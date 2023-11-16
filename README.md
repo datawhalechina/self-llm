@@ -4,7 +4,7 @@
 # 模型
 
 - InternLM
-  - [ ] InternLM-Chat-7B
+  - [x] InternLM-Chat-7B
   - [ ] Lagent+InternLM-Chat-7B-V1.1
   - [ ] 浦语灵笔图文理解&创作
 - ChatGLM
