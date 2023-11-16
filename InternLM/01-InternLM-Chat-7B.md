@@ -59,7 +59,6 @@ git checkout 3028f07cb79e5b1d7342f4ad8d11efad3fd13d17
 ```
 
 最后取消镜像加速，因为该加速可能对正常网络造成一定影响，避免对后续下载其他模型造成困扰。
-    
 ```shell
 unset http_proxy && unset https_proxy
 ```
@@ -77,5 +76,14 @@ cd /root/autodl-tmp/InternLM
 streamlit run web_demo.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-将 `autodl `的端口映射到本地的 [http://localhost:6006](http://localhost:6006/) 仅在此处展示一次，以下两个 Demo 都是同样的方法把 `autodl `中的 `6006 `端口映射到本机的 `http://localhost:6006`的方法都是相同的，方法如图所示
+将 `autodl `的端口映射到本地的 [http://localhost:6006](http://localhost:6006/) 仅在此处展示一次，以下两个 Demo 都是同样的方法把 `autodl `中的 `6006 `端口映射到本机的 `http://localhost:6006`的方法都是相同的，方法如图所示。
 
+![Alt text](images/image-4.png)
+
+注意：要在浏览器打开`http://localhost:6006`页面后，模型才会加载，如下图所示：
+
+![Alt text](images/image-5.png)
+
+在加载完模型之后，就可以既可与InternLM-Chat-7B进行对话了，如下图所示：
+
+![Alt text](images/image-6.png)
