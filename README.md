@@ -1,14 +1,14 @@
 # llm-QuicklyDeploy
-基于AutoDL快速部署开源大模型，更适合中国宝宝的部署教程
+基于AutoDL快速部署开源大模型，更适合中国宝宝的部署教程。
 
 # 模型
 
 - InternLM
   - [x] InternLM-Chat-7B
-  - [ ] Lagent+InternLM-Chat-7B-V1.1
-  - [ ] 浦语灵笔图文理解&创作
+  - [x] Lagent+InternLM-Chat-7B-V1.1
+  - [x] 浦语灵笔图文理解&创作
 - ChatGLM
-  - [ ] ChatGLM2-6B
+  - [ ] ChatGLM3-6B
   - [ ] CogVlm
 - Qwen
   - [ ] Qwen-7B
