@@ -13,14 +13,17 @@
 - Qwen
   - [ ] Qwen-7B
   - [ ] Qwen-VL
-
+- ~ ~ ~
 # 通用环境配置
+
+## pip、conda 换源
 
 ## 开放端口
 
 ## 模型下载
 
 ### hugging face
+
 ### hugging face 镜像下载
 
 ### modelscope
