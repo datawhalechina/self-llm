@@ -20,3 +20,6 @@
 ### hugging face 镜像下载
 ### modelscope
 ### git-lfs
+
+# 鸣谢
+[Datawhale](https://datawhale.club/#/)、[上海人工智能实验室](https://www.shlab.org.cn/)
