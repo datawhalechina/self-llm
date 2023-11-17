@@ -19,8 +19,7 @@
   - [ ] ChatGLM3-6B Code Interpreter
 - Qwen
   - [ ] Qwen-7B-chat
-- Yi
-  - [ ] Yi-7B-chat
+- Yi (暂时只有base模型，没有chat模型)
 - 欢迎提交新模型
 # 通用环境配置
 
