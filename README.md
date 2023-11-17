@@ -11,11 +11,11 @@
 # 模型目录
 
 - InternLM
-  - [x] [InternLM-Chat-7B](InternLM\01-InternLM-Chat-7B.md)
-  - [x] [Lagent+InternLM-Chat-7B-V1.1](InternLM\02-Lagent+InternLM-Chat-7B-V1.1.md)
-  - [x] [浦语灵笔图文理解&创作](InternLM\03-浦语灵笔图文理解&创作.md)
+  - [x] [InternLM-Chat-7B](InternLM/01-InternLM-Chat-7B.md)
+  - [x] [Lagent+InternLM-Chat-7B-V1.1](InternLM/02-Lagent+InternLM-Chat-7B-V1.1.md)
+  - [x] [浦语灵笔图文理解&创作](InternLM/03-浦语灵笔图文理解&创作.md)
 - ChatGLM
-  - [x] [ChatGLM3-6B chat](ChatGLM\01-ChatGLM3-6B-chat.md)
+  - [x] [ChatGLM3-6B chat](ChatGLM/01-ChatGLM3-6B-chat.md)
   - [ ] ChatGLM3-6B Code Interpreter
 - Qwen
   - [ ] Qwen-7B-chat
