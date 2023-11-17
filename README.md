@@ -8,7 +8,7 @@
 
 &emsp;&emsp;本项目基于AutoDL快速部署开源大模型，更适合中国宝宝的部署教程。 **欢迎各位大模型届未来的大佬** 提交PR，一起完善本项目。
 
-# 模型
+# 模型目录
 
 - InternLM
   - [x] InternLM-Chat-7B
@@ -90,11 +90,80 @@ EOF
 
 ### hugging face
 
+使用`huggingface`官方提供的`huggingface-cli`命令行工具。安装依赖:
+
+```shell
+pip install -U huggingface_hub
+```
+
+然后新建python文件，填入以下代码，运行即可。
+
+- resume-download：模型名称
+- local-dir：本地存储路径。（linux环境下需要填写绝对路径）
+
+```python
+import os
+
+# 下载模型
+os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b --local-dir your_path')
+```
+
 ### hugging face 镜像下载
+
+与使用hugginge face下载相同，只需要填入镜像地址即可。使用`huggingface`官方提供的`huggingface-cli`命令行工具。安装依赖:
+
+```shell
+pip install -U huggingface_hub
+```
+
+然后新建python文件，填入以下代码，运行即可。
+
+- resume-download：模型名称
+- local-dir：本地存储路径。（linux环境下需要填写绝对路径）
+
+```python
+import os
+
+# 设置环境变量
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+
+# 下载模型
+os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b --local-dir your_path')
+```
+
+更多关于镜像使用可以移步至 [HF Mirror](https://hf-mirror.com/) 查看。
 
 ### modelscope
 
+使用`modelscope`中的`snapshot_download`函数下载模型，第一个参数为模型名称，参数`cache_dir`为模型的下载路径。
+
+注意：`cache_dir`最好为决定路径。
+
+安装依赖：
+  
+```shell
+pip install modelscope
+pip install transformers
+```
+
+在当前目录下新建python文件，填入以下代码，运行即可。
+
+```python
+import torch
+from modelscope import snapshot_download, AutoModel, AutoTokenizer
+import os
+model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b', cache_dir='your path', revision='master')
+```
+
+
 ### git-lfs
+
+来到[git-lfs](https://git-lfs.com/)网站下载安装包，然后安装`git-lfs`。安装好之后在终端输入`git lfs install`，然后就可以使用`git-lfs`下载模型了。当然这种方法需要你有一点点 **Magic** 。
+
+
+```shell
+git clone https://huggingface.co/internlm/internlm-7b
+```
 
 # 致谢
 
