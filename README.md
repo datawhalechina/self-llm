@@ -118,7 +118,7 @@ pip install -U huggingface_hub
 
 然后新建python文件，填入以下代码，运行即可。
 
-- resume-download：模型名称
+- resume-download：断点续下
 - local-dir：本地存储路径。（linux环境下需要填写绝对路径）
 
 ```python
