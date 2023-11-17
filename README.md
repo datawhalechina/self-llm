@@ -1,14 +1,90 @@
-# llm-QuicklyDeploy
+# 开源大模型食用指南
+
+## 项目简介
+
+&emsp;&emsp;本项目是一个围绕开源大模型、针对国内初学者、基于 AutoDL 平台的中国宝宝专属大模型教程，针对各类开源大模型提供包括环境配置、本地部署、高效微调等技能在内的全流程指导，简化开源大模型的部署、使用和应用流程，让更多的普通学生、研究者更好地使用开源大模型，帮助开源、自由的大模型更快融入到普通学习者的生活中。
+
+&emsp;&emsp;本项目的主要内容包括：
+
+  1. 基于 AutoDL 平台（可扩展，例如阿里云）的开源 LLM 环境配置指南，针对不同模型要求提供不同的详细环境配置步骤；
+  2. 针对国内外主流开源 LLM 的部署使用教程，包括 LLaMA、ChatGLM、InternLM 等； 
+  3. 开源 LLM 的部署应用指导，包括命令行调用、在线 Demo 部署、LangChain 框架集成等；
+  4. 开源 LLM 的全量微调、高效微调方法，包括分布式全量微调、LoRA、ptuning 等。
+
+## 项目意义
 
 &emsp;&emsp;什么是大模型？
 
 >大模型（LLM）狭义上指基于深度学习算法进行训练的自然语言处理（NLP）模型，主要应用于自然语言理解和生成等领域，广义上还包括机器视觉（CV）大模型、多模态大模型和科学计算大模型等。
 
-&emsp;&emsp;如今国内外已经涌现了太多的开源大模型，国内也有很多优秀的开源大模型如：InternLM（书生·蒲语），ChatGLM，Qwen（通义千问），Yi（零一万物）等等。当前普通学生和用户想要使用这些大模型，需要具备一定的技术能力，才能完成模型的部署和使用。本项目旨在简化大模型的部署和使用，让更多的人能够使用大模型，利用大模型更好的学习和工作。
+&emsp;&emsp;百模大战正值火热，开源 LLM 层出不穷。如今国内外已经涌现了众多优秀开源 LLM，国外如 LLaMA、Alpaca，国内如 ChatGLM、BaiChuan、InternLM（书生·蒲语）等。开源 LLM 支持用户本地部署、私域微调，每一个人都可以在开源 LLM 的基础上打造专属于自己的独特大模型。
 
-&emsp;&emsp;本项目基于AutoDL快速部署开源大模型，更适合中国宝宝的部署教程。 **欢迎各位大模型届未来的大佬** 提交PR，一起完善本项目。
+&emsp;&emsp;然而，当前普通学生和用户想要使用这些大模型，需要具备一定的技术能力，才能完成模型的部署和使用。对于层出不穷又各有特色的开源 LLM，想要快速掌握一个开源 LLM 的应用方法，是一项比较有挑战的任务。
 
-# 模型目录
+&emsp;&emsp;本项目旨在首先基于核心贡献者的经验，实现国内外主流开源 LLM 的部署、使用与微调教程；在实现主流 LLM 的相关部分之后，我们希望充分聚集共创者，一起丰富这个开源 LLM 的世界，打造更多、更全面特色 LLM 的教程。星火点点，汇聚成海。我们希望成为 LLM 与普罗大众的阶梯，以自由、平等的开源精神，拥抱更恢弘而辽阔的 LLM 世界。
+
+## 项目受众
+
+&emsp;&emsp;本项目适合以下学习者：
+
+* 想要使用或体验 LLM，但无条件获得或使用相关 API；
+* 希望长期、低成本、大量应用 LLM；
+* 对开源 LLM 感兴趣，想要亲自上手开源 LLM；
+* NLP 在学，希望进一步学习 LLM；
+* 希望结合开源 LLM，打造领域特色的私域 LLM；
+
+## 项目规划
+
+&emsp;&emsp; 本项目拟围绕开源 LLM 应用全流程组织，包括环境配置及使用、部署应用、微调等，每个部分覆盖主流及特点开源 LLM：
+
+1. 环境配置
+    
+    - 使用 AutoDL
+    - pip、conda 换源
+    - 安装相关依赖
+    - ...... 
+
+2. 模型下载
+
+    - InternLM
+    - ChatGLM3
+    - ......
+
+3. 模型调用
+
+    - InternLM
+    - ChatGLM3
+    - ......
+
+4. 部署应用
+
+    - InternLM
+    - ChatGLM3
+    - ......
+
+5. 模型微调
+
+    - InternLM
+      
+      - 全量 Finetune
+      - LoRA
+      - ptuning
+      - ......
+
+    - ChatGLM3
+
+      - 全量 Finetune
+      - LoRA
+      - ptuning
+      - ......
+
+    - ......
+
+
+
+## 项目进展
+
+### 已支持模型
 
 - InternLM
   - [x] [InternLM-Chat-7B](InternLM/01-InternLM-Chat-7B.md)
@@ -21,13 +97,14 @@
   - [ ] Qwen-7B-chat
 - Yi (暂时只有base模型，没有chat模型)
 - 欢迎提交新模型
-# 通用环境配置
 
-## pip、conda 换源
+## 通用环境配置
+
+### pip、conda 换源
 
 更多详细内容可移步至[MirrorZ Help](https://help.mirrors.cernet.edu.cn/)查看。
 
-### pip 换源
+#### pip 换源
 
 临时使用镜像源安装，如下所示：`some-package` 为你需要安装的包名
 
@@ -48,7 +125,7 @@ pip config set global.index-url https://mirrors.cernet.edu.cn/pypi/web/simple
 python -m pip install -i https://mirrors.cernet.edu.cn/pypi/web/simple --upgrade pip
 ```
 
-### conda 换源
+#### conda 换源
 
 镜像站提供了 Anaconda 仓库与第三方源（conda-forge、msys2、pytorch 等，各系统都可以通过修改用户目录下的 .condarc 文件来使用镜像站。
 
@@ -79,15 +156,15 @@ custom_channels:
 EOF
 ```
 
-## AutoDL 开放端口
+### AutoDL 开放端口
 
 将 `autodl `的端口映射到本地的 [http://localhost:6006](http://localhost:6006/) 仅在此处展示一次，以下两个 Demo 都是同样的方法把 `autodl `中的 `6006 `端口映射到本机的 `http://localhost:6006`的方法都是相同的，方法如图所示。
 
 ![Alt text](images/image-4.png)
 
-## 模型下载
+### 模型下载
 
-### hugging face
+#### hugging face
 
 使用`huggingface`官方提供的`huggingface-cli`命令行工具。安装依赖:
 
@@ -107,7 +184,7 @@ import os
 os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b --local-dir your_path')
 ```
 
-### hugging face 镜像下载
+#### hugging face 镜像下载
 
 与使用hugginge face下载相同，只需要填入镜像地址即可。使用`huggingface`官方提供的`huggingface-cli`命令行工具。安装依赖:
 
@@ -132,7 +209,7 @@ os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b 
 
 更多关于镜像使用可以移步至 [HF Mirror](https://hf-mirror.com/) 查看。
 
-### modelscope
+#### modelscope
 
 使用`modelscope`中的`snapshot_download`函数下载模型，第一个参数为模型名称，参数`cache_dir`为模型的下载路径。
 
@@ -155,7 +232,7 @@ model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b', cache_d
 ```
 
 
-### git-lfs
+#### git-lfs
 
 来到[git-lfs](https://git-lfs.com/)网站下载安装包，然后安装`git-lfs`。安装好之后在终端输入`git lfs install`，然后就可以使用`git-lfs`下载模型了。当然这种方法需要你有一点点 **Magic** 。
 
@@ -164,7 +241,7 @@ model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b', cache_d
 git clone https://huggingface.co/internlm/internlm-7b
 ```
 
-# 致谢
+## 致谢
 
 <div align=center>
   <a href="https://datawhale.club/#/">Datawhale</a>、
