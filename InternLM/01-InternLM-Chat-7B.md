@@ -16,11 +16,11 @@ pip换源和安装依赖包
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope
-pip install transformers
+pip install modelscope==1.9.5
+pip install transformers==4.35.2
 pip install streamlit==1.24.0
-pip install sentencepiece
-pip install accelerate
+pip install sentencepiece==0.1.99
+pip install accelerate==0.24.1
 ```
 ## 模型下载
 
