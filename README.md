@@ -16,7 +16,7 @@
   - [x] [浦语灵笔图文理解&创作](InternLM/03-浦语灵笔图文理解&创作.md)
 - ChatGLM
   - [x] [ChatGLM3-6B chat](ChatGLM/01-ChatGLM3-6B-chat.md)
-  - [ ] ChatGLM3-6B Code Interpreter
+  - [x] [ChatGLM3-6B Code Interpreter](ChatGLM/02-ChatGLM3-6B-Code-Interpreter.md)
 - Qwen
   - [ ] Qwen-7B-chat
 - Yi (暂时只有base模型，没有chat模型)
