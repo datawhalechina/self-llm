@@ -77,8 +77,10 @@
 
 ### LangChain
 
-- [ ] 大模型 + LangChain + 向量知识库部署调用 @nowadays0421
-- [ ] 后续再加，欢迎大家提出issue和PR
+- [ ] LangChain 基于开源大模型构建问答链 @ Logan Zou
+- [ ] LangChain 使用开源大模型构建 embedding @ Logan Zou
+- [ ] 基于本地大模型构建应用 @ Logan Zou
+- 欢迎大家提出issue和PR
 
 ### 通用环境配置
 
