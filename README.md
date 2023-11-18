@@ -245,13 +245,13 @@ git clone https://huggingface.co/internlm/internlm-7b
 
 ## 致谢
 
-<div align=center style="margin-top: 20px;">
+<div align=center style="margin-top: 30px;">
   <a href="https://github.com/datawhalechina/d2l-ai-solutions-manual/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=KMnO4-zx/llm-QuicklyDeploy" />
   </a>
 </div>
 
-<div align=center style="margin-top: 20px;">
+<div align=center style="margin-top: 30px;">
   <a href="https://datawhale.club/#/">Datawhale</a>、
   <a href="https://www.shlab.org.cn/">上海人工智能实验室</a>
 </div>
