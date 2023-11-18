@@ -71,6 +71,8 @@
   - [ ] Yi-7B-base WebDemo (Yi 暂时没有chat模型)
 - llama2
   - [ ] llama2-7B-chinese-chat WebDemo
+  - [ ] llama2-7B-chinese-chat Lora 微调 @ Logan Zou
+  - [ ] llama2-7B-chinese-chat 全量微调 @ Logan Zou
 - 欢迎大家积极提出issue和PR
 
 ### LangChain
