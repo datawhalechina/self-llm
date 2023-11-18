@@ -46,7 +46,7 @@
   - [x] [InternLM-Chat-7B WebDemo](InternLM/01-InternLM-Chat-7B.md) @不要葱姜蒜
   - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/02-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
   - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/03-浦语灵笔图文理解&创作.md) @不要葱姜蒜
-  - [ ] InternLM-Chat-7B 接入 LangChain 框架
+  - [ ] InternLM-Chat-7B 接入 LangChain 框架 @ Logan Zou
   - [ ] InternLM-Chat-7B Lora 微调
   - [ ] InternLM-Chat-7B ptuning 微调
   - [ ] InternLM-Chat-7B 全量微调
@@ -56,7 +56,8 @@
   - [ ] ChatGLM3-6B FastApi 部署调用
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/01-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/02-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
-  - [ ] ChatGLM3-6B Lora 微调
+  - [ ] ChatGLM3-6B 接入 LangChain 框架 @ Logan Zou
+  - [ ] ChatGLM3-6B Lora 微调 @ Logan Zou
   - [ ] ChatGLM3-6B ptuning 微调
   - [ ] ChatGLM3-6B 全量微调
 - Qwen
