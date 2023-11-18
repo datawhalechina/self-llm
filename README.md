@@ -32,71 +32,60 @@
 * 对开源 LLM 感兴趣，想要亲自上手开源 LLM；
 * NLP 在学，希望进一步学习 LLM；
 * 希望结合开源 LLM，打造领域特色的私域 LLM；
+* 以及最广大、最普通的学生群体。
 
-## 项目规划
+## 项目规划及进展
 
 &emsp;&emsp; 本项目拟围绕开源 LLM 应用全流程组织，包括环境配置及使用、部署应用、微调等，每个部分覆盖主流及特点开源 LLM：
-
-1. 环境配置
-    
-    - 使用 AutoDL
-    - pip、conda 换源
-    - 安装相关依赖
-    - ...... 
-
-2. 模型下载
-
-    - InternLM
-    - ChatGLM3
-    - ......
-
-3. 模型调用
-
-    - InternLM
-    - ChatGLM3
-    - ......
-
-4. 部署应用
-
-    - InternLM
-    - ChatGLM3
-    - ......
-
-5. 模型微调
-
-    - InternLM
-      
-      - 全量 Finetune
-      - LoRA
-      - ptuning
-      - ......
-
-    - ChatGLM3
-
-      - 全量 Finetune
-      - LoRA
-      - ptuning
-      - ......
-
-    - ......
-
-
-
-## 项目进展
 
 ### 已支持模型
 
 - InternLM
-  - [x] [InternLM-Chat-7B](InternLM/01-InternLM-Chat-7B.md)
-  - [x] [Lagent+InternLM-Chat-7B-V1.1](InternLM/02-Lagent+InternLM-Chat-7B-V1.1.md)
-  - [x] [浦语灵笔图文理解&创作](InternLM/03-浦语灵笔图文理解&创作.md)
+  - [ ] InternLM-Chat-7B Transformers 部署调用
+  - [ ] InternLM-Chat-7B FastApi 部署调用
+  - [x] [InternLM-Chat-7B WebDemo](InternLM/01-InternLM-Chat-7B.md) @不要葱姜蒜
+  - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/02-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
+  - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/03-浦语灵笔图文理解&创作.md) @不要葱姜蒜
+  - [ ] InternLM-Chat-7B Lora 微调
+  - [ ] InternLM-Chat-7B ptuning 微调
+  - [ ] InternLM-Chat-7B 全量微调
 - ChatGLM
-  - [x] [ChatGLM3-6B chat](ChatGLM/01-ChatGLM3-6B-chat.md)
-  - [x] [ChatGLM3-6B Code Interpreter](ChatGLM/02-ChatGLM3-6B-Code-Interpreter.md)
+  - [ ] ChatGLM3-6B Transformers 部署调用
+  - [ ] ChatGLM3-6B FastApi 部署调用
+  - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/01-ChatGLM3-6B-chat.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/02-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
+  - [ ] ChatGLM3-6B Lora 微调
+  - [ ] ChatGLM3-6B ptuning 微调
+  - [ ] ChatGLM3-6B 全量微调
 - Qwen
-  - [ ] Qwen-7B-chat
-- Yi (暂时只有base模型，没有chat模型)
-- 欢迎提交新模型
+  - [ ] Qwen-7B-chat Transformers 部署调用
+  - [ ] Qwen-7B-chat FastApi 部署调用
+  - [ ] Qwen-7B-chat WebDemo
+  - [ ] Qwen-7B-chat Lora 微调
+  - [ ] Qwen-7B-chat ptuning 微调
+  - [ ] Qwen-7B-chat 全量微调
+- Yi 
+  - [ ] Yi-7B-base WebDemo (Yi 暂时没有chat模型)
+- llama2
+  - [ ] llama2-7B-chinese-chat WebDemo
+- 欢迎大家积极提出issue和PR
+
+### LangChain
+
+- [ ] 大模型 + LangChain + 向量知识库部署调用 @nowadays0421
+- [ ] 后续再加，欢迎大家提出issue和PR
+
+### 通用环境配置
+
+- [x] [pip、conda 换源](#pip、conda-换源) @不要葱姜蒜
+- [x] AutoDL 开放端口 @不要葱姜蒜
+
+- 模型下载
+  - [x] hugging face @不要葱姜蒜
+  - [x] hugging face 镜像下载 @不要葱姜蒜
+  - [x] modelscope @不要葱姜蒜
+  - [x] git-lfs @不要葱姜蒜
+  - [ ] Openxlab
 
 ## 通用环境配置
 
@@ -243,7 +232,13 @@ git clone https://huggingface.co/internlm/internlm-7b
 
 ## 致谢
 
-<div align=center>
+<div align=center style="margin-top: 20px;">
+  <a href="https://github.com/datawhalechina/d2l-ai-solutions-manual/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=KMnO4-zx/llm-QuicklyDeploy" />
+  </a>
+</div>
+
+<div align=center style="margin-top: 20px;">
   <a href="https://datawhale.club/#/">Datawhale</a>、
   <a href="https://www.shlab.org.cn/">上海人工智能实验室</a>
 </div>
