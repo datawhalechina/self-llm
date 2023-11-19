@@ -90,5 +90,15 @@ git remote add origin git@github.com:username/repo.git
 ```
 然后再```push```就可以了。
 
+## 1.6总结提交pr操作
+如果已经在fork的仓库中更新了文件，想要想原始仓库提交pr：
 
+1.打开fork仓库，在页面顶部找到Pull requests标签，点击。
 
+2.在右上角点击New pull request按钮。
+
+3.在Comparing changes页面，会看到两个下拉菜单，左侧显示的是你fork仓库，右边是原始仓库，确保选择了正确的仓库，并选择要提交的分支(通常是master).
+
+4.点击Create pull request按钮，并填写一个简短的标题和描述，描述修改。
+
+5.确认无误后，点击Create pull request提交PR
