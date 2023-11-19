@@ -46,9 +46,9 @@
 
 ### 已支持模型
 
-- InternLM
+- [InternLM](https://github.com/InternLM/InternLM.git)
   - [ ] InternLM-Chat-7B Transformers 部署调用 @小罗 ddl=11.26
-  - [ ] InternLM-Chat-7B FastApi 部署调用 
+  - [x] [InternLM-Chat-7B FastApi 部署调用](InternLM/02-internLM-Chat-7B%20FastApi.md) 
   - [x] [InternLM-Chat-7B WebDemo](InternLM/03-InternLM-Chat-7B.md) @不要葱姜蒜
   - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
   - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/05-浦语灵笔图文理解&创作.md) @不要葱姜蒜
@@ -57,7 +57,7 @@
   - [ ] InternLM-Chat-7B ptuning 微调
   - [ ] InternLM-Chat-7B 全量微调
 
-- ChatGLM
+- [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
   - [ ] ChatGLM3-6B Transformers 部署调用 @丁悦 ddl=12.2
   - [ ] ChatGLM3-6B FastApi 部署调用 @丁悦 ddl=12.2
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
@@ -66,7 +66,7 @@
   - [ ] ChatGLM3-6B Lora 微调 @ Hongru0306 ddl=11.26
   - [ ] ChatGLM3-6B ptuning 微调 @ Hongru0306 ddl=11.26
   - [ ] ChatGLM3-6B 全量微调 
-- Qwen
+- [Qwen](https://github.com/QwenLM/Qwen.git)
   - [ ] Qwen-7B-chat Transformers 部署调用 @娇娇 ddl=12.2
   - [ ] Qwen-7B-chat FastApi 部署调用 @娇娇 ddl=12.2
   - [ ] Qwen-7B-chat WebDemo @娇娇 ddl=12.2
