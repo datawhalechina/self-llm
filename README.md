@@ -100,7 +100,7 @@
 - Issue && PR
   - [x] Issue 提交 @ Hongru0306
   - [x] PR 提交 @ Hongru0306
-  - [ ] fork更新 @ Hongru0306
+  - [x] fork更新 @ Hongru0306
 
 ## 致谢
 
