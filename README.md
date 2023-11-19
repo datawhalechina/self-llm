@@ -63,8 +63,8 @@
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/01-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/02-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
   - [ ] ChatGLM3-6B 接入 LangChain 框架 @ Logan Zou
-  - [ ] ChatGLM3-6B Lora 微调 @ 鸿儒 ddl=11.26
-  - [ ] ChatGLM3-6B ptuning 微调 @ 鸿儒 ddl=11.26
+  - [ ] ChatGLM3-6B Lora 微调 @ Hongru0306 ddl=11.26
+  - [ ] ChatGLM3-6B ptuning 微调 @ Hongru0306 ddl=11.26
   - [ ] ChatGLM3-6B 全量微调 
 - Qwen
   - [ ] Qwen-7B-chat Transformers 部署调用 @娇娇 ddl=12.2
@@ -98,8 +98,9 @@
   - [x] git-lfs @不要葱姜蒜
   - [ ] Openxlab
 - Issue && PR
-  - [ ] Issue 提交 @鸿儒
-  - [ ] PR 提交 @鸿儒
+  - [x] Issue 提交 @ Hongru0306
+  - [x] PR 提交 @ Hongru0306
+  - [x] fork更新 @ Hongru0306
 
 ## 致谢
 
