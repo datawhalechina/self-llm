@@ -83,7 +83,12 @@ git merge upstream/master  # 合并原作者的仓库的更新
 git push origin master  # 将合并后的代码推送到自己的仓库
 
 ```
-
+## 1.5 注意
+有时候在```push```的时候连接犯病,我们可以用ssh
+```
+git remote add origin git@github.com:username/repo.git
+```
+然后再```push```就可以了。
 
 
 
