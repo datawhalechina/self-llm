@@ -2,7 +2,9 @@
 参考```我本人```写过的blog---[Github提交PR与修改pr](https://blog.csdn.net/python_innocent/article/details/130560871)
 
 ## 1.1 从零开始提issue与pr：
-- 一般情况下，第一次提pr都是先提一个issue来描述你的问题或者提议，以确保你的工作符合要求。但这不是必须的，完全可以直接fork仓库并提交pr
+- 一般情况下，第一次提pr都是先提一个issue来描述你的问题或者提议，以确保你的工作符合要求。但这不是必须的，完全可以直接fork仓库并提交pr。提issue很简单,操作如下：  
+![img](./pic/Issue1.png)
+![img](./pic/Issue2.png)
 - fork仓库后，在自己fork的仓库里面进行修改，然后点击自己fork仓库上面的pull request，将你的更改合并到原始仓库中，详情见下：
 
 ## 1.2 pr修改与改正  
@@ -38,13 +40,11 @@ git clone 'your/folk_repo_utl'  # 克隆到本地
 cd /path/to/your/local/folder  # 进入你的本地文件夹
 ```
 
-
-
 - 此处你可以在fork好的本地仓库进行增删减改操作
 - 增删减改之后:
 
-
-
+在此处要使用```git bash```：
+![img](./pic/PR6.png)
 
 ```
 git init  # 初始化为 Git 仓库  
@@ -68,6 +68,22 @@ git push -u origin master  # 推送到远程仓库的 master 分支
 
   
 ![img](https://img-blog.csdnimg.cn/0a4fc2a5bf7645658da5c29594c8d3fa.png)
+
+
+## 1.4 补充
+
+如果之前的repo已经有更新，但是你fork的时候没有拉取最新的更新：
+
+```
+git remote add upstream https://github.com/original-owner/original-repository.git  
+# 将原作者的仓库添加为远程仓库
+git fetch upstream  # 将原仓库拉取更新
+git checkout master  # 切换到master分支
+git merge upstream/master  # 合并原作者的仓库的更新
+git push origin master  # 将合并后的代码推送到自己的仓库
+
+```
+
 
 
 
