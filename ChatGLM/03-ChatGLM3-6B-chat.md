@@ -11,6 +11,8 @@
 pip换源和安装依赖包
 
 ```shell
+# 升级pip
+python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 

@@ -5,6 +5,8 @@
 选择和第一个 `InternLM` 一样的 `AutoDL` 镜像环境，运行以下命令安装依赖，如果上一个 `InternLM-Chat-7B` 已经配置好环境不需要重复安装.
 
 ```shell
+# 升级pip
+python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
