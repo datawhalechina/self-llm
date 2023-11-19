@@ -88,7 +88,7 @@
 
 ### 通用环境配置
 
-- [x] [pip、conda 换源](#pip、conda-换源) @不要葱姜蒜
+- [x] pip、conda 换源 @不要葱姜蒜
 - [x] AutoDL 开放端口 @不要葱姜蒜
 
 - [模型下载](./General-Setting) @不要葱姜蒜
