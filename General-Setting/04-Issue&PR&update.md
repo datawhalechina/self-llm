@@ -1,5 +1,5 @@
 # 1.Github提交PR与修改pr
-参考```我本人```写过的blog---[Github提交PR与修改pr](https://blog.csdn.net/python_innocent/article/details/130560871)
+部分参考```我本人```写过的blog---[Github提交PR与修改pr](https://blog.csdn.net/python_innocent/article/details/130560871)
 
 ## 1.1 从零开始提issue与pr：
 - 一般情况下，第一次提pr都是先提一个issue来描述你的问题或者提议，以确保你的工作符合要求。但这不是必须的，完全可以直接fork仓库并提交pr。提issue很简单,操作如下：  
