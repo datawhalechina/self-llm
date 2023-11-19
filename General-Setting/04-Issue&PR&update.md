@@ -27,13 +27,10 @@
 ![img](https://img-blog.csdnimg.cn/04c0be5f42a949748c9a562ff1ca4848.png)
 
 ### 1.2.2 新建文件夹与增删减改---**Git版本**  
-- 使用git对fork的仓库进行更新
 
 ```'your/folk_repo_utl'```查看方法：  
 
 ![img](./pic/PR5.png)
-
-
 
 ```
 git clone 'your/folk_repo_utl'  # 克隆到本地
