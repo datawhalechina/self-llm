@@ -1,25 +1,23 @@
-# ChatGLM3-6B Code Interpreter
-
-> 请注意，本项目需要 Python 3.10 或更高版本。
+# ChatGLM3-6B-chat
 
 ## 环境准备
 
-由于项目需要`python 3.10`或更高版本，所以我们在在[autodl](https://www.autodl.com/)平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择`Miniconda`-->`conda3`-->`3.10(ubuntu20.04)`-->`11.8`。
+在[autodl](https://www.autodl.com/)平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择`PyTorch`-->`2.0.0`-->`3.8(ubuntu20.04)`-->`11.8`
 
-![Alt text](images/image-4.png)
+![Alt text](images/image-1.png)
 
 接下来打开刚刚租用服务器的`JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行`demo`。
 
 pip换源和安装依赖包
 
-```bash
+```shell
+# 升级pip
+python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
-pip install transformers==4.35.2
-
-pip install torch==2.0.1+cu117 torchvision==0.15.2+cu117 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu117
+pip install modelscope
+pip install transformers
 ```
 
 ## 模型下载
@@ -63,27 +61,29 @@ git checkout f823b4a3be9666b9b2a9daa43b29659e876a040d
 unset http_proxy && unset https_proxy
 ```
 
-然后切换路径到`composite_demo`目录，并安装相关依赖
-```bash
-cd /root/autodl-tmp/ChatGLM3/composite_demo
+修改代码路径，将 `/root/autodl-tmp/ChatGLM3/basic_demo/web_demo2.py`中 13 行的模型更换为本地的`/root/autodl-tmp/ZhipuAI/chatglm3-6b`。
+
+![Alt text](images/image-2.png)
+
+
+## demo运行
+
+修改`requirements.txt`文件，将其中的`torch`删掉，环境中已经有了`torch`，不需要再安装。然后执行下面的命令：
+    
+```shell
+cd /root/autodl-tmp/ChatGLM3
 pip install -r requirements.txt
 ```
 
-## demo 运行
-
-在终端运行以下代码，导入模型路径和Jupyter内核：
+运行以下命令即可启动推理服务
 
 ```shell
-export MODEL_PATH=/root/autodl-tmp/ZhipuAI/chatglm3-6b
-export IPYKERNEL=python3
+cd /root/autodl-tmp/ChatGLM3
+streamlit run ./basic_demo/web_demo2.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-然后运行以下代码，运行demo：
+将 `autodl `的端口映射到本地的 [http://localhost:6006](http://localhost:6006/) 即可看到demo界面。
 
-```shell
-streamlit run /root/autodl-tmp/ChatGLM3/composite_demo/main.py --server.address 127.0.0.1 --server.port 6006
-```
+注意：要在浏览器打开`http://localhost:6006`页面后，模型才会加载，如下图所示：
 
-如下图所示，可以愉快的玩耍代码解释器了~
-
-![Alt text](images/image-5.png)
+![Alt text](images/image-3.png)

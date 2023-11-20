@@ -1,23 +1,29 @@
-# ChatGLM3-6B-chat
+# InternLM-Chat-7B 对话 Web
 
 ## 环境准备
 
-在[autodl](https://www.autodl.com/)平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择`PyTorch`-->`2.0.0`-->`3.8(ubuntu20.04)`-->`11.8`
+在[autodl](https://www.autodl.com/)平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择`PyTorch`-->`1.11.0`-->`3.8(ubuntu20.04)`-->`11.3`
 
-![Alt text](images/image-1.png)
+![Alt text](images/image.png)
 
 接下来打开刚刚租用服务器的`JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行`demo`。
+
+![Alt text](images/image-1.png)
 
 pip换源和安装依赖包
 
 ```shell
+# 升级pip
+python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope
-pip install transformers
+pip install modelscope==1.9.5
+pip install transformers==4.35.2
+pip install streamlit==1.24.0
+pip install sentencepiece==0.1.99
+pip install accelerate==0.24.1
 ```
-
 ## 模型下载
 
 使用 `modelscope` 中的`snapshot_download`函数下载模型，第一个参数为模型名称，参数`cache_dir`为模型的下载路径。
@@ -28,8 +34,9 @@ pip install transformers
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('ZhipuAI/chatglm3-6b', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b', cache_dir='/root/autodl-tmp', revision='master')
 ```
+![image](images/image-2.png)
 
 ## 代码准备
 
@@ -43,45 +50,42 @@ source /etc/network_turbo
 
 ```shell
 cd /root/autodl-tmp
-git clone https://github.com/THUDM/ChatGLM3.git
+git clone https://github.com/InternLM/InternLM.git
 ```
 
 切换commit版本，与教程commit版本保持一致，可以让大家更好的复现。
 
 ```shell
-cd ChatGLM3
-git checkout f823b4a3be9666b9b2a9daa43b29659e876a040d
+cd InternLM
+git checkout 3028f07cb79e5b1d7342f4ad8d11efad3fd13d17
 ```
 
 最后取消镜像加速，因为该加速可能对正常网络造成一定影响，避免对后续下载其他模型造成困扰。
-
 ```shell
 unset http_proxy && unset https_proxy
 ```
 
-修改代码路径，将 `/root/autodl-tmp/ChatGLM3/basic_demo/web_demo2.py`中 13 行的模型更换为本地的`/root/autodl-tmp/ZhipuAI/chatglm3-6b`。
+将 `/root/autodl-tmp/InternLM/web_demo.py`中 29 行和 33 行的模型更换为本地的`/root/autodl-tmp/Shanghai_AI_Laboratory/internlm-chat-7b`。
 
-![Alt text](images/image-2.png)
+![image-3](images/image-3.png)
 
-
-## demo运行
-
-修改`requirements.txt`文件，将其中的`torch`删掉，环境中已经有了`torch`，不需要再安装。然后执行下面的命令：
-    
-```shell
-cd /root/autodl-tmp/ChatGLM3
-pip install -r requirements.txt
-```
+## web demo运行
 
 运行以下命令即可启动推理服务
 
 ```shell
-cd /root/autodl-tmp/ChatGLM3
-streamlit run ./basic_demo/web_demo2.py --server.address 127.0.0.1 --server.port 6006
+cd /root/autodl-tmp/InternLM
+streamlit run web_demo.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-将 `autodl `的端口映射到本地的 [http://localhost:6006](http://localhost:6006/) 即可看到demo界面。
+将 `autodl `的端口映射到本地的 [http://localhost:6006](http://localhost:6006/) 仅在此处展示一次，以下两个 Demo 都是同样的方法把 `autodl `中的 `6006 `端口映射到本机的 `http://localhost:6006`的方法都是相同的，方法如图所示。
+
+![Alt text](images/image-4.png)
 
 注意：要在浏览器打开`http://localhost:6006`页面后，模型才会加载，如下图所示：
 
-![Alt text](images/image-3.png)
+![Alt text](images/image-5.png)
+
+在加载完模型之后，就可以既可与InternLM-Chat-7B进行对话了，如下图所示：
+
+![Alt text](images/image-6.png)
