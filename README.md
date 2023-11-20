@@ -52,7 +52,7 @@
   - [x] [InternLM-Chat-7B WebDemo](InternLM/03-InternLM-Chat-7B.md) @不要葱姜蒜
   - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
   - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/05-浦语灵笔图文理解&创作.md) @不要葱姜蒜
-  - [ ] InternLM-Chat-7B 接入 LangChain 框架 @ Logan Zou
+  - [x] InternLM-Chat-7B 接入 LangChain 框架 @ Logan Zou
   - [ ] InternLM-Chat-7B Lora 微调 @ 柯辰 ddl=12.10
   - [ ] InternLM-Chat-7B ptuning 微调
   - [ ] InternLM-Chat-7B 全量微调
