@@ -31,7 +31,8 @@ pip install markdown==3.3.7
 ```bash
 # 进入到数据库盘
 cd /root/autodl-tmp
-
+# 打开学术资源加速
+source /etc/network_turbo
 # clone 上述开源仓库
 git clone https://github.com/open-compass/opencompass.git
 git clone https://github.com/InternLM/lmdeploy.git
@@ -39,6 +40,8 @@ git clone https://github.com/InternLM/xtuner.git
 git clone https://github.com/InternLM/InternLM-XComposer.git
 git clone https://github.com/InternLM/lagent.git
 git clone https://github.com/InternLM/InternLM.git
+# 关闭学术资源加速
+unset http_proxy && unset https_proxy
 ```
 
 接着，为语料处理方便，我们将选用上述仓库中所有的 markdown、txt 文件作为示例语料库。注意，也可以选用其中的代码文件加入到知识库中，但需要针对代码文件格式进行额外处理。
