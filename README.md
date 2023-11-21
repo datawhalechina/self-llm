@@ -73,10 +73,10 @@
   - [ ] Qwen-7B-chat Lora 微调
   - [ ] Qwen-7B-chat ptuning 微调
   - [ ] Qwen-7B-chat 全量微调
-- llama2
-  - [ ] llama2-7B-chinese-chat WebDemo @凯立 ddl=11.24
-  - [ ] llama2-7B-chinese-chat Lora 微调 @ Logan Zou
-  - [ ] llama2-7B-chinese-chat 全量微调 @ Logan Zou
+- [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
+  - [ ] Atom-7B-chat WebDemo @凯立 ddl=11.24
+  - [ ] Atom-7B-chat Lora 微调 @ Logan Zou
+  - [ ] Atom-7B-chat 全量微调 @ Logan Zou
 - 欢迎大家积极提出issue和PR
 
 ### LangChain
@@ -96,7 +96,7 @@
   - [x] hugging face 镜像下载 @不要葱姜蒜
   - [x] modelscope @不要葱姜蒜
   - [x] git-lfs @不要葱姜蒜
-  - [ ] Openxlab
+  - [x] Openxlab
 - Issue && PR
   - [x] Issue 提交 @ Hongru0306
   - [x] PR 提交 @ Hongru0306
