@@ -47,7 +47,7 @@
 ### 已支持模型
 
 - [InternLM](https://github.com/InternLM/InternLM.git)
-  - [ ] InternLM-Chat-7B Transformers 部署调用 @小罗 ddl=11.26
+  - [x] [InternLM-Chat-7B Transformers 部署调用](./InternLM/01-InternLM-Chat-7B%20Transformers%20部署调用.md) @小罗 ddl=11.26
   - [x] [InternLM-Chat-7B FastApi 部署调用](InternLM/02-internLM-Chat-7B%20FastApi.md) @不要葱姜蒜
   - [x] [InternLM-Chat-7B WebDemo](InternLM/03-InternLM-Chat-7B.md) @不要葱姜蒜
   - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
