@@ -1,7 +1,6 @@
 python train.py \
-    --dataset_path ../../dataset/lora/huanhuan.json \
-    --model_path ../../dataset/model \
-    --base_model Atom-7B\
+    --dataset_path ../../dataset/huanhuan.jsonl \
+    --model_path /root/autodl-tmp/data/model/Atom \
     --lora_rank 8 \
     --per_device_train_batch_size 16 \
     --gradient_accumulation_steps 1 \
