@@ -74,7 +74,7 @@
   - [ ] Qwen-7B-chat ptuning 微调
   - [ ] Qwen-7B-chat 全量微调
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
-  - [ ] Atom-7B-chat WebDemo @凯立 ddl=11.24
+  - [x] Atom-7B-chat WebDemo @凯立 ddl=11.24
   - [ ] Atom-7B-chat Lora 微调 @ Logan Zou
   - [ ] Atom-7B-chat 全量微调 @ Logan Zou
 - 欢迎大家积极提出issue和PR
