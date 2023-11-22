@@ -16,7 +16,7 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 #安装项目相关依赖包
-pip install modelscope transformers gradio SentencePiece accelerate bitsandbytes
+pip install modelscope==1.9.5 transformers==4.35.2 gradio==4.4.1 SentencePiece==0.1.99 accelerate==0.24.1 bitsandbytes==0.41.2.post2
 ```
 
 ## 模型下载
@@ -44,6 +44,11 @@ source /etc/network_turbo
 ```shell
 cd /root/autodl-tmp
 git clone https://github.com/FlagAlpha/Llama2-Chinese.git
+```
+切换commit版本，与教程commit版本保持一致，可以让大家更好的复现。
+```shell
+cd Llama2-Chinese
+git checkout 0a2b588c5716f26f1e37affa308283354b3612be
 ```
 最后取消镜像加速，因为该加速可能对正常网络造成一定影响，避免对后续下载其他模型造成困扰。
 
