@@ -2,9 +2,9 @@
 
 
 ## Ptuning原理
-参考[transformers-code](https://github.com/zyds/transformers-code)  
+参考[transformers-code](https://github.com/zyds/transformers-code)
 
-数据加载与模型配置与LoRa一致,在此具体讲一下Ptuning的细节:  
+数据加载与模型配置与[LoRa](./04-Qwen-7B-Chat%20Lora%20微调.md)一致,在此具体讲一下Ptuning的细节:  
 基本原理为冻结主模型全部参数,在训练数据前加入一小段Prompt,之训练Prompt的嵌入层。在Ptuning中，只有soft prompt,是自动学习的,不用人工设置。
 - 在`Prompt-tuning`的时候，前面只是增加了一个`Prompt Embedding`.
 - 在Ptuning这里替换为了`Prompt Encoder`，新加了`LSTM/MLP+Embedding`.
