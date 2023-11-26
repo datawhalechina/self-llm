@@ -1,3 +1,4 @@
+import torch
 from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, DataCollatorForSeq2Seq, TrainingArguments, Trainer
 import pandas as pd
@@ -44,7 +45,7 @@ if "__main__" == __name__:
     tokenized_ds = ds.map(process_func, remove_columns=ds.column_names)
 
     # 创建模型
-    model = AutoModelForCausalLM.from_pretrained("./model/chatglm3-6b", trust_remote_code=True, low_cpu_mem_usage=True)
+    model = AutoModelForCausalLM.from_pretrained("./model/chatglm3-6b",torch_dtype=torch.half, trust_remote_code=True, low_cpu_mem_usage=True)
 
     # 创建loRA参数
     config = LoraConfig(task_type=TaskType.CAUSAL_LM, target_modules={"query_key_value"}, r=8, lora_alpha=32)
