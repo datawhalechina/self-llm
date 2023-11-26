@@ -185,7 +185,7 @@ ipt = tokenizer("<|system|>\n现在你要扮演皇帝身边的女人--甄嬛\n<|
 tokenizer.decode(model.generate(**ipt, max_length=128, do_sample=True)[0], skip_special_tokens=True)
 ```
 
-# 从新加载
+## 从新加载
 通过PEFT所微调的模型，都可以使用下面的方法进行重新加载，并推理:
 - 加载源model与tokenizer；
 - 使用`PeftModel`合并源model与PEFT微调后的参数。
