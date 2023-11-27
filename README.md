@@ -67,9 +67,9 @@
   - [ ] ChatGLM3-6B ptuning 微调 @ Hongru0306 ddl=11.26
   - [ ] ChatGLM3-6B 全量微调 
 - [Qwen](https://github.com/QwenLM/Qwen.git)
-  - [ ] Qwen-7B-chat Transformers 部署调用 @娇娇 ddl=12.2
-  - [ ] Qwen-7B-chat FastApi 部署调用 @娇娇 ddl=12.2
-  - [ ] Qwen-7B-chat WebDemo @娇娇 ddl=12.2
+  - [x] [Qwen-7B-chat Transformers 部署调用](./Qwen/01-Qwen-7B-Chat%20Transformers部署调用.md) @娇娇 ddl=12.2
+  - [x] [Qwen-7B-chat FastApi 部署调用](./Qwen/02-Qwen-7B-Chat%20FastApi%20部署调用.md) @娇娇 ddl=12.2
+  - [x] [Qwen-7B-chat WebDemo](./Qwen/03-Qwen-7B-Chat%20WebDemo.md) @娇娇 ddl=12.2
   - [x] [Qwen-7B-chat Lora 微调](./Qwen/04-Qwen-7B-Chat%20Lora%20微调.md) @ 不要葱姜蒜
   - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @ Hongru0306
   - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
