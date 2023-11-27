@@ -1,7 +1,7 @@
 # Qwen-7B-Chat WebDemo
 ## 环境准备
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
-![image](https://github.com/Aphasia0515/Qwen_bushu/assets/140427007/788b0e9d-9d18-40d5-9bd8-bf1865bc50ff)
+![Alt text](images/1.png)
 接下来打开刚刚租用服务器的JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行demo。
 
 pip换源和安装依赖包
@@ -60,4 +60,4 @@ python web_demo.py --server-port 6006
 将 autodl 的端口映射到本地的 http://localhost:6006 即可看到demo界面。
 
 注意：要在浏览器打开http://localhost:6006页面后，模型才会加载，如下图所示：
-![image](https://github.com/Aphasia0515/Qwen_bushu/assets/140427007/db9c5900-8402-4ca7-b789-f9bdb69087b2)
+![Alt text](images/5.png)
