@@ -44,7 +44,7 @@ git checkout 981c89b2a95676a4f98e94218c192c095bed5364
 unset http_proxy && unset https_proxy
 ```
 修改代码路径，将 /root/autodl-tmp/Qwen/web_demo.py中 13 行的模型更换为本地的/root/autodl-tmp/qwen/Qwen-7B-Chat。
-
+![Alt text](images/6.png)
 ## demo运行
 执行下面的命令安装依赖包：
 ```
