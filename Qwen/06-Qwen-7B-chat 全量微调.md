@@ -1,4 +1,4 @@
-# Atom-7B-chat 全量微调
+# Qwen-7B-chat 全量微调
 
 ## 修改代码
 
