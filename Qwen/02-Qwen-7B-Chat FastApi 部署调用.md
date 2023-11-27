@@ -1,7 +1,7 @@
 # Qwen-7B-Chat FastApi 部署调用
 ## 环境准备
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-
+![Alt text](images/1.png)
 pip换源和安装依赖包
 ```
 # 升级pip
@@ -109,7 +109,7 @@ cd /root/autodl-tmp
 python api.py
 ```
 加载完毕后出现如下信息说明成功。
-![image](https://github.com/Aphasia0515/Qwen_bushu/assets/140427007/c73b2952-696a-4900-9b54-5ff1af929df2)
+![Alt text](images/3.png)
 
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，如下所示：
 ```
@@ -141,6 +141,5 @@ if __name__ == '__main__':
   "time":"2023-11-19 20:08:40"
 }
 ```
-
-![image](https://github.com/Aphasia0515/Qwen_bushu/assets/140427007/a8f27d91-d710-4029-9133-b418883d822a)
+![Alt text](images/4.png)
 
