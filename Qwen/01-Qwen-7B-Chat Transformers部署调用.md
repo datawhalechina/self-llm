@@ -1,7 +1,7 @@
 # Qwen-7B-hat Transformers 部署调用
 ## 环境准备
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
-![image](https://github.com/Aphasia0515/Qwen_bushu/assets/140427007/788b0e9d-9d18-40d5-9bd8-bf1865bc50ff)
+![Alt text](images/1.png)
 接下来打开刚刚租用服务器的JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行demo。
 
 pip换源和安装依赖包
@@ -62,4 +62,4 @@ cd /root/autodl-tmp
 python trans.py
 ```
 加载完毕后，就可以看到模型生成的对话回答。（需要耐心等待一下哦！）
-![image](https://github.com/Aphasia0515/Qwen_bushu/assets/140427007/9fc3875c-e733-41b9-a3bd-2f698d8b124d)
+![Alt text](images/2.png)
