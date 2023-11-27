@@ -72,7 +72,7 @@
   - [ ] Qwen-7B-chat WebDemo @娇娇 ddl=12.2
   - [x] [Qwen-7B-chat Lora 微调](./Qwen/04-Qwen-7B-Chat%20Lora%20微调.md) @ 不要葱姜蒜
   - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @ Hongru0306
-  - [x] [Qwen-7B-chat 全量微调](./Qwen/Qwen-7B-chat 全量微调.md) @不要葱姜蒜
+  - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
   
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
   - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
