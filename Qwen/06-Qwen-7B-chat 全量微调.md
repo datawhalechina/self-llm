@@ -2,11 +2,11 @@
 
 ## 修改代码
 
-首先我们要准训练模型的代码，这里我们使用的 `modelscope` 上的 Qwen-7B-chat 模型，大家自行下载即可。
+首先我们要准训练模型的代码，这里我们使用的 `modelscope` 上的 `Qwen-7B-chat` 模型，大家自行下载即可。
 
-OK，模型下载完毕之后，我们就要准备代码文件。其实全量微调和Lor微调的代码基本一样，都采用了 Trainer 类来进行训练。只不过在全量微调的时候没有加载 `LoraConfig`，那我就直接给出代码，如果对代有什么问题，大家可以先自行探索Qwen lora的代码解释，有什么不懂的地方可以提Issue。
+OK，模型下载完毕之后，我们就要准备代码文件。其实全量微调和 `Lora` 微调的代码基本一样，都采用了 `Trainer` 类来进行训练。只不过在全量微调的时候没有加载 `LoraConfig`，那我就直接给出代码，如果对代有什么问题，大家可以先自行探索Qwen lora的代码解释，有什么不懂的地方可以提`Issue`。
 
-需要把代码中的模型地址修改一下，改成自己的模型地。
+需要把代码中的模型地址修改一下，改成自己的模型地址。
 
 ```python
 from datasets import Dataset
@@ -79,11 +79,11 @@ if "__main__" == __name__:
 
 ## DeepSpeed 环境配置
 
-DeepSpeed 是微软开源的一个深度学习训练框架，可以用于分布式训练，同时还可以加速训练，减少显存占用。这里我们使用的是 DeepSpeed 的半精度训练，可以减少显存占用，加快训练速度。
+`DeepSpeed` 是微软开源的一个深度学习训练框架，可以用于分布式训练，同时还可以加速训练，减少显存占用。这里我们使用的是 `DeepSpeed` 的半精度训练，可以减少显存占用，加快训练速度。
 
-首先我们需要安装 DeepSpeed，DeepSpeed 的安装很简单，但如果没有按照如下步骤安装，可能会出现一些问题。
+首先我们需要安装 `DeepSpeed`，`DeepSpeed` 的安装很简单，但如果没有按照如下步骤安装，可能会出现一些问题。
 
-首先创建一个崭新的，干净的conda环境，注意一定要使用当前目录下提供的`environment.yml`文件来创建环境，否则可能会出现一些问题。接着激活环境，安装deepspeed，使用`DS_BUILD_OPS=1`来安装deepspeed，这样会避免后续的很多报错。
+首先创建一个崭新的，干净的conda环境，注意一定要使用当前目录下提供的`environment.yml`文件来创建环境，否则可能会出现一些问题。接着激活环境，安装`deepspeed`，使用`DS_BUILD_OPS=1`来安装`deepspeed`，这样会避免后续的很多报错。
 
 ```bash
 conda env create -n deepspeed -f environment.yml --force
@@ -91,7 +91,7 @@ conda activate deepspeed
 DS_BUILD_OPS=1 pip install deepspeed
 ```
 
-然后就是安装`transformers`等其他依赖，注意不需要再安装torch了，在创建环境的时候`torch`已经安装了。
+然后就是安装`transformers`等其他依赖，注意不需要再安装`torch`了，在创建环境的时候`torch`已经安装了。
 
 ```bash
 pip install modelscope==1.9.5
@@ -104,7 +104,7 @@ pip install tiktoken
 pip install transformers_stream_generator
 ```
 
-注意：本环境是在`aws`服务器上安装并运行的，假如您在安装或者运行过程中遇到其他问题，欢迎提出issue，然后您解决之后，可以顺便提交PR，为项目添砖加瓦。
+注意：本环境是在`aws`服务器上安装并运行的，假如您在安装或者运行过程中遇到其他问题，欢迎提出`issue`，然后您解决之后，可以顺便提交`PR`，为项目添砖加瓦。
 
 ## 模型训练
 
@@ -175,7 +175,7 @@ pip install transformers_stream_generator
     "wall_clock_breakdown": false
 }
 ```
-然后我们来创建运行所需的`bash`文，创建一个train.sh文件，内容如下：
+然后我们来创建运行所需的`bash`文，创建一个`train.sh`文件，内容如下：
 
 ```shell
 num_gpus=4
@@ -196,5 +196,5 @@ deepspeed --num_gpus $num_gpus train.py \
 
 ## 注意： 
     
-- 因为本脚本使用了adam_cpu来加载优化器参数，所以全量微调所需的显存会比较小，但仍然需要使用至少4张24G显存的卡来训练。
-- 如果第一步创建deepspeed环境时候，没有使用`DS_BUILD_OPS=1`，那么可能会出现一些问题，比如`RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!`，这个时候需要重新创建环境，然后再次运行。
+- 因为本脚本使用了`adam_cpu`来加载优化器参数，所以全量微调所需的显存会比较小，但仍然需要使用至少4张24G显存的卡来训练。
+- 如果第一步创建`deepspeed`环境时候，没有使用`DS_BUILD_OPS=1`，那么可能会出现一些问题，比如`RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!`，这个时候需要重新创建环境，然后再次运行。
