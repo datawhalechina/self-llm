@@ -1,4 +1,4 @@
-# ChatGLM3-6B-chat
+# ChatGLM3-6B Transformers部署调用
 
 ## 环境准备
 
@@ -63,7 +63,7 @@ print(response)
 ```
 ### 部署
 
-在终端输入以下命令运行trans.py，即实现ChatGLM3-6B的Transformer部署调用
+在终端输入以下命令运行trans.py，即实现ChatGLM3-6B的Transformers部署调用
 
 ```shell
 cd /root/autodl-tmp
