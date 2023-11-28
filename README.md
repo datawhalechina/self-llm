@@ -59,13 +59,13 @@
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
   - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
-  - [ ] ChatGLM3-6B FastApi 部署调用 @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
   - [ ] ChatGLM3-6B 接入 LangChain 框架 @ Logan Zou
   - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
-  - [ ] ChatGLM3-6B ptuning 微调 @ Hongru0306 ddl=11.26
-  - [ ] ChatGLM3-6B 全量微调 
+  - [ ] ChatGLM3-6B 全量微调 @ 不要葱姜蒜
+
 - [Qwen](https://github.com/QwenLM/Qwen.git)
   - [x] [Qwen-7B-chat Transformers 部署调用](./Qwen/01-Qwen-7B-Chat%20Transformers部署调用.md) @娇娇 ddl=12.2
   - [x] [Qwen-7B-chat FastApi 部署调用](./Qwen/02-Qwen-7B-Chat%20FastApi%20部署调用.md) @娇娇 ddl=12.2
@@ -73,7 +73,7 @@
   - [x] [Qwen-7B-chat Lora 微调](./Qwen/04-Qwen-7B-Chat%20Lora%20微调.md) @ 不要葱姜蒜
   - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @ Hongru0306
   - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
-  
+
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
   - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
   - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
