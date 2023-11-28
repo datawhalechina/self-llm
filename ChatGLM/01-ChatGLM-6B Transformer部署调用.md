@@ -37,25 +37,38 @@ model_dir = snapshot_download('ZhipuAI/chatglm3-6b', cache_dir='/root/autodl-tmp
 
 在/root/autodl-tmp路径下新建trans.py文件并在其中输入以下内容
 ```python
-# AutoModel和AutoTokenizer都是Hugging Face中'transformer'库中的类，在此用来加载预训练模型中的分词器和模型
-from modelscope import AutoTokenizer, AutoModel
+# 使用Hugging Face中'transformer'库中的AutoTokenizer和AutoModelForCausalLM以加载分词器和对话模型
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 # 使用模型下载到的本地路径以加载
 model_dir = '/root/autodl-tmp/ZhipuAI/chatglm3-6b'
 # 分词器的加载，本地加载，trust_remote_code=True设置允许从网络上下载模型权重和相关的代码
 tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
-# 模型加载，本地加载，half()方法将模型的参数转换为半精度浮点数格式，cuda()方法使用GPU加载模型
-model = AutoModel.from_pretrained(model_dir, trust_remote_code=True).half().cuda()
+# 模型加载，本地加载，使用AutoModelForCausalLM类
+model = AutoModelForCausalLM.from_pretrained(model_dir, trust_remote_code=True)
+# 将模型移动到GPU上进行加速（如果有GPU的话）
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
 # 使用模型的评估模式来产生对话
-model = model.eval()
+model.eval()
 # 第一轮对话
-response, history = model.chat(tokenizer, "你好", history=[])
-print(response)
+input_text = "你好"
+history = []
+response = model.generate(tokenizer(input_text, return_tensors="pt").input_ids.to(device), max_length=50)
+response_text = tokenizer.decode(response[0], skip_special_tokens=True)
+print(response_text)
 # 第二轮对话
-response, history = model.chat(tokenizer, "请介绍一下你自己", history=history)
-print(response)
+input_text = "请介绍一下你自己"
+history.append(input_text)
+response = model.generate(tokenizer(" ".join(history), return_tensors="pt").input_ids.to(device), max_length=50)
+response_text = tokenizer.decode(response[0], skip_special_tokens=True)
+print(response_text)
 # 第三轮对话
-response, history = model.chat(tokenizer, "请帮我使用python语言写一段冒泡排序的代码", history=history)
-print(response)
+input_text = "请帮我使用python语言写一段冒泡排序的代码"
+history.append(input_text)
+response = model.generate(tokenizer(" ".join(history), return_tensors="pt").input_ids.to(device), max_length=150)
+response_text = tokenizer.decode(response[0], skip_special_tokens=True)
+print(response_text)
 ```
 ### 部署
 
