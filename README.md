@@ -58,7 +58,7 @@
   - [ ] InternLM-Chat-7B 全量微调
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [ ] ChatGLM3-6B Transformers 部署调用 @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
   - [ ] ChatGLM3-6B FastApi 部署调用 @丁悦 ddl=12.2
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
