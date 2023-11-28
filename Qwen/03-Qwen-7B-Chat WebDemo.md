@@ -9,7 +9,7 @@ pip换源和安装依赖包
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple>`
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple>
 
 pip install modelscope==1.9.5
 pip install "transformers>=4.32.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
