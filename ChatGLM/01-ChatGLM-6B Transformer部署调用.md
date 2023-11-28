@@ -1,4 +1,4 @@
-![image](https://github.com/dingyue772/self_llm/assets/90541495/6a1716bc-0b12-4bd0-9bef-2c03d97df4f4)# ChatGLM3-6B-chat
+# ChatGLM3-6B-chat
 
 ## 环境准备
 
