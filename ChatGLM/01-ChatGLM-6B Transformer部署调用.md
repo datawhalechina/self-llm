@@ -1,4 +1,4 @@
-# ChatGLM3-6B-chat
+![image](https://github.com/dingyue772/self_llm/assets/90541495/6a1716bc-0b12-4bd0-9bef-2c03d97df4f4)# ChatGLM3-6B-chat
 
 ## 环境准备
 
@@ -52,23 +52,14 @@ model.to(device)
 # 使用模型的评估模式来产生对话
 model.eval()
 # 第一轮对话
-input_text = "你好"
-history = []
-response = model.generate(tokenizer(input_text, return_tensors="pt").input_ids.to(device), max_length=50)
-response_text = tokenizer.decode(response[0], skip_special_tokens=True)
-print(response_text)
+response, history = model.chat(tokenizer, "你好", history=[])
+print(response)
 # 第二轮对话
-input_text = "请介绍一下你自己"
-history.append(input_text)
-response = model.generate(tokenizer(" ".join(history), return_tensors="pt").input_ids.to(device), max_length=50)
-response_text = tokenizer.decode(response[0], skip_special_tokens=True)
-print(response_text)
+response, history = model.chat(tokenizer, "请介绍一下你自己", history=history)
+print(response)
 # 第三轮对话
-input_text = "请帮我使用python语言写一段冒泡排序的代码"
-history.append(input_text)
-response = model.generate(tokenizer(" ".join(history), return_tensors="pt").input_ids.to(device), max_length=150)
-response_text = tokenizer.decode(response[0], skip_special_tokens=True)
-print(response_text)
+response, history = model.chat(tokenizer, "请帮我使用python语言写一段冒泡排序的代码", history=history)
+print(response)
 ```
 ### 部署
 
