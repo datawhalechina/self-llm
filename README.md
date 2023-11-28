@@ -106,8 +106,8 @@
 ## 致谢
 
 <div align=center style="margin-top: 30px;">
-  <a href="https://github.com/KMnO4-zx/self_llm/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=KMnO4-zx/self_llm" />
+  <a href="https://github.com/datawhalechina/self-llm/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=datawhalechina/self-llm" />
   </a>
 </div>
 
