@@ -13,10 +13,12 @@
 在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
 
 ```bash
-pip install transformers==4.36.0.dev0
-pip install peft==0.4.0.dev0
+pip install transformers==4.35.2
+pip install peft==0.4.0
 pip install datasets==2.10.1
 pip install accelerate==0.20.3
+pip install tiktoken
+pip install transformers_stream_generator
 ```
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.jsonl)。
@@ -91,11 +93,11 @@ def process_func(example):
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
 ```python
-tokenizer = AutoTokenizer.from_pretrained('./qwen/Qwen-7B-Chat/', use_fast=False, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/qwen/Qwen-7B-Chat', use_fast=False, trust_remote_code=True)
 tokenizer.pad_token_id = tokenizer.eod_id # Qwen中eod_id和pad_token_id是一样的，但需要指定一下
 
 # 模型以半精度形式加载，如果你的显卡比较新的话，可以用torch.bfolat形式加载
-model = AutoModelForCausalLM.from_pretrained('./qwen/Qwen-7B-Chat/', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
+model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/qwen/Qwen-7B-Chat', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
 ```
 
 ## 定义LoraConfig
