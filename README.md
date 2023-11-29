@@ -111,9 +111,3 @@
     <img src="https://contrib.rocks/image?repo=datawhalechina/self-llm" />
   </a>
 </div>
-
-
-<div align=center style="margin-top: 30px;">
-  <a href="https://datawhale.club/#/">Datawhale</a>、
-  <a href="https://www.shlab.org.cn/">上海人工智能实验室</a>
-</div>
