@@ -79,7 +79,17 @@
   - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
   - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
   - [ ] Atom-7B-chat 全量微调 @ Logan Zou
-- 欢迎大家积极提出issue和PR
+
+- [百川智能](https://www.baichuan-ai.com/home)
+  - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い
+  - [ ] baichuan-7B-chat WebDemo @ 三山时春い
+  - [ ] baichuan-7B-chat 接入 LangChain 框架 @ 三山时春い
+  - [ ] baichuan-7B-chat Lora 微调 @ 三山时春い
+
+- [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
+  - [ ] DeepSeek-7B-chat FastApi 部署调用 
+  - [ ] DeepSeek-7B-chat WebDemo
+  - [ ] DeepSeek-7B-chat Lora 微调
 
 ### LangChain
 
