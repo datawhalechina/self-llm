@@ -1,9 +1,13 @@
-# Qwen-7B-Chat FastApi 部署调用
+# DeepSeek-7B-chat FastApi 部署调用
+
+## DeepSpeek 介绍
+
+由70亿个参数组成的高级语言模型 DeepSeek LLM。它是在一个包含2万亿个英文和中文代币的庞大数据集上从零开始训练的。为了促进研究，DeepSeek 已经为研究社区开放了DeepSeek LLM 7B/67B Base 和 DeepSeek LLM 7B/67B Chat。
 
 ## 环境准备
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以）
 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](images/1.png)
+![Alt text](images/image-1.png)
 pip换源和安装依赖包
 ```
 # 升级pip
@@ -30,9 +34,11 @@ pip install transformers_stream_generator==0.0.4
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 from modelscope import GenerationConfig
-model_dir = snapshot_download('qwen/Qwen-7B-Chat', cache_dir='/root/autodl-tmp', revision='v1.1.4')
+model_dir = snapshot_download('deepseek-ai/deepseek-llm-7b-chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
-## 代码准备
+
+## 代码准备 
+
 在/root/autodl-tmp路径下新建api.py文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
 ```
 from fastapi import FastAPI, Request
@@ -65,59 +71,61 @@ async def create_item(request: Request):
     json_post = json.dumps(json_post_raw)  # 将JSON数据转换为字符串
     json_post_list = json.loads(json_post)  # 将字符串转换为Python对象
     prompt = json_post_list.get('prompt')  # 获取请求中的提示
-    history = json_post_list.get('history')  # 获取请求中的历史记录
     max_length = json_post_list.get('max_length')  # 获取请求中的最大长度
-    top_p = json_post_list.get('top_p')  # 获取请求中的top_p参数
-    temperature = json_post_list.get('temperature')  # 获取请求中的温度参数
-    # 调用模型进行对话生成
-    response, history = model.chat(
-        tokenizer,
-        prompt,
-        history=history,
-        max_length=max_length if max_length else 2048,  # 如果未提供最大长度，默认使用2048
-        top_p=top_p if top_p else 0.7,  # 如果未提供top_p参数，默认使用0.7
-        temperature=temperature if temperature else 0.95  # 如果未提供温度参数，默认使用0.95
-    )
+    
+    # 构建 messages      
+    messages = [
+        {"role": "user", "content": prompt}
+    ]
+    # 构建输入     
+    input_tensor = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt")
+    # 通过模型获得输出
+    outputs = model.generate(input_tensor.to(model.device), max_new_tokens=max_length)
+    result = tokenizer.decode(outputs[0][input_tensor.shape[1]:], skip_special_tokens=True)
+    
     now = datetime.datetime.now()  # 获取当前时间
     time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
     # 构建响应JSON
     answer = {
-        "response": response,
-        "history": history,
+        "response": result,
         "status": 200,
         "time": time
     }
     # 构建日志信息
-    log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(response) + '"'
+    log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(result) + '"'
     print(log)  # 打印日志
     torch_gc()  # 执行GPU内存清理
     return answer  # 返回响应
 
 # 主函数入口
 if __name__ == '__main__':
+    mode_name_or_path = '/root/autodl-tmp/deepseek-ai/deepseek-llm-7b-chat'
     # 加载预训练的分词器和模型
-    tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/qwen/Qwen-7B-Chat", trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained("/root/autodl-tmp/qwen/Qwen-7B-Chat", device_map="auto", trust_remote_code=True).eval()
-    model.generation_config = GenerationConfig.from_pretrained("/root/autodl-tmp/qwen/Qwen-7B-Chat", trust_remote_code=True) # 可指定
+    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,  device_map="auto")
+    model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
+    model.generation_config.pad_token_id = model.generation_config.eos_token_id
     model.eval()  # 设置模型为评估模式
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
 ```
+
 ## Api 部署
+
 在终端输入以下命令启动api服务
 ```
 cd /root/autodl-tmp
 python api.py
 ```
 加载完毕后出现如下信息说明成功。
-![Alt text](images/3.png)
+![Alt text](images/image-2.png)
 
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，如下所示：
 ```
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
-     -d '{"prompt": "你好", "history": []}'
+     -d '{"prompt": "你好"}'
 ```
 也可以使用python中的requests库进行调用，如下所示：
 ```
@@ -126,7 +134,7 @@ import json
 
 def get_completion(prompt):
     headers = {'Content-Type': 'application/json'}
-    data = {"prompt": prompt, "history": []}
+    data = {"prompt": prompt}
     response = requests.post(url='http://127.0.0.1:6006', headers=headers, data=json.dumps(data))
     return response.json()['response']
 
@@ -137,11 +145,9 @@ if __name__ == '__main__':
 
 ```json
 {
-  "response":"你好！很高兴为你服务。有什么我可以帮助你的吗？",
-  "history":[["你好","你好！很高兴为你服务。有什么我可以帮助你的吗？"]],
-  "status":200,
-  "time":"2023-11-26 1:14:20"
+    'response': '你好！有什么我可以帮助你的吗？', 
+    'status': 200, 
+    'time': '2023-12-01 17:06:10'
 }
 ```
-![Alt text](images/4.png)
-
+![Alt text](images/image-3.png)

@@ -87,9 +87,10 @@
   - [ ] baichuan-7B-chat Lora 微调 @ 三山时春いddl=12.15
 
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
-  - [ ] DeepSeek-7B-chat FastApi 部署调用 
-  - [ ] DeepSeek-7B-chat WebDemo
-  - [ ] DeepSeek-7B-chat Lora 微调
+  - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat langchain](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) 接入 @ 不要葱姜蒜
+  - [ ] DeepSeek-7B-chat WebDemo @ 不要葱姜蒜
+  - [ ] DeepSeek-7B-chat Lora 微调 @ 不要葱姜蒜
 
 ### LangChain
 
