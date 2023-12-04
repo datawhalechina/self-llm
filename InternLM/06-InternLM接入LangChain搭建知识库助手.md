@@ -165,7 +165,7 @@ def get_text(dir_path):
     docs = []
     # 遍历所有目标文件
     for one_file in tqdm(file_lst):
-        file_type = file.split('.')[-1]
+        file_type = one_file.split('.')[-1]
         if file_type == 'md':
             loader = UnstructuredMarkdownLoader(one_file)
         elif file_type == 'txt':
