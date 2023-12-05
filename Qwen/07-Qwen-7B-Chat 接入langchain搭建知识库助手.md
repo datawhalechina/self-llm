@@ -16,42 +16,45 @@ pip install "transformers>=4.32.0" accelerate tiktoken einops scipy transformers
 pip install -U huggingface_hub
 ```
 ## 模型下载
-使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
+在已完成Qwen-7B-chat部署的基础上，我们还需要还需要安装以下依赖包，请在终端复制粘贴以下命令，并按回车运行：
+```
+pip install langchain==0.0.292
+pip install gradio==4.4.0
+pip install chromadb==0.4.15
+pip install sentence-transformers==2.2.2
+pip install unstructured==0.10.30
+pip install markdown==3.3.7
+```
+同时，我们还需要使用到开源词向量模型 [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
+这里使用huggingface镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载
 
 在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载，模型大小为 15 GB，下载模型大概需要 10~20 分钟
 ```
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-from modelscope import GenerationConfig
-model_dir = snapshot_download('qwen/Qwen-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
-
 import os
 # 设置环境变量
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 # 下载模型
-os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /autodl-tmp/embedding_model')
+os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /root/autodl-tmp/embedding_model')
 ```
-## 代码准备
-首先clone代码，打开autodl平台自带的学术镜像加速。学术镜像加速详细使用请看：https://www.autodl.com/docs/network_turbo/
+## 知识库建设
+我们选用以下两个开源仓库作为知识库来源
+[通义千问-7B-Chat](https://www.modelscope.cn/models/qwen/Qwen-7B-Chat)
+[]
 ```
-source /etc/network_turbo
-```
-然后切换路径, clone代码.
-```
+# 进入到数据库盘
 cd /root/autodl-tmp
-git clone https://github.com/QwenLM/Qwen.git
-```
-切换commit版本，与教程commit版本保持一致，可以让大家更好的复现。
-```
-cd Qwen
-git checkout 981c89b2a95676a4f98e94218c192c095bed5364
-```
-最后取消镜像加速，因为该加速可能对正常网络造成一定影响，避免对后续下载其他模型造成困扰。
-```
+# 打开学术资源加速
+source /etc/network_turbo
+# clone 上述开源仓库
+git clone https://github.com/open-compass/opencompass.git
+git clone https://github.com/InternLM/lmdeploy.git
+git clone https://github.com/InternLM/xtuner.git
+git clone https://github.com/InternLM/InternLM-XComposer.git
+git clone https://github.com/InternLM/lagent.git
+git clone https://github.com/InternLM/InternLM.git
+# 关闭学术资源加速
 unset http_proxy && unset https_proxy
 ```
-修改代码路径，将 /root/autodl-tmp/Qwen/web_demo.py中 13 行的模型更换为本地的/root/autodl-tmp/qwen/Qwen-7B-Chat。
-![Alt text](images/6.png)
 ## demo运行
 执行下面的命令安装依赖包：
 ```
