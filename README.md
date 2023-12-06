@@ -93,9 +93,9 @@
   - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @ 不要葱姜蒜
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
-  - [ ] Qwen-Audio FastApi 部署调用 @ 思州
-  - [ ] Qwen-Audio WebDemo @ 思州
-  - [ ] Qwen-Audio Lora 微调 @ 思州
+  - [ ] Qwen-Audio FastApi 部署调用 @ jjyaoao
+  - [ ] Qwen-Audio WebDemo @ jjyaoao
+  - [ ] Qwen-Audio Lora 微调 @ jjyaoao
 
 ### LangChain
 
