@@ -1,4 +1,4 @@
-# DeepSeek-7B-chat Lora 微调
+# DeepSeek-7B-chat 4bits量化 QLora 微调
 
 ## 概述
 
