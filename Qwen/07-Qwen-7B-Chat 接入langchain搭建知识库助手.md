@@ -5,20 +5,23 @@
 接下来打开刚刚租用服务器的JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行demo。
 
 pip换源和安装依赖包
-```python
+
+```shell
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple>
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.9.5
 pip install "transformers>=4.32.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
 pip install -U huggingface_hub
 ```
 ## 模型下载
+
 在已完成Qwen-7B-chat部署的基础上，我们还需要还需要安装以下依赖包。
 请在终端复制粘贴以下命令，并按回车运行：
-```python
+
+```shell
 pip install langchain==0.0.292
 pip install gradio==4.4.0
 pip install chromadb==0.4.15
@@ -31,20 +34,23 @@ pip install markdown==3.3.7
 这里使用huggingface镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载
 
 在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载，模型大小为 15 GB，下载模型大概需要 10~20 分钟
-```
+
+```python
 import os
 # 设置环境变量
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 # 下载模型
 os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /root/autodl-tmp/embedding_model')
 ```
+
 ## 知识库建设
 我们选用以下两个开源仓库作为知识库来源
 - [qwen-7B-Chat](https://www.modelscope.cn/models/qwen/Qwen-7B-Chat)
 - [QwenLM](https://github.com/QwenLM/Qwen.git)
 
 首先我们需要将上述远程开源仓库 Clone 到本地，可以使用以下命令：
-```python
+
+```shell
 # 进入到数据库盘
 cd /root/autodl-tmp
 # 打开学术资源加速
@@ -54,9 +60,11 @@ git clone https://github.com/QwenLM/Qwen.git
 # 关闭学术资源加速
 unset http_proxy && unset https_proxy
 ```
+
 接着，为语料处理方便，我们将选用上述仓库中所有的 markdown、txt 文件作为示例语料库。注意，也可以选用其中的代码文件加入到知识库中，但需要针对代码文件格式进行额外处理。
 
 我们首先将上述仓库中所有满足条件的文件路径找出来，我们定义一个函数，该函数将递归指定文件夹路径，返回其中所有满足条件（即后缀名为 .md 或者 .txt 的文件）的文件路径：
+
 ```python
 import os 
 def get_files(dir_path):
@@ -73,7 +81,9 @@ def get_files(dir_path):
                 file_list.append(os.path.join(filepath, filename))
     return file_list
 ```
+
 得到所有目标文件路径之后，我们可以使用 LangChain 提供的 FileLoader 对象来加载目标文件，得到由目标文件解析出的纯文本内容。由于不同类型的文件需要对应不同的 FileLoader，我们判断目标文件类型，并针对性调用对应类型的 FileLoader，同时，调用 FileLoader 对象的 load 方法来得到加载之后的纯文本对象：
+
 ```python
 from tqdm import tqdm
 from langchain.document_loaders import UnstructuredFileLoader
@@ -98,9 +108,11 @@ def get_text(dir_path):
         docs.extend(loader.load())
     return docs
 ```
+
 使用上文函数，我们得到的 docs 为一个纯文本对象对应的列表。得到该列表之后，我们就可以将它引入到 LangChain 框架中构建向量数据库。由纯文本对象构建向量数据库，我们需要先对文本进行分块，接着对文本块进行向量化。
 
 LangChain 提供了多种文本分块工具，此处我们使用字符串递归分割器，并选择分块大小为 500，块重叠长度为 150：
+
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
@@ -131,7 +143,9 @@ vectordb = Chroma.from_documents(
 # 将加载的向量数据库持久化到磁盘上
 vectordb.persist()
 ```
+
 将上述代码整合在一起为知识库搭建的脚本：
+
 ```python
 # 首先导入所需第三方库
 from langchain.document_loaders import UnstructuredFileLoader
@@ -208,11 +222,15 @@ vectordb = Chroma.from_documents(
 # 将加载的向量数据库持久化到磁盘上
 vectordb.persist()
 ```
+
 运行上述脚本，即可在本地构建已持久化的向量数据库，后续直接导入该数据库即可，无需重复构建。
+
 ## QwenLM 接入LangChain
+
 为便捷构建 LLM 应用，我们需要基于本地部署的 QwenLM，自定义一个 LLM 类，将 QwenLM 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 
 基于本地部署的 QwenLM 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+
 ```python
 from langchain.llms.base import LLM
 from typing import Any, List, Optional
@@ -248,13 +266,17 @@ class QwenLM(LLM):
     def _llm_type(self) -> str:
         return "QwenLM"
 ```
+
 在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 InternLM 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 chat 方法，从而实现对模型的调用并返回调用结果。
 
 在整体项目中，我们将上述代码封装为 LLM.py，后续将直接从该文件中引入自定义的 LLM 类。
+
 ## 构建检索问答链
+
 LangChain 通过提供检索问答链对象来实现对于 RAG 全流程的封装。即我们可以调用一个 LangChain 提供的 RetrievalQA 对象，通过初始化时填入已构建的数据库和自定义 LLM 作为参数，来简便地完成检索增强问答的全流程，LangChain 会自动完成基于用户提问进行检索、获取相关文档、拼接为合适的 Prompt 并交给 LLM 问答的全部流程。
 
 首先我们需要将上文构建的向量数据库导入进来，我们可以直接通过 Chroma 以及上文定义的词向量模型来加载已构建的数据库：
+
 ```python
 from langchain.vectorstores import Chroma
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
@@ -272,15 +294,18 @@ vectordb = Chroma(
     embedding_function=embeddings
 )
 ```
+
 上述代码得到的 vectordb 对象即为我们已构建的向量数据库对象，该对象可以针对用户的 query 进行语义向量检索，得到与用户提问相关的知识片段。
 
 接着，我们实例化一个基于 QwenLM 自定义的 LLM 对象：
+
 ```python
 from LLM import QwenLM
 llm = QwenLM(model_path = "/root/autodl-tmp/qwen")
 llm.predict("你是谁")
 ```
 构建检索问答链，还需要构建一个 Prompt Template，该 Template 其实基于一个带变量的字符串，在检索之后，LangChain 会将检索到的相关文档片段填入到 Template 的变量中，从而实现带知识的 Prompt 构建。我们可以基于 LangChain 的 Template 基类来实例化这样一个 Template 对象：
+
 ```python
 from langchain.prompts import PromptTemplate
 
@@ -293,8 +318,10 @@ template = """使用以下上下文来回答最后的问题。如果你不知道
 # 调用 LangChain 的方法来实例化一个 Template 对象，该对象包含了 context 和 question 两个变量，在实际调用时，这两个变量会被检索到的文档片段和用户提问填充
 QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],template=template)
 ```
+
 最后，可以调用 LangChain 提供的检索问答链构造函数，基于我们的自定义 LLM、Prompt Template 和向量知识库来构建一个基于 InternLM 的检索问答链：
-```
+
+```python
 from langchain.chains import RetrievalQA
 
 qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),return_source_documents=True,chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
@@ -311,12 +338,16 @@ result_2 = llm(question)
 print("大模型回答 question 的结果：")
 print(result_2)
 ```
+
 ![Alt text](images/7.png)
 可以看到，使用检索问答链生成的答案更接近知识库里的内容。
+
 ## 部署WebDemo
+
 在完成上述核心功能后，我们可以基于 Gradio 框架将其部署到 Web 网页，从而搭建一个小型 Demo，便于测试与使用。
 
 我们首先将上文的代码内容封装为一个返回构建的检索问答链对象的函数，并在启动 Gradio 的第一时间调用该函数得到检索问答链对象，后续直接使用该对象进行问答对话，从而避免重复加载模型：
+
 ```python
 # 导入必要的库
 import gradio as gr
@@ -361,7 +392,9 @@ def load_chain():
     
     return qa_chain
 ```
+
 接着我们定义一个类，该类负责加载并存储检索问答链，并响应 Web 界面里调用检索问答链进行回答的动作：
+
 ```python
 class Model_center():
     """
@@ -386,7 +419,9 @@ class Model_center():
     def clear_history(self):
         self.chain.clear_history()
 ```
+
 然后我们只需按照 Gradio 的框架使用方法，实例化一个 Web 界面并将点击动作绑定到上述类的回答方法即可：
+
 ```python
 import gradio as gr
 model_center = Model_center()
@@ -431,5 +466,7 @@ gr.close_all()
 # 直接启动
 demo.launch()
 ```
+
 通过将上述代码封装为 run_gradio.py 脚本，直接通过在终端运行命令 python run_gradio.py ，即可在本地启动知识库助手的 Web Demo，默认会在 7860 端口运行，使用类似于部署的方式将服务器端口映射到本地端口即可访问:
+
 ![Alt text](images/8.png)
