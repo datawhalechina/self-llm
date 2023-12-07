@@ -53,9 +53,7 @@
   - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
   - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/05-浦语灵笔图文理解&创作.md) @不要葱姜蒜
   - [x] [InternLM-Chat-7B 接入 LangChain 框架](InternLM/06-InternLM接入LangChain搭建知识库助手.md) @ Logan Zou
-  - [ ] InternLM-Chat-7B Lora 微调 @ 柯辰 ddl=12.10
-  - [ ] InternLM-Chat-7B ptuning 微调
-  - [ ] InternLM-Chat-7B 全量微调
+
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
   - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
@@ -91,18 +89,12 @@
   - [x] [DeepSeek-7B-chat langchain 接入](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @ 不要葱姜蒜
   - [x] [DeepSeek-7B-chat WebDemo](./DeepSeek/03-DeepSeek-7B-chat%20WebDemo.md) @ 不要葱姜蒜
   - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @ 不要葱姜蒜
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
-  - [ ] Qwen-Audio FastApi 部署调用 @ jjyaoao
-  - [ ] Qwen-Audio WebDemo @ jjyaoao
+  - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
+  - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
   - [ ] Qwen-Audio Lora 微调 @ jjyaoao
-
-### LangChain
-
-- [ ] LangChain 基于开源大模型构建问答链 @ Logan Zou
-- [ ] LangChain 使用开源大模型构建 embedding @ Logan Zou
-- [ ] 基于本地大模型构建应用 @ Logan Zou
-- 欢迎大家提出issue和PR
 
 ### 通用环境配置
 
