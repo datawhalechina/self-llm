@@ -33,7 +33,7 @@ pip install markdown==3.3.7
 
 这里使用huggingface镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载，模型大小为 15 GB，下载模型大概需要 10~20 分钟
+在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载。
 
 ```python
 import os
@@ -450,8 +450,7 @@ with block as demo:
                     components=[chatbot], value="Clear console")
                 
         # 设置按钮的点击事件。当点击时，调用上面定义的 qa_chain_self_answer 函数，并传入用户的消息和聊天历史记录，然后更新文本框和聊天机器人组件。
-        db_wo_his_btn.click(model_center.qa_chain_self_answer, inputs=[
-                            msg, chatbot], outputs=[msg, chatbot])
+        db_wo_his_btn.click(model_center.qa_chain_self_answer, inputs=[msg, chatbot], outputs=[msg, chatbot])
         
         # 点击后清空后端存储的聊天记录
         clear.click(model_center.clear_history)
