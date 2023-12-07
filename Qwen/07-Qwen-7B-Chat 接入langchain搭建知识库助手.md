@@ -299,7 +299,7 @@ from langchain.chains import RetrievalQA
 qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),return_source_documents=True,chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
 ```
 得到的 qa_chain 对象即可以实现我们的核心功能，即基于 QwenLM 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：
-# 检索问答链回答效果
+```python
 question = "什么是InternLM"
 result = qa_chain({"query": question})
 print("检索问答链回答 question 的结果：")
@@ -309,3 +309,126 @@ print(result["result"])
 result_2 = llm(question)
 print("大模型回答 question 的结果：")
 print(result_2)
+```
+![Alt text]()
+可以看到，使用检索问答链生成的答案更接近知识库里的内容。
+## 部署WebDemo
+在完成上述核心功能后，我们可以基于 Gradio 框架将其部署到 Web 网页，从而搭建一个小型 Demo，便于测试与使用。
+
+我们首先将上文的代码内容封装为一个返回构建的检索问答链对象的函数，并在启动 Gradio 的第一时间调用该函数得到检索问答链对象，后续直接使用该对象进行问答对话，从而避免重复加载模型：
+```python
+# 导入必要的库
+import gradio as gr
+from langchain.vectorstores import Chroma
+from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+import os
+from LLM import QwenLM
+from langchain.prompts import PromptTemplate
+
+def load_chain():
+    # 加载问答链
+    # 定义 Embeddings
+    embeddings = HuggingFaceEmbeddings(model_name="/root/autodl-tmp/embedding_model")
+
+    # 向量数据库持久化路径
+    persist_directory = 'data_base/vector_db/chroma'
+
+    # 加载数据库
+    vectordb = Chroma(
+        persist_directory=persist_directory,  # 允许我们将persist_directory目录保存到磁盘上
+        embedding_function=embeddings
+    )
+
+    llm = QwenLM(model_path = "/root/autodl-tmp/qwen")
+
+    template = """使用以下上下文来回答最后的问题。如果你不知道答案，就说你不知道，不要试图编造答
+    案。尽量使答案简明扼要。总是在回答的最后说“谢谢你的提问！”。
+    {context}
+    问题: {question}
+    有用的回答:"""
+
+    QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],
+                                    template=template)
+
+    # 运行 chain
+    from langchain.chains import RetrievalQA
+
+    qa_chain = RetrievalQA.from_chain_type(llm,
+                                        retriever=vectordb.as_retriever(),
+                                        return_source_documents=True,
+                                        chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
+    
+    return qa_chain
+```
+接着我们定义一个类，该类负责加载并存储检索问答链，并响应 Web 界面里调用检索问答链进行回答的动作：
+```python
+class Model_center():
+    """
+    存储问答 Chain 的对象 
+    """
+    def __init__(self):
+        self.chain = load_chain()
+
+    def qa_chain_self_answer(self, question: str, chat_history: list = []):
+        """
+        调用不带历史记录的问答链进行回答
+        """
+        if question == None or len(question) < 1:
+            return "", chat_history
+        try:
+            chat_history.append(
+                (question, self.chain({"query": question})["result"]))
+            return "", chat_history
+        except Exception as e:
+            return e, chat_history
+
+    def clear_history(self):
+        self.chain.clear_history()
+```
+然后我们只需按照 Gradio 的框架使用方法，实例化一个 Web 界面并将点击动作绑定到上述类的回答方法即可：
+```python
+import gradio as gr
+model_center = Model_center()
+
+block = gr.Blocks()
+with block as demo:
+    with gr.Row(equal_height=True):   
+        with gr.Column(scale=15):
+            gr.Markdown("""<h1><center>QwenLM</center></h1>
+                <center>通义千问</center>
+                """)
+        # gr.Image(value=LOGO_PATH, scale=1, min_width=10,show_label=False, show_download_button=False)
+
+    with gr.Row():
+        with gr.Column(scale=4):
+            chatbot = gr.Chatbot(height=450, show_copy_button=True)
+            # 创建一个文本框组件，用于输入 prompt。
+            msg = gr.Textbox(label="Prompt/问题")
+
+            with gr.Row():
+                # 创建提交按钮。
+                db_wo_his_btn = gr.Button("Chat")
+            with gr.Row():
+                # 创建一个清除按钮，用于清除聊天机器人组件的内容。
+                clear = gr.ClearButton(
+                    components=[chatbot], value="Clear console")
+                
+        # 设置按钮的点击事件。当点击时，调用上面定义的 qa_chain_self_answer 函数，并传入用户的消息和聊天历史记录，然后更新文本框和聊天机器人组件。
+        db_wo_his_btn.click(model_center.qa_chain_self_answer, inputs=[
+                            msg, chatbot], outputs=[msg, chatbot])
+        
+        # 点击后清空后端存储的聊天记录
+        clear.click(model_center.clear_history)
+    gr.Markdown("""提醒：<br>
+    1. 初始化数据库时间可能较长，请耐心等待。
+    2. 使用中如果出现异常，将会在文本输入框进行展示，请不要惊慌。 <br>
+    """)
+# threads to consume the request
+gr.close_all()
+# 启动新的 Gradio 应用，设置分享功能为 True，并使用环境变量 PORT1 指定服务器端口。
+# demo.launch(share=True, server_port=int(os.environ['PORT1']))
+# 直接启动
+demo.launch()
+```
+通过将上述代码封装为 run_gradio.py 脚本，直接通过在终端运行命令 python run_gradio.py ，即可在本地启动知识库助手的 Web Demo，默认会在 7860 端口运行，使用类似于部署的方式将服务器端口映射到本地端口即可访问:
+![Alt text]()
