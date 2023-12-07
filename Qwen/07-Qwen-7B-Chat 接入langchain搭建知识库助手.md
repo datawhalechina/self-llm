@@ -279,3 +279,33 @@ from LLM import QwenLM
 llm = QwenLM(model_path = "/root/autodl-tmp/qwen")
 llm.predict("你是谁")
 ```
+构建检索问答链，还需要构建一个 Prompt Template，该 Template 其实基于一个带变量的字符串，在检索之后，LangChain 会将检索到的相关文档片段填入到 Template 的变量中，从而实现带知识的 Prompt 构建。我们可以基于 LangChain 的 Template 基类来实例化这样一个 Template 对象：
+```python
+from langchain.prompts import PromptTemplate
+
+# 我们所构造的 Prompt 模板
+template = """使用以下上下文来回答最后的问题。如果你不知道答案，就说你不知道，不要试图编造答案。尽量使答案简明扼要。总是在回答的最后说“谢谢你的提问！”。
+{context}
+问题: {question}
+有用的回答:"""
+
+# 调用 LangChain 的方法来实例化一个 Template 对象，该对象包含了 context 和 question 两个变量，在实际调用时，这两个变量会被检索到的文档片段和用户提问填充
+QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],template=template)
+```
+最后，可以调用 LangChain 提供的检索问答链构造函数，基于我们的自定义 LLM、Prompt Template 和向量知识库来构建一个基于 InternLM 的检索问答链：
+```
+from langchain.chains import RetrievalQA
+
+qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),return_source_documents=True,chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
+```
+得到的 qa_chain 对象即可以实现我们的核心功能，即基于 QwenLM 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：
+# 检索问答链回答效果
+question = "什么是InternLM"
+result = qa_chain({"query": question})
+print("检索问答链回答 question 的结果：")
+print(result["result"])
+
+# 仅 LLM 回答效果
+result_2 = llm(question)
+print("大模型回答 question 的结果：")
+print(result_2)
