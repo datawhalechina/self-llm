@@ -42,6 +42,7 @@ os.system('huggingface-cli download --resume-download sentence-transformers/para
 我们选用以下两个开源仓库作为知识库来源
 - [qwen-7B-Chat](https://www.modelscope.cn/models/qwen/Qwen-7B-Chat)
 - [QwenLM](https://github.com/QwenLM/Qwen.git)
+
 首先我们需要将上述远程开源仓库 Clone 到本地，可以使用以下命令：
 ```python
 # 进入到数据库盘
@@ -208,7 +209,7 @@ vectordb = Chroma.from_documents(
 vectordb.persist()
 ```
 运行上述脚本，即可在本地构建已持久化的向量数据库，后续直接导入该数据库即可，无需重复构建。
-## QwenLM 接入 LangChain
+## QwenLM 接入LangChain
 为便捷构建 LLM 应用，我们需要基于本地部署的 QwenLM，自定义一个 LLM 类，将 QwenLM 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 
 基于本地部署的 QwenLM 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
@@ -300,7 +301,7 @@ qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),ret
 ```
 得到的 qa_chain 对象即可以实现我们的核心功能，即基于 QwenLM 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：
 ```python
-question = "什么是InternLM"
+question = "什么是QwenLM"
 result = qa_chain({"query": question})
 print("检索问答链回答 question 的结果：")
 print(result["result"])
@@ -310,7 +311,7 @@ result_2 = llm(question)
 print("大模型回答 question 的结果：")
 print(result_2)
 ```
-![Alt text]()
+![Alt text](images/7.png)
 可以看到，使用检索问答链生成的答案更接近知识库里的内容。
 ## 部署WebDemo
 在完成上述核心功能后，我们可以基于 Gradio 框架将其部署到 Web 网页，从而搭建一个小型 Demo，便于测试与使用。
@@ -431,4 +432,4 @@ gr.close_all()
 demo.launch()
 ```
 通过将上述代码封装为 run_gradio.py 脚本，直接通过在终端运行命令 python run_gradio.py ，即可在本地启动知识库助手的 Web Demo，默认会在 7860 端口运行，使用类似于部署的方式将服务器端口映射到本地端口即可访问:
-![Alt text]()
+![Alt text](images/8.png)
