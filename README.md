@@ -73,6 +73,8 @@
   - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
   - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @娇娇
   - [ ] Qwen-7B-chat 低精度训练 @ Hongru0306
+  - [ ] Qwen-1.8B-chat Lora微调 @Joe ddl=12.12
+  - [ ] Qwen-7B-chat 接入 LangChain 框架 @Joe ddl=12.12
 
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
   - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
