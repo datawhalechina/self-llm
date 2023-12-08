@@ -79,8 +79,9 @@
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
   - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
   - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
+  - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @ jjyaoao
   - [ ] Atom-7B-chat 全量微调 @ Logan Zou
-
+  
 - [百川智能](https://www.baichuan-ai.com/home)
   - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い ddl=12.15
   - [ ] baichuan-7B-chat WebDemo @ 三山时春いddl=12.15
