@@ -101,7 +101,7 @@
   - [ ] Yi-6B-chat FastApi 部署调用
   - [ ] Yi-6B-chat langchain接入
   - [ ] Yi-6B-chat WebDemo
-  - [ ] Yi-6B-chat Lora 微调
+  - [ ] Yi-6B-chat Lora 微调 @ 娇娇 ddl=12.15
 
 
 ### 通用环境配置
