@@ -97,6 +97,13 @@
   - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
   - [ ] Qwen-Audio Lora 微调 @ jjyaoao
 
+- [Yi 零一万物](https://github.com/01-ai/Yi.git)
+  - [ ] Yi-6B-chat FastApi 部署调用
+  - [ ] Yi-6B-chat langchain接入
+  - [ ] Yi-6B-chat WebDemo
+  - [ ] Yi-6B-chat Lora 微调
+
+
 ### 通用环境配置
 
 - [x] pip、conda 换源 @不要葱姜蒜
