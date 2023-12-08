@@ -72,7 +72,9 @@
   - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @ Hongru0306
   - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
   - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @娇娇
-  - [ ] Qwen-7B-chat 低精度训练 @ Hongru0306
+  - [ ] Qwen-7B-chat 低精度训练 @ Hongru0306 ddl=12.11
+  - [ ] Qwen-1_8B-chat CPU 部署 @ 散步
+
 
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
   - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
@@ -100,7 +102,7 @@
 - [Yi 零一万物](https://github.com/01-ai/Yi.git)
   - [ ] Yi-6B-chat FastApi 部署调用
   - [ ] Yi-6B-chat langchain接入
-  - [ ] Yi-6B-chat WebDemo
+  - [ ] Yi-6B-chat WebDemo @ Hongru0306 ddl=12.15
   - [ ] Yi-6B-chat Lora 微调 @ 娇娇 ddl=12.15
 
 
