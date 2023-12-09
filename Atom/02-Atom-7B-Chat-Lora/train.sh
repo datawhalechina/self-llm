@@ -1,0 +1,14 @@
+python train.py \
+    --dataset_path ../../dataset/huanhuan.jsonl \
+    --model_path /root/autodl-tmp/data/model/Atom \
+    --lora_rank 8 \
+    --per_device_train_batch_size 16 \
+    --gradient_accumulation_steps 1 \
+    --max_steps 120000 \
+    --save_steps 40000 \
+    --save_total_limit 3 \
+    --learning_rate 1e-4 \
+    --fp16 \
+    --remove_unused_columns false \
+    --logging_steps 10 \
+    --output_dir ../../output

@@ -47,44 +47,65 @@
 ### 已支持模型
 
 - [InternLM](https://github.com/InternLM/InternLM.git)
-  - [ ] InternLM-Chat-7B Transformers 部署调用 @小罗 ddl=11.26
+  - [x] [InternLM-Chat-7B Transformers 部署调用](./InternLM/01-InternLM-Chat-7B%20Transformers%20部署调用.md) @小罗 ddl=11.26
   - [x] [InternLM-Chat-7B FastApi 部署调用](InternLM/02-internLM-Chat-7B%20FastApi.md) @不要葱姜蒜
   - [x] [InternLM-Chat-7B WebDemo](InternLM/03-InternLM-Chat-7B.md) @不要葱姜蒜
   - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
   - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/05-浦语灵笔图文理解&创作.md) @不要葱姜蒜
-  - [ ] InternLM-Chat-7B 接入 LangChain 框架 @ Logan Zou
-  - [ ] InternLM-Chat-7B Lora 微调 @ 柯辰 ddl=12.10
-  - [ ] InternLM-Chat-7B ptuning 微调
-  - [ ] InternLM-Chat-7B 全量微调
+  - [x] [InternLM-Chat-7B 接入 LangChain 框架](InternLM/06-InternLM接入LangChain搭建知识库助手.md) @ Logan Zou
+
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [ ] ChatGLM3-6B Transformers 部署调用 @丁悦 ddl=12.2
-  - [ ] ChatGLM3-6B FastApi 部署调用 @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
   - [ ] ChatGLM3-6B 接入 LangChain 框架 @ Logan Zou
-  - [ ] ChatGLM3-6B Lora 微调 @ Hongru0306 ddl=11.26
-  - [ ] ChatGLM3-6B ptuning 微调 @ Hongru0306 ddl=11.26
-  - [ ] ChatGLM3-6B 全量微调 
+  - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
+  - [ ] ChatGLM3-6B 全量微调 @ 不要葱姜蒜
+
 - [Qwen](https://github.com/QwenLM/Qwen.git)
-  - [ ] Qwen-7B-chat Transformers 部署调用 @娇娇 ddl=12.2
-  - [ ] Qwen-7B-chat FastApi 部署调用 @娇娇 ddl=12.2
-  - [ ] Qwen-7B-chat WebDemo @娇娇 ddl=12.2
-  - [ ] Qwen-7B-chat Lora 微调
-  - [ ] Qwen-7B-chat ptuning 微调
-  - [ ] Qwen-7B-chat 全量微调
-- llama2
-  - [ ] llama2-7B-chinese-chat WebDemo @凯立 ddl=11.24
-  - [ ] llama2-7B-chinese-chat Lora 微调 @ Logan Zou
-  - [ ] llama2-7B-chinese-chat 全量微调 @ Logan Zou
-- 欢迎大家积极提出issue和PR
+  - [x] [Qwen-7B-chat Transformers 部署调用](./Qwen/01-Qwen-7B-Chat%20Transformers部署调用.md) @娇娇 ddl=12.2
+  - [x] [Qwen-7B-chat FastApi 部署调用](./Qwen/02-Qwen-7B-Chat%20FastApi%20部署调用.md) @娇娇 ddl=12.2
+  - [x] [Qwen-7B-chat WebDemo](./Qwen/03-Qwen-7B-Chat%20WebDemo.md) @娇娇 ddl=12.2
+  - [x] [Qwen-7B-chat Lora 微调](./Qwen/04-Qwen-7B-Chat%20Lora%20微调.md) @ 不要葱姜蒜
+  - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @ Hongru0306
+  - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
+  - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @娇娇
+  - [ ] Qwen-7B-chat 低精度训练 @ Hongru0306 ddl=12.11
+  - [ ] Qwen-1_8B-chat CPU 部署 @ 散步
 
-### LangChain
 
-- [ ] LangChain 基于开源大模型构建问答链 @ Logan Zou
-- [ ] LangChain 使用开源大模型构建 embedding @ Logan Zou
-- [ ] 基于本地大模型构建应用 @ Logan Zou
-- 欢迎大家提出issue和PR
+- [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
+  - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
+  - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
+  - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @ jjyaoao
+  - [ ] Atom-7B-chat 全量微调 @ Logan Zou
+  
+- [百川智能](https://www.baichuan-ai.com/home)
+  - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い ddl=12.15
+  - [ ] baichuan-7B-chat WebDemo @ 三山时春いddl=12.15
+  - [ ] baichuan-7B-chat 接入 LangChain 框架 @ 三山时春いddl=12.15
+  - [ ] baichuan-7B-chat Lora 微调 @ 三山时春いddl=12.15
+
+- [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
+  - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat langchain 接入](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat WebDemo](./DeepSeek/03-DeepSeek-7B-chat%20WebDemo.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @ 不要葱姜蒜
+
+- [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
+  - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
+  - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
+  - [ ] Qwen-Audio Lora 微调 @ jjyaoao
+
+- [Yi 零一万物](https://github.com/01-ai/Yi.git)
+  - [ ] Yi-6B-chat FastApi 部署调用 @ Joe
+  - [ ] Yi-6B-chat langchain接入 @ Joe
+  - [ ] Yi-6B-chat WebDemo @ Hongru0306 ddl=12.15
+  - [ ] Yi-6B-chat Lora 微调 @ 娇娇 ddl=12.15
+
 
 ### 通用环境配置
 
@@ -96,7 +117,7 @@
   - [x] hugging face 镜像下载 @不要葱姜蒜
   - [x] modelscope @不要葱姜蒜
   - [x] git-lfs @不要葱姜蒜
-  - [ ] Openxlab
+  - [x] Openxlab
 - Issue && PR
   - [x] Issue 提交 @ Hongru0306
   - [x] PR 提交 @ Hongru0306
@@ -105,12 +126,7 @@
 ## 致谢
 
 <div align=center style="margin-top: 30px;">
-  <a href="https://github.com/KMnO4-zx/self_llm/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=KMnO4-zx/self_llm" />
+  <a href="https://github.com/datawhalechina/self-llm/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=datawhalechina/self-llm" />
   </a>
-</div>
-
-<div align=center style="margin-top: 30px;">
-  <a href="https://datawhale.club/#/">Datawhale</a>、
-  <a href="https://www.shlab.org.cn/">上海人工智能实验室</a>
 </div>
