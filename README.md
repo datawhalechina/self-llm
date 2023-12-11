@@ -71,7 +71,7 @@
   - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @ Hongru0306
   - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
   - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @娇娇
-  - [ ] Qwen-7B-chat 低精度训练 @ Hongru0306 ddl=12.11
+  - [x] [Qwen-7B-chat 低精度训练](./Qwen/08-Qwen-7B-Chat%20Lora%20低精度微调.md) @ Hongru0306 ddl=12.11
   - [ ] Qwen-1_8B-chat CPU 部署 @ 散步
 
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
