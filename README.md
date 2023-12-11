@@ -131,7 +131,7 @@
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale-鲸英助教）
 - [小罗](https://github.com/lyj11111111) （Datawhale-鲸英助教）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [王凯立](https://github.com/Kailigithub) （Datawhale-鲸英助教）
+- [Kailigithub](https://github.com/Kailigithub) （Datawhale-鲸英助教）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [李柯辰]() （Datawhale成员）
 - [散步]() （Datawhale成员）
