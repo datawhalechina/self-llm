@@ -74,19 +74,6 @@
   - [ ] Qwen-7B-chat 低精度训练 @ Hongru0306 ddl=12.11
   - [ ] Qwen-1_8B-chat CPU 部署 @ 散步
 
-
-- [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
-  - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
-  - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
-  - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @ jjyaoao
-  - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @ Logan Zou
-  
-- [百川智能](https://www.baichuan-ai.com/home)
-  - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い ddl=12.15
-  - [ ] baichuan-7B-chat WebDemo @ 三山时春いddl=12.15
-  - [ ] baichuan-7B-chat 接入 LangChain 框架 @ 三山时春いddl=12.15
-  - [ ] baichuan-7B-chat Lora 微调 @ 三山时春いddl=12.15
-
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
   - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
   - [x] [DeepSeek-7B-chat langchain 接入](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @ 不要葱姜蒜
@@ -94,10 +81,22 @@
   - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @ 不要葱姜蒜
   - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @ 不要葱姜蒜
 
+- [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
+  - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @凯立 ddl=11.24
+  - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
+  - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @ jjyaoao
+  - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @ Logan Zou
+
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
   - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
   - [ ] Qwen-Audio Lora 微调 @ jjyaoao
+
+- [百川智能](https://www.baichuan-ai.com/home)
+  - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い ddl=12.15
+  - [ ] baichuan-7B-chat WebDemo @ 三山时春いddl=12.15
+  - [ ] baichuan-7B-chat 接入 LangChain 框架 @ 三山时春いddl=12.15
+  - [ ] baichuan-7B-chat Lora 微调 @ 三山时春いddl=12.15
 
 - [Yi 零一万物](https://github.com/01-ai/Yi.git)
   - [ ] Yi-6B-chat FastApi 部署调用 @ Joe
@@ -123,6 +122,27 @@
   - [x] fork更新 @ Hongru0306
 
 ## 致谢
+
+### 核心贡献者
+
+- [宋志学-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-河南理工大学）
+- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
+- [肖鸿儒](https://github.com/Hongru0306) （Datawhale意向成员-同济大学）
+- [刘娇娇](https://github.com/Aphasia0515) （Datawhale-鲸英助教）
+- [小罗](https://github.com/lyj11111111) （Datawhale-鲸英助教）
+- [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
+- [王凯立](https://github.com/Kailigithub) （Datawhale-鲸英助教）
+- [陈思州](https://github.com/jjyaoao) （Datawhale成员）
+- [李柯辰]() （Datawhale成员）
+- [散步]() （Datawhale成员）
+- [惠佳豪]() （Datawhale-宣传大使）
+
+### 其他
+
+- 特别感谢[@Sm1les](https://github.com/Sm1les)对本项目的帮助与支持
+- 如果有任何想法可以联系我们 DataWhale 也欢迎大家多多提出 issue
+- 特别感谢以下为教程做出贡献的同学！
+
 
 <div align=center style="margin-top: 30px;">
   <a href="https://github.com/datawhalechina/self-llm/graphs/contributors">
