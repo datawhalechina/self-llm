@@ -102,7 +102,7 @@
   - [ ] Yi-6B-chat FastApi 部署调用 @ Joe ddl=12.15
   - [ ] Yi-6B-chat langchain接入 @ Joe ddl=12.15
   - [ ] Yi-6B-chat WebDemo @ Hongru0306 ddl=12.15
-  - [ ] Yi-6B-chat Lora 微调 @ 娇娇 ddl=12.15
+  - [x] [Yi-6B-chat Lora 微调](./Yi/04-Yi-6B-Chat%20Lora%20微调.md) @ 娇娇 ddl=12.15
 
 
 ### 通用环境配置
@@ -140,6 +140,7 @@
 ### 其他
 
 - 特别感谢[@Sm1les](https://github.com/Sm1les)对本项目的帮助与支持
+- 部分lora代码和讲解参考仓库：https://github.com/zyds/transformers-code.git
 - 如果有任何想法可以联系我们 DataWhale 也欢迎大家多多提出 issue
 - 特别感谢以下为教程做出贡献的同学！
 
