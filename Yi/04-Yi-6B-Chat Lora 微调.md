@@ -2,9 +2,9 @@
 
 ## 概述
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 Yi-6B-Chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们介绍如何基于 transformers、peft 等框架，对 Yi-6B-Chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-本节所讲述的代码脚本在同级目录 [04-Qwen-7B-Chat Lora 微调](./04-Qwen-7B-Chat%20Lora%20微调.py) 下，运行该脚本来执行微调过程，但注意，本文代码未使用分布式框架，微调 Yi-6B-Chat 模型至少需要 20G 及以上的显存，且需要修改脚本文件中的模型路径和数据集路径。
+本节所讲述的代码脚本在同级目录 [04-Yi-6B-Chat Lora 微调](./04-Yi-6B-Chat%20Lora%20微调.py) 下，运行该脚本来执行微调过程，但注意，本文代码未使用分布式框架，微调 Yi-6B-Chat 模型至少需要 20G 及以上的显存，且需要修改脚本文件中的模型路径和数据集路径。
 
 ## 环境配置
 
@@ -58,7 +58,7 @@ def process_func(example):
     instruction = tokenizer("\n".join(["<|im_start|>system", "现在你要扮演皇帝身边的女人--甄嬛.<|im_end|>" + "\n<|im_start|>user\n" + example["instruction"] + example["input"] + "<|im_end|>\n"]).strip(), add_special_tokens=False)  # add_special_tokens 不在开头加 special_tokens
     response = tokenizer("<|im_start|>assistant\n" + example["output"] + "<|im_end|>\n", add_special_tokens=False)
     input_ids = instruction["input_ids"] + response["input_ids"] + [tokenizer.pad_token_id]
-    attention_mask = instruction["attention_mask"] + response["attention_mask"] + [1]  # 因为eos token咱们也是要关注的所以 补充为1
+    attention_mask = instruction["attention_mask"] + response["attention_mask"] + [1]  # 因为eos token咱们也是要关注的，所以补充为1
     labels = [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.pad_token_id]  # Yi-6B的构造就是这样的
     if len(input_ids) > MAX_LENGTH:  # 做一个截断
         input_ids = input_ids[:MAX_LENGTH]
@@ -98,11 +98,11 @@ tokenized_id = ds.map(process_func, remove_columns=ds.column_names)
 
 ```python
 print(tokenizer.decode(tokenized_id[0]['input_ids']))
-```
-
-```python
 print(tokenizer.decode(list(filter(lambda x: x != -100, tokenized_id[0]["labels"]))))
 ```
+
+输出结果如下图所示：
+![Alt text](images/1.png)
 
 ## 加载tokenizer和半精度模型
 ```python
@@ -182,6 +182,9 @@ trainer = Trainer(
 trainer.train()
 ```
 
+模型训练完成后，会输出如下图所示的信息：
+![Alt text](images/2.png)
+
 ## 模型推理
 下载好的模型被保存在了 ./output/Yi-6B 目录下，如果想要从头加载微调好的模型，需要执行下面的代码
 
@@ -199,7 +202,7 @@ model = PeftModel.from_pretrained(model, peft_model_id)
 
 ```python
 model.eval()
-input = tokenizer("<|im_start|>system\n现在你要扮演皇帝身边的女人--甄嬛.<|im_end|>\n<|im_start|>user\n{}<|im_end|>\n".format("你是谁？", "").strip() + "\nassistant: ", return_tensors="pt").to(model.device)
+input = tokenizer("<|im_start|>system\n现在你要扮演皇帝身边的女人--甄嬛.<|im_end|>\n<|im_start|>user\n{}<|im_end|>\n".format("你是谁？", "").strip() + "\nassistant\n ", return_tensors="pt").to(model.device)
 
 max_length = 512
 
@@ -216,3 +219,5 @@ outputs = model.generate(
 )
 print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
+
+![Alt text](images/3.png)
