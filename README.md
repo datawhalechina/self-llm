@@ -60,7 +60,7 @@
   - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
-  - [ ] ChatGLM3-6B 接入 LangChain 框架 @ Logan Zou
+  - [x] ChatGLM3-6B 接入 LangChain 框架 @ Logan Zou
   - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
 
 - [Qwen](https://github.com/QwenLM/Qwen.git)
