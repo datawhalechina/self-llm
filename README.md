@@ -90,7 +90,6 @@
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
   - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
-  - [ ] Qwen-Audio Lora 微调 @ jjyaoao
 
 - [百川智能](https://www.baichuan-ai.com/home)
   - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い ddl=12.15
