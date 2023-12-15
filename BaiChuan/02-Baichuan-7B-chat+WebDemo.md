@@ -8,7 +8,7 @@ Baichuan 2 是百川智能推出的新一代开源大语言模型，采用 2.6 �
 
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以） 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。
 
-![image.png](02-Baichuan-7B-chat+WebDemo+d16892e2-f53d-48b7-969b-640d45ca7fa4/image.png)
+![Alt text](images/image1.png)
 
 pip换源和安装依赖包
 
@@ -123,7 +123,7 @@ streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.po
 
 如下所示：
 
-![42014018dbe02847bc1a3c9319b66c4.png](02-Baichuan-7B-chat+WebDemo+d16892e2-f53d-48b7-969b-640d45ca7fa4/42014018dbe02847bc1a3c9319b66c4.png)
+![Alt text](images/image5.png)
 
 
 
