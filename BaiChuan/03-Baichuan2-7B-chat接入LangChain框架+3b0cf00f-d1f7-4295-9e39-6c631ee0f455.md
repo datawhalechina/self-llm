@@ -6,7 +6,7 @@
 
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以） 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。
 
-![image.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/image.png)
+![Alt text](images/image1.png)
 
 ## 安装依赖
 
@@ -92,7 +92,7 @@ llm = baichuan2_LLM('/root/autodl-tmp/baichuan-inc/Baichuan2-7B-Chat')
 llm('你是谁')
 ```
 
-![9af518274651265f458ce115142de5c.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/9af518274651265f458ce115142de5c.png)
+![Alt text](images/image6.png)
 
 ## 附加案例：使用Langchain-Chatchat快速搭建基于百川2的多功能问答平台
 
@@ -106,17 +106,17 @@ llm('你是谁')
 
 ### 创建实例：
 
-![image.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/image 1.png)
+![Alt text](images/image7.png)
 
 ## 环境准备
 
 在autodl平台中租一个3090等24G显存的显卡机器
 
-![c141400596ed66783ce335d86469503.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/c141400596ed66783ce335d86469503.png)
+![Alt text](images/image8.png)
 
 ## 默认的模型：
 
-![image.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/image 2.png)
+![Alt text](images/image9.png)
 
 ## 模型下载:
 
@@ -137,11 +137,11 @@ model_dir = snapshot_download('baichuan-inc/Baichuan2-7B-Chat',cache_dir='/root/
 
 可选择多种模型：
 
-![image.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/image 3.png)
+![Alt text](images/image10.png)
 
 添加本地模型地址：
 
-![image.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/image 4.png)
+![Alt text](images/image11.png)
 
 ## 调用：
 
@@ -153,7 +153,7 @@ conda activate /root/pyenv
 python startup.py -a
 ```
 
-![image.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/image 5.png)
+![Alt text](images/image12.png)
 
 可以考虑vsc的端口vsc端口转发功能，转发端口，本地运行
 
@@ -161,11 +161,11 @@ python startup.py -a
 
 多模型选择对话：
 
-![6cb127f0241cee67f211e043b62cf7f.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/6cb127f0241cee67f211e043b62cf7f.png)
+![Alt text](images/image13.png)
 
 知识库管理：
 
-![fbcde63b6085f130eb4059426f067bf.png](03-Baichuan2-7B-chat接入LangChain框架+3b0cf00f-d1f7-4295-9e39-6c631ee0f455/fbcde63b6085f130eb4059426f067bf.png)
+![Alt text](images/image14.png)
 
 还有其他功能，可以自行尝试
 
