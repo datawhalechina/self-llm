@@ -7,7 +7,7 @@
 ## 环境准备
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以）
 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](/images/image-1.png)
+![Alt text](/images/image-web.png)
 pip换源和安装依赖包
 ```
 # 升级pip
