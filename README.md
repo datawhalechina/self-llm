@@ -100,7 +100,7 @@
 - [Yi 零一万物](https://github.com/01-ai/Yi.git)
   - [ ] Yi-6B-chat FastApi 部署调用 @ Joe ddl=12.15
   - [ ] Yi-6B-chat langchain接入 @ Joe ddl=12.15
-  - [ ] Yi-6B-chat WebDemo @ Hongru0306 ddl=12.15
+  - [x] [Yi-6B-chat WebDemo](./Yi/03-Yi-6B-chat%20WebDemo.md) @ Hongru0306 ddl=12.15
   - [x] [Yi-6B-chat Lora 微调](./Yi/04-Yi-6B-Chat%20Lora%20微调.md) @ 娇娇 ddl=12.15
 
 
