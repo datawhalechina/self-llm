@@ -94,7 +94,7 @@
 - [百川智能](https://www.baichuan-ai.com/home)
   - [ ] [baichuan2-7B-chat FastApi 部署调用](./BaiChuan/01-Baichuan2-7B-chat%2BFastApi%2B%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md) @ 三山时春い ddl=12.15
   - [ ] [baichuan-7B-chat WebDemo](./BaiChuan/02-Baichuan-7B-chat%2BWebDemo.md) @ 三山时春いddl=12.15
-  - [ ] baichuan-7B-chat 接入 LangChain 框架 @ 三山时春いddl=12.15
+  - [ ] [baichuan-7B-chat 接入 LangChain 框架](./BaiChuan/03-Baichuan2-7B-chat%E6%8E%A5%E5%85%A5LangChain%E6%A1%86%E6%9E%B6.md) @ 三山时春いddl=12.15
   - [ ] baichuan-7B-chat Lora 微调 @ 三山时春いddl=12.15
 
 - [Yi 零一万物](https://github.com/01-ai/Yi.git)
