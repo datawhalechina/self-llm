@@ -10,7 +10,7 @@
 
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以） 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image.png)
+![Alt text](images/image1.png)
 
 ## 安装依赖
 
@@ -109,7 +109,7 @@ llm.chat(messages=llm.build_messages(query='世界上第二高的山峰是哪一
 你叫什么名字呀?
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image 1.png)
+![Alt text](images/image15.png)
 
 ## 二、准备数据：
 
@@ -255,7 +255,7 @@ out.loss
 len(dl_train)
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image 2.png)
+![Alt text](images/image16.png)
 
 ## 三、定义模型：
 
@@ -403,7 +403,7 @@ keras_model.fit(train_data = dl_train,
                )
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image 3.png)
+![Alt text](images/image17.png)
 
 ## 五、保存模型：
 
@@ -504,7 +504,7 @@ llm = ChatLLM(model,tokenizer,model_type='baichuan2-chat',max_chat_rounds=3,stre
 你能帮我干嘛呀
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image 4.png)
+![Alt text](images/image18.png)
 
 
 
