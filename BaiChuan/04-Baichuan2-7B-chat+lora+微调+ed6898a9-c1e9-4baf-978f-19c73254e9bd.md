@@ -33,7 +33,7 @@ pip install xformers==0.0.23
 pip install peft 
 pip install accelerate==0.22.0
 pip install torchkeras==3.9.4
-pip install bitsandbyte==0.39.1
+pip install bitsandbytes==0.39.1
 ```
 
 ## 模型下载:
