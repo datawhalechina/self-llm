@@ -92,7 +92,7 @@
   - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
 
 - [百川智能](https://www.baichuan-ai.com/home)
-  - [ ] baichuan-7B-chat FastApi 部署调用 @ 三山时春い ddl=12.15
+  - [ ] [baichuan2-7B-chat FastApi 部署调用](https://github.com/L4HeyXiao/self-llm-hjh/blob/master/BaiChuan/01-Baichuan2-7B-chat%2BFastApi%2B%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md) @ 三山时春い ddl=12.15
   - [ ] baichuan-7B-chat WebDemo @ 三山时春いddl=12.15
   - [ ] baichuan-7B-chat 接入 LangChain 框架 @ 三山时春いddl=12.15
   - [ ] baichuan-7B-chat Lora 微调 @ 三山时春いddl=12.15
