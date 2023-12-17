@@ -116,7 +116,7 @@ streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.po
 
 如下所示：
 
-![Alt text](images/image5.png)
+![Alt text](images/image20.png)
 
 
 
