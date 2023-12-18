@@ -52,12 +52,12 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 import torch
 
 class baichuan2_LLM(LLM):
-    # 基于本地 InternLM 自定义 LLM 类
+    # 基于本地 Baichuan 自定义 LLM 类
     tokenizer : AutoTokenizer = None
     model: AutoModelForCausalLM = None
 
     def __init__(self, model_path :str):
-        # model_path: InternLM 模型路径
+        # model_path: Baichuan-7B-chat模型路径
         # 从本地初始化模型
         super().__init__()
         print("正在从本地加载模型...")
