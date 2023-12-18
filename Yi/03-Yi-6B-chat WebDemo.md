@@ -62,9 +62,9 @@ mode_name_or_path = '/CV/xhr_project/llm/model/Yi-6B-chat'
 @st.cache_resource
 def get_model():
     # 从预训练的模型中获取tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path,use_fast=False, trust_remote_code=True)
     # 从预训练的模型中获取模型，并设置模型参数
-    model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,  device_map="sequential")
+    model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,  device_map="auto")
     # 从预训练的模型中获取生成配置
     model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
     # 设置生成配置的pad_token_id为生成配置的eos_token_id
