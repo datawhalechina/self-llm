@@ -3,9 +3,11 @@
 ## 环境准备
 在 Autodl 平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以）。
 接下来打开刚刚租用服务器的 JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](images/1.png)
+![Alt text](images/4.png)
+
 pip换源和安装依赖包
-```
+
+```python
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
@@ -22,11 +24,11 @@ pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
 ```
 ## 模型下载
-使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
+使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，模型大小为12 GB，下载模型大概需要8~15分钟
+在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，模型大小为12GB，下载模型大概需要8~15分钟
 
-```
+```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
@@ -34,7 +36,7 @@ model_dir = snapshot_download('01ai/Yi-6B-Chat', cache_dir='/root/autodl-fs', re
 ```
 ## 代码准备
 在/root/autodl-tmp路径下新建api.py文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
-```
+```python
 from fastapi import FastAPI, Request
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 import uvicorn
@@ -106,21 +108,23 @@ if __name__ == '__main__':
 ```
 ## Api 部署
 在终端输入以下命令启动api服务
-```
+```shell
 cd /root/autodl-tmp
 python api.py
 ```
 加载完毕后出现如下信息说明成功。
-![Alt text](images/3.png)
+
+![](images/5.png)
 
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，如下所示：
-```
+```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好", "history": []}'
 ```
 也可以使用python中的requests库进行调用，如下所示：
-```
+
+```python
 import requests
 import json
 
@@ -133,14 +137,14 @@ def get_completion(prompt):
 if __name__ == '__main__':
     print(get_completion('你好'))
 ```
+
 得到的返回值如下所示：
 
 ```json
 {
-  "response":"你好！很高兴为你服务。有什么我可以帮助你的吗？",
-  "history":[["你好","你好！很高兴为你服务。有什么我可以帮助你的吗？"]],
+  "response":"你好！有什么可以帮助你的吗？",
+  "history":[["你好","你好！有什么可以帮助你的吗？"]],
   "status":200,
-  "time":"2023-11-26 1:14:20"
+  "time":"2023-12-15 20:08:40"
 }
 ```
-

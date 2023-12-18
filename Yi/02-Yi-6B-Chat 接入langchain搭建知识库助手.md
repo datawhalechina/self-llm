@@ -213,8 +213,7 @@ def get_text(dir_path):
 
 # 目标文件夹
 tar_dir = [
-    "/root/autodl-tmp/Yi",
-    "/root/autodl-tmp/Yi",
+    "/root/autodl-tmp/sweettalk-django4.2",
 ]
 
 # 加载目标文件
@@ -255,36 +254,40 @@ vectordb.persist()
 from langchain.llms.base import LLM
 from typing import Any, List, Optional
 from langchain.callbacks.manager import CallbackManagerForLLMRun
-from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, LlamaTokenizerFast
+import torch
 
-
-class YiLM(LLM):
+class Yi_LLM(LLM):
     # 基于本地 Yi 自定义 LLM 类
-    tokenizer : AutoTokenizer = None
+    tokenizer: AutoTokenizer = None
     model: AutoModelForCausalLM = None
+        
+    def __init__(self, mode_name_or_path :str):
 
-    def __init__(self, model_path :str):
-        # model_path: Yi 模型路径
-        # 从本地初始化模型
         super().__init__()
         print("正在从本地加载模型...")
-        model_dir = '/root/autodl-fs/01ai/Yi-6B-Chat'
-        self.tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
-        self.model = AutoModelForCausalLM.from_pretrained(model_dir, device_map="auto", trust_remote_code=True).eval()
-        # Specify hyperparameters for generation
-        self.model.generation_config = GenerationConfig.from_pretrained(model_dir, trust_remote_code=True) # 可指定不同的生成长度、top_p等相关超参
+        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True, use_fast=False)
+        self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,device_map="auto")
+        self.model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
+        self.model.generation_config.pad_token_id = self.model.generation_config.eos_token_id
+        self.model = self.model.eval()
         print("完成本地模型的加载")
-
+        
     def _call(self, prompt : str, stop: Optional[List[str]] = None,
                 run_manager: Optional[CallbackManagerForLLMRun] = None,
                 **kwargs: Any):
-        # 重写调用函数
-        response, history = self.model.chat(self.tokenizer, prompt , history=[])
+
+        messages = [
+            {"role": "user", "content": prompt }
+                    ]
+        input_ids = self.tokenizer.apply_chat_template(conversation=messages, tokenize=True, add_generation_prompt=True, return_tensors='pt')
+    
+        output_ids = self.model.generate(input_ids.to('cuda'))
+        response = self.tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
         return response
-        
     @property
     def _llm_type(self) -> str:
-        return "Yi"
+        return "Yi_LLM"
 ```
 
 在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 Yi 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 chat 方法，从而实现对模型的调用并返回调用结果。
@@ -320,10 +323,12 @@ vectordb = Chroma(
 接着，我们实例化一个基于 Yi 自定义的 LLM 对象：
 
 ```python
-from LLM import YiLM
-llm = YiLM(model_path = "/root/autodl-fs/01ai/Yi-6B-Chat")
-llm.predict("你是谁")
+from LLM import Yi_LLM
+llm = Yi_LLM(mode_name_or_path = "/root/autodl-fs/01ai/Yi-6B-Chat")
+llm("你是谁")
 ```
+
+![Alt text](\images\2023-12-18-2613.png)
 构建检索问答链，还需要构建一个 Prompt Template，该 Template 其实基于一个带变量的字符串，在检索之后，LangChain 会将检索到的相关文档片段填入到 Template 的变量中，从而实现带知识的 Prompt 构建。我们可以基于 LangChain 的 Template 基类来实例化这样一个 Template 对象：
 
 ```python
@@ -348,13 +353,15 @@ qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),ret
 ```
 得到的 qa_chain 对象即可以实现我们的核心功能，即基于 YiLM 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：
 ```python
-question = "什么是YiLM"
+question = "sweettalk_django项目是什么"
 result = qa_chain({"query": question})
 print("检索问答链回答 question 的结果：")
 print(result["result"])
 
+print("-------------------")
 # 仅 LLM 回答效果
 result_2 = llm(question)
 print("大模型回答 question 的结果：")
 print(result_2)
 ```
+![Alt text](\images/2023-12-18-262a.png)
