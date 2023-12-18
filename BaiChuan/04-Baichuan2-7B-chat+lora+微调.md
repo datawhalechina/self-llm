@@ -164,7 +164,8 @@ trainer = Trainer(
 )
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image.png)
+![Alt text](images/image23.png)
+
 
 ## 模型推理
 
@@ -179,7 +180,8 @@ result = tokenizer.decode(outputs[0], skip_special_tokens=True)
 print(result)
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image 1.png)
+![Alt text](images/image21.png)
+
 
 或者重新加载模型：
 
@@ -211,7 +213,8 @@ outputs = model.generate(
 print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 
-![image.png](04-Baichuan2-7B-chat+lora+微调+ed6898a9-c1e9-4baf-978f-19c73254e9bd/image 2.png)
+![Alt text](images/image22.png)
+
 
 
 
