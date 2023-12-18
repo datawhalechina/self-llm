@@ -72,13 +72,13 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ```Python
 def process_func(example):
-    MAX_LENGTH = 256    # Llama分词器会将一个中文字切分为多个token，因此需要放开一些最大长度，保证数据的完整性
+    MAX_LENGTH = 256    
     input_ids, attention_mask, labels = [], [], []
     instruction = tokenizer("\n".join(["<|im_start|>system", "现在你要扮演皇帝身边的女人--甄嬛.<|im_end|>" + "\n<|im_start|>user\n" + example["instruction"] + example["input"] + "<|im_end|>\n"]).strip()+"\n\nAssistant: ",add_special_tokens=False)  # add_special_tokens 不在开头加 special_tokens
     response = tokenizer(example["output"]+tokenizer.eos_token, add_special_tokens=False)
     input_ids = instruction["input_ids"] + response["input_ids"]
     attention_mask = instruction["attention_mask"] + response["attention_mask"] # 因为eos token咱们也是要关注的所以 补充为1
-    labels = [-100] * len(instruction["input_ids"]) + response["input_ids"]   # Qwen的特殊构造就是这样的
+    labels = [-100] * len(instruction["input_ids"]) + response["input_ids"]  
     if len(input_ids) > MAX_LENGTH:  # 做一个截断
         input_ids = input_ids[:MAX_LENGTH]
         attention_mask = attention_mask[:MAX_LENGTH]
