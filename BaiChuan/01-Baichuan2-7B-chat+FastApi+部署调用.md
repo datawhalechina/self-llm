@@ -14,7 +14,7 @@ Baichuan 2 是百川智能推出的新一代开源大语言模型，采用 2.6 �
 
 pip换源和安装依赖包
 
-```Python
+```shell
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
