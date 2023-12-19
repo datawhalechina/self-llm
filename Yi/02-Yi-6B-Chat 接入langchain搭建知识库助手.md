@@ -336,7 +336,7 @@ llm = Yi_LLM(mode_name_or_path = "/root/autodl-tmp/01ai/Yi-6B-Chat")
 llm("你是谁")
 ```
 
-![模型返回回答效果](images\question_to_the_Yi.png)
+![模型返回回答效果](images/question_to_the_Yi.png)
 构建检索问答链，还需要构建一个 Prompt Template，该 Template 其实基于一个带变量的字符串，在检索之后，LangChain 会将检索到的相关文档片段填入到 Template 的变量中，从而实现带知识的 Prompt 构建。我们可以基于 LangChain 的 Template 基类来实例化这样一个 Template 对象：
 
 ```python
@@ -375,4 +375,4 @@ print("大模型回答 question 的结果：")
 print(result_2)
 ```  
 
-![检索回答链返回结果](images\search_question_chain.png)  
+![检索回答链返回结果](images/search_question_chain.png)
