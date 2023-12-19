@@ -8,7 +8,7 @@
 
 ## 安装依赖
 
-```Python
+```shell
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
