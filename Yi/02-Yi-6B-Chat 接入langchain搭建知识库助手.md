@@ -1,10 +1,13 @@
-# Yi-6B-Chat 接入langchain搭建知识库助手
-## 环境准备
-在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
-![Alt text](images/4.png)
-接下来打开刚刚租用服务器的JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行demo。
+# Yi-6B-Chat 接入 LangChain 搭建知识库助手  
 
-pip换源和安装依赖包
+## 环境准备  
+
+在 autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8  
+
+![机器配置选择](images/4.png)
+接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行 demo。
+
+pip 换源加速下载并安装依赖包
 
 ```shell
 # 升级pip
@@ -15,11 +18,12 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install modelscope==1.9.5
 pip install "transformers>=4.32.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
 pip install -U huggingface_hub
-```
+```  
+
 ## 模型下载
 
-在已完成Yi-6B-chat部署的基础上，我们还需要还需要安装以下依赖包。
-请在终端复制粘贴以下命令，并按回车运行：
+在已完成 Yi-6B-chat 部署的基础上，我们还需要还需要安装以下依赖包。
+请在终端复制粘贴以下命令，并回车运行：
 
 ```shell
 pip install langchain==0.0.292
@@ -28,12 +32,13 @@ pip install chromadb==0.4.15
 pip install sentence-transformers==2.2.2
 pip install unstructured==0.10.30
 pip install markdown==3.3.7
-```
-同时，我们还需要使用到开源词向量模型 [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) 
+```  
 
-这里使用huggingface镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载
+同时，我们还需要使用到开源词向量模型 [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) 。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载。
+这里使用 huggingface 镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载。
+
+在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载。
 
 ```python
 import os
@@ -43,22 +48,22 @@ os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /root/autodl-tmp/embedding_model')
 ```
 
-使用 `modelscope` 中的`snapshot_download`函数下载模型，第一个参数为模型名称，参数`cache_dir`为模型的下载路径。
+使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py`执行下载，模型大小为 11 GB，下载模型大概需要 8~15 分钟
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 11 GB，下载模型大概需要 8~15 分钟。
 
-~~~python
+```python  
+
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('01ai/Yi-6B-Chat', cache_dir='/root/autodl-fs', revision='master')
-~~~
-
-
+model_dir = snapshot_download('01ai/Yi-6B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+```
 
 ## 知识库建设
 
-我们选用以下开源仓库作为知识库来源
+我们选用以下开源仓库作为知识库来源：
+
 - [sweettalk-django4.2](https://github.com/Joe-2002/sweettalk-django4.2)
 
 首先我们需要将上述远程开源仓库 Clone 到本地，可以使用以下命令：
@@ -124,7 +129,6 @@ def get_text(dir_path):
 
 使用上文函数，我们得到的 docs 为一个纯文本对象对应的列表。
 
-
 ```python
 docs = get_text('/root/autodl-tmp/sweettalk-django4.2')
 ```
@@ -138,17 +142,21 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=500, chunk_overlap=150)
-split_docs = text_splitter.split_documents(docs)
-```
-接着我们选用开源词向量模型  [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) 来进行文本向量化
+split_docs = text_splitter.split_documents(docs)  
+```  
 
-LangChain 提供了直接引入 HuggingFace 开源社区中的模型进行向量化的接口：
+接着我们选用开源词向量模型  [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) 来进行文本向量化。
+
+LangChain 提供了直接引入 HuggingFace 开源社区中的模型进行向量化的接口：  
+
 ```python
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 
 embeddings = HuggingFaceEmbeddings(model_name="/root/autodl-tmp/embedding_model")
-```
-同时，我们选择 Chroma 作为向量数据库，基于上文分块后的文档以及加载的开源向量化模型，将语料加载到指定路径下的向量数据库：
+```  
+
+同时，我们选择 Chroma 作为向量数据库，基于上文分块后的文档以及加载的开源向量化模型，将语料加载到指定路径下的向量数据库：  
+
 ```python
 from langchain.vectorstores import Chroma
 
@@ -324,11 +332,11 @@ vectordb = Chroma(
 
 ```python
 from LLM import Yi_LLM
-llm = Yi_LLM(mode_name_or_path = "/root/autodl-fs/01ai/Yi-6B-Chat")
+llm = Yi_LLM(mode_name_or_path = "/root/autodl-tmp/01ai/Yi-6B-Chat")
 llm("你是谁")
 ```
 
-![Alt text](\images\2023-12-18-2613.png)
+![模型返回回答效果](images\question_to_the_Yi.png)
 构建检索问答链，还需要构建一个 Prompt Template，该 Template 其实基于一个带变量的字符串，在检索之后，LangChain 会将检索到的相关文档片段填入到 Template 的变量中，从而实现带知识的 Prompt 构建。我们可以基于 LangChain 的 Template 基类来实例化这样一个 Template 对象：
 
 ```python
@@ -350,8 +358,10 @@ QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],template
 from langchain.chains import RetrievalQA
 
 qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),return_source_documents=True,chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
-```
-得到的 qa_chain 对象即可以实现我们的核心功能，即基于 YiLM 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：
+```  
+
+得到的 qa_chain 对象即可以实现我们的核心功能，即基于 Yi 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：  
+
 ```python
 question = "sweettalk_django项目是什么"
 result = qa_chain({"query": question})
@@ -363,5 +373,6 @@ print("-------------------")
 result_2 = llm(question)
 print("大模型回答 question 的结果：")
 print(result_2)
-```
-![Alt text](\images/2023-12-18-262a.png)
+```  
+
+![检索回答链返回结果](images\search_question_chain.png)  

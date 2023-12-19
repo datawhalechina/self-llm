@@ -1,13 +1,15 @@
 # Yi-6B-Chat FastApi 部署调用
 
-## 环境准备
-在 Autodl 平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以）。
-接下来打开刚刚租用服务器的 JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](images/4.png)
+## 环境准备  
 
-pip换源和安装依赖包
+在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3 版本以上的都可以）。
+接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。  
 
-```python
+![开启机器配置选择](images/4.png)
+
+pip 换源加速下载并安装依赖包
+
+```shell
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
@@ -22,20 +24,25 @@ pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
 pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
-```
-## 模型下载
+```  
+
+## 模型下载  
+
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，模型大小为12GB，下载模型大概需要8~15分钟
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 12GB，下载模型大概需要 8~15 分钟。
 
 ```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('01ai/Yi-6B-Chat', cache_dir='/root/autodl-fs', revision='master')
-```
-## 代码准备
-在/root/autodl-tmp路径下新建api.py文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
+model_dir = snapshot_download('01ai/Yi-6B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+```  
+
+## 代码准备  
+
+在 /root/autodl-tmp 路径下新建 api.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。  
+
 ```python
 from fastapi import FastAPI, Request
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
@@ -98,31 +105,37 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    tokenizer = AutoTokenizer.from_pretrained("/root/autodl-fs/01ai/Yi-6B-Chat", trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained("/root/autodl-fs/01ai/Yi-6B-Chat", device_map="auto", trust_remote_code=True).eval()
-    model.generation_config = GenerationConfig.from_pretrained("/root/autodl-fs/01ai/Yi-6B-Chat", trust_remote_code=True) # 可指定
+    tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/01ai/Yi-6B-Chat", trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained("/root/autodl-tmp/01ai/Yi-6B-Chat", device_map="auto", trust_remote_code=True).eval()
+    model.generation_config = GenerationConfig.from_pretrained("/root/autodl-tmp/01ai/Yi-6B-Chat", trust_remote_code=True) # 可指定
     model.eval()  # 设置模型为评估模式
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
-```
-## Api 部署
-在终端输入以下命令启动api服务
-```shell
+```  
+
+## Api 部署  
+
+在终端输入以下命令启动api服务：  
+
+```shell  
 cd /root/autodl-tmp
 python api.py
-```
+```  
+
 加载完毕后出现如下信息说明成功。
 
-![](images/5.png)
+![启动服务加载信息](images/5.png)
 
-默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，如下所示：
+默认部署在 6006 端口，通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
+
 ```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好", "history": []}'
-```
-也可以使用python中的requests库进行调用，如下所示：
+```  
+
+也可以使用 python 中的 requests 库进行调用，如下所示：
 
 ```python
 import requests
@@ -147,4 +160,4 @@ if __name__ == '__main__':
   "status":200,
   "time":"2023-12-15 20:08:40"
 }
-```
+```  
