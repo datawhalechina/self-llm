@@ -72,7 +72,7 @@
   - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
   - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @娇娇
   - [x] [Qwen-7B-chat 低精度训练](./Qwen/08-Qwen-7B-Chat%20Lora%20低精度微调.md) @ Hongru0306 ddl=12.11
-  - [ ] Qwen-1_8B-chat CPU 部署 @ 散步
+  - [x] [Qwen-1_8B-chat CPU 部署](./Qwen/09-Qwen-1_8B-chat%20CPU%20部署%20.md) @ 散步
 
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
   - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
@@ -98,8 +98,8 @@
   - [x] [Baichuan2-7B-chat Lora 微调](./BaiChuan/04-Baichuan2-7B-chat%2Blora%2B%E5%BE%AE%E8%B0%83.md) @ 三山时春いddl=12.15
 
 - [Yi 零一万物](https://github.com/01-ai/Yi.git)
-  - [ ] Yi-6B-chat FastApi 部署调用 @ Joe ddl=12.15
-  - [ ] Yi-6B-chat langchain接入 @ Joe ddl=12.15
+  - [x] [Yi-6B-chat FastApi 部署调用](./Yi/01-Yi-6B-Chat%20FastApi%20部署调用.md) @ Joe ddl=12.15
+  - [x] [Yi-6B-chat langchain接入](./Yi/02-Yi-6B-Chat%20接入langchain搭建知识库助手.md) @ Joe ddl=12.15
   - [x] [Yi-6B-chat WebDemo](./Yi/03-Yi-6B-chat%20WebDemo.md) @ Hongru0306 ddl=12.15
   - [x] [Yi-6B-chat Lora 微调](./Yi/04-Yi-6B-Chat%20Lora%20微调.md) @ 娇娇 ddl=12.15
 
