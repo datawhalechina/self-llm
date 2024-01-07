@@ -149,3 +149,9 @@
     <img src="https://contrib.rocks/image?repo=datawhalechina/self-llm" />
   </a>
 </div>
+
+### Star History
+
+<div align=center style="margin-top: 30px;">
+  <img src="images/star-history-202417.png" width="80%"/>
+</div>
