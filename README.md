@@ -106,19 +106,19 @@
 
 ### 通用环境配置
 
-- [x] pip、conda 换源 @不要葱姜蒜
-- [x] AutoDL 开放端口 @不要葱姜蒜
+- [x] [pip、conda 换源](./General-Setting/01-pip、conda换源.md) @不要葱姜蒜
+- [x] [AutoDL 开放端口](./General-Setting/02-AutoDL开放端口.md) @不要葱姜蒜
 
-- [模型下载](./General-Setting) @不要葱姜蒜
-  - [x] hugging face @不要葱姜蒜
-  - [x] hugging face 镜像下载 @不要葱姜蒜
-  - [x] modelscope @不要葱姜蒜
-  - [x] git-lfs @不要葱姜蒜
-  - [x] Openxlab
+- 模型下载
+  - [x] [hugging face](./General-Setting/03-模型下载.md) @不要葱姜蒜
+  - [x] [hugging face](./General-Setting/03-模型下载.md) 镜像下载 @不要葱姜蒜
+  - [x] [modelscope](./General-Setting/03-模型下载.md) @不要葱姜蒜
+  - [x] [git-lfs](./General-Setting/03-模型下载.md) @不要葱姜蒜
+  - [x] [Openxlab](./General-Setting/03-模型下载.md)
 - Issue && PR
-  - [x] Issue 提交 @ Hongru0306
-  - [x] PR 提交 @ Hongru0306
-  - [x] fork更新 @ Hongru0306
+  - [x] [Issue 提交](./General-Setting/04-Issue&PR&update.md) @ Hongru0306
+  - [x] [PR 提交](./General-Setting/04-Issue&PR&update.md) @ Hongru0306
+  - [x] [fork更新](./General-Setting/04-Issue&PR&update.md) @ Hongru0306
 
 ## 致谢
 
