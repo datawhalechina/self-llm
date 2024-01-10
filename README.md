@@ -153,5 +153,5 @@
 ### Star History
 
 <div align=center style="margin-top: 30px;">
-  <img src="images/star-history-202417.png" width="80%"/>
+  <img src="images/star-history-2024110.png"/>
 </div>
