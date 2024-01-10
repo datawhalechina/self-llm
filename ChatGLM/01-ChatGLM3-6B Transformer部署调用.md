@@ -18,6 +18,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope
 pip install transformers
+pip install sentencepiece
 ```
 
 ## 模型下载
