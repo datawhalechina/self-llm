@@ -14,13 +14,18 @@ DeepSeek MoE目前推出的版本参数量为160亿，实际激活参数量大�
 pip换源和安装依赖包
 
 ```shell
+# 从github clone相关项目 并打开
+# git clone https://github.com/deepseek-ai/DeepSeek-MoE.git
+# cd DeepSeek-MoE/
+# 因为涉及到访问github因此最好打开autodl的学术镜像加速
+source /etc/network_turbo
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-
-pip install modelscope transformers sentencepiece
-pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.4.2/flash_attn-2.4.2+cu118torch2.1cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
+pip install modelscope transformers sentencepiece accelerate
+# pip install -r requirements.txt
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.4.2/flash_attn-2.4.2+cu122torch2.1cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
 ```
 
 ## 模型下载
