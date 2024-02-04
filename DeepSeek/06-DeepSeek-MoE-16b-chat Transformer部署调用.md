@@ -14,9 +14,6 @@ DeepSeek MoE目前推出的版本参数量为160亿，实际激活参数量大�
 pip换源和安装依赖包
 
 ```shell
-# 从github clone相关项目 并打开
-# git clone https://github.com/deepseek-ai/DeepSeek-MoE.git
-# cd DeepSeek-MoE/
 # 因为涉及到访问github因此最好打开autodl的学术镜像加速
 source /etc/network_turbo
 # 升级pip
@@ -43,31 +40,42 @@ model_dir = snapshot_download('deepseek-ai/deepseek-moe-16b-chat', cache_dir='/r
 
 ## 代码准备
 
-在/root/autodl-tmp路径下新建trans.py文件并在其中输入以下内容
+在/root/autodl-tmp路径下新建trains.py文件并在其中输入以下内容
 ```python
-# 使用Hugging Face中'transformer'库中的AutoTokenizer和AutoModelForCausalLM以加载分词器和对话模型
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import torch
-# 使用模型下载到的本地路径以加载
-model_dir = '/root/autodl-tmp/deepseek-ai/deepseek-moe-16b-chat'
-# 分词器的加载，本地加载，trust_remote_code=True设置允许从网络上下载模型权重和相关的代码
-tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
-# 模型加载，本地加载，使用AutoModelForCausalLM类
-model = AutoModelForCausalLM.from_pretrained(model_dir, trust_remote_code=True)
-# 将模型移动到GPU上进行加速（如果有GPU的话）
-device = torch.device("cuda")
-model.to(device)
-# 使用模型的评估模式来产生对话
-model.eval()
-# 第一轮对话
-response, history = model.chat(tokenizer, "你好", history=[])
-print(response)
-# 第二轮对话
-response, history = model.chat(tokenizer, "请介绍一下你自己", history=history)
-print(response)
-# 第三轮对话
-response, history = model.chat(tokenizer, "请帮我使用python语言写一段冒泡排序的代码", history=history)
-print(response)
+import torch  # 导入torch库，用于深度学习相关操作
+from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig  # 从transformers库导入所需的类
+
+# 将模型路径设置为刚刚下载的模型路径
+model_name = "/root/autodl-tmp/deepseek-ai/deepseek-moe-16b-chat"
+
+# 加载分词器，trust_remote_code=True允许加载远程代码
+tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+
+# 加载语言模型，设置数据类型为bfloat16以优化性能（以免爆显存），并自动选择GPU进行推理
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16, device_map="auto", trust_remote_code=True)
+
+# 加载并设置生成配置，使用与模型相同的设置
+model.generation_config = GenerationConfig.from_pretrained(model_name, trust_remote_code=True)
+
+# 将填充令牌ID设置为与结束令牌ID相同，用于生成文本的结束标记
+model.generation_config.pad_token_id = model.generation_config.eos_token_id
+
+# 定义输入消息，模型使用apply_chat_template进行消息输入，模拟用户与模型的交互
+messages = [
+    {"role": "user", "content": "你是谁"}
+]
+
+# 处理输入消息，并添加生成提示
+input_tensor = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt")
+
+# 使用模型生成回应，设置max_new_tokens数量为100（防止爆显存）也可以将max_new_tokens设置的更大，但可能爆显存
+outputs = model.generate(input_tensor.to(model.device), max_new_tokens=100)
+
+# 模型输出，跳过特殊令牌以获取纯文本结果
+result = tokenizer.decode(outputs[0][input_tensor.shape[1]:], skip_special_tokens=True)
+
+# 显示生成的回答
+print(result)
 ```
 ### 部署
 
@@ -75,7 +83,7 @@ print(response)
 
 ```shell
 cd /root/autodl-tmp
-python trans.py
+python trains.py
 ```
 观察命令行中loading checkpoint表示模型正在加载，等待模型加载完成产生对话，如下图所示
-![image](images/image-6.png)
+![image](images/image-7.png)

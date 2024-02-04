@@ -9,11 +9,16 @@ DeepSeek MoE目前推出的版本参数量为160亿，实际激活参数量大�
 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
 ![Alt text](images/image-6.png)
 pip换源和安装依赖包
-```
+```shell
+# 因为涉及到访问github因此最好打开autodl的学术镜像加速
+source /etc/network_turbo
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip install modelscope transformers sentencepiece accelerate fastapi uvicorn requests streamlit transformers_stream_generator
+# pip install -r requirements.txt
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.4.2/flash_attn-2.4.2+cu122torch2.1cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
 
 pip install fastapi==0.104.1
 pip install uvicorn==0.24.0.post1
@@ -26,21 +31,21 @@ pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
 ```
 ## 模型下载
-使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
+使用 `modelscope` 中的`snapshot_download`函数下载模型，第一个参数为模型名称，参数`cache_dir`为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，模型大小为15 GB，下载模型大概需要10~20分钟
+在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py`执行下载，模型大小为 30 GB，下载模型大概需要 10~20 分钟
 
-```
+```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
-from modelscope import GenerationConfig
-model_dir = snapshot_download('deepseek-ai/deepseek-llm-7b-chat', cache_dir='/root/autodl-tmp', revision='master')
+import os
+model_dir = snapshot_download('deepseek-ai/deepseek-moe-16b-chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 ## 代码准备 
 
 在/root/autodl-tmp路径下新建api.py文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
-```
+```python
 from fastapi import FastAPI, Request
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 import uvicorn
@@ -81,8 +86,7 @@ async def create_item(request: Request):
     input_tensor = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt")
     # 通过模型获得输出
     outputs = model.generate(input_tensor.to(model.device), max_new_tokens=max_length)
-    result = tokenizer.decode(outputs[0][input_tensor.shape[1]:], skip_special_tokens=True)
-    
+    result = tokenizer.decode(outputs[input_tensor.shape[1]:], skip_special_tokens=True)
     now = datetime.datetime.now()  # 获取当前时间
     time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
     # 构建响应JSON
@@ -99,11 +103,14 @@ async def create_item(request: Request):
 
 # 主函数入口
 if __name__ == '__main__':
-    mode_name_or_path = '/root/autodl-tmp/deepseek-ai/deepseek-llm-7b-chat'
-    # 加载预训练的分词器和模型
+    mode_name_or_path = '/root/autodl-tmp/deepseek-ai/deepseek-moe-16b-chat'
+    # 加载分词器，trust_remote_code=True允许加载远程代码
     tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True)
+    # 加载语言模型，设置数据类型为bfloat16以优化性能（以免爆显存），并自动选择GPU进行推理
     model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,  device_map="auto")
+    # 加载并设置生成配置，使用与模型相同的设置
     model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
+    # 将填充令牌ID设置为与结束令牌ID相同，用于生成文本的结束标记
     model.generation_config.pad_token_id = model.generation_config.eos_token_id
     model.eval()  # 设置模型为评估模式
     # 启动FastAPI应用
@@ -119,35 +126,27 @@ cd /root/autodl-tmp
 python api.py
 ```
 加载完毕后出现如下信息说明成功。
-![Alt text](images/image-2.png)
+![Alt text](images/image-8.png)
 
-默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，如下所示：
-```
+默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，建议max_length为100，多了容易爆显存，少了容易回答输出不全，如下所示：
+```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
-     -d '{"prompt": "你好"}'
+     -d '{"prompt": "你好,你是谁？","max_length":100}'
 ```
 也可以使用python中的requests库进行调用，如下所示：
-```
+```python
 import requests
 import json
 
-def get_completion(prompt):
+def get_completion(prompt,max_length):
     headers = {'Content-Type': 'application/json'}
-    data = {"prompt": prompt}
+    data = {"prompt": prompt,"max_length":max_length}
     response = requests.post(url='http://127.0.0.1:6006', headers=headers, data=json.dumps(data))
     return response.json()['response']
 
 if __name__ == '__main__':
-    print(get_completion('你好'))
+    print(get_completion("你好,你是谁？",100))
 ```
 得到的返回值如下所示：
-
-```text
-{
-    'response': '你好！有什么我可以帮助你的吗？', 
-    'status': 200, 
-    'time': '2023-12-01 17:06:10'
-}
-```
-![Alt text](images/image-3.png)
+![Alt text](images/image-9.png)
