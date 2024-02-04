@@ -93,15 +93,14 @@ async def create_item(request: Request):
 
 # 主函数入口
 if __name__ == '__main__':
-    mode_name_or_path = '/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32'
-    # 加载分词器，trust_remote_code=True允许加载远程代码
-    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True)
-    # 加载语言模型，设置数据类型为bfloat16以优化性能（以免爆显存），并自动选择GPU进行推理
-    model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,  device_map="auto")
-    # 加载并设置生成配置，使用与模型相同的设置
-    model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
-    # 将填充令牌ID设置为与结束令牌ID相同，用于生成文本的结束标记
-    model.generation_config.pad_token_id = model.generation_config.eos_token_id
+    torch.manual_seed(0)  # 设置随机种子以确保结果的可复现性
+    # 定义模型路径
+    path = '/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32'
+    # 从模型路径加载分词器，
+    tokenizer = AutoTokenizer.from_pretrained(path)
+    # 从模型路径加载模型，设置为使用bfloat16精度以优化性能，并将模型部署到支持CUDA的GPU上,trust_remote_code=True允许加载远程代码
+    model = AutoModelForCausalLM.from_pretrained(path, torch_dtype=torch.bfloat16, device_map='cuda', trust_remote_code=True)
+
     model.eval()  # 设置模型为评估模式
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
@@ -122,7 +121,7 @@ python api.py
 ```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
-     -d '{"prompt": "你好,你是谁？","max_length":100}'
+     -d '{"prompt": ""}'
 ```
 也可以使用python中的requests库进行调用，如下所示：
 ```python
@@ -136,7 +135,7 @@ def get_completion(prompt,max_length):
     return response.json()['response']
 
 if __name__ == '__main__':
-    print(get_completion("你好,你是谁？",100))
+    print(get_completion("山东省最高的山是哪座山, 它比黄山高还是矮？差距多少？",100))
 ```
 得到的返回值如下所示：
 ![Alt text](images/image-9.png)

@@ -52,7 +52,7 @@ torch.manual_seed(0)  # 设置随机种子以确保结果的可复现性
 # 定义模型路径
 path = '/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32'
 
-# 从模型路径加载分词器
+# 从模型路径加载分词器，
 tokenizer = AutoTokenizer.from_pretrained(path)
 
 # 从模型路径加载模型，设置为使用bfloat16精度以优化性能，并将模型部署到支持CUDA的GPU上,trust_remote_code=True允许加载远程代码
