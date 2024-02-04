@@ -25,7 +25,11 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install modelscope transformers sentencepiece accelerate 
+
+MAX_JOBS=8 pip install flash-attn --no-build-isolation
 ```
+
+> 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
 ## 模型下载
 

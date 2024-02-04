@@ -1,4 +1,4 @@
-# MiniCPM-2B-chat WebDemo部署
+# MiniCPM-2B-chat transformers 部署调用
 
 ## MiniCPM-2B-chat 介绍
 
@@ -16,25 +16,17 @@ MiniCPM 是面壁智能与清华大学自然语言处理实验室共同开源的
 ![Alt text](images/image-1.png)
 
 接下来打开刚刚租用服务器的`JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行`demo`。
-首先`clone`代码，打开autodl平台自带的学术镜像加速。学术镜像加速详细使用请看：https://www.autodl.com/docs/network_turbo/
 
-直接在终端执行以下代码即可完成学术镜像加速、代码`clone`及pip换源和安装依赖包
+pip换源和安装依赖包
 
 ```shell
-# 因为涉及到访问github因此最好打开autodl的学术镜像加速
-source /etc/network_turbo
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install modelscope transformers sentencepiece accelerate gradio
+pip install modelscope transformers sentencepiece accelerate langchain
 
 MAX_JOBS=8 pip install flash-attn --no-build-isolation
-
-# clone项目代码
-git clone https://github.com/OpenBMB/MiniCPM.git
-# 切换到项目路径
-cd MiniCPM
 ```
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
@@ -52,19 +44,57 @@ import os
 model_dir = snapshot_download('OpenBMB/MiniCPM-2B-sft-fp32', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-### Web Demo运行
-进入代码目录,运行demo启动脚本，在--model_name_or_path 参数后填写下载的模型目录
-```shell
-# 启动Demo，model_path参数填写刚刚下载的模型目录
-python demo/hf_based_demo.py --model_path "/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32"
+## 代码准备
+
+为便捷构建 LLM 应用，我们需要基于本地部署的 MiniCPM-2B-chat，自定义一个 LLM 类，将 MiniCPM-2B-chat 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
+
+基于本地部署的 MiniCPM-2B-chat 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+
+
+```python
+from langchain.llms.base import LLM
+from typing import Any, List, Optional
+from langchain.callbacks.manager import CallbackManagerForLLMRun
+from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
+import torch
+
+class MiniCPM_LLM(LLM):
+    # 基于本地 InternLM 自定义 LLM 类
+    tokenizer : AutoTokenizer = None
+    model: AutoModelForCausalLM = None
+
+    def __init__(self, model_path :str):
+        # model_path: InternLM 模型路径
+        # 从本地初始化模型
+        super().__init__()
+        print("正在从本地加载模型...")
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+        self.model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True,torch_dtype=torch.bfloat16,  device_map="auto")
+        self.model = self.model.eval()
+        print("完成本地模型的加载")
+
+    def _call(self, prompt : str, stop: Optional[List[str]] = None,
+                run_manager: Optional[CallbackManagerForLLMRun] = None,
+                **kwargs: Any):
+        # 通过模型获得输出
+        responds, history = self.model.chat(self.tokenizer, prompt, temperature=0.5, top_p=0.8, repetition_penalty=1.02)
+        return responds
+        
+    @property
+    def _llm_type(self) -> str:
+        return "MiniCPM_LLM"
 ```
-启动成功后终端显示如下：
-![image](images/image-5.png)
-## 设置代理访问
-在Autodl容器实例页面找到自定义服务，下载对应的代理工具
-![Alt text](images/image-6.png)
-![Alt text](images/image-7.png)
-启动代理工具，拷贝对应的ssh指令及密码，设置代理端口为7860，点击开始代理
-![Alt text](images/image-8.png)
-代理成功后点击下方链接即可访问web-demo
-![Alt text](images/image-9.png)
+
+## 调用
+
+然后就可以像使用任何其他的langchain大模型功能一样使用了。
+
+```python
+llm = MiniCPM_LLM('/root/autodl-tmp/OpenBMB/miniCPM-bf16')
+
+llm('你好')
+```
+
+如下图所示：
+
+![alt text](images/image-10.png)
