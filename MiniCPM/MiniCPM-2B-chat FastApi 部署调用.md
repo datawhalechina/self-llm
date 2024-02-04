@@ -75,7 +75,7 @@ async def create_item(request: Request):
     json_post_list = json.loads(json_post)  # 将字符串转换为Python对象
     prompt = json_post_list.get('prompt')  # 获取请求中的输入prompt
     
-    # 构建输入 
+    # 构建输入，并设置生成参数，temperature、top_p值和repetition_penalty（重复惩罚因子）等，可执行修改 
     responds, history = model.chat(tokenizer, prompt, temperature=0.5, top_p=0.8, repetition_penalty=1.02)    
     now = datetime.datetime.now()  # 获取当前时间
     time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
