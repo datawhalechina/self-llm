@@ -121,7 +121,7 @@ python api.py
 ```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
-     -d '{"prompt": ""}'
+     -d '{"prompt": "山东省最高的山是哪座山, 它比黄山高还是矮？差距多少？"}'
 ```
 也可以使用python中的requests库进行调用，如下所示：
 ```python
