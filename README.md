@@ -105,10 +105,10 @@
   - [x] [Yi-6B-chat Lora 微调](./Yi/04-Yi-6B-Chat%20Lora%20微调.md) @ 娇娇 ddl=12.15
 
 - [MiniCPM](https://github.com/OpenBMB/MiniCPM.git)
-  - [ ] MiniCPM-2B-chat transformers 部署调用 @Kailigithub ddl=2.8
-  - [ ] MiniCPM-2B-chat FastApi 部署调用 @Kailigithub ddl=2.8
+  - [x] MiniCPM-2B-chat transformers 部署调用 @Kailigithub ddl=2.8
+  - [x] MiniCPM-2B-chat FastApi 部署调用 @Kailigithub ddl=2.8
   - [ ] MiniCPM-2B-chat langchain 接入 @不要葱姜蒜 ddl=2.8
-  - [ ] MiniCPM-2B-chat webdemo 部署 @Kailigithub ddl=2.8
+  - [x] MiniCPM-2B-chat webdemo 部署 @Kailigithub ddl=2.8
   - [ ] MiniCPM-2B-chat Lora 微调 @不要葱姜蒜 ddl=2.8
 
 ### 通用环境配置

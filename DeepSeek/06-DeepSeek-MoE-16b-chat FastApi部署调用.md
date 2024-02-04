@@ -1,4 +1,4 @@
-# DeepSeek-MoE-16b-chat Transformers 部署调用
+# 06-DeepSeek-MoE-16b-chat FastApi 部署调用
 
 ## DeepSeek-MoE-16b-chat 介绍
 

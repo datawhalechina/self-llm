@@ -1,4 +1,4 @@
-# MiniCPM-2B-chat transformers 部署调用
+# MiniCPM-2B-chat WebDemo部署
 
 ## MiniCPM-2B-chat 介绍
 
@@ -16,15 +16,22 @@ MiniCPM 是面壁智能与清华大学自然语言处理实验室共同开源的
 ![Alt text](images/image-1.png)
 
 接下来打开刚刚租用服务器的`JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行`demo`。
+首先`clone`代码，打开autodl平台自带的学术镜像加速。学术镜像加速详细使用请看：https://www.autodl.com/docs/network_turbo/
 
-pip换源和安装依赖包
+直接在终端执行以下代码即可完成学术镜像加速、代码`clone`及pip换源和安装依赖包
 
 ```shell
+# 因为涉及到访问github因此最好打开autodl的学术镜像加速
+source /etc/network_turbo
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install modelscope transformers sentencepiece accelerate 
+pip install modelscope transformers sentencepiece accelerate gradio
+# clone项目代码
+git clone https://github.com/OpenBMB/MiniCPM.git
+# 切换到项目路径
+cd MiniCPM
 ```
 
 ## 模型下载
@@ -40,37 +47,19 @@ import os
 model_dir = snapshot_download('OpenBMB/MiniCPM-2B-sft-fp32', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-## 代码准备
-
-在/root/autodl-tmp路径下新建trains.py文件并在其中输入以下内容
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer  # 从transformers库导入所需的类
-import torch  # 导入torch库，用于深度学习相关操作
-
-torch.manual_seed(0)  # 设置随机种子以确保结果的可复现性
-
-# 定义模型路径
-path = '/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32'
-
-# 从模型路径加载分词器，
-tokenizer = AutoTokenizer.from_pretrained(path)
-
-# 从模型路径加载模型，设置为使用bfloat16精度以优化性能，并将模型部署到支持CUDA的GPU上,trust_remote_code=True允许加载远程代码
-model = AutoModelForCausalLM.from_pretrained(path, torch_dtype=torch.bfloat16, device_map='cuda', trust_remote_code=True)
-
-# 使用模型进行聊天，提出问题并设置生成参数，如temperature、top_p值和repetition_penalty（重复惩罚因子）
-responds, history = model.chat(tokenizer, "山东省最高的山是哪座山, 它比黄山高还是矮？差距多少？", temperature=0.5, top_p=0.8, repetition_penalty=1.02)
-
-# 显示生成的回答
-print(responds)
-```
-### 部署
-
-在终端输入以下命令运行trains.py，即实现MiniCPM-2B-chat的Transformers部署调用
-
+### Web Demo运行
+进入代码目录,运行demo启动脚本，在--model_name_or_path 参数后填写下载的模型目录
 ```shell
-cd /root/autodl-tmp
-python trains.py
+# 启动Demo，model_path参数填写刚刚下载的模型目录
+python demo/hf_based_demo.py --model_path "/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32"
 ```
-观察命令行中，等待模型加载完成产生对话，如下图所示
-![image](images/image-2.png)
+启动成功后终端显示如下：
+![image](images/image-5.png)
+## 设置代理访问
+在Autodl容器实例页面找到自定义服务，下载对应的代理工具
+![Alt text](images/image-6.png)
+![Alt text](images/image-7.png)
+启动代理工具，拷贝对应的ssh指令及密码，设置代理端口为7860，点击开始代理
+![Alt text](images/image-8.png)
+代理成功后点击下方链接即可访问web-demo
+![Alt text](images/image-9.png)

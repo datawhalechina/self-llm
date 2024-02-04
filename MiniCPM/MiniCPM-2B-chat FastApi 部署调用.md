@@ -1,6 +1,6 @@
-# MiniCPM-2B-chat transformers 部署调用
+# MiniCPM-2B-chat FastApi 部署调用
 
-## MiniCPM-2B-chat transformers 介绍
+## MiniCPM-2B-chat 介绍
 
 MiniCPM 是面壁智能与清华大学自然语言处理实验室共同开源的系列端侧大模型，主体语言模型 MiniCPM-2B 仅有 24亿（2.4B）的非词嵌入参数量。
 
@@ -86,7 +86,7 @@ async def create_item(request: Request):
         "time": time
     }
     # 构建日志信息
-    log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(result) + '"'
+    log = "[" + time + "] " + '", prompt:"' + prompt + '", response:"' + repr(responds) + '"'
     print(log)  # 打印日志
     torch_gc()  # 执行GPU内存清理
     return answer  # 返回响应
@@ -115,7 +115,7 @@ cd /root/autodl-tmp
 python api.py
 ```
 加载完毕后出现如下信息说明成功。
-![Alt text](images/image-8.png)
+![Alt text](images/image-3.png)
 
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，建议max_length为100，多了容易爆显存，少了容易回答输出不全，如下所示：
 ```shell
@@ -123,19 +123,19 @@ curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "山东省最高的山是哪座山, 它比黄山高还是矮？差距多少？"}'
 ```
+![Alt text](images/image-4.png)
 也可以使用python中的requests库进行调用，如下所示：
 ```python
 import requests
 import json
 
-def get_completion(prompt,max_length):
+def get_completion(prompt):
     headers = {'Content-Type': 'application/json'}
     data = {"prompt": prompt,"max_length":max_length}
     response = requests.post(url='http://127.0.0.1:6006', headers=headers, data=json.dumps(data))
     return response.json()['response']
 
 if __name__ == '__main__':
-    print(get_completion("山东省最高的山是哪座山, 它比黄山高还是矮？差距多少？",100))
+    print(get_completion("山东省最高的山是哪座山, 它比黄山高还是矮？差距多少？"))
 ```
 得到的返回值如下所示：
-![Alt text](images/image-9.png)
