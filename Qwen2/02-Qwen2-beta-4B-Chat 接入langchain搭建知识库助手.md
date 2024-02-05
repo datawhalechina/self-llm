@@ -15,7 +15,7 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
+pip install modelscope==1.11.0
 pip install "transformers>=4.37.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
 pip install -U huggingface_hub
 ```  
@@ -50,7 +50,7 @@ os.system('huggingface-cli download --resume-download sentence-transformers/para
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 8~15 分钟。
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 2 分钟。
 
 ```python  
 
@@ -274,24 +274,24 @@ class Qwen2_LLM(LLM):
 
         super().__init__()
         print("正在从本地加载模型...")
-        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True, use_fast=False)
-        self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True,torch_dtype=torch.bfloat16,device_map="auto")
+        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
+        self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, device_map="auto")
         self.model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
-        self.model.generation_config.pad_token_id = self.model.generation_config.eos_token_id
-        self.model = self.model.eval()
         print("完成本地模型的加载")
         
     def _call(self, prompt : str, stop: Optional[List[str]] = None,
                 run_manager: Optional[CallbackManagerForLLMRun] = None,
                 **kwargs: Any):
 
-        messages = [
-            {"role": "user", "content": prompt }
-                    ]
-        input_ids = self.tokenizer.apply_chat_template(conversation=messages, tokenize=True, add_generation_prompt=True, return_tensors='pt')
-    
-        output_ids = self.model.generate(input_ids.to('cuda'))
-        response = self.tokenizer.decode(output_ids[0][input_ids.shape[1]:], skip_special_tokens=True)
+        messages = [{"role": "user", "content": prompt }]
+        input_ids = self.tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
+        model_inputs = self.tokenizer([input_ids], return_tensors="pt").to('cuda')
+        generated_ids = self.model.generate(model_inputs.input_ids,max_new_tokens=512)
+        generated_ids = [
+            output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+        ]
+        response = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        
         return response
     @property
     def _llm_type(self) -> str:
@@ -302,33 +302,10 @@ class Qwen2_LLM(LLM):
 
 在整体项目中，我们将上述代码封装为 LLM.py，后续将直接从该文件中引入自定义的 LLM 类。
 
-## 构建检索问答链
 
-LangChain 通过提供检索问答链对象来实现对于 RAG 全流程的封装。即我们可以调用一个 LangChain 提供的 RetrievalQA 对象，通过初始化时填入已构建的数据库和自定义 LLM 作为参数，来简便地完成检索增强问答的全流程，LangChain 会自动完成基于用户提问进行检索、获取相关文档、拼接为合适的 Prompt 并交给 LLM 问答的全部流程。
+## 调用
 
-首先我们需要将上文构建的向量数据库导入进来，我们可以直接通过 Chroma 以及上文定义的词向量模型来加载已构建的数据库：
-
-```python
-from langchain.vectorstores import Chroma
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-import os
-
-# 定义 Embeddings
-embeddings = HuggingFaceEmbeddings(model_name="/root/autodl-tmp/embedding_model")
-
-# 向量数据库持久化路径
-persist_directory = 'data_base/vector_db/chroma'
-
-# 加载数据库
-vectordb = Chroma(
-    persist_directory=persist_directory, 
-    embedding_function=embeddings
-)
-```
-
-上述代码得到的 vectordb 对象即为我们已构建的向量数据库对象，该对象可以针对用户的 query 进行语义向量检索，得到与用户提问相关的知识片段。
-
-接着，我们实例化一个基于 Qwen2 自定义的 LLM 对象：
+然后就可以像使用任何其他的langchain大模型功能一样使用了。
 
 ```python
 from LLM import Qwen2_LLM
@@ -337,42 +314,3 @@ llm("你是谁")
 ```
 
 ![模型返回回答效果](images/question_to_the_Qwen2.png)
-构建检索问答链，还需要构建一个 Prompt Template，该 Template 其实基于一个带变量的字符串，在检索之后，LangChain 会将检索到的相关文档片段填入到 Template 的变量中，从而实现带知识的 Prompt 构建。我们可以基于 LangChain 的 Template 基类来实例化这样一个 Template 对象：
-
-```python
-from langchain.prompts import PromptTemplate
-
-# 我们所构造的 Prompt 模板
-template = """使用以下上下文来回答最后的问题。如果你不知道答案，就说你不知道，不要试图编造答案。尽量使答案简明扼要。总是在回答的最后说“谢谢你的提问！”。
-{context}
-问题: {question}
-有用的回答:"""
-
-# 调用 LangChain 的方法来实例化一个 Template 对象，该对象包含了 context 和 question 两个变量，在实际调用时，这两个变量会被检索到的文档片段和用户提问填充
-QA_CHAIN_PROMPT = PromptTemplate(input_variables=["context","question"],template=template)
-```
-
-最后，可以调用 LangChain 提供的检索问答链构造函数，基于我们的自定义 LLM、Prompt Template 和向量知识库来构建一个基于 Qwen2 的检索问答链：
-
-```python
-from langchain.chains import RetrievalQA
-
-qa_chain = RetrievalQA.from_chain_type(llm,retriever=vectordb.as_retriever(),return_source_documents=True,chain_type_kwargs={"prompt":QA_CHAIN_PROMPT})
-```  
-
-得到的 qa_chain 对象即可以实现我们的核心功能，即基于 Qwen2 模型的专业知识库助手。我们可以对比该检索问答链和纯 LLM 的问答效果：  
-
-```python
-question = "sweettalk_django项目是什么"
-result = qa_chain({"query": question})
-print("检索问答链回答 question 的结果：")
-print(result["result"])
-
-print("-------------------")
-# 仅 LLM 回答效果
-result_2 = llm(question)
-print("大模型回答 question 的结果：")
-print(result_2)
-```  
-
-![检索回答链返回结果](images/search_question_chain.png)

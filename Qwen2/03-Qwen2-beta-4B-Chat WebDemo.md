@@ -25,7 +25,7 @@ pip install transformers_stream_generator==0.0.4
 ## 模型下载
 使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，下载模型大概需要10~20分钟
+在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，下载模型大概需要 2 分钟。
 
 ```
 import torch
@@ -92,17 +92,22 @@ if prompt := st.chat_input():
     st.chat_message("user").write(prompt)
     
     # 构建输入     
-    input_tensor = tokenizer.apply_chat_template(st.session_state.messages, add_generation_prompt=True, return_tensors="pt")
+    input_ids = tokenizer.apply_chat_template(st.session_state.messages, tokenize=False, add_generation_prompt=True)
+    model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
     # 通过模型获得输出
-    outputs = model.generate(input_tensor.to(model.device), max_new_tokens=max_length)
+    generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=max_length)
+    generated_ids = [
+        output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+    ]
     # 解码模型的输出，并去除特殊标记
-    response = tokenizer.decode(outputs[0][input_tensor.shape[1]:], skip_special_tokens=True)
+    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     # 将模型的输出添加到session_state中的messages列表中
     st.session_state.messages.append({"role": "assistant", "content": response})
     # 在聊天界面上显示模型的输出
     st.chat_message("assistant").write(response)
     # print(st.session_state)
 ```
+
 
 ## 运行 demo
 

@@ -30,7 +30,7 @@ pip install transformers_stream_generator==0.0.4
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8GB，下载模型大概需要 8~15 分钟。
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8GB，下载模型大概需要 2 分钟。
 
 ```python
 import torch
@@ -81,13 +81,13 @@ async def create_item(request: Request):
     ]
 
     # 调用模型进行对话生成
-    input_ids = tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
-    model_inputs = tokenizer([text], return_tensors="pt").to('cuda')
-    generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=512)
+    input_ids = self.tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
+    model_inputs = self.tokenizer([input_ids], return_tensors="pt").to('cuda')
+    generated_ids = self.model.generate(model_inputs.input_ids,max_new_tokens=512)
     generated_ids = [
         output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
     ]
-    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+    response = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     now = datetime.datetime.now()  # 获取当前时间
     time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
     # 构建响应JSON
@@ -105,7 +105,7 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    model_name_or_path = 'root/autodl-tmp/qwen/Qwen2-beta-4B-Chat'
+    model_name_or_path = '/root/autodl-tmp/qwen/Qwen2-beta-4B-Chat'
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True, use_fast=False)
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
     model.generation_config = GenerationConfig.from_pretrained(model_name_or_path, trust_remote_code=True) # 可指定
@@ -133,7 +133,7 @@ python api.py
 ```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
-     -d '{"prompt": "你好", "history": []}'
+     -d '{"prompt": "你好"}'
 ```  
 
 也可以使用 python 中的 requests 库进行调用，如下所示：
@@ -155,12 +155,7 @@ if __name__ == '__main__':
 得到的返回值如下所示：
 
 ```json
-{
-  "response":"你好！有什么可以帮助你的吗？", 
-  "history":[["你好", "你好！有什么可以帮助你的吗？"]], 
-  "status":200, 
-  "time":"2024-02-05 17:18:40"
-}
+{"response":"你好！有什么我可以帮助你的吗？","status":200,"time":"2024-02-05 18:08:19"}
 ```  
 
 ![Alt text](images/6.png)
