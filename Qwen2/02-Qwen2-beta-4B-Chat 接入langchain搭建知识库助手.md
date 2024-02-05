@@ -1,4 +1,4 @@
-# Qwen2-beta-4B-Chat 接入 LangChain 搭建知识库助手  
+# Qwen1.5-4B-Chat 接入 LangChain 搭建知识库助手  
 
 ## 环境准备  
 
@@ -31,7 +31,7 @@ pip install -U huggingface_hub
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen2-beta-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen1.5-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 
@@ -92,7 +92,7 @@ class Qwen2_LLM(LLM):
 
 ```python
 from LLM import Qwen2_LLM
-llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen2-beta-4B-Chat")
+llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-4B-Chat")
 llm("你是谁")
 ```
 

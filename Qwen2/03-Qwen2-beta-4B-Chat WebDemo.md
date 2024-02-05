@@ -1,8 +1,8 @@
-# Qwen2-beta-4B-Chat WebDemo 部署
+# Qwen1.5-4B-Chat WebDemo 部署
 
-## Qwen2 介绍
+## Qwen1.5 介绍
 
-Qwen2-beta 是 Qwen2 的测试版，Qwen2 是基于 transformer 的 decoder-only 语言模型，已在大量数据上进行了预训练。与之前发布的 Qwen 相比，Qwen2 的改进包括 6 种模型大小，包括 0.5B、1.8B、4B、7B、14B 和 72B；Chat模型在人类偏好方面的性能显著提高；基础模型和聊天模型均支持多种语言；所有大小的模型均稳定支持 32K 上下文长度，无需 trust_remote_code。
+Qwen1.5 是 Qwen2 的测试版，Qwen1.5 是基于 transformer 的 decoder-only 语言模型，已在大量数据上进行了预训练。与之前发布的 Qwen 相比，Qwen1.5 的改进包括 6 种模型大小，包括 0.5B、1.8B、4B、7B、14B 和 72B；Chat模型在人类偏好方面的性能显著提高；基础模型和聊天模型均支持多种语言；所有大小的模型均稳定支持 32K 上下文长度，无需 trust_remote_code。
 
 ## 环境准备
 在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以）
@@ -31,7 +31,7 @@ pip install transformers_stream_generator==0.0.4
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 from modelscope import GenerationConfig
-model_dir = snapshot_download('qwen/Qwen2-beta-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen1.5-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 ## 代码准备
@@ -46,17 +46,17 @@ import streamlit as st
 
 # 在侧边栏中创建一个标题和一个链接
 with st.sidebar:
-    st.markdown("## Qwen2 LLM")
+    st.markdown("## Qwen1.5 LLM")
     "[开源大模型食用指南 self-llm](https://github.com/datawhalechina/self-llm.git)"
     # 创建一个滑块，用于选择最大长度，范围在0到1024之间，默认值为512
     max_length = st.slider("max_length", 0, 1024, 512, step=1)
 
 # 创建一个标题和一个副标题
-st.title("💬 Qwen2 Chatbot")
+st.title("💬 Qwen1.5 Chatbot")
 st.caption("🚀 A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
-mode_name_or_path = '/CV/xhr_project/llm/model/qwen/Qwen2-beta-4B-Chat'
+mode_name_or_path = '/CV/xhr_project/llm/model/qwen/Qwen1.5-4B-Chat'
 
 # 定义一个函数，用于获取模型和tokenizer
 @st.cache_resource
@@ -68,7 +68,7 @@ def get_model():
   
     return tokenizer, model
 
-# 加载Qwen2-beta-4B-Chat的model和tokenizer
+# 加载Qwen1.5-4B-Chat的model和tokenizer
 tokenizer, model = get_model()
 
 # 如果session_state中没有"messages"，则创建一个包含默认消息的列表
