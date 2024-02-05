@@ -106,10 +106,9 @@ async def create_item(request: Request):
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
     model_name_or_path = '/root/autodl-tmp/qwen/Qwen2-beta-4B-Chat'
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True, use_fast=False)
-    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
-    model.generation_config = GenerationConfig.from_pretrained(model_name_or_path, trust_remote_code=True) # 可指定
-    model.eval()  # 设置模型为评估模式
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
+    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
+
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用

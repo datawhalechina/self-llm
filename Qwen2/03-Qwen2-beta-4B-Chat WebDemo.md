@@ -65,12 +65,7 @@ def get_model():
     tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
     # 从预训练的模型中获取模型，并设置模型参数
     model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16,  device_map="auto")
-    # 从预训练的模型中获取生成配置
-    model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
-    # 设置生成配置的pad_token_id为生成配置的eos_token_id
-    model.generation_config.pad_token_id = model.generation_config.eos_token_id
-    # 设置模型为评估模式
-    model.eval()  
+  
     return tokenizer, model
 
 # 加载Qwen2-beta-4B-Chat的model和tokenizer
@@ -92,14 +87,12 @@ if prompt := st.chat_input():
     st.chat_message("user").write(prompt)
     
     # 构建输入     
-    input_ids = tokenizer.apply_chat_template(st.session_state.messages, tokenize=False, add_generation_prompt=True)
+    input_ids = tokenizer.apply_chat_template(st.session_state.messages,tokenize=False,add_generation_prompt=True)
     model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
-    # 通过模型获得输出
-    generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=max_length)
+    generated_ids = model.generate(model_inputs.input_ids, max_new_tokens=512)
     generated_ids = [
         output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
     ]
-    # 解码模型的输出，并去除特殊标记
     response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     # 将模型的输出添加到session_state中的messages列表中
     st.session_state.messages.append({"role": "assistant", "content": response})
