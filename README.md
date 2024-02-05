@@ -105,11 +105,11 @@
   - [x] [Yi-6B-chat Lora 微调](./Yi/04-Yi-6B-Chat%20Lora%20微调.md) @ 娇娇 ddl=12.15
 
 - [MiniCPM](https://github.com/OpenBMB/MiniCPM.git)
-  - [x] MiniCPM-2B-chat transformers 部署调用 @Kailigithub ddl=2.8
-  - [x] MiniCPM-2B-chat FastApi 部署调用 @Kailigithub ddl=2.8
-  - [ ] MiniCPM-2B-chat langchain 接入 @不要葱姜蒜 ddl=2.8
-  - [x] MiniCPM-2B-chat webdemo 部署 @Kailigithub ddl=2.8
-  - [ ] MiniCPM-2B-chat Lora 微调 @不要葱姜蒜 ddl=2.8
+  - [x] [MiniCPM-2B-chat transformers 部署调用](./MiniCPM/MiniCPM-2B-chat%20transformers%20部署调用.md) @Kailigithub 
+  - [x] [MiniCPM-2B-chat FastApi 部署调用](./MiniCPM/MiniCPM-2B-chat%20FastApi%20部署调用.md) @Kailigithub 
+  - [x] [MiniCPM-2B-chat langchain 接入](./MiniCPM/MiniCPM-2B-chat%20langchain接入.md) @不要葱姜蒜 
+  - [x] [MiniCPM-2B-chat webdemo 部署](./MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
+  - [x] [MiniCPM-2B-chat Lora && Full 微调](./MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
 
 ### 通用环境配置
 
@@ -142,7 +142,7 @@
 - [李柯辰]() （Datawhale成员）
 - [散步]() （Datawhale成员）
 - [惠佳豪]() （Datawhale-宣传大使）
-
+- [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
 ### 其他
 
 - 特别感谢[@Sm1les](https://github.com/Sm1les)对本项目的帮助与支持
