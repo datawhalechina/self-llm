@@ -109,11 +109,11 @@ def process_func(example):
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
 ```python
-tokenizer = AutoTokenizer.from_pretrained('./OpenBMB/miniCPM-bf16', use_fast=False, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained('./OpenBMB/miniCPM-bf32', use_fast=False, trust_remote_code=True)
 tokenizer.padding_side = 'right'
 tokenizer.pad_token_id = tokenizer.eos_token_id
 
-model = AutoModelForCausalLM.from_pretrained('./OpenBMB/miniCPM-bf16', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
+model = AutoModelForCausalLM.from_pretrained('./OpenBMB/miniCPM-bf32', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
 ```
 
 ## 定义LoraConfig

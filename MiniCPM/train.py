@@ -12,7 +12,7 @@ deepspeed.ops.op_builder.CPUAdamBuilder().load()
 class FinetuneArguments:
     # 微调参数
     # field：dataclass 函数，用于指定变量初始化
-    model_path: str = field(default="./OpenBMB/miniCPM-bf16")
+    model_path: str = field(default="./OpenBMB/miniCPM-bf32")
 
 # 用于处理数据集的函数
 def process_func(example):
