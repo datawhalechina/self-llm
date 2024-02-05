@@ -8,7 +8,7 @@
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下（本教程中使用的模型路径是 /root/autodl-tmp/01ai/Qwen2-beta-4B-Chat ），你还需要安装一些第三方库，可以使用以下命令：
+在完成基本环境配置和本地模型部署的情况下（本教程中使用的模型路径是 /root/autodl-tmp/qwen/Qwen2-beta-4B-Chat ），你还需要安装一些第三方库，可以使用以下命令：
 
 ```bash
 pip install "transformers>=4.37.0"
