@@ -74,7 +74,7 @@
   - [x] [Qwen-7B-chat 低精度训练](./Qwen/08-Qwen-7B-Chat%20Lora%20低精度微调.md) @ Hongru0306 ddl=12.11
   - [x] [Qwen-1_8B-chat CPU 部署](./Qwen/09-Qwen-1_8B-chat%20CPU%20部署%20.md) @ 散步
 
-- Qwen 1.5
+- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
   - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
   - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
