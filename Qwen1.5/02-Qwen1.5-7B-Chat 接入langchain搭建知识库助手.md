@@ -1,4 +1,4 @@
-# Qwen1.5-4B-Chat 接入 LangChain 搭建知识库助手  
+# Qwen1.5-7B-Chat 接入 LangChain 搭建知识库助手  
 
 ## 环境准备  
 
@@ -24,14 +24,14 @@ pip install -U huggingface_hub
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 2 分钟。
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 14 GB，下载模型大概需要 2 分钟。
 
 ```python  
 
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen1.5-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 
@@ -92,7 +92,7 @@ class Qwen2_LLM(LLM):
 
 ```python
 from LLM import Qwen2_LLM
-llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-4B-Chat")
+llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-7B-Chat")
 llm("你是谁")
 ```
 

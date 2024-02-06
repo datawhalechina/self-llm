@@ -1,4 +1,4 @@
-# Qwen1.5-4B-Chat FastApi 部署调用
+# Qwen1.5-7B-Chat FastApi 部署调用
 
 ## 环境准备  
 
@@ -30,13 +30,13 @@ pip install transformers_stream_generator==0.0.4
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8GB，下载模型大概需要 2 分钟。
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 14GB，下载模型大概需要 2 分钟。
 
 ```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen1.5-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```  
 
 ## 代码准备  
@@ -105,7 +105,7 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    model_name_or_path = '/root/autodl-tmp/qwen/Qwen1.5-4B-Chat'
+    model_name_or_path = '/root/autodl-tmp/qwen/Qwen1.5-7B-Chat'
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
 

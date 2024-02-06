@@ -31,7 +31,7 @@ pip install transformers_stream_generator==0.0.4
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 from modelscope import GenerationConfig
-model_dir = snapshot_download('qwen/Qwen1.5-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 ## 代码准备
@@ -56,7 +56,7 @@ st.title("💬 Qwen1.5 Chatbot")
 st.caption("🚀 A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
-mode_name_or_path = '/CV/xhr_project/llm/model/qwen/Qwen1.5-4B-Chat'
+mode_name_or_path = '/root/autodl-tmp/qwen/Qwen1.5-7B-Chat'
 
 # 定义一个函数，用于获取模型和tokenizer
 @st.cache_resource
