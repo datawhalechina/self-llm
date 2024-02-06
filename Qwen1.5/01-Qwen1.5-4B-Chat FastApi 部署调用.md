@@ -1,4 +1,4 @@
-# Qwen2-beta-4B-Chat FastApi 部署调用
+# Qwen1.5-4B-Chat FastApi 部署调用
 
 ## 环境准备  
 
@@ -36,7 +36,7 @@ pip install transformers_stream_generator==0.0.4
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen2-beta-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen1.5-4B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```  
 
 ## 代码准备  
@@ -105,7 +105,7 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    model_name_or_path = '/root/autodl-tmp/qwen/Qwen2-beta-4B-Chat'
+    model_name_or_path = '/root/autodl-tmp/qwen/Qwen1.5-4B-Chat'
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
 
