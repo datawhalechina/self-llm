@@ -14,10 +14,10 @@
 在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
 
 ```bash
-pip install transformers==4.36.0.dev0
+pip install transformers==4.37.2
 pip install peft==0.4.0.dev0
 pip install datasets==2.10.1
-pip install accelerate==0.20.3
+pip install accelerate==0.21.0
 ```
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.jsonl)。
