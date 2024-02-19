@@ -47,19 +47,19 @@ args = TrainingArguments(
 
 
 if "__main__" == __name__:
-    os.chdir('/CV/xhr/xhr_project/LLM_learn/transformers-code-master/self-llm')
+    os.chdir('/root/self-llm')  # /root/self-llm 需改成自己 self-llm 项目的绝对路径
     # 处理数据集
     # 将JSON文件转换为CSV文件
-    df = pd.read_json('./huanhuan.json')
+    df = pd.read_json('./dataset/huanhuan.json')
     ds = Dataset.from_pandas(df)
     # 加载tokenizer
-    tokenizer = AutoTokenizer.from_pretrained('/CV/xhr/xhr_project/LLM_learn/transformers-code-master/model/Qwen-7B-Chat', use_fast=False, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/qwen/Qwen-7B-Chat', use_fast=False, trust_remote_code=True)
     tokenizer.pad_token_id = tokenizer.eod_id
     # 将数据集变化为token形式
     tokenized_id = ds.map(process_func, remove_columns=ds.column_names)
 
     # 创建模型并以半精度形式加载
-    model = AutoModelForCausalLM.from_pretrained('/CV/xhr/xhr_project/LLM_learn/transformers-code-master/model/Qwen-7B-Chat', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/qwen/Qwen-7B-Chat', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
     # model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
     # 加载lora参数
     model = get_peft_model(model, config)
