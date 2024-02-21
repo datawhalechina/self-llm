@@ -47,10 +47,10 @@
 ### 已支持模型
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
-  - [ ] gemma-7b-it FastApi 部署调用
-  - [ ] gemma-7b-it langchain 接入
-  - [ ] gemma-7b-it WebDemo 部署
-  - [ ] gemma-7b-it Peft Lora 微调
+  - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
+  - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
+  - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
+  - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
