@@ -46,6 +46,12 @@
 
 ### 已支持模型
 
+- [deepseek-coder](https://github.com/deepseek-ai/DeepSeek-Coder.git)
+  - [ ] deepseek-coder-7b-instruct-v1.5 FastApi 部署调用 @王小为 ddl=3月底
+  - [ ] deepseek-coder-7b-instruct-v1.5 langchain 接入 @王小为 ddl=3月底
+  - [ ] deepseek-coder-7b-instruct-v1.5 WebDemo 部署 @王小为 ddl=3月底
+  - [ ] deepseek-coder-7b-instruct-v1.5 Lora 微调 @王小为 ddl=3月底
+
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
