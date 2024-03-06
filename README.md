@@ -21,7 +21,7 @@
 
 >大模型（LLM）狭义上指基于深度学习算法进行训练的自然语言处理（NLP）模型，主要应用于自然语言理解和生成等领域，广义上还包括机器视觉（CV）大模型、多模态大模型和科学计算大模型等。
 
-&emsp;&emsp;百模大战正值火热，开源 LLM 层出不穷。如今国内外已经涌现了众多优秀开源 LLM，国外如 LLaMA、Alpaca，国内如 ChatGLM、BaiChuan、InternLM（书生·蒲语）等。开源 LLM 支持用户本地部署、私域微调，每一个人都可以在开源 LLM 的基础上打造专属于自己的独特大模型。
+&emsp;&emsp;百模大战正值火热，开源 LLM 层出不穷。如今国内外已经涌现了众多优秀开源 LLM，国外如 LLaMA、Alpaca，国内如 ChatGLM、BaiChuan、InternLM（书生·浦语）等。开源 LLM 支持用户本地部署、私域微调，每一个人都可以在开源 LLM 的基础上打造专属于自己的独特大模型。
 
 &emsp;&emsp;然而，当前普通学生和用户想要使用这些大模型，需要具备一定的技术能力，才能完成模型的部署和使用。对于层出不穷又各有特色的开源 LLM，想要快速掌握一个开源 LLM 的应用方法，是一项比较有挑战的任务。
 
@@ -47,8 +47,7 @@
 ### 已支持模型
 
 - [deepseek-coder](https://github.com/deepseek-ai/DeepSeek-Coder.git)
-  - [ ] deepseek-coder-7b-instruct-v1.5 FastApi 部署调用 @Swiftie ddl=3月底
-  - [ ] deepseek-coder-7b-instruct-v1.5 langchain 接入 @Swiftie ddl=3月底
+  - [ ] deepseek-coder-7b-instruct-v1.5 FastApi 部署调用 @不要葱姜蒜 ddl=3月底
   - [ ] deepseek-coder-7b-instruct-v1.5 WebDemo 部署 @Swiftie ddl=3月底
   - [ ] deepseek-coder-7b-instruct-v1.5 Lora 微调 @Swiftie ddl=3月底
 
