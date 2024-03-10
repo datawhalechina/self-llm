@@ -46,16 +46,22 @@
 
 ### 已支持模型
 
-- [deepseek-coder](https://github.com/deepseek-ai/DeepSeek-Coder.git)
-  - [ ] deepseek-coder-7b-instruct-v1.5 FastApi 部署调用 @不要葱姜蒜 ddl=3月底
-  - [ ] deepseek-coder-7b-instruct-v1.5 WebDemo 部署 @Swiftie ddl=3月底
-  - [ ] deepseek-coder-7b-instruct-v1.5 Lora 微调 @Swiftie ddl=3月底
-
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+
+- [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
+  - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat langchain 接入](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat WebDemo](./DeepSeek/03-DeepSeek-7B-chat%20WebDemo.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @ 不要葱姜蒜
+  - [x] [DeepSeek-MoE-16b-chat Transformers 部署调用](./DeepSeek/06-DeepSeek-MoE-16b-chat%20Transformer部署调用.md) @Kailigithub
+  - [x] [DeepSeek-MoE-16b-chat FastApi 部署调用](./DeepSeek/06-DeepSeek-MoE-16b-chat%20FastApi.md) @Kailigithub
+  - [x] [DeepSeek-coder-6.7b finetune colab](./DeepSeek/07-deepseek_fine_tune.ipynb) @[Swiftie](https://github.com/cswangxiaowei)
+  - [x] [Deepseek-coder-6.7b webdemo colab](./DeepSeek/08-deepseek_web_demo.ipynb) @[Swiftie](https://github.com/cswangxiaowei)
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
@@ -77,15 +83,6 @@
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
   - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
-
-- [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
-  - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
-  - [x] [DeepSeek-7B-chat langchain 接入](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @ 不要葱姜蒜
-  - [x] [DeepSeek-7B-chat WebDemo](./DeepSeek/03-DeepSeek-7B-chat%20WebDemo.md) @ 不要葱姜蒜
-  - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @ 不要葱姜蒜
-  - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @ 不要葱姜蒜
-  - [x] [DeepSeek-MoE-16b-chat Transformers 部署调用](./DeepSeek/06-DeepSeek-MoE-16b-chat%20Transformer部署调用.md) @Kailigithub
-  - [x] [DeepSeek-MoE-16b-chat FastApi 部署调用](./DeepSeek/06-DeepSeek-MoE-16b-chat%20FastApi.md) @Kailigithub
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
@@ -150,16 +147,17 @@
 
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-河南理工大学）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
-- [肖鸿儒](https://github.com/Hongru0306) （Datawhale意向成员-同济大学）
-- [李娇娇](https://github.com/Aphasia0515) （Datawhale意向成员-鲸英助教）
-- [小罗](https://github.com/lyj11111111) （Datawhale-鲸英助教）
+- [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
+- [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
+- [小罗](https://github.com/lyj11111111) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [Kailigithub](https://github.com/Kailigithub) （Datawhale-鲸英助教）
+- [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
-- [李柯辰]() （Datawhale成员）
-- [散步]() （Datawhale成员）
-- [惠佳豪]() （Datawhale-宣传大使）
+- [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
+- [散步](https://github.com/sanbuphy) （Datawhale成员）
+- [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
+- [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 ### 其他
 
 - 特别感谢[@Sm1les](https://github.com/Sm1les)对本项目的帮助与支持
