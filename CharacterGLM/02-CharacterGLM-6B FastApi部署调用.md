@@ -180,4 +180,4 @@ python api-requests.py
 }
 ```
 
-![alt text](1709650011260.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/f14d739e-addf-4b1b-bcf3-da4d714130fe)
