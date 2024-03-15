@@ -140,7 +140,8 @@ curl -X POST "http://127.0.0.1:6006" \
 
 调用示例结果如下图所示
 
-![alt text](a3367af175859d83496a0357d56daa6.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/c5568fe4-ae2a-4679-b795-f3fe17458310)
+
 
 也可以使用python中的requests库进行调用，新建api-requests.py文件，写入如下代码：
 
