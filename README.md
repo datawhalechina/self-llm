@@ -46,6 +46,12 @@
 
 ### 已支持模型
 
+- [InternLM2](https://github.com/InternLM/InternLM)
+  - [ ] InternLM2-7B-chat FastApi 部署调用
+  - [ ] InternLM2-7B-chat langchain 接入
+  - [ ] InternLM2-7B-chat WebDemo 部署
+  - [ ] InternLM2-7B-chat Xtuner Qlora 微调
+
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
