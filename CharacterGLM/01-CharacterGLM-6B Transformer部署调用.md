@@ -73,4 +73,5 @@ python trans.py
 
 观察命令行中loading checkpoint表示模型正在加载，等待模型加载完成产生对话，如下图所示
 
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/f9d65275-fa89-4039-95c5-7cc0615753e2)
 
