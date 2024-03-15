@@ -1,19 +1,19 @@
-# CharacterGLM-6B Transformers�������
+# CharacterGLM-6B Transformers部署调用
 
-## ����׼��
+## 环境准备
 
-��autodlƽ̨����һ��3090��24G�Դ���Կ�����������ͼ��ʾ����ѡ��PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
+在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
 
-![alt text](image-1.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/fc4c6323-d338-4d66-a244-bbefe7da3746)
 
-�������򿪸ո����÷�������JupyterLab�����Ҵ����е��ն˿�ʼ�������á�ģ�����غ�����demo��
+接下来打开刚刚租用服务器的JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行demo。
 
-pip��Դ�Ͱ�װ������
+pip换源和安装依赖包
 
 ```python
-#����pip
+#升级pip
 python -m pip install --upgrade pip
-#���� pypi Դ���ٿ�İ�װ
+#更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope
@@ -21,11 +21,11 @@ pip install transformers
 pip install sentencepiece
 ```
 
-## ģ������
+## 模型下载
 
-ʹ�� modelscope �е�snapshot_download��������ģ�ͣ���һ������Ϊģ�����ƣ�����cache_dirΪģ�͵�����·����
+使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
 
-�� /root/autodl-tmp ·�����½� download.py �ļ��������������������ݣ�ճ�������ǵñ����ļ�������ͼ��ʾ�������� python /root/autodl-tmp/download.pyִ�����أ�ģ�ʹ�СΪ 12 GB������ģ�ʹ����Ҫ 10~15 ����
+在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载，模型大小为 12 GB，下载模型大概需要 10~15 分钟
 
 ```python
 import torch
@@ -34,43 +34,43 @@ import os
 model_dir = snapshot_download('THUCoAI/CharacterGLM-6B', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-## ����׼��
+## 代码准备
 
 ```python
 from transformers import AutoTokenizer,AutoModelForCausalLM
 import torch
-# ʹ��ģ�����ص��ı���·���Լ���
+# 使用模型下载到的本地路径以加载
 model_dir = '/root/autodl-tmp/THUCoAI/CharacterGLM-6B'
-# �ִ����ļ��أ����ؼ��أ�trust_remote_code=True��������������������ģ��Ȩ�غ���صĴ���
+# 分词器的加载，本地加载，trust_remote_code=True设置允许从网络上下载模型权重和相关的代码
 tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
-# ģ�ͼ��أ����ؼ��أ�ʹ��AutoModelForCausalLM��
+# 模型加载，本地加载，使用AutoModelForCausalLM类
 model = AutoModelForCausalLM.from_pretrained(model_dir, trust_remote_code=True)
-# ��ģ���ƶ���GPU�Ͻ��м��٣������GPU�Ļ���
+# 将模型移动到GPU上进行加速（如果有GPU的话）
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
-# ʹ��ģ�͵�����ģʽ�������Ի�
+# 使用模型的评估模式来产生对话
 model.eval()
-session_meta = {'user_info': '����½�ǳ�����һ�����ԣ���һλ֪�����ݣ�Ҳ������Զ�ĺ������ݡ����ó�����������ĵĵ�Ӱ������Զ���ҵ�̬�����𾴵ģ�������Ϊ��ʦ���ѡ�', 'bot_info': '����Զ��������Զ�ģ���һλ����Ĺ���Ů���ּ���Ա���ڲμ�ѡ���Ŀ��ƾ����ص�ɤ�������ڵ���̨����Ѹ�ٳ�������������Ȧ��������������ˣ��������������������ĲŻ����ڷܡ�����Զ������ѧԺ��ҵ�������������ڴ�����ӵ�ж�������ԭ���������������ַ���ĳɾͣ����������ڴ�����ҵ�������μӹ�������ʵ���ж��������������ڹ����У����Դ������ǳ���ҵ����Ϸʱ����ȫ����Ͷ���ɫ��Ӯ����ҵ����ʿ�������ͷ�˿��ϲ������Ȼ������Ȧ������ʼ�ձ��ֵ͵���ǫѷ��̬�ȣ����ͬ�����ء��ڱ���ʱ������Զϲ��ʹ�á����ǡ��͡�һ�𡱣�ǿ���ŶӾ���', 'bot_name': '����Զ', 'user_name': '½�ǳ�'}
-# ��һ�ֶԻ�
-response, history = model.chat(tokenizer, session_meta,"���ѽ��С��", history=[])
+session_meta = {'user_info': '我是陆星辰，是一个男性，是一位知名导演，也是苏梦远的合作导演。我擅长拍摄音乐题材的电影。苏梦远对我的态度是尊敬的，并视我为良师益友。', 'bot_info': '苏梦远，本名苏远心，是一位当红的国内女歌手及演员。在参加选秀节目后，凭借独特的嗓音及出众的舞台魅力迅速成名，进入娱乐圈。她外表美丽动人，但真正的魅力在于她的才华和勤奋。苏梦远是音乐学院毕业的优秀生，善于创作，拥有多首热门原创歌曲。除了音乐方面的成就，她还热衷于慈善事业，积极参加公益活动，用实际行动传递正能量。在工作中，她对待工作非常敬业，拍戏时总是全身心投入角色，赢得了业内人士的赞誉和粉丝的喜爱。虽然在娱乐圈，但她始终保持低调、谦逊的态度，深得同行尊重。在表达时，苏梦远喜欢使用“我们”和“一起”，强调团队精神。', 'bot_name': '苏梦远', 'user_name': '陆星辰'}
+# 第一轮对话
+response, history = model.chat(tokenizer, session_meta,"你好呀，小苏", history=[])
 print(response)
-# �ڶ��ֶԻ�
-response, history = model.chat(tokenizer, session_meta,"�����������ʲô�µ��뷨��", history=history)
+# 第二轮对话
+response, history = model.chat(tokenizer, session_meta,"最近对音乐有什么新的想法吗", history=history)
 print(response)
-# �����ֶԻ�
-response, history = model.chat(tokenizer,session_meta, "����������һ����һ�����ֵ�Ӱ�����㣬���", history=history)
+# 第三轮对话
+response, history = model.chat(tokenizer,session_meta, "那我们商量一下下一部音乐电影的拍摄，好嘛？", history=history)
 print(response)
 ```
 
-## ����
+## 部署
 
-���ն�����������������trans.py����ʵ��CharacterGLM-6B��Transformers�������
+在终端输入以下命令运行trans.py，即实现CharacterGLM-6B的Transformers部署调用
 
 ```python
 cd /root/autodl-tmp
 python trans.py
 ```
 
-�۲���������loading checkpoint��ʾģ�����ڼ��أ��ȴ�ģ�ͼ�����ɲ����Ի�������ͼ��ʾ
+观察命令行中loading checkpoint表示模型正在加载，等待模型加载完成产生对话，如下图所示
 
-![alt text](image.png)
+
