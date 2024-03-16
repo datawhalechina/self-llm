@@ -11,11 +11,11 @@ InternLM2 ，即书生·浦语大模型第二代，开源了面向实用场景�
 
 在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8。
 
-![1710591481882](images/1710591481882.png)
+![3-1](images/3-1.png)
 
 接下来打开刚刚租用服务器的 JupyterLab，新建一个`Internlm2-7b-chat-web.ipynb`文件
 
-![1710593210067](images/1710593210067.png)
+![3-2](images/3-2.png)
 
 pip换源和安装依赖包，在ipynb文件里写入下面代码，点击运行
 
@@ -70,7 +70,7 @@ from modelscope import snapshot_download
 model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm2-chat-7b', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-![1710593157639](images/1710593157639.png)
+![3-3](images/3-3.png)
 
 ## 代码准备
 
@@ -89,7 +89,7 @@ git clone https://github.com/InternLM/InternLM.git
 unset http_proxy && unset https_proxy
 ```
 
-![1710592827552](images/1710592827552.png)
+![3-4](images/3-4.png)
 
 ### 安装依赖
 
@@ -104,7 +104,7 @@ pip install -r requirements.txt
 
 将 `/root/autodl-tmp/InternLM/chat/web_demo.py`中 183 行和 186 行的模型更换为本地的`/root/autodl-tmp/Shanghai_AI_Laboratory/internlm2-chat-7b`。
 
-![1710593997287](images/1710593997287.png)
+![3-5](images/3-5.png)
 
 修改完成之后，启动`web_demo.py`文件
 
@@ -114,7 +114,7 @@ cd /root/autodl-tmp/InternLM/
 streamlit run ./chat/web_demo.py
 ```
 
-![1710594084945](images/1710594084945.png)
+![3-6](images/3-6.png)
 
 此时，我们通过ssh端口转发，把`autodl`上启动的服务映射到本地端口上来，使用下面的命令。在本地打开`powershell`
 
@@ -123,8 +123,8 @@ ssh -CNg -L 8501:127.0.0.1:8501 -p 【你的autodl机器的ssh端口】 root@[�
 ssh -CNg -L 8501:127.0.0.1:8501 -p 36494 root@region-45.autodl.pro
 ```
 
-![1710594276639](images/1710594276639.png)
+![3-7](images/3-7.png)
 
 在加载完模型之后，就可以既可与InternLM2-Chat-7B进行对话了，如下图所示：
 
-![1710594364995](images/1710594364995.png)
+![3-8](images/3-8.png)
