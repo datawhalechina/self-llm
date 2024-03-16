@@ -1,4 +1,11 @@
-# Qwen1.5-7B-Chat FastApi 部署调用
+# InternLM2-7B-chat FastAPI 部署
+
+nternLM2 ，即书生·浦语大模型第二代，开源了面向实用场景的70亿参数基础模型与对话模型 （InternLM2-Chat-7B）。模型具有以下特点：
+
+- 有效支持20万字超长上下文：模型在20万字长输入中几乎完美地实现长文“大海捞针”，而且在 LongBench 和 L-Eval 等长文任务中的表现也达到开源模型中的领先水平。 可以通过 LMDeploy 尝试20万字超长上下文推理。
+- 综合性能全面提升：各能力维度相比上一代模型全面进步，在推理、数学、代码、对话体验、指令遵循和创意写作等方面的能力提升尤为显著，综合性能达到同量级开源模型的领先水平，在重点能力评测上 InternLM2-Chat-20B 能比肩甚至超越 ChatGPT （GPT-3.5）。
+- 代码解释器与数据分析：在配合代码解释器（code-interpreter）的条件下，InternLM2-Chat-20B 在 GSM8K 和 MATH 上可以达到和 GPT-4 相仿的水平。基于在数理和工具方面强大的基础能力，InternLM2-Chat 提供了实用的数据分析能力。
+- 工具调用能力整体升级：基于更强和更具有泛化性的指令理解、工具筛选与结果反思等能力，新版模型可以更可靠地支持复杂智能体的搭建，支持对工具进行有效的多轮调用，完成较复杂的任务。
 
 ## 环境准备  
 
@@ -36,7 +43,7 @@ pip install transformers_stream_generator==0.0.4
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm2-chat-7b', cache_dir='/root/autodl-tmp', revision='master')
 ```  
 
 ## 代码准备  
@@ -74,20 +81,9 @@ async def create_item(request: Request):
     json_post = json.dumps(json_post_raw)  # 将JSON数据转换为字符串
     json_post_list = json.loads(json_post)  # 将字符串转换为Python对象
     prompt = json_post_list.get('prompt')  # 获取请求中的提示
-
-    messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-    ]
-
-    # 调用模型进行对话生成
-    input_ids = tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
-    model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
-    generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=512)
-    generated_ids = [
-        output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-    ]
-    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+    
+    response, history = model.chat(tokenizer, prompt, history=[])
+    
     now = datetime.datetime.now()  # 获取当前时间
     time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
     # 构建响应JSON
@@ -105,14 +101,14 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    model_name_or_path = '/root/autodl-tmp/qwen/Qwen1.5-7B-Chat'
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
-    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
+    tokenizer = AutoTokenizer.from_pretrained("Shanghai_AI_Laboratory/internlm2-chat-7b", trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained("Shanghai_AI_Laboratory/internlm2-chat-7b", torch_dtype=torch.float16, trust_remote_code=True).cuda()
+    model = model.eval()
 
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
-```  
+``` 
 
 ## Api 部署  
 
@@ -157,4 +153,4 @@ if __name__ == '__main__':
 {"response":"你好！有什么我可以帮助你的吗？","status":200,"time":"2024-02-05 18:08:19"}
 ```  
 
-![Alt text](images/6.png)
+![Alt text](images/3.png)
