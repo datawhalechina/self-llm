@@ -48,7 +48,7 @@
 
 - [InternLM2](https://github.com/InternLM/InternLM)
   - [x] [InternLM2-7B-chat FastApi 部署调用](./InternLM2/01-InternLM2-7B-chat%20FastAPI部署.md) @ 不要葱姜蒜
-  - [ ] InternLM2-7B-chat langchain 接入
+  - [x] [InternLM2-7B-chat langchain 接入](./InternLM2/02-InternLM2-7B-chat%20langchain%20接入.md) @ 不要葱姜蒜
   - [ ] InternLM2-7B-chat WebDemo 部署
   - [ ] InternLM2-7B-chat Xtuner Qlora 微调
 
