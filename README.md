@@ -15,6 +15,8 @@
 
 &emsp;&emsp;想要深度参与的同学可以联系我们，我们会将你加入到项目的维护者中。
 
+> &emsp;&emsp;***学习建议：本项目的学习建议是，先学习环境配置，然后再学习模型的部署使用，最后再学习微调。因为环境配置是基础，模型的部署使用是基础，微调是进阶。初学者可以选择Qwen1.5，InternLM2，MiniCPM等模型优先学习。***
+
 ## 项目意义
 
 &emsp;&emsp;什么是大模型？
@@ -83,14 +85,6 @@
   - [x] [MiniCPM-2B-chat webdemo 部署](./MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
   - [x] [MiniCPM-2B-chat Lora && Full 微调](./MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
 
-- [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
-  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
-  - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
-  - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
-  - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
-  - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
-
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
   - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @ jjyaoao
@@ -131,6 +125,14 @@
   - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
   - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @ jjyaoao
   - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @ Logan Zou
+
+- [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
+  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
+  - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
 
 ### 通用环境配置
 
