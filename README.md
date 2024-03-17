@@ -50,7 +50,7 @@
   - [x] [InternLM2-7B-chat FastApi 部署调用](./InternLM2/01-InternLM2-7B-chat%20FastAPI部署.md) @ 不要葱姜蒜
   - [x] [InternLM2-7B-chat langchain 接入](./InternLM2/02-InternLM2-7B-chat%20langchain%20接入.md) @ 不要葱姜蒜
   - [x] [InternLM2-7B-chat WebDemo 部署](./InternLM2/03-InternLM2-7B-chat%20WebDemo%20部署.md) @ 白玉
-  - [ ] InternLM2-7B-chat Xtuner Qlora 微调
+  - [x] [InternLM2-7B-chat Xtuner Qlora 微调](./InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20微调.md) @ 白玉
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
