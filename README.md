@@ -1,5 +1,3 @@
-# 开源大模型食用指南
-
 <div align=center>
   <img src="./images/head-img.png" >
   <h1>开源大模型使用指南</h1>
