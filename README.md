@@ -49,6 +49,12 @@
 
 ### 已支持模型
 
+- [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
+  - [ ] TransNormerLLM-7B-Chat FastApi 部署调用 @[ml67](https://github.com/mlw67) ddl=3月底
+  - [ ] TransNormerLLM-7B-Chat langchain 接入 @[ml67](https://github.com/mlw67) ddl=3月底
+  - [ ] TransNormerLLM-7B-Chat WebDemo 部署 @[ml67](https://github.com/mlw67) ddl=3月底
+  - [ ] TransNormerLLM-7B-Chat Lora 微调 @[ml67](https://github.com/mlw67) ddl=3月底ß
+
 - [BlueLM Vivo 蓝心大模型](https://github.com/vivo-ai-lab/BlueLM.git)
   - [ ] BlueLM-7B-Chat FatApi 部署调用 @[acwwt](https://github.com/acwwt) ddl=3月底
   - [ ] BlueLM-7B-Chat langchain 接入 @[acwwt](https://github.com/acwwt) ddl=3月底
