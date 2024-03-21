@@ -83,7 +83,7 @@ streamlit run ./web_demo2.py --server.address 127.0.0.1 --server.port 6006
 
 ## 命令行运行
 
-修改代码路径，将 /root/autodl-tmp/CharacterGLM-6B/basic_demo/cli_demo.py中第20行的模型更换为本地的/root/autodl-tmp/THUCoAI/CharacterGLM-6B
+修改代码路径，将 /root/autodl-tmp/CharacterGLM-6B/basic_demo/cli_demo.py中的模型路径更换为本地的/root/autodl-tmp/THUCoAI/CharacterGLM-6B
 
 在终端运行以下命令即可启动推理服务
 
@@ -92,4 +92,5 @@ cd /root/autodl-tmp/CharacterGLM-6B/basic_demo
 python ./cli_demo.py 
 ```
 
-![alt text](../image/03-运行clidemo.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/1eb29dd5-8bae-458f-908f-f7388ae248c0)
+
