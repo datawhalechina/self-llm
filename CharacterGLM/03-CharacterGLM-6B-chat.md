@@ -78,7 +78,8 @@ streamlit run ./web_demo2.py --server.address 127.0.0.1 --server.port 6006
 
 在浏览器打开 http://localhost:6006 界面，模型加载，即可使用，如下图所示。
 
-![alt text](../image/03-webdemo_show.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/ac7a9887-4628-4539-9297-caccfb523530)
+
 
 ## 命令行运行
 
