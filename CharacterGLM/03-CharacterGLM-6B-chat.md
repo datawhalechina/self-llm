@@ -54,7 +54,8 @@ git clone https://github.com/thu-coai/CharacterGLM-6B
 
 修改代码路径，将 /root/autodl-tmp/CharacterGLM-6B/basic_demo/web_demo_streamlit.py中第20行的模型更换为本地的/root/autodl-tmp/THUCoAI/CharacterGLM-6B
 
-![alt text](../image/03-修改路径.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/1edc97a2-3d6e-43e3-b176-644b756b615f)
+
 
 修改requirements.txt文件，将其中的torch删掉，环境中已经有了torch，不需要再安装。然后执行下面的命令：
 
