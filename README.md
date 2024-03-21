@@ -1,6 +1,7 @@
-# 开源大模型食用指南
-
-## 项目简介
+<div align=center>
+  <img src="./images/head-img.png" >
+  <h1>开源大模型使用指南</h1>
+</div>
 
 &emsp;&emsp;本项目是一个围绕开源大模型、针对国内初学者、基于 AutoDL 平台的中国宝宝专属大模型教程，针对各类开源大模型提供包括环境配置、本地部署、高效微调等技能在内的全流程指导，简化开源大模型的部署、使用和应用流程，让更多的普通学生、研究者更好地使用开源大模型，帮助开源、自由的大模型更快融入到普通学习者的生活中。
 
@@ -14,6 +15,8 @@
 &emsp;&emsp;**项目的主要内容就是教程，让更多的学生和未来的从业者了解和熟悉开源大模型的食用方法！任何人都可以提出issue或是提交PR，共同构建维护这个项目。**
 
 &emsp;&emsp;想要深度参与的同学可以联系我们，我们会将你加入到项目的维护者中。
+
+> &emsp;&emsp;***学习建议：本项目的学习建议是，先学习环境配置，然后再学习模型的部署使用，最后再学习微调。因为环境配置是基础，模型的部署使用是基础，微调是进阶。初学者可以选择Qwen1.5，InternLM2，MiniCPM等模型优先学习。***
 
 ## 项目意义
 
@@ -46,17 +49,36 @@
 
 ### 已支持模型
 
-- [InternLM2](https://github.com/InternLM/InternLM)
-  - [ ] InternLM2-7B-chat FastApi 部署调用
-  - [ ] InternLM2-7B-chat langchain 接入
-  - [ ] InternLM2-7B-chat WebDemo 部署
-  - [ ] InternLM2-7B-chat Xtuner Qlora 微调
+- [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
+  - [ ] TransNormerLLM-7B-Chat FastApi 部署调用 @[ml67](https://github.com/mlw67) ddl=3月底
+  - [ ] TransNormerLLM-7B-Chat langchain 接入 @[ml67](https://github.com/mlw67) ddl=3月底
+  - [ ] TransNormerLLM-7B-Chat WebDemo 部署 @[ml67](https://github.com/mlw67) ddl=3月底
+  - [ ] TransNormerLLM-7B-Chat Lora 微调 @[ml67](https://github.com/mlw67) ddl=3月底ß
+
+- [BlueLM Vivo 蓝心大模型](https://github.com/vivo-ai-lab/BlueLM.git)
+  - [ ] BlueLM-7B-Chat FatApi 部署调用 @[acwwt](https://github.com/acwwt) ddl=3月底
+  - [ ] BlueLM-7B-Chat langchain 接入 @[acwwt](https://github.com/acwwt) ddl=3月底
+  - [ ] BlueLM-7B-Chat WebDemo 部署 @[acwwt](https://github.com/acwwt) ddl=3月底
+  - [ ] BlueLM-7B-Chat Lora 微调 @[acwwt](https://github.com/acwwt) ddl=3月底
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+
+- [InternLM2](https://github.com/InternLM/InternLM)
+  - [x] [InternLM2-7B-chat FastApi 部署调用](./InternLM2/01-InternLM2-7B-chat%20FastAPI部署.md) @ 不要葱姜蒜
+  - [x] [InternLM2-7B-chat langchain 接入](./InternLM2/02-InternLM2-7B-chat%20langchain%20接入.md) @ 不要葱姜蒜
+  - [x] [InternLM2-7B-chat WebDemo 部署](./InternLM2/03-InternLM2-7B-chat%20WebDemo%20部署.md) @ 白玉
+  - [x] [InternLM2-7B-chat Xtuner Qlora 微调](./InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20微调.md) @ 白玉
+
+- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
+  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
 
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
   - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
@@ -69,26 +91,12 @@
   - [x] [DeepSeek-coder-6.7b finetune colab](./DeepSeek/07-deepseek_fine_tune.ipynb) @[Swiftie](https://github.com/cswangxiaowei)
   - [x] [Deepseek-coder-6.7b webdemo colab](./DeepSeek/08-deepseek_web_demo.ipynb) @[Swiftie](https://github.com/cswangxiaowei)
 
-- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
-  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
-
 - [MiniCPM](https://github.com/OpenBMB/MiniCPM.git)
   - [x] [MiniCPM-2B-chat transformers 部署调用](./MiniCPM/MiniCPM-2B-chat%20transformers%20部署调用.md) @Kailigithub 
   - [x] [MiniCPM-2B-chat FastApi 部署调用](./MiniCPM/MiniCPM-2B-chat%20FastApi%20部署调用.md) @Kailigithub 
   - [x] [MiniCPM-2B-chat langchain 接入](./MiniCPM/MiniCPM-2B-chat%20langchain接入.md) @不要葱姜蒜 
   - [x] [MiniCPM-2B-chat webdemo 部署](./MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
   - [x] [MiniCPM-2B-chat Lora && Full 微调](./MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
-
-- [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
-  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
-  - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
-  - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
-  - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
-  - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @ jjyaoao
@@ -130,6 +138,14 @@
   - [x] [Atom-7B-chat Lora](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) 微调 @ Logan Zou
   - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @ jjyaoao
   - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @ Logan Zou
+
+- [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
+  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
+  - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
 
 ### 通用环境配置
 
@@ -181,5 +197,5 @@
 ### Star History
 
 <div align=center style="margin-top: 30px;">
-  <img src="images/star-history-2024310.png"/>
+  <img src="./images/star-history-2024318.png"/>
 </div>
