@@ -71,7 +71,8 @@ cd /root/autodl-tmp/CharacterGLM-6B/basic_demo
 streamlit run ./web_demo2.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-![alt text](../image/03-运行webdemo.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/2fff8bd4-6d4b-449f-81ee-dc9e42b8ceb8)
+
 
 在将 autodl 的端口映射到本地的 http://localhost:6006 后，即可看到demo界面。具体映射步骤参考文档General-Setting文件夹下/02-AutoDL开放端口.md文档。
 
