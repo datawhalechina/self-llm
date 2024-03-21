@@ -1,30 +1,31 @@
 # CharacterGLM-6B-chat
 
-## »·¾³×¼±¸
+## ç¯å¢ƒå‡†å¤‡
 
-ÔÚautodlÆ½Ì¨ÖĞ×âÒ»¸ö3090µÈ24GÏÔ´æµÄÏÔ¿¨»úÆ÷£¬ÈçÏÂÍ¼ËùÊ¾¾µÏñÑ¡ÔñPyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
+åœ¨autodlå¹³å°ä¸­ç§Ÿä¸€ä¸ª3090ç­‰24Gæ˜¾å­˜çš„æ˜¾å¡æœºå™¨ï¼Œå¦‚ä¸‹å›¾æ‰€ç¤ºé•œåƒé€‰æ‹©PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8
 
-![alt text](image-1.png)
+![image](https://github.com/suncaleb1/self-llm/assets/155936975/0dddbee9-df80-4033-9568-185ea585f261)
 
-½ÓÏÂÀ´´ò¿ª¸Õ¸Õ×âÓÃ·şÎñÆ÷µÄJupyterLab£¬²¢ÇÒ´ò¿ªÆäÖĞµÄÖÕ¶Ë¿ªÊ¼»·¾³ÅäÖÃ¡¢Ä£ĞÍÏÂÔØºÍÔËĞĞdemo¡£
 
-pip»»Ô´ºÍ°²×°ÒÀÀµ°ü
+æ¥ä¸‹æ¥æ‰“å¼€åˆšåˆšç§Ÿç”¨æœåŠ¡å™¨çš„JupyterLabï¼Œå¹¶ä¸”æ‰“å¼€å…¶ä¸­çš„ç»ˆç«¯å¼€å§‹ç¯å¢ƒé…ç½®ã€æ¨¡å‹ä¸‹è½½å’Œè¿è¡Œdemoã€‚
+
+pipæ¢æºå’Œå®‰è£…ä¾èµ–åŒ…
 
 ```python
-# Éı¼¶pip
+# å‡çº§pip
 python -m pip install --upgrade pip
-# ¸ü»» pypi Ô´¼ÓËÙ¿âµÄ°²×°
+# æ›´æ¢ pypi æºåŠ é€Ÿåº“çš„å®‰è£…
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope
 pip install transformers
 ```
 
-## Ä£ĞÍÏÂÔØ
+## æ¨¡å‹ä¸‹è½½
 
-Ê¹ÓÃ modelscope ÖĞµÄsnapshot_downloadº¯ÊıÏÂÔØÄ£ĞÍ£¬µÚÒ»¸ö²ÎÊıÎªÄ£ĞÍÃû³Æ£¬²ÎÊıcache_dirÎªÄ£ĞÍµÄÏÂÔØÂ·¾¶¡£
+ä½¿ç”¨ modelscope ä¸­çš„snapshot_downloadå‡½æ•°ä¸‹è½½æ¨¡å‹ï¼Œç¬¬ä¸€ä¸ªå‚æ•°ä¸ºæ¨¡å‹åç§°ï¼Œå‚æ•°cache_dirä¸ºæ¨¡å‹çš„ä¸‹è½½è·¯å¾„ã€‚
 
-ÔÚ /root/autodl-tmp Â·¾¶ÏÂĞÂ½¨ download.py ÎÄ¼ş²¢ÔÚÆäÖĞÊäÈëÒÔÏÂÄÚÈİ£¬Õ³Ìù´úÂëºó¼ÇµÃ±£´æÎÄ¼ş£¬ÈçÏÂÍ¼ËùÊ¾¡£²¢ÔËĞĞ python /root/autodl-tmp/download.pyÖ´ĞĞÏÂÔØ£¬Ä£ĞÍ´óĞ¡Îª 12 GB£¬ÏÂÔØÄ£ĞÍ´ó¸ÅĞèÒª 10~15 ·ÖÖÓ
+åœ¨ /root/autodl-tmp è·¯å¾„ä¸‹æ–°å»º download.py æ–‡ä»¶å¹¶åœ¨å…¶ä¸­è¾“å…¥ä»¥ä¸‹å†…å®¹ï¼Œç²˜è´´ä»£ç åè®°å¾—ä¿å­˜æ–‡ä»¶ï¼Œå¦‚ä¸‹å›¾æ‰€ç¤ºã€‚å¹¶è¿è¡Œ python /root/autodl-tmp/download.pyæ‰§è¡Œä¸‹è½½ï¼Œæ¨¡å‹å¤§å°ä¸º 12 GBï¼Œä¸‹è½½æ¨¡å‹å¤§æ¦‚éœ€è¦ 10~15 åˆ†é’Ÿ
 
 ```python
 import torch
@@ -33,59 +34,59 @@ import os
 model_dir = snapshot_download('THUCoAI/CharacterGLM-6B', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-## ´úÂë×¼±¸
+## ä»£ç å‡†å¤‡
 
-Ê×ÏÈclone´úÂë£¬´ò¿ªautodlÆ½Ì¨×Ô´øµÄÑ§Êõ¾µÏñ¼ÓËÙ¡£Ñ§Êõ¾µÏñ¼ÓËÙÏêÏ¸Ê¹ÓÃÇë¿´£º
+é¦–å…ˆcloneä»£ç ï¼Œæ‰“å¼€autodlå¹³å°è‡ªå¸¦çš„å­¦æœ¯é•œåƒåŠ é€Ÿã€‚å­¦æœ¯é•œåƒåŠ é€Ÿè¯¦ç»†ä½¿ç”¨è¯·çœ‹ï¼š
 https://www.autodl.com/docs/network_turbo/
 
 ```python
 source /etc/network_turbo
 ```
 
-È»ºóÇĞ»»Â·¾¶, clone´úÂë.
+ç„¶ååˆ‡æ¢è·¯å¾„, cloneä»£ç .
 
 ```python
 cd /root/autodl-tmp
 git clone https://github.com/thu-coai/CharacterGLM-6B
 ```
 
-## demoÔËĞĞ
+## demoè¿è¡Œ
 
-ĞŞ¸Ä´úÂëÂ·¾¶£¬½« /root/autodl-tmp/CharacterGLM-6B/basic_demo/web_demo_streamlit.pyÖĞµÚ20ĞĞµÄÄ£ĞÍ¸ü»»Îª±¾µØµÄ/root/autodl-tmp/THUCoAI/CharacterGLM-6B
+ä¿®æ”¹ä»£ç è·¯å¾„ï¼Œå°† /root/autodl-tmp/CharacterGLM-6B/basic_demo/web_demo_streamlit.pyä¸­ç¬¬20è¡Œçš„æ¨¡å‹æ›´æ¢ä¸ºæœ¬åœ°çš„/root/autodl-tmp/THUCoAI/CharacterGLM-6B
 
-![alt text](../image/03-ĞŞ¸ÄÂ·¾¶.png)
+![alt text](../image/03-ä¿®æ”¹è·¯å¾„.png)
 
-ĞŞ¸Ärequirements.txtÎÄ¼ş£¬½«ÆäÖĞµÄtorchÉ¾µô£¬»·¾³ÖĞÒÑ¾­ÓĞÁËtorch£¬²»ĞèÒªÔÙ°²×°¡£È»ºóÖ´ĞĞÏÂÃæµÄÃüÁî£º
+ä¿®æ”¹requirements.txtæ–‡ä»¶ï¼Œå°†å…¶ä¸­çš„torchåˆ æ‰ï¼Œç¯å¢ƒä¸­å·²ç»æœ‰äº†torchï¼Œä¸éœ€è¦å†å®‰è£…ã€‚ç„¶åæ‰§è¡Œä¸‹é¢çš„å‘½ä»¤ï¼š
 
 ```python
 cd /root/autodl-tmp/CharacterGLM-6B
 pip install -r requirements.txt
 ```
 
-ÔÚÖÕ¶ËÔËĞĞÒÔÏÂÃüÁî¼´¿ÉÆô¶¯ÍÆÀí·şÎñ,¾¡Á¿cdµ½basic_demoÎÄ¼ş¼ĞÏÂ£¬·ÀÖ¹ÕÒ²»µ½character.jsonÎÄ¼ş
+åœ¨ç»ˆç«¯è¿è¡Œä»¥ä¸‹å‘½ä»¤å³å¯å¯åŠ¨æ¨ç†æœåŠ¡,å°½é‡cdåˆ°basic_demoæ–‡ä»¶å¤¹ä¸‹ï¼Œé˜²æ­¢æ‰¾ä¸åˆ°character.jsonæ–‡ä»¶
 
 ```python
 cd /root/autodl-tmp/CharacterGLM-6B/basic_demo
 streamlit run ./web_demo2.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-![alt text](../image/03-ÔËĞĞwebdemo.png)
+![alt text](../image/03-è¿è¡Œwebdemo.png)
 
-ÔÚ½« autodl µÄ¶Ë¿ÚÓ³Éäµ½±¾µØµÄ http://localhost:6006 ºó£¬¼´¿É¿´µ½demo½çÃæ¡£¾ßÌåÓ³Éä²½Öè²Î¿¼ÎÄµµGeneral-SettingÎÄ¼ş¼ĞÏÂ/02-AutoDL¿ª·Å¶Ë¿Ú.mdÎÄµµ¡£
+åœ¨å°† autodl çš„ç«¯å£æ˜ å°„åˆ°æœ¬åœ°çš„ http://localhost:6006 åï¼Œå³å¯çœ‹åˆ°demoç•Œé¢ã€‚å…·ä½“æ˜ å°„æ­¥éª¤å‚è€ƒæ–‡æ¡£General-Settingæ–‡ä»¶å¤¹ä¸‹/02-AutoDLå¼€æ”¾ç«¯å£.mdæ–‡æ¡£ã€‚
 
-ÔÚä¯ÀÀÆ÷´ò¿ª http://localhost:6006 ½çÃæ£¬Ä£ĞÍ¼ÓÔØ£¬¼´¿ÉÊ¹ÓÃ£¬ÈçÏÂÍ¼ËùÊ¾¡£
+åœ¨æµè§ˆå™¨æ‰“å¼€ http://localhost:6006 ç•Œé¢ï¼Œæ¨¡å‹åŠ è½½ï¼Œå³å¯ä½¿ç”¨ï¼Œå¦‚ä¸‹å›¾æ‰€ç¤ºã€‚
 
 ![alt text](../image/03-webdemo_show.png)
 
-## ÃüÁîĞĞÔËĞĞ
+## å‘½ä»¤è¡Œè¿è¡Œ
 
-ĞŞ¸Ä´úÂëÂ·¾¶£¬½« /root/autodl-tmp/CharacterGLM-6B/basic_demo/cli_demo.pyÖĞµÚ20ĞĞµÄÄ£ĞÍ¸ü»»Îª±¾µØµÄ/root/autodl-tmp/THUCoAI/CharacterGLM-6B
+ä¿®æ”¹ä»£ç è·¯å¾„ï¼Œå°† /root/autodl-tmp/CharacterGLM-6B/basic_demo/cli_demo.pyä¸­ç¬¬20è¡Œçš„æ¨¡å‹æ›´æ¢ä¸ºæœ¬åœ°çš„/root/autodl-tmp/THUCoAI/CharacterGLM-6B
 
-ÔÚÖÕ¶ËÔËĞĞÒÔÏÂÃüÁî¼´¿ÉÆô¶¯ÍÆÀí·şÎñ
+åœ¨ç»ˆç«¯è¿è¡Œä»¥ä¸‹å‘½ä»¤å³å¯å¯åŠ¨æ¨ç†æœåŠ¡
 
 ```python
 cd /root/autodl-tmp/CharacterGLM-6B/basic_demo
 python ./cli_demo.py 
 ```
 
-![alt text](../image/03-ÔËĞĞclidemo.png)
+![alt text](../image/03-è¿è¡Œclidemo.png)
