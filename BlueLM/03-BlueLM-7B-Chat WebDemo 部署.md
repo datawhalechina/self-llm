@@ -10,7 +10,7 @@ BlueLM-7B 是由 vivo AI 全球研究院自主研发的大规模预训练语言�
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | 🤗 [BlueLM-7B-Base](https://huggingface.co/vivo-ai/BlueLM-7B-Base) | 🤗 [BlueLM-7B-Chat](https://huggingface.co/vivo-ai/BlueLM-7B-Chat) |
 | 🤗 [BlueLM-7B-Base-32K](https://huggingface.co/vivo-ai/BlueLM-7B-Base-32K) | 🤗 [BlueLM-7B-Chat-32K](https://huggingface.co/vivo-ai/BlueLM-7B-Chat-32K) |
-|                                                              |                  🤗 [BlueLM-7B-Chat-4bits](                   |
+|                                                              |                  🤗 [BlueLM-7B-Chat-4bits](https://huggingface.co/vivo-ai/BlueLM-7B-Chat-4bits)                   |
 
 ## 环境准备
 

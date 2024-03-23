@@ -55,17 +55,17 @@
   - [ ] TransNormerLLM-7B-Chat WebDemo 部署 @[ml67](https://github.com/mlw67) ddl=3月底
   - [ ] TransNormerLLM-7B-Chat Lora 微调 @[ml67](https://github.com/mlw67) ddl=3月底ß
 
-- [BlueLM Vivo 蓝心大模型](https://github.com/vivo-ai-lab/BlueLM.git)
-  - [ ] BlueLM-7B-Chat FatApi 部署调用 @[acwwt](https://github.com/acwwt) ddl=3月底
-  - [ ] BlueLM-7B-Chat langchain 接入 @[acwwt](https://github.com/acwwt) ddl=3月底
-  - [ ] BlueLM-7B-Chat WebDemo 部署 @[acwwt](https://github.com/acwwt) ddl=3月底
-  - [ ] BlueLM-7B-Chat Lora 微调 @[acwwt](https://github.com/acwwt) ddl=3月底
-
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+
+- [BlueLM Vivo 蓝心大模型](https://github.com/vivo-ai-lab/BlueLM.git)
+  - [x] [BlueLM-7B-Chat FatApi 部署调用](./BlueLM/01-BlueLM-7B-Chat%20FastApi%20部署.md) @[acwwt](https://github.com/acwwt) ddl=3月底
+  - [x] [BlueLM-7B-Chat langchain 接入](./BlueLM/02-BlueLM-7B-Chat%20langchain%20接入.md) @[acwwt](https://github.com/acwwt) ddl=3月底
+  - [x] [BlueLM-7B-Chat WebDemo 部署](./BlueLM/03-BlueLM-7B-Chat%20WebDemo%20部署.md) @[acwwt](https://github.com/acwwt) ddl=3月底
+  - [x] [BlueLM-7B-Chat Lora 微调](./BlueLM/04-BlueLM-7B-Chat%20Lora%20微调.md) @[acwwt](https://github.com/acwwt) ddl=3月底
 
 - [InternLM2](https://github.com/InternLM/InternLM)
   - [x] [InternLM2-7B-chat FastApi 部署调用](./InternLM2/01-InternLM2-7B-chat%20FastAPI部署.md) @ 不要葱姜蒜
