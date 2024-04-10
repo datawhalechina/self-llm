@@ -147,6 +147,11 @@
   - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
   - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @ Hongru0306
 
+### 镜像列表
+
+- [x] [AutoDL-Qwen1.5 环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5)
+
+
 ### 通用环境配置
 
 - [x] [pip、conda 换源](./General-Setting/01-pip、conda换源.md) @不要葱姜蒜
