@@ -17,12 +17,10 @@
 &emsp;&emsp;想要深度参与的同学可以联系我们，我们会将你加入到项目的维护者中。
 
 > &emsp;&emsp;***学习建议：本项目的学习建议是，先学习环境配置，然后再学习模型的部署使用，最后再学习微调。因为环境配置是基础，模型的部署使用是基础，微调是进阶。初学者可以选择Qwen1.5，InternLM2，MiniCPM等模型优先学习。***
-> 
-> &emsp;&emsp;***下列是Datawhale其他大模型优秀课程推荐，同学们可以按需学习哦~***
->
-> - [大模型理论学习：so-large-llm](https://github.com/datawhalechina/so-large-lm.git)
-> - [面向小白开发者的大模型应用开发教程：llm-universe](https://github.com/datawhalechina/llm-universe.git)
-> - [大模型多智能体教程：hugging-multi-agent](https://github.com/datawhalechina/hugging-multi-agent)
+
+> 注：考虑到有同学希望在学习本项目之前，希望学习大模型的理论部分，如果想要进一步深入学习 LLM 的理论基础，并在理论的基础上进一步认识、应用 LLM，可以参考 Datawhale 的 [so-large-llm](https://github.com/datawhalechina/so-large-lm.git)课程。
+
+> 注：如果有同学在学习本课程之后，想要自己动手开发大模型应用。同学们可以参考 Datawhale 的 [动手学大模型应用开发](https://github.com/datawhalechina/llm-universe) 课程，该项目是一个面向小白开发者的大模型应用开发教程，旨在基于阿里云服务器，结合个人知识库助手项目，向同学们完整的呈现大模型应用开发流程。
 
 ## 项目意义
 
