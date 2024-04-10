@@ -16,6 +16,7 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.11.0
+pip install langchain==0.1.15
 pip install "transformers>=4.37.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
 pip install -U huggingface_hub
 ```  
