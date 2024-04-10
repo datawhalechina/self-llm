@@ -17,6 +17,12 @@
 &emsp;&emsp;想要深度参与的同学可以联系我们，我们会将你加入到项目的维护者中。
 
 > &emsp;&emsp;***学习建议：本项目的学习建议是，先学习环境配置，然后再学习模型的部署使用，最后再学习微调。因为环境配置是基础，模型的部署使用是基础，微调是进阶。初学者可以选择Qwen1.5，InternLM2，MiniCPM等模型优先学习。***
+> 
+> &emsp;&emsp;***下列是Datawhale其他大模型优秀课程推荐，同学们可以按需学习哦~***
+>
+> - [大模型理论学习：so-large-llm](https://github.com/datawhalechina/so-large-lm.git)
+> - [面向小白开发者的大模型应用开发教程：llm-universe](https://github.com/datawhalechina/llm-universe.git)
+> - [大模型多智能体教程：hugging-multi-agent](https://github.com/datawhalechina/hugging-multi-agent)
 
 ## 项目意义
 
