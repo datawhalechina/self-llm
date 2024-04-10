@@ -36,7 +36,7 @@ pip install markdown==3.3.7
 
 同时，我们还需要使用到开源词向量模型 [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) 。
 
-这里使用 huggingface 镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载。
+这里使用 Hugging Face 镜像下载到本地 /root/autodl-tmp/embedding_model，你也可以选择其它的方式下载。
 
 在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载。
 
@@ -147,7 +147,7 @@ split_docs = text_splitter.split_documents(docs)
 
 接着我们选用开源词向量模型  [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) 来进行文本向量化。
 
-LangChain 提供了直接引入 HuggingFace 开源社区中的模型进行向量化的接口：  
+LangChain 提供了直接引入 Hugging Face 开源社区中的模型进行向量化的接口：  
 
 ```python
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
