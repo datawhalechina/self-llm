@@ -191,6 +191,7 @@
 - [郑皓桦（白玉）](https://github.com/BaiYu96) （内容创作者）
 - [郭志航](https://github.com/acwwt) （内容创作者）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
+
 ### 其他
 
 - 特别感谢[@Sm1les](https://github.com/Sm1les)对本项目的帮助与支持
