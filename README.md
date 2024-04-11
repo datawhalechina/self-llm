@@ -199,7 +199,6 @@
 - 如果有任何想法可以联系我们 DataWhale 也欢迎大家多多提出 issue
 - 特别感谢以下为教程做出贡献的同学！
 
-
 <div align=center style="margin-top: 30px;">
   <a href="https://github.com/datawhalechina/self-llm/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=datawhalechina/self-llm" />
