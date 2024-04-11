@@ -37,9 +37,9 @@ TransNormer 中的较低层使用了 DiagAttention 来避免 dilution 问题。�
 
 打开Python的终端（Terminal）界面
 
-![Python终端](images/Python-terminal.png)
+![Python终端](images/python-terminal.png)
 左击红色框的部分,进入Python的终端控制台
-![Python终端](images/Python-terminal2.png)
+![Python终端](images/python-terminal2.png)
 
 ### 2.2 pip 换源加速下载并安装依赖包
 
