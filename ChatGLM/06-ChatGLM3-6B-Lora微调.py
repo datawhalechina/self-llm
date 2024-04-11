@@ -48,7 +48,7 @@ if "__main__" == __name__:
     model = AutoModelForCausalLM.from_pretrained("/root/autodl-tmp/ZhipuAI/chatglm3-6b",torch_dtype=torch.half, trust_remote_code=True, low_cpu_mem_usage=True)
 
     # 创建loRA参数
-    config = LoraConfig(task_type=TaskType.CAUSAL_LM, target_modules={"query_key_value"}, r=8, lora_alpha=32)
+    config = LoraConfig(task_type=TaskType.CAUSAL_LM, target_modules=["query_key_value"], r=8, lora_alpha=32)
 
     # 模型合并
     model = get_peft_model(model, config)
