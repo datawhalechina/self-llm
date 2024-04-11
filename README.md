@@ -188,6 +188,8 @@
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
+- [郑皓桦（白玉）](https://github.com/BaiYu96) （内容创作者）
+- [郭志航](https://github.com/acwwt) （内容创作者）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 ### 其他
 
