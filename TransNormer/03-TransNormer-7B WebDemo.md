@@ -72,7 +72,7 @@ mode_name_or_path = '/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B'
 @st.cache_resource
 def get_model():
     # 从预训练的模型中获取tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
+    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True, use_fast=False)
     # 从预训练的模型中获取模型，并设置模型参数
     model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, trust_remote_code=True,  
     device_map="auto")

@@ -59,7 +59,7 @@ class TransNormer_LLM(LLM):
 
         super().__init__()
         print("正在从本地加载模型...")
-        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
+        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True, use_fast=False)
         self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, trust_remote_code=True, device_map="auto")
         self.model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
         print("完成本地模型的加载")

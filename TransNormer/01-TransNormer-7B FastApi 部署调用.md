@@ -35,10 +35,12 @@ TransNormer 中的较低层使用了 DiagAttention 来避免 dilution 问题。�
 
 ![开启机器配置选择](images/Machine-Config.png)
 
-打开Python的终端（Terminal）界面
+打开启动页的终端（Terminal）界面：
 
 ![Python终端](images/python-terminal.png)
-左击红色框的部分,进入Python的终端控制台
+
+左击红色框的部分,进入Python的终端控制台，如下图所示：
+
 ![Python终端](images/python-terminal2.png)
 
 ### 2.2 pip 换源加速下载并安装依赖包
@@ -182,7 +184,7 @@ async def create_item(request: Request):
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
     model_name_or_path = '/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B'
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True, use_fast=False)
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", trust_remote_code=True, torch_dtype=torch.bfloat16)
 
     # 启动FastAPI应用
