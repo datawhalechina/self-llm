@@ -178,7 +178,7 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/DeepSeek",
+    output_dir="./output/TransNormerLLM-7B-Lora",
     per_device_train_batch_size=4,
     gradient_accumulation_steps=4,
     logging_steps=10,

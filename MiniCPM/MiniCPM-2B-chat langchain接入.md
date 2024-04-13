@@ -90,7 +90,7 @@ class MiniCPM_LLM(LLM):
 然后就可以像使用任何其他的langchain大模型功能一样使用了。
 
 ```python
-llm = MiniCPM_LLM('/root/autodl-tmp/OpenBMB/miniCPM-bf32')
+llm = MiniCPM_LLM('/root/autodl-tmp/OpenBMB/MiniCPM-2B-sft-fp32')
 
 llm('你好')
 ```
