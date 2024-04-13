@@ -138,9 +138,9 @@ You are a helpful assistant.<|im_end|>
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
 ```python
-tokenizer = AutoTokenizer.from_pretrained('./OpenNLPLab/TransNormerLLM-7B/', use_fast=False, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B/', use_fast=False, trust_remote_code=True, trust_remote_code=True)
 
-model = AutoModelForCausalLM.from_pretrained('./OpenNLPLab/TransNormerLLM-7B/', device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B/', trust_remote_code=True, device_map="auto",torch_dtype=torch.bfloat16)
 ```
 
 ## 定义LoraConfig
@@ -211,8 +211,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from peft import PeftModel
 
-mode_path = './OpenNLPLab/TransNormerLLM-7B/'
-lora_path = 'lora_path'
+mode_path = '/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B/'
+lora_path = './output/DeepSeek'
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(mode_path)
