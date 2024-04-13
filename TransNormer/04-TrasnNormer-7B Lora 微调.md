@@ -1,19 +1,26 @@
-# TransNormerLLM-1B Lora 微调 & 全量微调 
+# TransNormerLLM-7B Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 TransNormerLLM-1B「备注：TransNormerLLM-358M/1B/7B的」 模型进行 Lora 微调  & 全量微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 TransNormerLLM-1B「备注：TransNormerLLM-358M/1B/7B的」 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 这个教程会在同目录下给大家提供一个 [nodebook](./TransNormerLLM-7B-Lora.ipynb) 文件，来让大家更好的学习。
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
+在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，这里我们有两种安装方式，不过在安装依赖库之前我们首先更新pip版本（防止版本过低），并切换pip的安装源（到国内源，这样可以安装更快，防止下载链接超时）
 
-```bash
+在红框部分逐行输入如下「2.2」中命令：
+```shell
+# 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
-pip install modelscope==1.9.5
+**方式一：**
+依然在红框部分逐行输入如下「2.2」中命令：
+
+```shell
+pip install modelscope==1.11.0
 pip install "transformers>=4.37.0"
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
@@ -25,6 +32,37 @@ pip install deepspeed
 pip install triton==2.0.0
 pip install einops
 
+MAX_JOBS=8 pip install flash-attn --no-build-isolation
+```
+
+or
+
+```shell
+pip install modelscope==1.11.0 "transformers>=4.37.0" streamlit==1.24.0 sentencepiece==0.1.99 accelerate==0.24.1 transformers_stream_generator==0.0.4 datasets==2.18.0 peft==0.10.0 deepspeed triton==2.0.0 einops
+
+MAX_JOBS=8 pip install flash-attn --no-build-isolation
+```
+
+**方式二：**
+将如下内容：
+```shell
+modelscope==1.11.0
+"transformers>=4.37.0"
+streamlit==1.24.0
+sentencepiece==0.1.99
+accelerate==0.24.1
+transformers_stream_generator==0.0.4
+datasets==2.18.0
+peft==0.10.0
+deepspeed
+triton==2.0.0
+einops
+``` 
+用 vim 写入一个 requirements.txt 文件，然后运行命令：pip install -r requirements.txt
+
+然后，再执行如下命令
+
+```bash
 MAX_JOBS=8 pip install flash-attn --no-build-isolation
 ```
 
