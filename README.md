@@ -53,17 +53,25 @@
 
 ### 已支持模型
 
-- [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
-  - [X] TransNormerLLM-7B-Chat FastApi 部署调用 @[ml67](https://github.com/mlw67) ddl=3月底
-  - [X] TransNormerLLM-7B-Chat langchain 接入 @[ml67](https://github.com/mlw67) ddl=3月底
-  - [X] TransNormerLLM-7B-Chat WebDemo 部署 @[ml67](https://github.com/mlw67) ddl=3月底
-  - [ ] TransNormerLLM-7B-Chat Lora 微调 @[ml67](https://github.com/mlw67) ddl=3月底ß
-
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+
+- [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
+  - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @[ml67](https://github.com/mlw67) ddl=3月底
+  - [X] [TransNormerLLM-7B-Chat langchain 接入](./TransNormer/02-TransNormer-7B%20接入langchain搭建知识库助手.md) @[ml67](https://github.com/mlw67) ddl=3月底
+  - [X] [TransNormerLLM-7B-Chat WebDemo 部署](./TransNormer/03-TransNormer-7B%20WebDemo.md) @[ml67](https://github.com/mlw67) ddl=3月底
+  - [x] [TransNormerLLM-7B-Chat Lora 微调](./TransNormer/04-TrasnNormer-7B%20Lora%20微调.md) @[ml67](https://github.com/mlw67) ddl=3月底ß
+
+- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
+  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
+  - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @[丁悦](https://github.com/dingyue772)
 
 - [BlueLM Vivo 蓝心大模型](https://github.com/vivo-ai-lab/BlueLM.git)
   - [x] [BlueLM-7B-Chat FatApi 部署调用](./BlueLM/01-BlueLM-7B-Chat%20FastApi%20部署.md) @[acwwt](https://github.com/acwwt) ddl=3月底
@@ -76,13 +84,6 @@
   - [x] [InternLM2-7B-chat langchain 接入](./InternLM2/02-InternLM2-7B-chat%20langchain%20接入.md) @ 不要葱姜蒜
   - [x] [InternLM2-7B-chat WebDemo 部署](./InternLM2/03-InternLM2-7B-chat%20WebDemo%20部署.md) @ 白玉
   - [x] [InternLM2-7B-chat Xtuner Qlora 微调](./InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20微调.md) @ 白玉
-
-- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
-  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
-  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
 
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
   - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @ 不要葱姜蒜
@@ -188,7 +189,10 @@
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
+- [郑皓桦（白玉）](https://github.com/BaiYu96) （内容创作者）
+- [郭志航](https://github.com/acwwt) （内容创作者）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
+
 ### 其他
 
 - 特别感谢[@Sm1les](https://github.com/Sm1les)对本项目的帮助与支持
@@ -206,5 +210,5 @@
 ### Star History
 
 <div align=center style="margin-top: 30px;">
-  <img src="./images/star-history-2024410.png"/>
+  <img src="./images/star-history-2024411.png"/>
 </div>
