@@ -53,6 +53,13 @@
 
 ### 已支持模型
 
+- [XVERSE-7B-Chat](https://modelscope.cn/models/xverse/XVERSE-7B-Chat/summary)
+  - [ ] [XVERSE-7B-Chat FastApi 部署调用]() @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [ ] [XVERSE-7B-Chat langchain 接入]() @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [ ] [XVERSE-7B-Chat WebDemo 部署]() @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [ ] [XVERSE-7B-Chat Lora 微调]() @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [ ] [XVERSE-MoE-A4.2B 部署]() @[acwwt](https://github.com/acwwt) ddl=4月底
+
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
