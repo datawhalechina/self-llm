@@ -73,7 +73,7 @@
   - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
   - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
   - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @[丁悦](https://github.com/dingyue772)
-  - [x] [Qwen1.5-7B-chat vLLM推理部署](./Qwen1.5/07-Qwen1.5-7B-Chat%20vllm%20推理部署调用.md) @[立业](https://github.com/0-yy-0)
+  - [x] [Qwen1.5-7B-chat vLLM推理部署](./Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @[立业](https://github.com/0-yy-0)
 
 - [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
   - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @[ml67](https://github.com/mlw67) ddl=3月底
