@@ -163,7 +163,7 @@
 ### 镜像列表
 
 - [x] [AutoDL-Qwen1.5 环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5)
-
+- [x] [AutoDL-vLLM 环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-vllm)
 
 ### 通用环境配置
 
