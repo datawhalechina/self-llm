@@ -53,18 +53,24 @@
 
 ### 已支持模型
 
-- [XVERSE-7B-Chat](https://modelscope.cn/models/xverse/XVERSE-7B-Chat/summary)
-  - [ ] [XVERSE-7B-Chat FastApi 部署调用]() @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [ ] [XVERSE-7B-Chat langchain 接入]() @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [ ] [XVERSE-7B-Chat WebDemo 部署]() @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [ ] [XVERSE-7B-Chat Lora 微调]() @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [ ] [XVERSE-MoE-A4.2B 部署]() @[acwwt](https://github.com/acwwt) ddl=4月底
+- [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
+  - [ ] LLaMA3-8B-Instruct FastApi 部署调用
+  - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md)
+  - [x] [LLaMA3-8B-Instruct WebDemo 部署](./LLaMA3/03-LLaMA3-8B-Instruct%20WebDemo%20部署.md)
+  - [ ] LLaMA3-8B-Instruct Lora 微调
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+
+- [XVERSE-7B-Chat](https://modelscope.cn/models/xverse/XVERSE-7B-Chat/summary)
+  - [x] [XVERSE-7B-Chat transformers 部署调用](./XVERSE/01-XVERSE-7B-chat%20Transformers推理.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat FastApi 部署调用](./XVERSE/02-XVERSE-7B-chat%20FastAPI部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat langchain 接入](./XVERSE/03-XVERSE-7B-chat%20langchain%20接入.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat WebDemo 部署](./XVERSE/04-XVERSE-7B-chat%20WebDemo%20部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat Lora 微调](./XVERSE/05-XVERSE-7B-Chat%20Lora%20微调.md) @[acwwt](https://github.com/acwwt) ddl=4月底
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
