@@ -73,7 +73,7 @@ def torch_gc():
 
 # 构建 chat 模版
 def bulid_input(prompt, history=[]):
-    system_format='<|begin_of_text|><<SYS>>\n{content}\n<</SYS>>\n\n'
+    system_format='<|start_header_id|>system<|end_header_id|>\n\n{content}<|eot_id|>'
     user_format='<|start_header_id|>user<|end_header_id|>\n\n{content}<|eot_id|>'
     assistant_format='<|start_header_id|>assistant<|end_header_id|>\n\n{content}<|eot_id|>\n'
     history.append({'role':'user','content':prompt})

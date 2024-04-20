@@ -102,12 +102,11 @@ def process_func(example):
     }
 ```
 
-`Llama-3-8B-Instruct` 采用我们自定义的`Prompt Template`格式如下：
+`Llama-3-8B-Instruct` 采用的`Prompt Template`格式如下：
 
 ```text
-"<|begin_of_text|><<SYS>>
-You are a helpful assistant.
-<</SYS>>
+<|start_header_id|>system<|end_header_id|>
+You are a helpful assistant<|eot_id|>'
 <|start_header_id|>user<|end_header_id|>
 你是谁？<|eot_id|>'
 <|start_header_id|>assistant<|end_header_id|>
