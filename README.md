@@ -54,10 +54,10 @@
 ### 已支持模型
 
 - [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
-  - [ ] LLaMA3-8B-Instruct FastApi 部署调用
+  - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md)
   - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md)
   - [x] [LLaMA3-8B-Instruct WebDemo 部署](./LLaMA3/03-LLaMA3-8B-Instruct%20WebDemo%20部署.md)
-  - [ ] LLaMA3-8B-Instruct Lora 微调
+  - [x] [LLaMA3-8B-Instruct Lora 微调](./LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20微调.md)
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
