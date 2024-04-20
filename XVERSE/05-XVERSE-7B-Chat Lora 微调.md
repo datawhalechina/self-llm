@@ -1,22 +1,18 @@
-# BlueLM-7B-Chat Lora 微调
+# XVERSE-7B-Chat Lora 微调
 
 ## 概述
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 BlueLM-7B-Chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 XVERSE-7B-Chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-这个教程会在同目录下给大家提供一个 [notebook](./04-BlueLM-7B-Chat%20Lora%20微调.ipynb) 文件，来让大家更好的学习。
+这个教程会在同目录下给大家提供一个 [notebook](./05-XVERSE-7B-Chat%20Lora%20微调.ipynb) 文件，来让大家更好的学习。
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
+在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，为了方便大家实践，我将环境打包放在 code 文件夹下了，可以使用以下命令：
 
 ```bash
-pip install transformers==4.35.2
-pip install peft==0.4.0
-pip install datasets==2.10.1
-pip install accelerate==0.20.3
-pip install tiktoken
-pip install transformers_stream_generator
+cd code
+pip install -r requirement.txt
 ```
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)。
@@ -33,11 +29,11 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 }
 ```
 
-其中，`instruction` 是用户指令，告知模型其需要完成的任务；`input` 是用户输入，是完成用户指令所必须的输入内容；`output` 是模型应该给出的输出。而在BlueLM中数据的目标格式是这样的
+其中，`instruction` 是用户指令，告知模型其需要完成的任务；`input` 是用户输入，是完成用户指令所必须的输入内容；`output` 是模型应该给出的输出。而在 XVERSE 中数据的目标格式是这样的
 
 ```json
 {
-    "inputs": "[|Human|]:解释什么是人工智能。\n[|AI|]:", 
+    "inputs": "Human:解释什么是人工智能。\n Assistant:", 
     "targets": "人工智能是一种利用计算机程序和算法创造出类似人类智能的技术，可以让计算机在解决问题、学习、推理和自然语言处理等方面表现出类似人类的能力。"}
 ```
 
@@ -51,7 +47,7 @@ def process_func(example):
         input_ids = []
         labels = []
 
-        instruction = tokenizer(text=f"[|Human|]:现在你要扮演皇帝身边的女人--甄嬛\n\n {example['instruction']}{example['input']}[|AI|]:", add_special_tokens=False)
+        instruction = tokenizer(text=f"Human:现在你要扮演皇帝身边的女人--甄嬛\n\n {example['instruction']}{example['input']}Assistant:", add_special_tokens=False)
         response = tokenizer(text=f"{example['output']}", add_special_tokens=False)
         input_ids = [tokenizer.bos_token_id] + instruction["input_ids"] + response["input_ids"] + [tokenizer.eos_token_id]
         labels = [tokenizer.bos_token_id] + [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.eos_token_id]
@@ -68,19 +64,18 @@ def process_func(example):
 经过格式化的数据，也就是送入模型的每一条数据，都是一个字典，包含了 `input_ids`、`labels` 两个键值对，其中 `input_ids` 是输入文本的编码，`labels` 是输出文本的编码。decode之后应该是这样的：
 
 ```json
-<s> [|Human|]: 现在你要扮演皇帝身边的女人--甄嬛\n\n 这个温太医啊，也是古怪，谁不知太医不得皇命不能为皇族以外的人请脉诊病，他倒好，十天半月便往咱们府里跑。 [|AI|]:  你们俩话太多了，我该和温太医要一剂药，好好治治你们。</s>
+'<|startoftext|>Human:现在你要扮演皇帝身边的女人--甄嬛\n\n 这个温太医啊，也是古怪，谁不知太医不得皇命不能为皇族以外的人请脉诊病，他倒好，十天半月便往咱们府里跑。Assistant:你们俩话太多了，我该和温太医要一剂药，好好治治你们。<|endoftext|>'
 ```
 
-为什么会是这个形态呢？好问题！不同模型所对应的格式化输入都不一样，BlueLM只有`[|Human|]和[|AI|]`两个角色，所以自然而然数据格式就是这样的啦。
+为什么会是这个形态呢？好问题！不同模型所对应的格式化输入都不一样，因为在 XVERSE 中它的template是这样的：`["Human: {{content}}\n\nAssistant: "]`，所有自然而然格式就是这样的，并且 XVERSE 的文本起始token和结束token也不一样。
 
 ## 加载tokenizer和模型
 
 ```python
 import torch
 
-model = AutoModelForCausalLM.from_pretrained('vivo-ai/BlueLM-7B-Chat', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
-model.generation_config = GenerationConfig.from_pretrained('vivo-ai/BlueLM-7B-Chat')
-model.generation_config.pad_token_id = model.generation_config.eos_token_id
+model = AutoModelForCausalLM.from_pretrained('xverse/XVERSE-7B-Chat', trust_remote_code=True, torch_dtype=torch.half, device_map="auto")
+model.generation_config = GenerationConfig.from_pretrained('xverse/XVERSE-7B-Chat')
 ```
 
 ## 定义LoraConfig
@@ -120,7 +115,7 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/Qwen",
+    output_dir="./output/BlueLM",
     per_device_train_batch_size=8,
     gradient_accumulation_steps=2,
     logging_steps=10,
@@ -148,14 +143,16 @@ trainer.train()
 
 ## 模型推理
 
-使用最常用的方式进行推理
+使用最常用的方式进行推理:
+> 注意将`return_token_type_ids`调为false
 
 ```python
+model.eval()
 text = "小姐，别的秀女都在求中选，唯有咱们小姐想被撂牌子，菩萨一定记得真真儿的——"
-inputs = tokenizer(f"[|Human|]:{text}[|AI|]:", return_tensors="pt")
+inputs = tokenizer(f"Human:{text} Assistant:", return_tensors="pt", return_token_type_ids=False, )
 outputs = model.generate(**inputs.to(model.device), max_new_tokens=100)
 result = tokenizer.decode(outputs[0], skip_special_tokens=True)
 print(result)
 ```
 
-完整代码请看：[BlueLM-7B-Chat Lora 微调](./04-BlueLM-7B-Chat%20Lora%20微调.ipynb)
+完整代码请看：[XVERSE-7B-Chat Lora 微调](./05-XVERSE-7B-Chat%20Lora%20微调.py)
