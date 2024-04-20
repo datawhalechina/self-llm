@@ -169,7 +169,8 @@
 ### 镜像列表
 
 - [x] [AutoDL-Qwen1.5 环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5)
-- [x] [AutoDL-vLLM 环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-vllm)
+- [x] [AutoDL-LLaMA3 环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-LLaMA3)
+- [x] [AutoDL-vLLM 推理加速框架环境镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-vllm) 
 
 ### 通用环境配置
 
