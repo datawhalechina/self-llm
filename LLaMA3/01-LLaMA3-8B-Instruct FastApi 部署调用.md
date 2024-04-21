@@ -5,7 +5,7 @@
 在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 `PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1`。
 接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
 
-![开启机器配置选择](images/autodl_config.png)
+![开启机器配置选择](images/image-1.png)
 
 pip 换源加速下载并安装依赖包
 
@@ -73,7 +73,7 @@ def torch_gc():
 
 # 构建 chat 模版
 def bulid_input(prompt, history=[]):
-    system_format='<|begin_of_text|><<SYS>>\n{content}\n<</SYS>>\n\n'
+    system_format='<|start_header_id|>system<|end_header_id|>\n\n{content}<|eot_id|>'
     user_format='<|start_header_id|>user<|end_header_id|>\n\n{content}<|eot_id|>'
     assistant_format='<|start_header_id|>assistant<|end_header_id|>\n\n{content}<|eot_id|>\n'
     history.append({'role':'user','content':prompt})

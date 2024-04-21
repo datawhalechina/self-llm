@@ -4,6 +4,13 @@
 
 这个教程会在同目录下给大家提供一个 [nodebook](./LLaMA3-8B-Instruct%20Lora.ipynb) 文件，来让大家更好的学习。
 
+## 环境准备
+
+在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 `PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1`。
+接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
+
+![开启机器配置选择](images/image-1.png)
+
 ## 环境配置
 
 在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
@@ -95,12 +102,11 @@ def process_func(example):
     }
 ```
 
-`Llama-3-8B-Instruct` 采用我们自定义的`Prompt Template`格式如下：
+`Llama-3-8B-Instruct` 采用的`Prompt Template`格式如下：
 
 ```text
-"<|begin_of_text|><<SYS>>
-You are a helpful assistant.
-<</SYS>>
+<|start_header_id|>system<|end_header_id|>
+You are a helpful assistant<|eot_id|>'
 <|start_header_id|>user<|end_header_id|>
 你是谁？<|eot_id|>'
 <|start_header_id|>assistant<|end_header_id|>
