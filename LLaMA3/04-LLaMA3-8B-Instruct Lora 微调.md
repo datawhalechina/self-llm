@@ -225,7 +225,11 @@ model_inputs = tokenizer([text], return_tensors="pt").to('cuda')
 generated_ids = model.generate(
     model_inputs.input_ids,
     max_new_tokens=512,
-    eos_token_id=tokenizer.encode('<|eot_id|>')[0]
+    do_sample=True,
+    top_p=0.9, 
+    temperature=0.5, 
+    repetition_penalty=1.1,
+    eos_token_id=tokenizer.encode('<|eot_id|>')[0],
 )
 generated_ids = [
     output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
