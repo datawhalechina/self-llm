@@ -1,4 +1,4 @@
-# 基于 InternLM 和 LangChain 搭建知识库助手
+# 基于 ChatGLM3 和 LangChain 搭建知识库助手
 
 ## 环境配置
 
@@ -13,7 +13,7 @@ pip install unstructured==0.10.30
 pip install markdown==3.3.7
 ```
 
-同时，我们需要使用到开源词向量模型 [Sentence Transformer](sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)，可以将其模型参数以类似于下载 ChatGLM3 模型参数的方式下载到本地 /root/autodl-tmp/sentence-transformer。同时，在本节中，ChatGLM3-6B 的模型参数文件存储在本地 autodl-tmp/ZhipuAI/chatglm3-6b。
+同时，我们需要使用到开源词向量模型 [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)（HuggingFace 链接名为：sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2），可以将其模型参数以类似于下载 ChatGLM3 模型参数的方式下载到本地 /root/autodl-tmp/sentence-transformer。同时，在本节中，ChatGLM3-6B 的模型参数文件存储在本地 autodl-tmp/ZhipuAI/chatglm3-6b。
 
 ## 知识库搭建
 

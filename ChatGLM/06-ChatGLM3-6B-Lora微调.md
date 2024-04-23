@@ -14,10 +14,10 @@
 在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
 
 ```bash
-pip install transformers==4.36.0.dev0
+pip install transformers==4.37.2
 pip install peft==0.4.0.dev0
 pip install datasets==2.10.1
-pip install accelerate==0.20.3
+pip install accelerate==0.21.0
 ```
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.jsonl)。
@@ -40,12 +40,29 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ```json
 {
-    "instruction": "现在你要扮演皇帝身边的女人--甄嬛",
+    "instruction": "",
     "input":"你是谁？",
     "output":"家父是大理寺少卿甄远道。"
 }
 ```
 我们所构造的全部指令数据集在根目录下。
+
+## QA和Instruction的区别与联系
+QA是指一问一答的形式，通常是用户提问，模型给出回答。而Instruction则源自于Prompt Engineering，将问题拆分为两个部分：Instruction用于描述任务，Input用于描述待处理的对象。
+
+问答（QA）格式的训练数据通常用于训练模型回答基于知识的问题，而指令（Instruction）格式的训练数据更适用于训练模型执行具体任务。例如，对于问题"请解释VC银翘片和双黄连口服液之间的区别"
+- 问答（QA）格式:
+    ```
+    指令（Instruction）： 
+    输入（Input）：VC银翘片和双黄连口服液之间的区别是什么？
+    ```
+
+- 指令（Instruction）格式:
+    ```
+    指令（Instruction）：请解释下面两个药品之间的区别。
+    输入（Input）：VC银翘片和双黄连口服液。
+    ```
+指令的形式可能使模型具有更好的泛化能力，因为它强调了任务的性质，而不仅仅是特定的输入。通常指令格式和问答格式可以相互转化。
 
 ## 数据格式化
 
