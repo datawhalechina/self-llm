@@ -81,7 +81,7 @@ def bulid_input(prompt, history=[]):
             prompt_str+=user_format.format(content=item['content'])
         else:
             prompt_str+=assistant_format.format(content=item['content'])
-    return prompt_str
+    return prompt_str + '<|start_header_id|>assistant<|end_header_id|>\n\n'
 
 # 加载LLaMA3的model和tokenizer
 tokenizer, model = get_model()
