@@ -53,6 +53,12 @@
 
 ### 已支持模型
 
+- [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
+  - [ ] Phi-3-mini-4k-instruct FastApi 部署调用
+  - [ ] Phi-3-mini-4k-instruct langchain 接入
+  - [ ] Phi-3-mini-4k-instruct WebDemo 部署
+  - [ ] Phi-3-mini-4k-instruct Lora 微调
+
 - [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
   - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md) @立业
   - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md) @不要葱姜蒜
