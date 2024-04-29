@@ -68,6 +68,7 @@ pip install sentencepiece==0.1.99
 pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
 pip install einops ujson
+pip install protobuf
 ```
 
 ### 使用modelscope下载模型
