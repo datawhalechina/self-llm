@@ -1,20 +1,26 @@
-# Qwen1.5-7B-chat Lora 微调
+# TransNormerLLM-7B Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 Qwen1.5-7B-chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 TransNormerLLM-1B「备注：TransNormerLLM-358M/1B/7B的」 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-
-这个教程会在同目录下给大家提供一个 [nodebook](./Qwen1.5-7B-Chat%20Lora.ipynb) 文件，来让大家更好的学习。
+这个教程会在同目录下给大家提供一个 [nodebook](./TransNormerLLM-7B-Lora.ipynb) 文件，来让大家更好的学习。
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
+在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，这里我们有两种安装方式，不过在安装依赖库之前我们首先更新pip版本（防止版本过低），并切换pip的安装源（到国内源，这样可以安装更快，防止下载链接超时）
 
-```bash
+在红框部分逐行输入如下「2.2」中命令：
+```shell
+# 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
-pip install modelscope==1.9.5
+**方式一：**
+依然在红框部分逐行输入如下「2.2」中命令：
+
+```shell
+pip install modelscope==1.11.0
 pip install "transformers>=4.37.0"
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
@@ -22,16 +28,47 @@ pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
 pip install datasets==2.18.0
 pip install peft==0.10.0
+pip install deepspeed
+pip install triton==2.0.0
+pip install einops
 
 MAX_JOBS=8 pip install flash-attn --no-build-isolation
 ```
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
 
+or
+
+```shell
+pip install modelscope==1.11.0 "transformers>=4.37.0" streamlit==1.24.0 sentencepiece==0.1.99 accelerate==0.24.1 transformers_stream_generator==0.0.4 datasets==2.18.0 peft==0.10.0 deepspeed triton==2.0.0 einops
+
+MAX_JOBS=8 pip install flash-attn --no-build-isolation
+```
+
+**方式二：**
+将如下内容：
+```shell
+modelscope==1.11.0
+"transformers>=4.37.0"
+streamlit==1.24.0
+sentencepiece==0.1.99
+accelerate==0.24.1
+transformers_stream_generator==0.0.4
+datasets==2.18.0
+peft==0.10.0
+deepspeed
+triton==2.0.0
+einops
+``` 
+用 vim 写入一个 requirements.txt 文件，然后运行命令：pip install -r requirements.txt
+
+然后，再执行如下命令
+
+```bash
+MAX_JOBS=8 pip install flash-attn --no-build-isolation
+```
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+在本节教程里，我们将微调数据集 `huanhuan.json` 放置在根目录 [/dataset](../dataset/huanhuan.json)，该样本数据取自 [huanhuan.json](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)
 
 ## 指令集构建
 
@@ -47,7 +84,8 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 其中，`instruction` 是用户指令，告知模型其需要完成的任务；`input` 是用户输入，是完成用户指令所必须的输入内容；`output` 是模型应该给出的输出。
 
-即我们的核心训练目标是让模型具有理解并遵循用户指令的能力。因此，在指令集构建时，我们应针对我们的目标任务，针对性构建任务指令集。例如，在本节我们使用由笔者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目作为示例，我们的目标是构建一个能够模拟甄嬛对话风格的个性化 LLM，因此我们构造的指令形如：
+即我们的核心训练目标是让模型具有理解并遵循用户指令的能力。因此，在指令集构建时，我们应针对我们的目标任务，针对性构建任务指令集。例如，在本节我们使用由项目合作者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目作为示例，我们的目标是构建一个能够模拟甄嬛对话风格的个性化 LLM，因此我们构造的指令形如：
+
 
 ```json
 {
@@ -57,8 +95,8 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 }
 ```
 
+当然，利用训练数据：`alpaca_data.json` 也可以的。该样本数据取自 [alpaca_data.json](https://raw.githubusercontent.com/tatsu-lab/stanford_alpaca/main/alpaca_data.json)，数据由 52,002 个条目组成，已重新格式化。其主要目的是演示如何对我们的模型进行 SFT，并不保证其有效性。
 我们所构造的全部指令数据集在根目录下。
-
 
 ## 数据格式化
 
@@ -84,7 +122,7 @@ def process_func(example):
     }
 ```
 
-`Qwen1.5` 采用的`Prompt Template`格式如下：
+`TransNormerLLM-7B` 采用的`Prompt Template`格式如下：
 
 ```text
 <|im_start|>system
@@ -100,9 +138,9 @@ You are a helpful assistant.<|im_end|>
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
 ```python
-tokenizer = AutoTokenizer.from_pretrained('./qwen/Qwen1.5-7B-Chat/', use_fast=False, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B/', use_fast=False, trust_remote_code=True, trust_remote_code=True)
 
-model = AutoModelForCausalLM.from_pretrained('./qwen/Qwen1.5-7B-Chat/', device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B/', trust_remote_code=True, device_map="auto",torch_dtype=torch.bfloat16)
 ```
 
 ## 定义LoraConfig
@@ -140,7 +178,7 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/DeepSeek",
+    output_dir="./output/TransNormerLLM-7B-Lora",
     per_device_train_batch_size=4,
     gradient_accumulation_steps=4,
     logging_steps=10,
@@ -173,8 +211,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from peft import PeftModel
 
-mode_path = './qwen/Qwen1.5-7B-Chat/'
-lora_path = 'lora_path'
+mode_path = '/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B/'
+lora_path = './output/DeepSeek'
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(mode_path)

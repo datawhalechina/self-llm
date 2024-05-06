@@ -32,6 +32,7 @@ pip换源和安装依赖包，在ipynb文件里写入下面代码，点击运行
 !pip install sentencepiece==0.1.99
 !pip install accelerate==0.24.1
 !pip install transformers_stream_generator==0.0.4
+pip install protobuf
 ```
 
 如果你是在终端命令运行直接就按下面的命令运行

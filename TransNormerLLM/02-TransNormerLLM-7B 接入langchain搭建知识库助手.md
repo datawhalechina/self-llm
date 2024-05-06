@@ -1,10 +1,9 @@
-# Qwen1.5-7B-Chat 接入 LangChain 搭建知识库助手  
+# TransNormerLLM-7B 接入 LangChain 搭建知识库助手  
 
 ## 环境准备  
+在 autodl 平台中租赁一个 3090/4090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8  
 
-在 autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8  
-
-![机器配置选择](images/1.png)
+![机器配置选择](images/Machine-Config.png)
 接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行 demo。
 
 pip 换源加速下载并安装依赖包
@@ -16,14 +15,12 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.11.0
-pip install langchain==0.1.15
 pip install "transformers>=4.37.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
 pip install -U huggingface_hub
+pip install triton==2.0.0
+pip install einops
+pip install langchain
 ```  
-
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
-
 
 ## 模型下载
 
@@ -36,15 +33,15 @@ pip install -U huggingface_hub
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('OpenNLPLab/TransNormerLLM-7B', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 
 ## 代码准备
 
-为便捷构建 LLM 应用，我们需要基于本地部署的 Qwen2-LM，自定义一个 LLM 类，将 Qwen2 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
+为便捷构建 LLM 应用，我们需要基于本地部署的 TransNormerLLM-7B，自定义一个 LLM 类，将 TransNormerLLM-7B 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 
-基于本地部署的 Qwen2 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+基于本地部署的 TransNormerLLM-7B 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
 
 ```python
 from langchain.llms.base import LLM
@@ -53,8 +50,8 @@ from langchain.callbacks.manager import CallbackManagerForLLMRun
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, LlamaTokenizerFast
 import torch
 
-class Qwen2_LLM(LLM):
-    # 基于本地 Qwen2 自定义 LLM 类
+class TransNormer_LLM(LLM):
+    # 基于本地 TransNormer 自定义 LLM 类
     tokenizer: AutoTokenizer = None
     model: AutoModelForCausalLM = None
         
@@ -62,8 +59,8 @@ class Qwen2_LLM(LLM):
 
         super().__init__()
         print("正在从本地加载模型...")
-        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
-        self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, device_map="auto")
+        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True, use_fast=False)
+        self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, trust_remote_code=True, device_map="auto")
         self.model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
         print("完成本地模型的加载")
         
@@ -83,10 +80,10 @@ class Qwen2_LLM(LLM):
         return response
     @property
     def _llm_type(self) -> str:
-        return "Qwen2_LLM"
+        return "TransNormer_LLM"
 ```
 
-在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 Qwen2 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 chat 方法，从而实现对模型的调用并返回调用结果。
+在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 TransNormer 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 chat 方法，从而实现对模型的调用并返回调用结果。
 
 在整体项目中，我们将上述代码封装为 LLM.py，后续将直接从该文件中引入自定义的 LLM 类。
 
@@ -96,9 +93,9 @@ class Qwen2_LLM(LLM):
 然后就可以像使用任何其他的langchain大模型功能一样使用了。
 
 ```python
-from LLM import Qwen2_LLM
-llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-7B-Chat")
+from LLM import TransNormer_LLM #！注意此代码需要和 LLM.py在同路径下，如果是写在Jupyter 中则不需要库导入
+llm = TransNormer_LLM(mode_name_or_path = "/root/autodl-tmp/OpenNLPLab/TransNormerLLM-7B")
 llm("你是谁")
 ```
 
-![模型返回回答效果](images/question_to_the_Qwen2.png)
+![模型返回回答效果](images/question_to_the_TransNormer.png)

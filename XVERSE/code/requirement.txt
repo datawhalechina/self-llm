@@ -1,0 +1,15 @@
+fastapi==0.104.1
+uvicorn==0.24.0.post1
+requests==2.31.0
+transformers==4.33.1
+gradio==4.26.0
+gradio_client==0.15.1
+sentencepiece==0.1.99
+accelerate==0.24.1
+langchain==0.1.16
+cpm_kernels
+modelscope==1.9.5
+peft==0.4.0
+datasets==2.10.1
+tiktoken
+transformers_stream_generator

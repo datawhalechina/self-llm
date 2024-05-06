@@ -1,9 +1,15 @@
-# Qwen1.5-7B-chat Lora 微调
+# LLaMA3-8B-Instruct Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 Qwen1.5-7B-chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 LLaMA3-8B-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
+这个教程会在同目录下给大家提供一个 [nodebook](./LLaMA3-8B-Instruct%20Lora.ipynb) 文件，来让大家更好的学习。
 
-这个教程会在同目录下给大家提供一个 [nodebook](./Qwen1.5-7B-Chat%20Lora.ipynb) 文件，来让大家更好的学习。
+## 环境准备
+
+在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 `PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1`。
+接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
+
+![开启机器配置选择](images/image-1.png)
 
 ## 环境配置
 
@@ -15,23 +21,36 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.9.5
-pip install "transformers>=4.37.0"
+pip install "transformers>=4.40.0"
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
-pip install datasets==2.18.0
+pip install accelerate==0.29.3
+pip install datasets==2.19.0
 pip install peft==0.10.0
 
 MAX_JOBS=8 pip install flash-attn --no-build-isolation
 ```
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
-
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 LLaMA3 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-LLaMA3***
+
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+
+## 模型下载
+
+使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+
+在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15 GB，下载模型大概需要 2 分钟。
+
+```python
+import torch
+from modelscope import snapshot_download, AutoModel, AutoTokenizer
+import os
+
+model_dir = snapshot_download('LLM-Research/Meta-Llama-3-8B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
+```
 
 ## 指令集构建
 
@@ -39,9 +58,9 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ```json
 {
-    "instruction":"回答以下用户问题，仅输出答案。",
-    "input":"1+1等于几?",
-    "output":"2"
+  "instruction": "回答以下用户问题，仅输出答案。",
+  "input": "1+1等于几?",
+  "output": "2"
 }
 ```
 
@@ -51,14 +70,13 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ```json
 {
-    "instruction": "你是谁？",
-    "input":"",
-    "output":"家父是大理寺少卿甄远道。"
+  "instruction": "你是谁？",
+  "input": "",
+  "output": "家父是大理寺少卿甄远道。"
 }
 ```
 
 我们所构造的全部指令数据集在根目录下。
-
 
 ## 数据格式化
 
@@ -68,11 +86,11 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 def process_func(example):
     MAX_LENGTH = 384    # Llama分词器会将一个中文字切分为多个token，因此需要放开一些最大长度，保证数据的完整性
     input_ids, attention_mask, labels = [], [], []
-    instruction = tokenizer(f"<|im_start|>system\n现在你要扮演皇帝身边的女人--甄嬛<|im_end|>\n<|im_start|>user\n{example['instruction'] + example['input']}<|im_end|>\n<|im_start|>assistant\n", add_special_tokens=False)  # add_special_tokens 不在开头加 special_tokens
-    response = tokenizer(f"{example['output']}", add_special_tokens=False)
+    instruction = tokenizer(f"<|start_header_id|>user<|end_header_id|>\n\n{example['instruction'] + example['input']}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n", add_special_tokens=False)  # add_special_tokens 不在开头加 special_tokens
+    response = tokenizer(f"{example['output']}<|eot_id|>", add_special_tokens=False)
     input_ids = instruction["input_ids"] + response["input_ids"] + [tokenizer.pad_token_id]
     attention_mask = instruction["attention_mask"] + response["attention_mask"] + [1]  # 因为eos token咱们也是要关注的所以 补充为1
-    labels = [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.pad_token_id]  
+    labels = [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.pad_token_id]
     if len(input_ids) > MAX_LENGTH:  # 做一个截断
         input_ids = input_ids[:MAX_LENGTH]
         attention_mask = attention_mask[:MAX_LENGTH]
@@ -84,41 +102,41 @@ def process_func(example):
     }
 ```
 
-`Qwen1.5` 采用的`Prompt Template`格式如下：
+`Llama-3-8B-Instruct` 采用的`Prompt Template`格式如下：
 
 ```text
-<|im_start|>system
-You are a helpful assistant.<|im_end|>
-<|im_start|>user
-你是谁？<|im_end|>
-<|im_start|>assistant
-我是一个有用的助手。<|im_end|>
+<|start_header_id|>system<|end_header_id|>
+You are a helpful assistant<|eot_id|>'
+<|start_header_id|>user<|end_header_id|>
+你是谁？<|eot_id|>'
+<|start_header_id|>assistant<|end_header_id|>
+我是一个有用的助手。<|eot_id|>"
 ```
 
-## 加载tokenizer和半精度模型
+## 加载 tokenizer 和半精度模型
 
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
 ```python
-tokenizer = AutoTokenizer.from_pretrained('./qwen/Qwen1.5-7B-Chat/', use_fast=False, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct', use_fast=False, trust_remote_code=True)
 
-model = AutoModelForCausalLM.from_pretrained('./qwen/Qwen1.5-7B-Chat/', device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct', device_map="auto",torch_dtype=torch.bfloat16)
 ```
 
-## 定义LoraConfig
+## 定义 LoraConfig
 
 `LoraConfig`这个类中可以设置很多参数，但主要的参数没多少，简单讲一讲，感兴趣的同学可以直接看源码。
 
 - `task_type`：模型类型
 - `target_modules`：需要训练的模型层的名字，主要就是`attention`部分的层，不同的模型对应的层的名字不同，可以传入数组，也可以字符串，也可以正则表达式。
 - `r`：`lora`的秩，具体可以看`Lora`原理
-- `lora_alpha`：`Lora alaph`，具体作用参见 `Lora` 原理 
+- `lora_alpha`：`Lora alaph`，具体作用参见 `Lora` 原理
 
-`Lora`的缩放是啥嘞？当然不是`r`（秩），这个缩放就是`lora_alpha/r`, 在这个`LoraConfig`中缩放就是4倍。
+`Lora`的缩放是啥嘞？当然不是`r`（秩），这个缩放就是`lora_alpha/r`, 在这个`LoraConfig`中缩放就是 4 倍。
 
 ```python
 config = LoraConfig(
-    task_type=TaskType.CAUSAL_LM, 
+    task_type=TaskType.CAUSAL_LM,
     target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     inference_mode=False, # 训练模式
     r=8, # Lora 秩
@@ -140,7 +158,7 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/DeepSeek",
+    output_dir="./output/llama3",
     per_device_train_batch_size=4,
     gradient_accumulation_steps=4,
     logging_steps=10,
@@ -162,6 +180,15 @@ trainer = Trainer(
     data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True),
 )
 trainer.train()
+
+```
+
+## 保存 lora 权重
+
+```python
+lora_path='./llama3_lora'
+trainer.model.save_pretrained(lora_path)
+tokenizer.save_pretrained(lora_path)
 ```
 
 ## 加载 lora 权重推理
@@ -173,8 +200,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from peft import PeftModel
 
-mode_path = './qwen/Qwen1.5-7B-Chat/'
-lora_path = 'lora_path'
+mode_path = '/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct'
+lora_path = './llama3_lora' # lora权重路径
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(mode_path)
@@ -187,7 +214,7 @@ model = PeftModel.from_pretrained(model, model_id=lora_path, config=config)
 
 prompt = "你是谁？"
 messages = [
-    {"role": "system", "content": "现在你要扮演皇帝身边的女人--甄嬛"},
+    # {"role": "system", "content": "现在你要扮演皇帝身边的女人--甄嬛"},
     {"role": "user", "content": prompt}
 ]
 
@@ -197,7 +224,8 @@ model_inputs = tokenizer([text], return_tensors="pt").to('cuda')
 
 generated_ids = model.generate(
     model_inputs.input_ids,
-    max_new_tokens=512
+    max_new_tokens=512,
+    eos_token_id=tokenizer.encode('<|eot_id|>')[0]
 )
 generated_ids = [
     output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
@@ -207,4 +235,3 @@ response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
 print(response)
 ```
-

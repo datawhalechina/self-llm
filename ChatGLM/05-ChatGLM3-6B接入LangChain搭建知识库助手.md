@@ -1,4 +1,4 @@
-# 基于 InternLM 和 LangChain 搭建知识库助手
+# 基于 ChatGLM3 和 LangChain 搭建知识库助手
 
 ## 环境配置
 
