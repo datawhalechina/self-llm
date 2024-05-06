@@ -11,7 +11,6 @@ import pandas as pd
 from peft import TaskType, get_peft_model, LoraConfig
 
 
-# 数据处理流程,参考GLM3仓库:https://github.com/THUDM/ChatGLM3/blob/main/finetune_chatmodel_demo/preprocess_utils
 def process_func(example):
     MAX_LENGTH = 512
     input_ids, labels = [], [] 
