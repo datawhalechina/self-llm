@@ -1,12 +1,13 @@
-# 04-CharacterGLM-6B-Chat LoraÎ¢µ÷
+# 04-CharacterGLM-6B-Chat Loraå¾®è°ƒ
 
-## ¸ÅÊö
+## æ¦‚è¿°
 
-±¾ÎÄ¼òÒª½éÉÜÈçºÎ»ùÓÚtransformers¡¢peftµÈ¿ò¼Ü£¬¶ÔCharacterGLM-6B-chatÄ£ĞÍ½øĞĞLoraÎ¢µ÷¡£LoraÔ­Àí¿É²Î¿¼²©¿Í£ºÖªºõ|ÉîÈëÇ³³öLora
+æœ¬æ–‡ç®€è¦ä»‹ç»å¦‚ä½•åŸºäºtransformersã€peftç­‰æ¡†æ¶ï¼Œå¯¹CharacterGLM-6B-chatæ¨¡å‹è¿›è¡ŒLoraå¾®è°ƒã€‚LoraåŸç†å¯å‚è€ƒåšå®¢ï¼š[çŸ¥ä¹|æ·±å…¥æµ…å‡ºLora](https://zhuanlan.zhihu.com/p/650197598)
+æœ¬æ–‡ä»£ç æœªä½¿ç”¨åˆ†å¸ƒå¼æ¡†æ¶ï¼Œå¾®è°ƒ ChatGLM3-6B-Chat æ¨¡å‹è‡³å°‘éœ€è¦ 21G åŠä»¥ä¸Šçš„æ˜¾å­˜ï¼Œä¸”éœ€è¦ä¿®æ”¹è„šæœ¬æ–‡ä»¶ä¸­çš„æ¨¡å‹è·¯å¾„å’Œæ•°æ®é›†è·¯å¾„ã€‚
 
-## »·¾³ÅäÖÃ
+## ç¯å¢ƒé…ç½®
 
-ÔÚÍê³É»ù±¾»·¾³ÅäÖÃºÍ±¾µØÄ£ĞÍ²¿ÊğµÄÇé¿öÏÂ£¬»¹ĞèÒª°²×°Ò»Ğ©µÚÈı·½¿â£¬¿ÉÒÔÊ¹ÓÃÈçÏÂÃüÁî£º
+åœ¨å®ŒæˆåŸºæœ¬ç¯å¢ƒé…ç½®å’Œæœ¬åœ°æ¨¡å‹éƒ¨ç½²çš„æƒ…å†µä¸‹ï¼Œè¿˜éœ€è¦å®‰è£…ä¸€äº›ç¬¬ä¸‰æ–¹åº“ï¼Œå¯ä»¥ä½¿ç”¨å¦‚ä¸‹å‘½ä»¤ï¼š
 
 ```python
 pip install transformers==4.37.2
@@ -16,63 +17,63 @@ pip install accelerate==0.21.0
 
 ```
 
-ÔÚ±¾½ÚÄÚÈİÖĞ£¬½«Î¢µ÷Êı¾İ¼¯·ÅÖÃÔÚ¸ùÄ¿Â¼/dataset¡£
+åœ¨æœ¬èŠ‚å†…å®¹ä¸­ï¼Œå°†å¾®è°ƒæ•°æ®é›†æ”¾ç½®åœ¨æ ¹ç›®å½•[/dataset](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)ã€‚
 
-## Ö¸Áî¼¯¹¹½¨
+## æŒ‡ä»¤é›†æ„å»º
 
-LLMÎ¢µ÷Ò»°ãÖ¸Ö¸ÁîÎ¢µ÷¹ı³Ì¡£ËùÎ½Ö¸ÁîÎ¢µ÷£¬ÊÇËµÎÒÃÇÊ¹ÓÃµÄÎ¢µ÷Êı¾İĞÎÈç£º
+LLMå¾®è°ƒä¸€èˆ¬æŒ‡æŒ‡ä»¤å¾®è°ƒè¿‡ç¨‹ã€‚æ‰€è°“æŒ‡ä»¤å¾®è°ƒï¼Œæ˜¯è¯´æˆ‘ä»¬ä½¿ç”¨çš„å¾®è°ƒæ•°æ®å½¢å¦‚ï¼š
 
 ```python
 {
-    "instruction":"»Ø´ğÓÃ»§ÒÔÏÂÎÊÌâ£¬Ö±½Ó¸ø³ö½á¹û¡£"
-    "input":"ÖĞ¹úµÚÒ»¸öÅµ±´¶û½±µÃÖ÷ÊÇË­£¿"
-    "output":"ÄªÑÔ"
+    "instruction":"å›ç­”ç”¨æˆ·ä»¥ä¸‹é—®é¢˜ï¼Œç›´æ¥ç»™å‡ºç»“æœã€‚"
+    "input":"ä¸­å›½ç¬¬ä¸€ä¸ªè¯ºè´å°”å¥–å¾—ä¸»æ˜¯è°ï¼Ÿ"
+    "output":"è«è¨€"
 }
 ```
 
-ÆäÖĞinstructionÊÇÓÃ»§Ö¸Áî£¬¸æÖªÄ£ĞÍĞèÒªÍê³ÉµÄÈÎÎñ£»inputÊÇÓÃ»§ÊäÈë£¬ÊÇÍê³ÉÓÃ»§Ö¸ÁîËù±ØĞèµÄÊäÈëÄÚÈİ£»outputÊÇÄ£ĞÍÓ¦¸Ã¸ø³öµÄÊä³ö¡£
+å…¶ä¸­instructionæ˜¯ç”¨æˆ·æŒ‡ä»¤ï¼Œå‘ŠçŸ¥æ¨¡å‹éœ€è¦å®Œæˆçš„ä»»åŠ¡ï¼›inputæ˜¯ç”¨æˆ·è¾“å…¥ï¼Œæ˜¯å®Œæˆç”¨æˆ·æŒ‡ä»¤æ‰€å¿…éœ€çš„è¾“å…¥å†…å®¹ï¼›outputæ˜¯æ¨¡å‹åº”è¯¥ç»™å‡ºçš„è¾“å‡ºã€‚
 
-¼´ÎÒÃÇµÄºËĞÄÑµÁ·Ä¿±êÊÇÈÃÄ£ĞÍ¾ßÓĞÀí½â²¢×ñÑ­ÓÃ»§Ö¸ÁîµÄÄÜÁ¦¡£Òò´Ë£¬ÔÚÖ¸Áî¼¯¹¹½¨Ê±£¬ÎÒÃÇÓ¦Õë¶ÔÎÒÃÇµÄÄ¿±êÈÎÎñ£¬Õë¶ÔĞÔ¹¹½¨ÈÎÎñÖ¸Áî¼¯¡£ÔÚ±¾ÎÄÎÒÃÇÊ¹ÓÃÓÉ±ÊÕßºÏ×÷¿ªÔ´µÄChat-Õç‹ÖÏîÄ¿×÷ÎªÊ¾Àı£¬ÎÒÃÇµÄÄ¿±êÊÇ¹¹½¨Ò»¸öÄÜ¹»Ä£ÄâÕç‹Ö¶Ô»°·ç¸ñµÄ¸öĞÔ»¯LLM£¬Òò´ËÎÒÃÇ¹¹½¨µÄÖ¸ÁîĞÎÈç£º
+å³æˆ‘ä»¬çš„æ ¸å¿ƒè®­ç»ƒç›®æ ‡æ˜¯è®©æ¨¡å‹å…·æœ‰ç†è§£å¹¶éµå¾ªç”¨æˆ·æŒ‡ä»¤çš„èƒ½åŠ›ã€‚å› æ­¤ï¼Œåœ¨æŒ‡ä»¤é›†æ„å»ºæ—¶ï¼Œæˆ‘ä»¬åº”é’ˆå¯¹æˆ‘ä»¬çš„ç›®æ ‡ä»»åŠ¡ï¼Œé’ˆå¯¹æ€§æ„å»ºä»»åŠ¡æŒ‡ä»¤é›†ã€‚åœ¨æœ¬æ–‡æˆ‘ä»¬ä½¿ç”¨ç”±ç¬”è€…åˆä½œå¼€æºçš„[Chat-ç”„å¬›é¡¹ç›®](https://github.com/KMnO4-zx/huanhuan-chat)ä½œä¸ºç¤ºä¾‹ï¼Œæˆ‘ä»¬çš„ç›®æ ‡æ˜¯æ„å»ºä¸€ä¸ªèƒ½å¤Ÿæ¨¡æ‹Ÿç”„å¬›å¯¹è¯é£æ ¼çš„ä¸ªæ€§åŒ–LLMï¼Œå› æ­¤æˆ‘ä»¬æ„å»ºçš„æŒ‡ä»¤å½¢å¦‚ï¼š
 
 ```python
 {
     "instruction": "",
-    "input":"ÄãÊÇË­£¿",
-    "output":"¼Ò¸¸ÊÇ´óÀíËÂÉÙÇäÕçÔ¶µÀ¡£"
+    "input":"ä½ æ˜¯è°ï¼Ÿ",
+    "output":"å®¶çˆ¶æ˜¯å¤§ç†å¯ºå°‘å¿ç”„è¿œé“ã€‚"
 }
 ```
 
-ÎÒÃÇ¹¹ÔìµÄÈ«²¿Ö¸ÁîÊı¾İ¼¯ÔÚ¸ùÄ¿Â¼ÏÂ¡£
+æˆ‘ä»¬æ„é€ çš„å…¨éƒ¨æŒ‡ä»¤æ•°æ®é›†åœ¨æ ¹ç›®å½•ä¸‹ã€‚
 
-## QAºÍInstructionµÄÇø±ğºÍÁªÏµ
+## QAå’ŒInstructionçš„åŒºåˆ«å’Œè”ç³»
 
-QAÊÇÖ¸Ò»ÎÊÒ»´ğµÄĞÎÊ½£¬Í¨³£ÊÇÓÃ»§ÌáÎÊ£¬Ä£ĞÍ¸ø³ö»Ø´ğ¡£¶øinstructionÔòÔ´×ÔÓÚPrompt Engineering£¬½«ÎÊÌâ²ğ·Ö³ÉÁ½¸ö²¿·Ö£ºInstructionÓÃÓÚÃèÊöÈÎÎñ£¬InputÓÃÓÚÃèÊö´ı´¦ÀíµÄ¶ÔÏó¡£
+QAæ˜¯æŒ‡ä¸€é—®ä¸€ç­”çš„å½¢å¼ï¼Œé€šå¸¸æ˜¯ç”¨æˆ·æé—®ï¼Œæ¨¡å‹ç»™å‡ºå›ç­”ã€‚è€Œinstructionåˆ™æºè‡ªäºPrompt Engineeringï¼Œå°†é—®é¢˜æ‹†åˆ†æˆä¸¤ä¸ªéƒ¨åˆ†ï¼šInstructionç”¨äºæè¿°ä»»åŠ¡ï¼ŒInputç”¨äºæè¿°å¾…å¤„ç†çš„å¯¹è±¡ã€‚
 
-ÎÊ´ğ(QA)¸ñÊ½µÄÑµÁ·Êı¾İÍ¨³£ÓÃÓÚÑµÁ·Ä£ĞÍÖ´ĞĞ¾ßÌåÈÎÎñ¡£ÀıÈç£¬¶ÔÓÚÎÊÌâ¡°Çë½âÊÍINFJºÍENTPÁ½ÖÖMBTIĞÔ¸ñÖ®¼äµÄÇø±ğ¡±
+é—®ç­”(QA)æ ¼å¼çš„è®­ç»ƒæ•°æ®é€šå¸¸ç”¨äºè®­ç»ƒæ¨¡å‹æ‰§è¡Œå…·ä½“ä»»åŠ¡ã€‚ä¾‹å¦‚ï¼Œå¯¹äºé—®é¢˜â€œè¯·è§£é‡ŠINFJå’ŒENTPä¸¤ç§MBTIæ€§æ ¼ä¹‹é—´çš„åŒºåˆ«â€
 
-*ÎÊ´ğ(QA)¸ñÊ½£º
-
-```python
-Ö¸Áî(instruction)£º
-ÊäÈë(input)£ºINFJºÍENTPÕâÁ½ÖÖMBTIĞÔ¸ñÖ®¼äµÄÇø±ğÊÇÊ²Ã´£¿
-```
-
-*Ö¸Áî(Instruction)¸ñÊ½£º
+*é—®ç­”(QA)æ ¼å¼ï¼š
 
 ```python
-Ö¸Áî(Instruction):Çë½âÊÍÏÂÃæÁ½ÖÖMBTIĞÔ¸ñµÄÇø±ğ
-ÊäÈë(input):INFJºÍENTP
+æŒ‡ä»¤(instruction)ï¼š
+è¾“å…¥(input)ï¼šINFJå’ŒENTPè¿™ä¸¤ç§MBTIæ€§æ ¼ä¹‹é—´çš„åŒºåˆ«æ˜¯ä»€ä¹ˆï¼Ÿ
 ```
 
-## Êı¾İ¸ñÊ½»¯
+*æŒ‡ä»¤(Instruction)æ ¼å¼ï¼š
 
-LoraÑµÁ·µÄÊı¾İÊÇĞèÒª¾­¹ı¸ñÊ½»¯¡¢±àÂëÖ®ºóÔÙÊäÈë¸øÄ£ĞÍ½øĞĞÑµÁ·µÄ£¬ÎÒÃÇÒ»°ãĞèÒª½«ÊäÈëÎÄ±¾±àÂëÎªinput_ids£¬½«Êä³öÎÄ±¾±àÂëÎªlabels,±àÂëÖ®ºóµÄ½á¹û¶¼ÊÇ¶àÎ¬ÏòÁ¿¡£ÎÒÃÇÊ×ÏÈ¶¨ÒåÒ»¸öÓë´¦Àíº¯Êı£¬Õâ¸öº¯ÊıÓÃÓÚ¶ÔÃ¿Ò»¸öÑù±¾£¬±àÂëÆäÊäÈë£¬Êä³öÎÄ±¾²¢·µ»ØÒ»¸ö±àÂëºóµÄ×Öµä£º
+```python
+æŒ‡ä»¤(Instruction):è¯·è§£é‡Šä¸‹é¢ä¸¤ç§MBTIæ€§æ ¼çš„åŒºåˆ«
+è¾“å…¥(input):INFJå’ŒENTP
+```
+
+## æ•°æ®æ ¼å¼åŒ–
+
+Loraè®­ç»ƒçš„æ•°æ®æ˜¯éœ€è¦ç»è¿‡æ ¼å¼åŒ–ã€ç¼–ç ä¹‹åå†è¾“å…¥ç»™æ¨¡å‹è¿›è¡Œè®­ç»ƒçš„ï¼Œæˆ‘ä»¬ä¸€èˆ¬éœ€è¦å°†è¾“å…¥æ–‡æœ¬ç¼–ç ä¸ºinput_idsï¼Œå°†è¾“å‡ºæ–‡æœ¬ç¼–ç ä¸ºlabels,ç¼–ç ä¹‹åçš„ç»“æœéƒ½æ˜¯å¤šç»´å‘é‡ã€‚æˆ‘ä»¬é¦–å…ˆå®šä¹‰ä¸€ä¸ªä¸å¤„ç†å‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°ç”¨äºå¯¹æ¯ä¸€ä¸ªæ ·æœ¬ï¼Œç¼–ç å…¶è¾“å…¥ï¼Œè¾“å‡ºæ–‡æœ¬å¹¶è¿”å›ä¸€ä¸ªç¼–ç åçš„å­—å…¸ï¼š
 
 ```python
 def process_func(example):
     MAX_LENGTH = 512
     input_ids, labels = [], []
-    prompt = tokenizer.encode("ÓÃ»§:\n"+"ÏÖÔÚÄãÒª°çÑİ»ÊµÛÉí±ßµÄÅ®ÈË--Õç‹Ö¡£", add_special_tokens=False)
+    prompt = tokenizer.encode("ç”¨æˆ·:\n"+"ç°åœ¨ä½ è¦æ‰®æ¼”çš‡å¸èº«è¾¹çš„å¥³äºº--ç”„å¬›ã€‚", add_special_tokens=False)
     instruction_ = tokenizer.encode("\n".join([example["instruction"], example["input"]]).strip(), add_special_tokens=False,max_length=512)
     instruction = tokenizer.encode(prompt + instruction_)
     response = tokenizer.encode("CharacterGLM-6B:\n:" + example["output"], add_special_tokens=False)
@@ -90,11 +91,11 @@ def process_func(example):
     }
 ```
 
-¾­¹ı¸ñÊ½»¯µÄÊı¾İ£¬Ò²¾ÍÊÇËÍÈëÄ£ĞÍµÄÃ¿Ò»ÌõÊı¾İ£¬¶¼ÊÇÒ»¸ö×Öµä£¬°üº¬ÁËinput_ids¡¢labelsÁ½¸ö¼üÖµ¶Ô£¬ÆäÖĞinput_idsÊÇÊäÈëÎÄ±¾µÄ±àÂë£¬labelsÊÇÊä³öÎÄ±¾µÄ±àÂë¡£
+ç»è¿‡æ ¼å¼åŒ–çš„æ•°æ®ï¼Œä¹Ÿå°±æ˜¯é€å…¥æ¨¡å‹çš„æ¯ä¸€æ¡æ•°æ®ï¼Œéƒ½æ˜¯ä¸€ä¸ªå­—å…¸ï¼ŒåŒ…å«äº†input_idsã€labelsä¸¤ä¸ªé”®å€¼å¯¹ï¼Œå…¶ä¸­input_idsæ˜¯è¾“å…¥æ–‡æœ¬çš„ç¼–ç ï¼Œlabelsæ˜¯è¾“å‡ºæ–‡æœ¬çš„ç¼–ç ã€‚
 
-## ¼ÓÔØtokenizerºÍ°ë¾«¶ÈÄ£ĞÍ
+## åŠ è½½tokenizerå’ŒåŠç²¾åº¦æ¨¡å‹
 
-Ä£ĞÍÒÔ°æ¾«¶ÈĞÎÊ½¼ÓÔØ£¬Èç¹ûÏÔ¿¨±È½ÏĞÂ£¬¿ÉÒÔÓÃtorch.bfloatĞÎÊ½¼ÓÔØ£¬¶ÔÓÚ×Ô¶¨ÒåµÄÄ£ĞÍÒ»¶¨ÒªÖ¸¶¨trust_remote_code²ÎÊıÎªTrue
+æ¨¡å‹ä»¥ç‰ˆç²¾åº¦å½¢å¼åŠ è½½ï¼Œå¦‚æœæ˜¾å¡æ¯”è¾ƒæ–°ï¼Œå¯ä»¥ç”¨torch.bfloatå½¢å¼åŠ è½½ï¼Œå¯¹äºè‡ªå®šä¹‰çš„æ¨¡å‹ä¸€å®šè¦æŒ‡å®štrust_remote_codeå‚æ•°ä¸ºTrue
 
 ```python
 tokenizer=AutoTokenizer.from_pretrained('/root/autodl-tmp/THUCoAI/CharacterGLM-6B',use_fast=False,trust_remote_code=True)
@@ -102,16 +103,16 @@ tokenizer=AutoTokenizer.from_pretrained('/root/autodl-tmp/THUCoAI/CharacterGLM-6
 model=AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/THUCoAI/CharacterGLM-6B',trust_remote_code=True,torch_dtype=torch.half,device_map="auto")
 ```
 
-## ¶¨ÒåLoraConfig
+## å®šä¹‰LoraConfig
 
-LoraConfigÕâ¸öÀàÖĞ¿ÉÒÔÉèÖÃºÜ¶à²ÎÊı£¬²¿·Ö²ÎÊıÕ¹Ê¾ÈçÏÂ£º
-task_type:Ä£ĞÍÀàĞÍ
-target¡ª¡ªmodules£ºĞèÒªÑµÁ·µÄÄ£ĞÍ²ãµÄÃû×Ö£¬Ö÷Òª¾ÍÊÇattention²¿·ÖµÄ²ã£¬²»Í¬µÄÄ£ĞÍ¶ÔÓ¦µÄ²ãµÄÃû×Ö²»Í¬£¬¿ÉÒÔ´«ÈëÊı×é£¬Ò²¿ÉÒÔ×Ö·û´®£¬Ò²¿ÉÒÔÕıÔò±í´ïÊ½¡£
-r:loraµÄÖÈ
+LoraConfigè¿™ä¸ªç±»ä¸­å¯ä»¥è®¾ç½®å¾ˆå¤šå‚æ•°ï¼Œéƒ¨åˆ†å‚æ•°å±•ç¤ºå¦‚ä¸‹ï¼š
+task_type:æ¨¡å‹ç±»å‹
+targetâ€”â€”modulesï¼šéœ€è¦è®­ç»ƒçš„æ¨¡å‹å±‚çš„åå­—ï¼Œä¸»è¦å°±æ˜¯attentionéƒ¨åˆ†çš„å±‚ï¼Œä¸åŒçš„æ¨¡å‹å¯¹åº”çš„å±‚çš„åå­—ä¸åŒï¼Œå¯ä»¥ä¼ å…¥æ•°ç»„ï¼Œä¹Ÿå¯ä»¥å­—ç¬¦ä¸²ï¼Œä¹Ÿå¯ä»¥æ­£åˆ™è¡¨è¾¾å¼ã€‚
+r:loraçš„ç§©
 lora_alpha:Lora alpha
-modules_to_save:Ö¸¶¨µÄÊÇ³ıÁË²ğ³ÉloraµÄÄ£¿é£¬ÆäËüµÄÄ£¿é¿ÉÒÔÍêÕûµÄÖ¸¶¨ÑµÁ·
+modules_to_save:æŒ‡å®šçš„æ˜¯é™¤äº†æ‹†æˆloraçš„æ¨¡å—ï¼Œå…¶å®ƒçš„æ¨¡å—å¯ä»¥å®Œæ•´çš„æŒ‡å®šè®­ç»ƒ
 
-LoraµÄËù·½Ê½lora_alpha/r£¬ÔÚÕâ¸öLoraConfigÖĞËõ·Å¾ÍÊÇ4±¶¡£Õâ¸öËõ·ÅµÄ±¾ÖÊ²¢Ã»ÓĞ¸Ä±äLoraµÄ²ÎÊıÁ¿´óĞ¡£¬±¾ÖÊÔÚÓÚ½«ÀïÃæµÄ²ÎÊıÊıÖµ×ö¹ã²¥³Ë·¨£¬½øĞĞÏßĞÔµÄËõ·Å¡£
+Loraçš„æ‰€æ–¹å¼lora_alpha/rï¼Œåœ¨è¿™ä¸ªLoraConfigä¸­ç¼©æ”¾å°±æ˜¯4å€ã€‚è¿™ä¸ªç¼©æ”¾çš„æœ¬è´¨å¹¶æ²¡æœ‰æ”¹å˜Loraçš„å‚æ•°é‡å¤§å°ï¼Œæœ¬è´¨åœ¨äºå°†é‡Œé¢çš„å‚æ•°æ•°å€¼åšå¹¿æ’­ä¹˜æ³•ï¼Œè¿›è¡Œçº¿æ€§çš„ç¼©æ”¾ã€‚
 
 ```python
 config=LoraConfig(
@@ -124,15 +125,15 @@ config=LoraConfig(
 )
 ```
 
-## ×Ô¶¨ÒåTraininArguments²ÎÊı
+## è‡ªå®šä¹‰TraininArgumentså‚æ•°
 
-TrainingArgumentsÕâ¸öÀàµÄÔ´ÂëÒ²½éÉÜÁËÃ¿¸ö²ÎÊıµÄ¾ßÌå×÷ÓÃ£¬³£ÓÃµÄ²ÎÊıÈçÏÂ£º
-output_dir:Ä£ĞÍµÄÊä³öÂ·¾¶
+TrainingArgumentsè¿™ä¸ªç±»çš„æºç ä¹Ÿä»‹ç»äº†æ¯ä¸ªå‚æ•°çš„å…·ä½“ä½œç”¨ï¼Œå¸¸ç”¨çš„å‚æ•°å¦‚ä¸‹ï¼š
+output_dir:æ¨¡å‹çš„è¾“å‡ºè·¯å¾„
 per_device_train_batch_size:batch_size
-gradient_accumulation_steps:Ìİ¶ÈÀÛ¼Ó£¬Èç¹ûÏÔ´æ±È½ÏĞ¡£¬¿ÉÒÔ°Ñbatch_sizeÉèÖÃĞ¡Ò»µã£¬Ìİ¶ÈÀÛ»ıÔö´óÒ»µã
-logging_steps:¶àÉÙ²½£¬Êä³öÒ»´Îlog
-num_train_epochs:¹ËÃûË¼Òåepoch
-gradient_chechpointing:Ìİ¶È¼ì²é£¬Õâ¸öÒ»µ©¿ªÆô£¬Ä£ĞÍ¾Í±ØĞëÖ´ĞĞ
+gradient_accumulation_steps:æ¢¯åº¦ç´¯åŠ ï¼Œå¦‚æœæ˜¾å­˜æ¯”è¾ƒå°ï¼Œå¯ä»¥æŠŠbatch_sizeè®¾ç½®å°ä¸€ç‚¹ï¼Œæ¢¯åº¦ç´¯ç§¯å¢å¤§ä¸€ç‚¹
+logging_steps:å¤šå°‘æ­¥ï¼Œè¾“å‡ºä¸€æ¬¡log
+num_train_epochs:é¡¾åæ€ä¹‰epoch
+gradient_chechpointing:æ¢¯åº¦æ£€æŸ¥ï¼Œè¿™ä¸ªä¸€æ—¦å¼€å¯ï¼Œæ¨¡å‹å°±å¿…é¡»æ‰§è¡Œ
 model.enable_input_require_grads()
 
 ```python
@@ -155,9 +156,9 @@ args=TrainingArguments(
 )
 ```
 
-## Ê¹ÓÃTrainerÑµÁ·
+## ä½¿ç”¨Trainerè®­ç»ƒ
 
-°Ñmodel·Å½øÈ¥£¬°ÑÉÏÃæÉèÖÃµÄ²ÎÊı·Å½øÈ¥£¬Êı¾İ¼¯·Å½øÈ¥£¬¿ªÊ¼ÑµÁ·
+æŠŠmodelæ”¾è¿›å»ï¼ŒæŠŠä¸Šé¢è®¾ç½®çš„å‚æ•°æ”¾è¿›å»ï¼Œæ•°æ®é›†æ”¾è¿›å»ï¼Œå¼€å§‹è®­ç»ƒ
 
 ```python
 trainer=Trainer(
@@ -169,26 +170,26 @@ trainer=Trainer(
 trainer.train()
 ```
 
-## Ä£ĞÍÍÆÀí
+## æ¨¡å‹æ¨ç†
 
 ```python
 model = model.cuda()
-ipt = tokenizer("ÓÃ»§£º{}\n{}".format("ÏÖÔÚÄãÒª°çÑİ»ÊµÛÉí±ßµÄÅ®ÈË--Õç‹Ö¡£ÄãÊÇË­£¿", "").strip() + "characterGLM-6B:\n", return_tensors="pt").to(model.device)
+ipt = tokenizer("ç”¨æˆ·ï¼š{}\n{}".format("ç°åœ¨ä½ è¦æ‰®æ¼”çš‡å¸èº«è¾¹çš„å¥³äºº--ç”„å¬›ã€‚ä½ æ˜¯è°ï¼Ÿ", "").strip() + "characterGLM-6B:\n", return_tensors="pt").to(model.device)
 tokenizer.decode(model.generate(**ipt, max_length=128, do_sample=True)[0], skip_special_tokens=True)
 ```
 
-## ´ÓĞÂ¼ÓÔØ
+## ä»æ–°åŠ è½½
 
-Í¨¹ıPEFTËùÎ¢µ÷µÄÄ£ĞÍ£¬¶¼¿ÉÒÔÊ¹ÓÃÏÂÃæµÄ·½·¨½øĞĞÖØĞÂ¼ÓÔØ£¬²¢ÍÆÀí£º
+é€šè¿‡PEFTæ‰€å¾®è°ƒçš„æ¨¡å‹ï¼Œéƒ½å¯ä»¥ä½¿ç”¨ä¸‹é¢çš„æ–¹æ³•è¿›è¡Œé‡æ–°åŠ è½½ï¼Œå¹¶æ¨ç†ï¼š
 
-¼ÓÔØÔ´modelÓëtokenizer£»
-Ê¹ÓÃPeftModelºÏ²¢Ô´modelÓëPEFTÎ¢µ÷ºóµÄ²ÎÊı
+åŠ è½½æºmodelä¸tokenizerï¼›
+ä½¿ç”¨PeftModelåˆå¹¶æºmodelä¸PEFTå¾®è°ƒåçš„å‚æ•°
 
 ```python
 from peft import Peftmodel
 model=AutoModelForCausalLM.from_pretrained("/root/autodl-tmp/THUCoAI/CharacterGLM-6B",trust_remote_code=True,low_cpu_mem_usage=True)
 tokenizer=AutoTokenizer.from_pretrained("root/autodl-tmp/THUCoAI/CharacterGLM-6B",use_fast=False,trust_remote_code=True)
 p_model=PeftModel.from_pretrained(model,model_id="./output/CharatcerGLM/checkpoint-1000/")
-ipt = tokenizer("ÓÃ»§£º{}\n{}".format("ÏÖÔÚÄãÒª°çÑİ»ÊµÛÉí±ßµÄÅ®ÈË--Õç‹Ö¡£ÄãÊÇË­£¿", "").strip() + "characterGLM-6B:\n", return_tensors="pt").to(model.device)
+ipt = tokenizer("ç”¨æˆ·ï¼š{}\n{}".format("ç°åœ¨ä½ è¦æ‰®æ¼”çš‡å¸èº«è¾¹çš„å¥³äºº--ç”„å¬›ã€‚ä½ æ˜¯è°ï¼Ÿ", "").strip() + "characterGLM-6B:\n", return_tensors="pt").to(model.device)
 tokenizer.decode(p_model.generate(**ipt,max_length=128,do_sample=True)[0],skip_special_tokens=True)
 ```
