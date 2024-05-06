@@ -5,4 +5,5 @@ CharacterGLM-6B 是聆心智能和清华大学 CoAI 实验室联合发布的新�
 ## 01-CharacterGLM-6B Transformer部署调用
 ## 02-CharacterGLM-6B FastApi部署调用
 ## 03-CharacterGLM-6B-chat
-后续将逐期更新文件
+## 04-CharacterGLM-6B Lora微调
+
