@@ -67,6 +67,12 @@
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
 
+- [CharacterGLM-6B](https://github.com/thu-coai/CharacterGLM-6B)
+  - [x] [CharacterGLM-6B Transformers 部署调用](./CharacterGLM/01-CharacterGLM-6B%20Transformer部署调用.md) @[Caleb-Sun-jz](https://github.com/Caleb-Sun-jz)
+  - [x] [CharacterGLM-6B FastApi 部署调用](./CharacterGLM/02-CharacterGLM-6B%20FastApi部署调用.md) @[Caleb-Sun-jz](https://github.com/Caleb-Sun-jz)
+  - [x] [CharacterGLM-6B webdemo 部署](./CharacterGLM/03-CharacterGLM-6B-chat.md) @[Caleb-Sun-jz](https://github.com/Caleb-Sun-jz)
+  - [x] [CharacterGLM-6B Lora 微调](./CharacterGLM/04-CharacterGLM-6B%20Lora微调.md) @[Caleb-Sun-jz](https://github.com/Caleb-Sun-jz)
+
 - [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
   - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md) @立业
   - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md) @不要葱姜蒜
