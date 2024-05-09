@@ -1,4 +1,4 @@
-# Llama-3-8B-Instruct FastApi 部署调用
+#01-Gemma-7B-Instruct FastApi 部署调用
 
 ## 环境准备
 
@@ -73,9 +73,9 @@ def torch_gc():
 
 # 构建 chat 模版
 def bulid_input(prompt, history=[]):
-    system_format='<|start_header_id|>system<|end_header_id|>\n\n{content}<|eot_id|>'
-    user_format='<|start_header_id|>user<|end_header_id|>\n\n{content}<|eot_id|>'
-    assistant_format='<|start_header_id|>assistant<|end_header_id|>\n\n{content}<|eot_id|>\n'
+    system_format='<start_of_turn>system\n{content}<end_of_turn>\n'
+    user_format='<start_of_turn>user\n{content}<end_of_turn>\n'
+    assistant_format='<start_of_turn>model\n'
     history.append({'role':'user','content':prompt})
     prompt_str = ''
     # 拼接历史对话
@@ -134,14 +134,15 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    model_name_or_path = '/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct'
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
+    model_name_or_path = '/root/autodl-tmp/AI-ModelScope/gemma-7b'
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16).cuda()
 
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
 ```
+更多chat模板参考这里：https://github.com/InternLM/xtuner/blob/main/xtuner/utils/templates.py#L8
 
 ## Api 部署
 

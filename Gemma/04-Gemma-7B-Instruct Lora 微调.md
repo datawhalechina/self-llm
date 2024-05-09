@@ -1,6 +1,6 @@
-# LLaMA3-8B-Instruct Lora 微调
+# Gemma-7B Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 LLaMA3-8B-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 Gemma-7B 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 这个教程会在同目录下给大家提供一个 [nodebook](./LLaMA3-8B-Instruct%20Lora.ipynb) 文件，来让大家更好的学习。
 
@@ -33,7 +33,7 @@ MAX_JOBS=8 pip install flash-attn --no-build-isolation
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 LLaMA3 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Gemma 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-LLaMA3***
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
@@ -158,7 +158,7 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/llama3",
+    output_dir="./output/gemma",
     per_device_train_batch_size=4,
     gradient_accumulation_steps=4,
     logging_steps=10,
@@ -186,7 +186,7 @@ trainer.train()
 ## 保存 lora 权重
 
 ```python
-lora_path='./llama3_lora'
+lora_path='./gemma_lora'
 trainer.model.save_pretrained(lora_path)
 tokenizer.save_pretrained(lora_path)
 ```
@@ -201,7 +201,7 @@ import torch
 from peft import PeftModel
 
 mode_path = '/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct'
-lora_path = './llama3_lora' # lora权重路径
+lora_path = './gemma_lora' # lora权重路径
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(mode_path)

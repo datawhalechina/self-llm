@@ -1,4 +1,4 @@
-# LLaMA3-8B-Instruct langchain 接入
+# Gemma-7B langchain 接入
 
 ## 环境准备  
 
@@ -36,7 +36,7 @@ import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
 
-model_dir = snapshot_download('LLM-Research/Meta-Llama-3-8B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('AI-ModelScope/gemma-7b', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 ## 代码准备
@@ -61,7 +61,7 @@ class LLaMA3_LLM(LLM):
 
         super().__init__()
         print("正在从本地加载模型...")
-        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
+        self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path)
         self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, device_map="auto")
         self.tokenizer.pad_token = self.tokenizer.eos_token
         print("完成本地模型的加载")

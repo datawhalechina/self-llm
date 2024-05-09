@@ -1,4 +1,4 @@
-# LLaMA3-8B-Instruct WebDemo 部署
+# Gemma-7B WebDemo 部署
 
 ## 环境准备  
 
@@ -20,7 +20,7 @@ pip install langchain==0.1.15
 pip install "transformers>=4.40.0" accelerate tiktoken einops scipy transformers_stream_generator==0.1.16
 pip install streamlit
 ```  
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 LLaMA3 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Gemma 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-LLaMA3***
 
 ## 模型下载
@@ -48,11 +48,11 @@ import streamlit as st
 
 # 在侧边栏中创建一个标题和一个链接
 with st.sidebar:
-    st.markdown("## LLaMA3 LLM")
+    st.markdown("## Gemma LLM")
     "[开源大模型食用指南 self-llm](https://github.com/datawhalechina/self-llm.git)"
 
 # 创建一个标题和一个副标题
-st.title("💬 LLaMA3 Chatbot")
+st.title("💬 Gemma Chatbot")
 st.caption("🚀 A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
@@ -83,7 +83,7 @@ def bulid_input(prompt, history=[]):
             prompt_str+=assistant_format.format(content=item['content'])
     return prompt_str
 
-# 加载LLaMA3的model和tokenizer
+# 加载Gemma的model和tokenizer
 tokenizer, model = get_model()
 
 # 如果session_state中没有"messages"，则创建一个包含默认消息的列表
@@ -127,6 +127,5 @@ if prompt := st.chat_input():
 streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-如下所示，可以看出LLaMA3自带思维链，应该是在训练的时候数据集里就直接有cot形式的数据集，LLaMA3很强！
 
 ![alt text](./images/image-3.png)
