@@ -56,7 +56,7 @@
 ### 已支持模型
 
 - [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
-  - [ ] Phi-3-mini-4k-instruct FastApi 部署调用
+  - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
   - [ ] Phi-3-mini-4k-instruct langchain 接入
   - [ ] Phi-3-mini-4k-instruct WebDemo 部署
   - [ ] Phi-3-mini-4k-instruct Lora 微调
