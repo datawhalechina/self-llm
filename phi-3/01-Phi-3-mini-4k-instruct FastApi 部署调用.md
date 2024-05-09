@@ -1,3 +1,5 @@
+#  Phi-3-mini-4k-instruct FastApi 部署调用
+
 ## 环境准备
 
 在 autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8 。
@@ -10,15 +12,14 @@
 
 创建本次phi3实践的工作目录`/root/autodl-tmp/phi3`
 
-```
+```bash
 # 创建工作目录
 mkdir -p /root/autodl-tmp/phi3
-
 ```
 
 ### 安装依赖
 
-```python
+```bash
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
@@ -28,20 +29,33 @@ pip install fastapi==0.104.1
 pip install uvicorn==0.24.0.post1
 pip install requests==2.25.1
 pip install modelscope==1.9.5
-# pip install transformers==4.37.2
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
 pip install accelerate==0.24.1
+```
 
+由于phi3要求的transformers的版本为`4.41.0.dev0版本`。
+
+各位可以先通过下面命令查看你的Transformers包的版本
+
+```bash
+pip list |grep transformers
+```
+
+如果版本不对，可以通过下面命令升级
+
+```bash
 # phi3升级transformers为4.41.0.dev0版本
 pip uninstall -y transformers && pip install git+https://github.com/huggingface/transformers
 ```
 
+
+
 ## 模型下载
 
-使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
+使用 modelscope 中的`napshot_download`函数下载模型，第一个参数为模型名称，参数`cache_dir`为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py执行下载，模型大小为 8 GB，下载模型大概需要 10~15 分钟
+在 /root/autodl-tmp 路径下新建`download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行`python /root/autodl-tmp/download.py`执行下载，模型大小为 8 GB，下载模型大概需要 10~15 分钟
 
 ```python
 #模型下载
@@ -51,7 +65,7 @@ model_dir = snapshot_download('LLM-Research/Phi-3-mini-4k-instruct', cache_dir='
 
 ## 代码准备
 
-在`/root/autodl-tmp`路径下新建api.py文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
+在`/root/autodl-tmp`路径下新建`api.py`文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
 
 ```python
 from fastapi import FastAPI, Request
@@ -131,7 +145,6 @@ if __name__ == '__main__':
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用curl调用，如下所示：
 
 ```bash
-
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好", "history": []}'
@@ -147,7 +160,7 @@ curl -X POST "http://127.0.0.1:6006" \
 
 SSH端口映射
 
-```
+```bash
 ssh -CNg -L 6006:127.0.0.1:6006 -p 【你的autodl机器的ssh端口】 root@[你的autodl机器地址]
 ssh -CNg -L 6006:127.0.0.1:6006 -p 36494 root@region-45.autodl.pro
 ```
