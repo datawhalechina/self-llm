@@ -57,7 +57,7 @@
 
 - [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
   - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
-  - [ ] Phi-3-mini-4k-instruct langchain 接入
+  - [x] [Phi-3-mini-4k-instruct langchain 接入](./phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @白玉
   - [ ] Phi-3-mini-4k-instruct WebDemo 部署
   - [ ] Phi-3-mini-4k-instruct Lora 微调
 
