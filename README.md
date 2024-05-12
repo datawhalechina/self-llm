@@ -55,17 +55,17 @@
 
 ### 已支持模型
 
-- [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
-  - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
-  - [x] [Phi-3-mini-4k-instruct langchain 接入](./phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @白玉
-  - [ ] Phi-3-mini-4k-instruct WebDemo 部署
-  - [ ] Phi-3-mini-4k-instruct Lora 微调
-
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
   - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
   - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
   - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+
+- [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
+  - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
+  - [x] [Phi-3-mini-4k-instruct langchain 接入](./phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @白玉
+  - [x] [Phi-3-mini-4k-instruct WebDemo 部署](./phi-3/03-Phi-3-mini-4k-instruct%20WebDemo部署.md)
+  - [x] [Phi-3-mini-4k-instruct Lora 微调](./phi-3/04-Phi-3-mini-4k-Instruct%20Lora%20微调.md)
 
 - [CharacterGLM-6B](https://github.com/thu-coai/CharacterGLM-6B)
   - [x] [CharacterGLM-6B Transformers 部署调用](./CharacterGLM/01-CharacterGLM-6B%20Transformer部署调用.md) @孙健壮
