@@ -64,8 +64,8 @@
 - [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
   - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
   - [x] [Phi-3-mini-4k-instruct langchain 接入](./phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @白玉
-  - [x] [Phi-3-mini-4k-instruct WebDemo 部署](./phi-3/03-Phi-3-mini-4k-instruct%20WebDemo部署.md)
-  - [x] [Phi-3-mini-4k-instruct Lora 微调](./phi-3/04-Phi-3-mini-4k-Instruct%20Lora%20微调.md)
+  - [x] [Phi-3-mini-4k-instruct WebDemo 部署](./phi-3/03-Phi-3-mini-4k-instruct%20WebDemo部署.md) @[丁悦](https://github.com/dingyue772)
+  - [x] [Phi-3-mini-4k-instruct Lora 微调](./phi-3/04-Phi-3-mini-4k-Instruct%20Lora%20微调.md) @[丁悦](https://github.com/dingyue772)
 
 - [CharacterGLM-6B](https://github.com/thu-coai/CharacterGLM-6B)
   - [x] [CharacterGLM-6B Transformers 部署调用](./CharacterGLM/01-CharacterGLM-6B%20Transformer部署调用.md) @孙健壮
@@ -173,8 +173,8 @@
   - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @ Logan Zou
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
-  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @[丁悦](https://github.com/dingyue772)
+  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @[丁悦](https://github.com/dingyue772)
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou

@@ -31,7 +31,7 @@ pip install peft==0.10.0
 MAX_JOBS=8 pip install flash-attn --no-build-isolation
 ```
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Phi-3 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-LLaMA3***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Phi-3-Lora***
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
