@@ -1,6 +1,6 @@
-# LLaMA3-8B-Instruct Lora 微调
+# Gemma2b-Instruct Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 LLaMA3-8B-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 Gemma2b 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 这个教程会在同目录下给大家提供一个 [nodebook](./04-Gemma-2B-Lora微调.ipynb) 文件，来让大家更好的学习。
 
@@ -82,7 +82,7 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ```python
 def process_func(example):
-    MAX_LENGTH = 384    # Llama分词器会将一个中文字切分为多个token，因此需要放开一些最大长度，保证数据的完整性
+    MAX_LENGTH = 384    # 分词器会将一个中文字切分为多个token，因此需要放开一些最大长度，保证数据的完整性
     input_ids, attention_mask, labels = [], [], []
     instruction = tokenizer(f"<start_of_turn>system\n现在你要扮演皇帝身边的女人--甄嬛<end_of_turn>\n<start_of_turn>user\n{example['instruction'] + example['input']}<end_of_turn>\n<start_of_turn>model\n", add_special_tokens=False)
     #response = tokenizer(f"{example['output']}", add_special_tokens=False)
@@ -185,7 +185,7 @@ trainer.train()
 ## 保存 lora 权重
 
 ```python
-lora_path='./gemma2b_lora'
+lora_path='./gemma2b'
 trainer.model.save_pretrained(lora_path)
 tokenizer.save_pretrained(lora_path)
 ```
