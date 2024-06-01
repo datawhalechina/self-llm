@@ -185,7 +185,7 @@ trainer.train()
 ## 保存 lora 权重
 
 ```python
-lora_path='./gemma2b'
+lora_path='./gemma2b_lora'
 trainer.model.save_pretrained(lora_path)
 tokenizer.save_pretrained(lora_path)
 ```
@@ -200,7 +200,7 @@ import torch
 from peft import PeftModel
 
 mode_path = '/root/autodl-tmp/Lucachen/gemma2b'
-lora_path = './gemma2b' # lora权重路径
+lora_path = './gemma2b_lora' # lora权重路径
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(mode_path)
