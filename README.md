@@ -222,7 +222,7 @@
 - [郭志航](https://github.com/acwwt) （内容创作者）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
-- [东东](https://github.com/LucaChen)（内容创作者-Google开发工程师）
+- [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 
 ### 其他
 
