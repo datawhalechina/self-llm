@@ -56,10 +56,10 @@
 ### 已支持模型
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
-  - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
-  - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
-  - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
-  - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
+  - [x] [gemma-2b-it FastApi 部署调用 @东东](./Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md)
+  - [x] [gemma-2b-it langchain 接入 @东东](./Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md)
+  - [x] [gemma-2b-it WebDemo 部署 @东东](./Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md)
+  - [x] [gemma-2b-it Peft Lora 微调 @东东](./Gemma/04-Gemma-2B-Instruct%20Lora微调.md)
 
 - [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
   - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
@@ -222,6 +222,7 @@
 - [郭志航](https://github.com/acwwt) （内容创作者）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
+- [东东](https://github.com/LucaChen)（内容创作者-Google开发工程师）
 
 ### 其他
 
