@@ -159,7 +159,7 @@ args = TrainingArguments(
 
 [SwanLab](https://swanlab.cn/)是一个高效，好用的模型实验管理python库，可以很方便地对我们的训练任务进行记录，并提供可视化的分析图表.
 
-![image.png](https://kashiwa-pic.oss-cn-beijing.aliyuncs.com/20240602221034.png)
+![image.png](./images/swanlabweb.png)
 
 SwanLab的使用流程也非常简单，只需以下三步即可：
 
@@ -174,12 +174,12 @@ pip install swanlab
 接着进入我们的个人设置界面获取 API-Key（这是将我们的数据上传到云端的关键）
 
 
-![image.png](https://kashiwa-pic.oss-cn-beijing.aliyuncs.com/20240602222022.png)
+![image.png](./images/swanlabsettings.png)
 
 
 目前SwanLab已经对十几个主流的开源框架进行了集成，让我们可以通过几行代码轻松实现日志记录。我们通过查询它的官方文档可以发现，SwanLab目前已经支持了Transformers  Trainer的支持。
 
-![image.png](https://kashiwa-pic.oss-cn-beijing.aliyuncs.com/20240602221222.png)
+![image.png](./images/swanlabcallbacks.png)
 
 
 
@@ -209,10 +209,10 @@ trainer.train()
 ## 查看训练进展
 SwanLab目前支持了在Jupyter界面中直接开启看板，来很方便的了解训练的情况。
 
-![image.png](https://kashiwa-pic.oss-cn-beijing.aliyuncs.com/20240602222728.png)
+![image.png](./images/swanlabdisplay.png)
 
 当然也可以直接登录官网，在我们的个人账号下进行查看。
-![image.png](https://kashiwa-pic.oss-cn-beijing.aliyuncs.com/20240602222840.png)
+![image.png](./images/swanlabchart.png)
 
 
 ## 加载 lora 权重推理
