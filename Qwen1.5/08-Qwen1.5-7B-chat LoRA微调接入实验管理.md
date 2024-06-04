@@ -204,6 +204,7 @@ trainer = Trainer(
 trainer.train()
 ```
 
+训练启动后会要求我们输入SwanLab的API-key，只需要输入我们在个人设置界面获得的API-key即可。
 
 ## 查看训练进展
 SwanLab目前支持了在Jupyter界面中直接开启看板，来很方便的了解训练的情况。
