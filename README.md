@@ -55,6 +55,16 @@
 
 ### 已支持模型
 
+- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
+  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
+  - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @[丁悦](https://github.com/dingyue772)
+  - [x] [Qwen1.5-7B-chat vLLM推理部署](./Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @[立业](https://github.com/0-yy-0)
+  - [x] [Qwen1.5-7B-chat Lora 微调 接入SwanLab实验管理平台](./Qwen1.5/08-Qwen1.5-7B-chat%20LoRA微调接入实验管理.md) [@柏特](https://github.com/KashiwaByte)
+
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
   - [x] [gemma-2b-it FastApi 部署调用 @东东](./Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md)
   - [x] [gemma-2b-it langchain 接入 @东东](./Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md)
@@ -85,15 +95,6 @@
   - [x] [XVERSE-7B-Chat langchain 接入](./XVERSE/03-XVERSE-7B-chat%20langchain%20接入.md) @[acwwt](https://github.com/acwwt) ddl=4月底
   - [x] [XVERSE-7B-Chat WebDemo 部署](./XVERSE/04-XVERSE-7B-chat%20WebDemo%20部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
   - [x] [XVERSE-7B-Chat Lora 微调](./XVERSE/05-XVERSE-7B-Chat%20Lora%20微调.md) @[acwwt](https://github.com/acwwt) ddl=4月底
-
-- [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
-  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
-  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
-  - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @[丁悦](https://github.com/dingyue772)
-  - [x] [Qwen1.5-7B-chat vLLM推理部署](./Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @[立业](https://github.com/0-yy-0)
 
 - [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
   - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @[ml67](https://github.com/mlw67) ddl=3月底
@@ -223,6 +224,7 @@
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
+- [柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 
 ### 其他
 
