@@ -56,10 +56,10 @@
 ### 已支持模型
 
 - [ChatGLM4](https://github.com/THUDM/GLM-4.git)
-  - [ ] ChatGLM4-9B-chat FastApi 部署调用 @友东
-  - [ ] ChatGLM4-9B-chat langchain 接入 @珂珂豆
+  - [x] [ChatGLM4-9B-chat FastApi 部署调用](./ChatGLM4/01-ChatGLM4-9B-chat%20FastApi%20部署调用.md) @友东
+  - [x] [ChatGLM4-9B-chat langchain 接入](./ChatGLM4/02-ChatGLM4-9B-chat%20langchain%20接入.md) @珂珂豆
   - [ ] ChatGLM4-9B-chat WebDemo 部署 @至轩
-  - [ ] ChatGLM4-9B-chat vLLM 部署 @熠明
+  - [x] [ChatGLM4-9B-chat vLLM 部署](./ChatGLM4/04-GLM4-9B-Chat%20vLLM%20部署调用.md) @熠明
   - [ ] ChatGLM4-9B-chat Lora 微调 @鸿儒
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)

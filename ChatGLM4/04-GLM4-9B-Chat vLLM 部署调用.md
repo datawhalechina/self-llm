@@ -31,8 +31,8 @@ pip install openai==1.17.1
 pip install torch==2.1.2+cu121
 pip install tqdm==4.64.1
 pip install transformers==4.39.3
-# 下载flash-attn 请等待
-pip install flash-attn==2.5.7 --no-build-isolation
+# 下载flash-attn 请等待大约10分钟左右~
+MAX_JOBS=8 pip install flash-attn --no-build-isolation
 pip install vllm==0.4.0.post1
 ```
 
