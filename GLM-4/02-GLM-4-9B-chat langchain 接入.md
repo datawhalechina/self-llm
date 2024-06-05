@@ -1,4 +1,4 @@
-# ChatGLM4-9b-Chat 接入 LangChain 
+# GLM-4-9b-Chat 接入 LangChain 
 
 ## 环境准备
 
@@ -12,8 +12,9 @@ pip install langchain==0.2.1
 pip install langchain==0.1.15
 ```
 
-## 代码准备
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 GLM-4 的环境镜像，该镜像适用于本教程需要 GLM-4 的部署环境。点击下方链接并直接创建 AutoDL 示例即可。（vLLM 对 torch 版本要求较高，且越高的版本对模型的支持更全，效果更好，所以新建一个全新的镜像。） **https://www.codewithgpu.com/i/datawhalechina/self-llm/GLM-4**
 
+## 代码准备
 
 为便捷构建 LLM 应用，我们需要基于本地部署的 Chat，自定义一个 LLM 类，将 ChatGLM4 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 

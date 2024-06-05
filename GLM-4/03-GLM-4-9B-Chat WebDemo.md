@@ -1,11 +1,11 @@
-# ChatGLM4-9B-Chat WebDemo 部署
+# GLM-4-9B-Chat WebDemo 部署
 
 ## 环境准备
 在autodl平台中租一个4090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1
 接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
 ![Alt text](images/image03-1.png)
 pip换源和安装依赖包
-```
+```bash
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
@@ -19,13 +19,15 @@ pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
 pip install tiktoken
 ```
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 GLM-4 的环境镜像，该镜像适用于本教程需要 GLM-4 的部署环境。点击下方链接并直接创建 AutoDL 示例即可。（vLLM 对 torch 版本要求较高，且越高的版本对模型的支持更全，效果更好，所以新建一个全新的镜像。） **https://www.codewithgpu.com/i/datawhalechina/self-llm/GLM-4**
+
 
 ## 模型下载
 使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
 
 在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，下载模型大概需要 2 分钟。
 
-```
+```python
 mport torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
