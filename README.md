@@ -18,6 +18,8 @@
 
 > &emsp;&emsp;***学习建议：本项目的学习建议是，先学习环境配置，然后再学习模型的部署使用，最后再学习微调。因为环境配置是基础，模型的部署使用是基础，微调是进阶。初学者可以选择Qwen1.5，InternLM2，MiniCPM等模型优先学习。***
 
+> 注：如果有同学希望了解大模型的模型构成，以及从零手写RAG、Agent和Eval等任务，可以学习Datawhale的另一个项目[Tiny-Universe](https://github.com/datawhalechina/tiny-universe)，大模型是当下深度学习领域的热点，但现有的大部分大模型教程只在于教给大家如何调用api完成大模型的应用，而很少有人能够从原理层面讲清楚模型结构、RAG、Agent 以及 Eval。所以该仓库会提供全部手写，不采用调用api的形式，完成大模型的 RAG 、 Agent 、Eval 任务。
+
 > 注：考虑到有同学希望在学习本项目之前，希望学习大模型的理论部分，如果想要进一步深入学习 LLM 的理论基础，并在理论的基础上进一步认识、应用 LLM，可以参考 Datawhale 的 [so-large-llm](https://github.com/datawhalechina/so-large-lm.git)课程。
 
 > 注：如果有同学在学习本课程之后，想要自己动手开发大模型应用。同学们可以参考 Datawhale 的 [动手学大模型应用开发](https://github.com/datawhalechina/llm-universe) 课程，该项目是一个面向小白开发者的大模型应用开发教程，旨在基于阿里云服务器，结合个人知识库助手项目，向同学们完整的呈现大模型应用开发流程。
@@ -53,24 +55,12 @@
 
 ### 已支持模型
 
-- [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
-  - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md) @立业
-  - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md) @不要葱姜蒜
-  - [x] [LLaMA3-8B-Instruct WebDemo 部署](./LLaMA3/03-LLaMA3-8B-Instruct%20WebDemo%20部署.md) @不要葱姜蒜
-  - [x] [LLaMA3-8B-Instruct Lora 微调](./LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20微调.md) @立业
-
-- [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
-  - [ ] gemma-7b-it FastApi 部署调用 @东东 ddl=3月底
-  - [ ] gemma-7b-it langchain 接入 @东东 ddl=3月底
-  - [ ] gemma-7b-it WebDemo 部署 @东东 ddl=3月底
-  - [ ] gemma-7b-it Peft Lora 微调 @东东 ddl=3月底
-
-- [XVERSE-7B-Chat](https://modelscope.cn/models/xverse/XVERSE-7B-Chat/summary)
-  - [x] [XVERSE-7B-Chat transformers 部署调用](./XVERSE/01-XVERSE-7B-chat%20Transformers推理.md) @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [x] [XVERSE-7B-Chat FastApi 部署调用](./XVERSE/02-XVERSE-7B-chat%20FastAPI部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [x] [XVERSE-7B-Chat langchain 接入](./XVERSE/03-XVERSE-7B-chat%20langchain%20接入.md) @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [x] [XVERSE-7B-Chat WebDemo 部署](./XVERSE/04-XVERSE-7B-chat%20WebDemo%20部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
-  - [x] [XVERSE-7B-Chat Lora 微调](./XVERSE/05-XVERSE-7B-Chat%20Lora%20微调.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+- [ChatGLM4](https://github.com/THUDM/GLM-4.git)
+  - [x] [ChatGLM4-9B-chat FastApi 部署调用](./ChatGLM4/01-ChatGLM4-9B-chat%20FastApi%20部署调用.md) @友东
+  - [x] [ChatGLM4-9B-chat langchain 接入](./ChatGLM4/02-ChatGLM4-9B-chat%20langchain%20接入.md) @珂珂豆
+  - [ ] ChatGLM4-9B-chat WebDemo 部署 @至轩
+  - [x] [ChatGLM4-9B-chat vLLM 部署](./ChatGLM4/04-GLM4-9B-Chat%20vLLM%20部署调用.md) @熠明
+  - [ ] ChatGLM4-9B-chat Lora 微调 @鸿儒
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
@@ -80,6 +70,38 @@
   - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @[byx020119](https://github.com/byx020119)
   - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @[丁悦](https://github.com/dingyue772)
   - [x] [Qwen1.5-7B-chat vLLM推理部署](./Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @[立业](https://github.com/0-yy-0)
+  - [x] [Qwen1.5-7B-chat Lora 微调 接入SwanLab实验管理平台](./Qwen1.5/08-Qwen1.5-7B-chat%20LoRA微调接入实验管理.md) [@柏特](https://github.com/KashiwaByte)
+
+- [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
+  - [x] [gemma-2b-it FastApi 部署调用 @东东](./Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md)
+  - [x] [gemma-2b-it langchain 接入 @东东](./Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md)
+  - [x] [gemma-2b-it WebDemo 部署 @东东](./Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md)
+  - [x] [gemma-2b-it Peft Lora 微调 @东东](./Gemma/04-Gemma-2B-Instruct%20Lora微调.md)
+
+- [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
+  - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @白玉
+  - [x] [Phi-3-mini-4k-instruct langchain 接入](./phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @白玉
+  - [x] [Phi-3-mini-4k-instruct WebDemo 部署](./phi-3/03-Phi-3-mini-4k-instruct%20WebDemo部署.md) @[丁悦](https://github.com/dingyue772)
+  - [x] [Phi-3-mini-4k-instruct Lora 微调](./phi-3/04-Phi-3-mini-4k-Instruct%20Lora%20微调.md) @[丁悦](https://github.com/dingyue772)
+
+- [CharacterGLM-6B](https://github.com/thu-coai/CharacterGLM-6B)
+  - [x] [CharacterGLM-6B Transformers 部署调用](./CharacterGLM/01-CharacterGLM-6B%20Transformer部署调用.md) @孙健壮
+  - [x] [CharacterGLM-6B FastApi 部署调用](./CharacterGLM/02-CharacterGLM-6B%20FastApi部署调用.md) @孙健壮
+  - [x] [CharacterGLM-6B webdemo 部署](./CharacterGLM/03-CharacterGLM-6B-chat.md) @孙健壮
+  - [x] [CharacterGLM-6B Lora 微调](./CharacterGLM/04-CharacterGLM-6B%20Lora微调.md) @孙健壮
+
+- [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
+  - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md) @立业
+  - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md) @不要葱姜蒜
+  - [x] [LLaMA3-8B-Instruct WebDemo 部署](./LLaMA3/03-LLaMA3-8B-Instruct%20WebDemo%20部署.md) @不要葱姜蒜
+  - [x] [LLaMA3-8B-Instruct Lora 微调](./LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20微调.md) @立业
+
+- [XVERSE-7B-Chat](https://modelscope.cn/models/xverse/XVERSE-7B-Chat/summary)
+  - [x] [XVERSE-7B-Chat transformers 部署调用](./XVERSE/01-XVERSE-7B-chat%20Transformers推理.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat FastApi 部署调用](./XVERSE/02-XVERSE-7B-chat%20FastAPI部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat langchain 接入](./XVERSE/03-XVERSE-7B-chat%20langchain%20接入.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat WebDemo 部署](./XVERSE/04-XVERSE-7B-chat%20WebDemo%20部署.md) @[acwwt](https://github.com/acwwt) ddl=4月底
+  - [x] [XVERSE-7B-Chat Lora 微调](./XVERSE/05-XVERSE-7B-Chat%20Lora%20微调.md) @[acwwt](https://github.com/acwwt) ddl=4月底
 
 - [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
   - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @[ml67](https://github.com/mlw67) ddl=3月底
@@ -159,8 +181,8 @@
   - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @ Logan Zou
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦 ddl=12.2
-  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦 ddl=12.2
+  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @[丁悦](https://github.com/dingyue772)
+  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @[丁悦](https://github.com/dingyue772)
   - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
   - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @ Logan Zou
@@ -207,6 +229,9 @@
 - [郑皓桦（白玉）](https://github.com/BaiYu96) （内容创作者）
 - [郭志航](https://github.com/acwwt) （内容创作者）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
+- [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
+- [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
+- [柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 
 ### 其他
 
@@ -225,5 +250,5 @@
 ### Star History
 
 <div align=center style="margin-top: 30px;">
-  <img src="./images/star-history-2024414.png"/>
+  <img src="./images/star-history-202455.png"/>
 </div>

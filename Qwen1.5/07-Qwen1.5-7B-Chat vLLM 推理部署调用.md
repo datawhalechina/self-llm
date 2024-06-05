@@ -288,8 +288,8 @@ python benchmark_throughput.py \
 	--output-len 128 \
 	--num-prompts 25 \
 	--seed 2024 \
-	--dtype float16
-    --hf_max_batch_size 25
+	--dtype float16 \
+    --hf-max-batch-size 25
 ```
 得到的结果如下所示：
 ```

@@ -31,6 +31,7 @@ pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
 pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
+pip install protobuf
 ```  
 
 ## 模型下载  
