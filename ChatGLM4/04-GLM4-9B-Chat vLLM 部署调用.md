@@ -16,7 +16,7 @@ vLLM 框架是一个高效的大型语言模型（LLM）**推理和部署服务�
 
 接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
 
-![](images/vllm_answer.png)
+![](images/image04-1.png)
 
 pip 换源加速下载并安装依赖包
 
