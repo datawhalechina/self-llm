@@ -66,7 +66,7 @@ def get_model():
   
     return tokenizer, model
 
-# 加载Qwen1.5-4B-Chat的model和tokenizer
+# 加载ChatGLM-9B-Chat的model和tokenizer
 tokenizer, model = get_model()
 
 # 如果session_state中没有"messages"，则创建一个包含默认消息的列表
