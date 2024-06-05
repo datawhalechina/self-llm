@@ -55,7 +55,7 @@
 
 ### 已支持模型
 
-- [ChatGLM4](https://github.com/THUDM/GLM-4.git)
+- [GLM-4](https://github.com/THUDM/GLM-4.git)
   - [x] [ChatGLM4-9B-chat FastApi 部署调用](./GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @友东
   - [x] [ChatGLM4-9B-chat langchain 接入](./GLM-4/02-GLM-4-9B-chat%20langchain%20接入.md) @珂珂豆
   - [x] [ChatGLM4-9B-chat WebDemo 部署](./GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @至轩
