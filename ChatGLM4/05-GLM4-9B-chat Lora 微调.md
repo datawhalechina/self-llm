@@ -34,7 +34,7 @@ MAX_JOBS=8 pip install flash-attn --no-build-isolation
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 GLM4 的环境镜像，该镜像适用于该仓库的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-LLaMA3***
+> ***release soon!***
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
