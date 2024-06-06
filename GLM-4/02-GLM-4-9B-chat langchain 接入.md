@@ -18,7 +18,7 @@ pip install langchain==0.1.15
 
 为便捷构建 LLM 应用，我们需要基于本地部署的 Chat，自定义一个 LLM 类，将 ChatGLM4 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 
-基于本地部署的 Qwen2 自定义 LLM 类并不复杂，我们只需从 Langchain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+基于本地部署的 ChatGLM4 自定义 LLM 类并不复杂，我们只需从 Langchain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
 
 ```python
 from langchain.llms.base import LLM
