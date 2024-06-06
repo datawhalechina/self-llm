@@ -56,11 +56,11 @@
 ### 已支持模型
 
 - [GLM-4](https://github.com/THUDM/GLM-4.git)
-  - [x] [ChatGLM4-9B-chat FastApi 部署调用](./GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @友东
-  - [x] [ChatGLM4-9B-chat langchain 接入](./GLM-4/02-GLM-4-9B-chat%20langchain%20接入.md) @珂珂豆
-  - [x] [ChatGLM4-9B-chat WebDemo 部署](./GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @至轩
-  - [x] [ChatGLM4-9B-chat vLLM 部署](./GLM-4/04-GLM-4-9B-Chat%20vLLM%20部署调用.md) @熠明
-  - [x] [ChatGLM4-9B-chat Lora 微调](./GLM-4/05-GLM-4-9B-chat%20Lora%20微调.md) @鸿儒
+  - [x] [GLM-4-9B-chat FastApi 部署调用](./GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @友东
+  - [x] [GLM-4-9B-chat langchain 接入](./GLM-4/02-GLM-4-9B-chat%20langchain%20接入.md) @珂珂豆
+  - [x] [GLM-4-9B-chat WebDemo 部署](./GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @至轩
+  - [x] [GLM-4-9B-chat vLLM 部署](./GLM-4/04-GLM-4-9B-Chat%20vLLM%20部署调用.md) @熠明
+  - [x] [GLM-4-9B-chat Lora 微调](./GLM-4/05-GLM-4-9B-chat%20Lora%20微调.md) @鸿儒
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
