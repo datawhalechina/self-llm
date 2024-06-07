@@ -57,7 +57,7 @@
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
   - [x] [Qwen2-7B-Instruct FastApi 部署调用](./Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @婧淇
-  - [ ] Qwen2-7B-Instruct langchain 接入 @友东
+  - [ ] Qwen2-7B-Instruct langchain 接入 @不要葱姜蒜
   - [ ] Qwen2-7B-Instruct WebDemo 部署 @三水
   - [ ] Qwen2-7B-Instruct vLLM 部署调用 @舒凡
   - [ ] Qwen2-7B-Instruct Lora 微调 @散步
