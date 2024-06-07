@@ -2,14 +2,14 @@
 
 ## 环境准备  
 
-在 Autodl 平台中租赁一个 RTX 3090/24G 显存的显卡机器。如下图所示，镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3 版本以上的都可以）。
+在 Autodl 平台中租赁一个 RTX 3090/24G 显存的显卡机器。如下图所示，镜像选择 PyTorch-->2.1.0-->3.10(ubuntu20.04)-->12.1（11.3 版本以上的都可以）。
 
 ![开启机器配置选择](images/01-1.png)
 
 
 接下来，我们打开刚刚租用服务器的 JupyterLab，如下图所示，然后打开其中的终端，开始环境配置、模型下载和运行演示。  
 ![开启JupyterLab](images/01-2.png)
-<!-- ![开启终端](images/3.png) -->
+<!-- ![开启终端](images/01-3.png) -->
 
 pip 换源加速下载并安装依赖包
 
@@ -23,14 +23,11 @@ pip install fastapi==0.104.1
 pip install uvicorn==0.24.0.post1
 pip install requests==2.25.1
 pip install modelscope==1.11.0
-pip install transformers==4.37.0
+pip install transformers==4.41.0
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
 pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
-
-
-pip install fastapi==0.104.1 uvicorn==0.24.0.post1 requests==2.25.1 modelscope==1.11.0 transformers==4.37.0 streamlit==1.24.0 sentencepiece==0.1.99 accelerate==0.24.1 transformers_stream_generator==0.0.4
 
 ```  
 
