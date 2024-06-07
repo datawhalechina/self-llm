@@ -56,11 +56,11 @@
 ### 已支持模型
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
-  - [ ] Qwen2-7B-Instruct FastApi 部署调用
-  - [ ] Qwen2-7B-Instruct langchain 接入
-  - [ ] Qwen2-7B-Instruct WebDemo 部署
-  - [ ] Qwen2-7B-Instruct vLLM 部署调用
-  - [ ] Qwen2-7B-Instruct Lora 微调
+  - [ ] Qwen2-7B-Instruct FastApi 部署调用 @婧淇
+  - [ ] Qwen2-7B-Instruct langchain 接入 @友东
+  - [ ] Qwen2-7B-Instruct WebDemo 部署 @三水
+  - [ ] Qwen2-7B-Instruct vLLM 部署调用 @舒凡
+  - [ ] Qwen2-7B-Instruct Lora 微调 @散步
 
 - [GLM-4](https://github.com/THUDM/GLM-4.git)
   - [x] [GLM-4-9B-chat FastApi 部署调用](./GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @友东
