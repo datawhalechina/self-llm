@@ -56,7 +56,7 @@
 ### 已支持模型
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
-  - [ ] Qwen2-7B-Instruct FastApi 部署调用 @婧淇
+  - [x] [Qwen2-7B-Instruct FastApi 部署调用](./Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @婧淇
   - [ ] Qwen2-7B-Instruct langchain 接入 @友东
   - [ ] Qwen2-7B-Instruct WebDemo 部署 @三水
   - [ ] Qwen2-7B-Instruct vLLM 部署调用 @舒凡
