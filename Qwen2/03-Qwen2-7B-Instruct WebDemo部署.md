@@ -54,7 +54,7 @@ download.py代码如下
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 from modelscope import GenerationConfig
-model_dir = snapshot_download('qwen/Qwen2-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('qwen/Qwen2-7B-Instructz', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 保存好后在终端运行 python /root/autodl-tmp/download.py 执行下载，下载模型需要一些时间。
@@ -95,7 +95,7 @@ st.title("💬 Qwen2 Chatbot")
 st.caption("🚀 A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
-mode_name_or_path = '/root/autodl-tmp/qwen/Qwen2-7B-Chat'
+mode_name_or_path = '/root/autodl-tmp/qwen/Qwen2-7B-Instruct'
 
 # 定义一个函数，用于获取模型和tokenizer
 @st.cache_resource

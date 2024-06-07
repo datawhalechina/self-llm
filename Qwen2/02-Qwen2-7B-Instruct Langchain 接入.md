@@ -97,7 +97,7 @@ class Qwen2_LLM(LLM):
 ```python
 from LLM import Qwen2_LLM
 llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen2-7B-Instruct")
-llm("你是谁")
+print(llm("你是谁"))
 ```
 
 ![alt text](./images/02-1.png)
