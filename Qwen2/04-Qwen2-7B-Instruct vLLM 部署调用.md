@@ -8,19 +8,21 @@
 - **高吞吐量**：`vLLM` 支持异步处理和连续批处理请求，显著提高了模型推理的吞吐量，加速了文本生成和处理速度。
 - **易用性**：`vLLM` 与 `HuggingFace` 模型无缝集成，支持多种流行的大型语言模型，简化了模型部署和推理的过程。兼容 `OpenAI` 的 `API` 服务器。
 - **分布式推理**：框架支持在多 `GPU` 环境中进行分布式推理，通过模型并行策略和高效的数据通信，提升了处理大型模型的能力。
-- **开源**：`vLLM` 是开源的，拥有活跃的社区支持，便于开发者贡献和改进，共同推动技术发展。
+- **开源共享**：`vLLM` 由于其开源的属性，拥有活跃的社区支持，这也便于开发者贡献和改进，共同推动技术发展。
+
+
 
 ## **环境准备**
 
-在 `AutoDL` 平台中租赁一个 3090 等 24G 显存大小的容器实例，镜像选择如下 `PyTorch`→`2.1.0`→`3.10(ubuntu22.04)`→`12.1`。
+在 `AutoDL` 平台中租赁一个 3090 等 24G 显存大小的容器实例，镜像选择如下 `PyTorch`→`2.1.0`→`3.10(ubuntu22.04)`→`12.1`
 
 ![fig4-11](images/fig4-11.png)
 
-接下来打开使用`ssh`登录的方式访问，在终端中复制并输入登录指令和密码完成登录
+接下来打开使用 `ssh` 登录的方式访问，在终端中复制并输入登录指令和密码完成登录
 
 ![fig4-12](images/fig4-12.png)
 
-`ssh` 登录成功后的界面如图所示
+`ssh` 登录成功后的界面如图所示👇
 
 ![fig4-13](images/fig4-13.png)
 
@@ -52,13 +54,15 @@ pip install vllm
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 `AutoDL` 平台准备了 `vLLM` 的环境镜像，该镜像适用于任何需要 `vLLM` 的部署环境。点击下方链接并直接创建 `AutoDL` 示例即可。（`vLLM` 对 `torch` 版本要求较高，且越高的版本对模型的支持更全，效果更好，所以新建一个全新的镜像。） **https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2**
 
+
+
 ## 模型下载  
 
 使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir`为模型的下载路径。
 
 先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
 
-然后新建 `python`脚本， `vim model_download.py` 并在其中输入以下内容
+然后新建 `python` 脚本， `vim model_download.py` 并在其中输入以下内容
 
 ```python
 # model_download.py
@@ -74,10 +78,12 @@ model_dir = snapshot_download('qwen/Qwen2-7B-Instruct', cache_dir='/root/autodl-
 
 然后运行 `python model_download.py` 执行下载，这里需要耐心等待一会直到模型下载完成
 
-如果大家担心下载时间比较久浪费服务器的时间资源的话，可以使用 `tmux` 来实现终端多开，这样就可以边下载边继续后面的准备工作 ~
+> TIPS：使用 `Tmux` 来实现终端复用
+
+如果大家担心下载时间比较久浪费服务器的时间资源的话，可以使用 `Tmux` 来实现终端复用，这样就可以边下载边继续后面的准备工作 ~
 
 ```bash
-sudo apt-get install tmux # 安装tmux
+sudo apt install tmux # 安装tmux
 tmux new -s qwen2 # qwen2为自定义的session-name，也可以改成任意自己喜欢的
 tmux ls # 查看当前所有的tmux会话
 tmux attach -t qwen2 # 重新连接到会话
@@ -87,17 +93,19 @@ Ctrl+b c # 创建一个编号为1的新窗口同时进行后面的准备工作
 
 使用 `tmux` 还有另外一个好处，就是即使关闭了终端，下载任务依然会在后台运行，因为 `tmux` 会有一个 `server` 进程来保存你登录会话的状态。
 
+
+
 ## **代码准备**
 
 ### **Python脚本**
 
-在 `/root/autodl-tmp` 路径下新建 `vllm_model.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 `issue`。
+在 `/root/autodl-tmp` 路径下新建 `vllm_model.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。下面的代码有很详细的注释，如有不理解的地方，欢迎大家提 `issue`。
 
 首先从 `vLLM` 库中导入 `LLM` 和 `SamplingParams` 类。`LLM` 类是使用 `vLLM` 引擎运行离线推理的主要类。`SamplingParams` 类指定采样过程的参数，用于控制和调整生成文本的随机性和多样性。
 
 `vLLM` 提供了非常方便的封装，我们直接传入模型名称或模型路径即可，不必手动初始化模型和分词器。
 
-我们可以通过这个代码示例熟悉下` vLLM` 引擎的使用方式。被注释的部分内容可以丰富模型的能力，但不是必要的，大家可以按需选择，自己动手尝试 ~
+我们可以通过这个代码示例熟悉下 ` vLLM` 引擎的使用方式。被注释的部分内容可以丰富模型的能力，但不是必要的，大家可以按需选择，自己多多动手尝试 ~
 
 ```python
 # vllm_model.py
@@ -165,6 +173,8 @@ Prompt: '可以给我将一个有趣的童话故事吗？', Generated text: ' �
 
 ![fig4-1](images/fig4-1.png)
 
+
+
 ### 创建兼容 OpenAI API 接口的服务器
 
 `Qwen` 兼容 `OpenAI API` 协议，所以我们可以直接使用 `vLLM` 创建 `OpenAI API` 服务器。`vLLM` 部署实现 `OpenAI API` 协议的服务器非常方便。默认会在 http://localhost:8000 启动服务器。服务器当前一次托管一个模型，并实现列表模型、`completions` 和 `chat completions` 端口。
@@ -190,7 +200,7 @@ python -m vllm.entrypoints.openai.api_server --model /root/autodl-tmp/qwen/Qwen2
 
 ![fig4-2](images/fig4-2.png)
 
-通过 `curl` 命令查看当前的模型列表
+- 通过 `curl` 命令查看当前的模型列表
 
 ```bash
 curl http://localhost:8000/v1/models
@@ -232,7 +242,8 @@ curl http://localhost:8000/v1/models
 
 ![fig4-3](images/fig4-3.png)
 
-使用 `curl` 命令测试 `OpenAI Completions API` 
+- 使用 `curl` 命令测试 `OpenAI Completions API` 
+
 
 ```bash
 curl http://localhost:8000/v1/completions \
@@ -272,7 +283,8 @@ curl http://localhost:8000/v1/completions \
 
 ![fig4-4](images/fig4-4.png)
 
-我们也可以用 `Python` 脚本请求 `OpenAI Completions API` 
+- 我们可以用 `Python` 脚本请求 `OpenAI Completions API` 
+
 
 ```python
 # vllm_openai_completions.py
@@ -300,7 +312,8 @@ ChatCompletionMessage(content='你好！很高兴为你提供帮助。有什么�
 
 ![fig4-5](images/fig4-5.png)
 
-用 `curl` 命令测试 `OpenAI Chat Completions API` 
+- 用 `curl` 命令测试 `OpenAI Chat Completions API` 
+
 
 ```bash
 curl http://localhost:8000/v1/chat/completions \
@@ -344,7 +357,8 @@ curl http://localhost:8000/v1/chat/completions \
 
 ![fig4-6](images/fig4-6.png)
 
-我们也可以用 `Python` 脚本请求 `OpenAI Chat Completions API` 
+- 我们也可以用 `Python` 脚本请求 `OpenAI Chat Completions API` 
+
 
 ```python
 # vllm_openai_chat_completions.py
@@ -378,6 +392,8 @@ ChatCompletion(id='cmpl-6f3d64194d1949cca6f7df3e1e36d887', choices=[Choice(finis
 另外，在以上所有的在请求处理过程中， `API` 后端都会打印相对应的日志和统计信息😊
 ![fig4-7](images/fig4-7.png)
 
+
+
 ## 速度测试  
 
 既然 `vLLM` 是一个高效的大型语言模型推理和部署服务系统，那么我们不妨就测试一下模型的回复生成速度。看看和原始的速度相比有多大的提升。这里直接使用 `vLLM` 自带的 `benchmark_throughput.py` 脚本进行测试。可以将当前文件夹 `benchmark_throughput.py` 脚本放在 `/root/autodl-tmp/` 目录下。或者也可以自行[下载脚本](https://github.com/vllm-project/vllm/blob/main/benchmarks/benchmark_throughput.py)。
@@ -394,6 +410,8 @@ ChatCompletion(id='cmpl-6f3d64194d1949cca6f7df3e1e36d887', choices=[Choice(finis
 - `--max-model-len` 模型最大长度
 - `--hf_max_batch_size` `transformers` 库的最大批处理大小（仅仅对于 `hf` 推理后端有效且为必填字段）
 - `--dataset` 数据集路径。（未设置会自动生成数据）
+
+
 
 测试 `vLLM` 推理速度的命令和参数设置
 
@@ -417,6 +435,8 @@ Throughput: 7.68 requests/s, 1474.75 tokens/s
 
 ![fig4-8](images/fig4-8.png)
 
+
+
 测试原始方式（即使用 `HuggingFace` 的 `Transformers` 库）推理速度的命令和参数设置
 
 ```bash
@@ -438,6 +458,8 @@ Throughput: 5.73 requests/s, 1100.57 tokens/s
 ```
 
 ![fig4-9](images/fig4-9.png)
+
+
 
 对比两者的推理速度，在本次测试中 `vLLM` 的速度要比原始的速度快 **34%** 左右 🤗
 
