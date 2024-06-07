@@ -56,8 +56,8 @@ pip install vllm==0.4.0.post1
 pip install vllm
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 `AutoDL` 平台准备了 `vLLM` 的环境镜像，该镜像适用于任何需要 `vLLM` 的部署环境。点击下方链接并直接创建 `AutoDL` 示例即可。（`vLLM` 对 `torch` 版本要求较高，且越高的版本对模型的支持更全，效果更好，所以新建一个全新的镜像。） **https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2**
-
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2***
 
 
 ## 模型下载  

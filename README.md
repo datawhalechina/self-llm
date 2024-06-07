@@ -57,10 +57,10 @@
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
   - [x] [Qwen2-7B-Instruct FastApi 部署调用](./Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @婧淇
-  - [ ] Qwen2-7B-Instruct langchain 接入 @不要葱姜蒜
-  - [ ] Qwen2-7B-Instruct WebDemo 部署 @三水
-  - [ ] Qwen2-7B-Instruct vLLM 部署调用 @舒凡
-  - [ ] Qwen2-7B-Instruct Lora 微调 @散步
+  - [x] [Qwen2-7B-Instruct langchain 接入](./Qwen2/02-Qwen2-7B-Instruct%20Langchain%20接入.md) @不要葱姜蒜
+  - [x] [Qwen2-7B-Instruct WebDemo 部署](./Qwen2/03-Qwen2-7B-Instruct%20WebDemo部署.md) @三水
+  - [x] [Qwen2-7B-Instruct vLLM 部署调用](./Qwen2/04-Qwen2-7B-Instruct%20vLLM%20部署调用.md) @舒凡
+  - [x] [Qwen2-7B-Instruct Lora 微调](./Qwen2/05-Qwen2-7B-Instruct%20Lora%20微调.md) @散步
 
 - [GLM-4](https://github.com/THUDM/GLM-4.git)
   - [x] [GLM-4-9B-chat FastApi 部署调用](./GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @友东
@@ -243,6 +243,9 @@
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（Datawhale成员-内容创作者）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
+- [康婧淇](https://github.com/jodie-kang)（Datawhale成员-内容创作者）
+- [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 
 ### 其他
 

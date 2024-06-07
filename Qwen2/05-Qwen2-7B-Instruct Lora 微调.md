@@ -40,7 +40,7 @@ pip install peft==0.10.0
 MAX_JOBS=8 pip install flash-attn --no-build-isolation 
 ```
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen2***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2***
 
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。

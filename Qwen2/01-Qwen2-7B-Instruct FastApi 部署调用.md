@@ -31,8 +31,8 @@ pip install transformers_stream_generator==0.0.4
 
 ```  
 
-<!-- > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.0的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。 -->
-<!-- > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen2.0*** -->
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2***
 
 
 ## 模型下载  
