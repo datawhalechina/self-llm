@@ -18,13 +18,17 @@
 
 ![fig4-11](images/fig4-11.png)
 
-接下来打开使用 `ssh` 登录的方式访问，在终端中复制并输入登录指令和密码完成登录
+接下来打开本地设备终端使用 `ssh` 的方式访问，在终端中依次复制登录指令和密码完成登录
 
 ![fig4-12](images/fig4-12.png)
 
 `ssh` 登录成功后的界面如图所示👇
 
 ![fig4-13](images/fig4-13.png)
+
+或者也可以直接打开 `AutoDL` 网页端的快捷工具中选择 `JupyterLab` 并在其中点击终端打开（这种方式不需要验证🫠）
+
+![fig4-14](images/fig4-14.png)
 
 接下来开始环境配置、模型下载和运行演示 ~
 
@@ -72,7 +76,7 @@ from modelscope import snapshot_download, AutoModel, AutoTokenizer
 model_dir = snapshot_download('qwen/Qwen2-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-然后在终端中运行 `python model_download.py` 执行下载，这里需要耐心等待一段时间直到模型下载完成。
+然后在终端中输入 `python model_download.py` 执行下载，这里需要耐心等待一段时间直到模型下载完成。
 
 
 
