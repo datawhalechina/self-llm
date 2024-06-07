@@ -62,7 +62,7 @@ pip install vllm
 
 先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
 
-然后新建 `python` 脚本， `vim model_download.py` 并在其中输入以下内容
+然后新建名为 `model_download.py` 的 `python` 脚本，并在其中输入以下内容并保存
 
 ```python
 # model_download.py
@@ -72,26 +72,7 @@ from modelscope import snapshot_download, AutoModel, AutoTokenizer
 model_dir = snapshot_download('qwen/Qwen2-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-代码输入后键入 `esc` + `:wq` 保存并退出，如下图所示
-
-![fig4-14](images/fig4-14.png)
-
-然后运行 `python model_download.py` 执行下载，这里需要耐心等待一会直到模型下载完成
-
-> TIPS：使用 `Tmux` 来实现终端复用
-
-如果大家担心下载时间比较久浪费服务器的时间资源的话，可以使用 `Tmux` 来实现终端复用，这样就可以边下载边继续后面的准备工作 ~
-
-```bash
-sudo apt install tmux # 安装tmux
-tmux new -s qwen2 # qwen2为自定义的session-name，也可以改成任意自己喜欢的
-tmux ls # 查看当前所有的tmux会话
-tmux attach -t qwen2 # 重新连接到会话
-python model_download.py # 在编号为0的窗口下载模型
-Ctrl+b c # 创建一个编号为1的新窗口同时进行后面的准备工作
-```
-
-使用 `tmux` 还有另外一个好处，就是即使关闭了终端，下载任务依然会在后台运行，因为 `tmux` 会有一个 `server` 进程来保存你登录会话的状态。
+然后在终端中运行 `python model_download.py` 执行下载，这里需要耐心等待一段时间直到模型下载完成。
 
 
 
@@ -283,7 +264,7 @@ curl http://localhost:8000/v1/completions \
 
 ![fig4-4](images/fig4-4.png)
 
-- 我们可以用 `Python` 脚本请求 `OpenAI Completions API` 
+- 用 `Python` 脚本请求 `OpenAI Completions API` 
 
 
 ```python
@@ -357,7 +338,7 @@ curl http://localhost:8000/v1/chat/completions \
 
 ![fig4-6](images/fig4-6.png)
 
-- 我们也可以用 `Python` 脚本请求 `OpenAI Chat Completions API` 
+- 用 `Python` 脚本请求 `OpenAI Chat Completions API` 
 
 
 ```python
@@ -463,7 +444,7 @@ Throughput: 5.73 requests/s, 1100.57 tokens/s
 
 对比两者的推理速度，在本次测试中 `vLLM` 的速度要比原始的速度快 **34%** 左右 🤗
 
-> TIPS：本次测试并非严谨的测试，仅供本 `case` 参考，读者可以取多个测试用例平均多次实验以得到严谨的实验结论。
+> TIPS：本次测试并非严谨的测试，仅供本 `case` 参考，读者可以取多个测试用例并多次实验取平均以得到严谨的实验结论。
 
 | 推理框架 | requests/s | tokens/s |
 | :------: | :--------: | :------: |
