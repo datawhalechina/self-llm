@@ -13,9 +13,9 @@ MASTER_ADDR=localhost
 MASTER_PORT=6001
 
 
-MODEL="openbmb/MiniCPM-V-2" # or openbmb/MiniCPM-V-2
-DATA="./data/train_en_train.json" # json file
-EVAL_DATA="./data/train_zh_train.json" # json file
+MODEL="/root/autodl-tmp/openbmb/MiniCPM-V-2" # or openbmb/MiniCPM-V-2
+DATA="./data/sample_50_train.json" # json file
+EVAL_DATA="./data/sample_10_test.json" # json file
 LLM_TYPE="minicpm" # if use openbmb/MiniCPM-V-2, please set LLM_TYPE=minicpm
 
 DISTRIBUTED_ARGS="
