@@ -173,7 +173,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from peft import PeftModel
 
-mode_path = './qwen/Qwen1.5-7B-Chat/'
+model_path = './qwen/Qwen1.5-7B-Chat/'
 lora_path = 'lora_path'
 
 # 加载tokenizer
