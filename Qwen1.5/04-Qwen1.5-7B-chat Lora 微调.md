@@ -177,10 +177,10 @@ model_path = './qwen/Qwen1.5-7B-Chat/'
 lora_path = 'lora_path'
 
 # 加载tokenizer
-tokenizer = AutoTokenizer.from_pretrained(mode_path)
+tokenizer = AutoTokenizer.from_pretrained(model_path)
 
 # 加载模型
-model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",torch_dtype=torch.bfloat16)
 
 # 加载lora权重
 model = PeftModel.from_pretrained(model, model_id=lora_path, config=config)
