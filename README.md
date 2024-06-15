@@ -55,6 +55,12 @@
 
 ### 已支持模型
 
+- [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
+  - [ ] Index-1.9B-Chat FastApi 部署调用
+  - [ ] Index-1.9B-Chat langchain 接入
+  - [ ] Index-1.9B-Chat WebDemo 部署
+  - [ ] Index-1.9B-Chat Lora 微调
+
 - [Qwen2](https://github.com/QwenLM/Qwen2)
   - [x] [Qwen2-7B-Instruct FastApi 部署调用](./Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @康婧淇
   - [x] [Qwen2-7B-Instruct langchain 接入](./Qwen2/02-Qwen2-7B-Instruct%20Langchain%20接入.md) @不要葱姜蒜

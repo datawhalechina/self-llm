@@ -3,7 +3,7 @@
 本节我们简要介绍如何基于 transformers、peft 等框架，对 Qwen1.5-7B-chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 
-这个教程会在同目录下给大家提供一个 [nodebook](./Qwen1.5-7B-Chat%20Lora.ipynb) 文件，来让大家更好的学习。
+这个教程会在同级目录下给大家提供一个 [nodebook](./Qwen1.5-7B-Chat%20Lora.ipynb) 文件，来让大家更好的学习。
 
 ## 环境配置
 
@@ -173,14 +173,14 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from peft import PeftModel
 
-mode_path = './qwen/Qwen1.5-7B-Chat/'
+model_path = './qwen/Qwen1.5-7B-Chat/'
 lora_path = 'lora_path'
 
 # 加载tokenizer
-tokenizer = AutoTokenizer.from_pretrained(mode_path)
+tokenizer = AutoTokenizer.from_pretrained(model_path)
 
 # 加载模型
-model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",torch_dtype=torch.bfloat16)
 
 # 加载lora权重
 model = PeftModel.from_pretrained(model, model_id=lora_path, config=config)
