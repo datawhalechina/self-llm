@@ -44,11 +44,11 @@ pip install peft==0.10.0
 MAX_JOBS=8 pip install flash-attn --no-build-isolation 
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Index-1.9B-Chat的环境镜像。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2***
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 `AutoDL` 平台准备了 `Index-1.9B-Chat` 的环境镜像。点击下方链接并直接创建 `Autodl` 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Index***
 
 
-> 注意：flash-attn 安装会比较慢，大概需要十几分钟。
+> 注意：`flash-attn` 安装会比较慢，大概需要十几分钟。
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
