@@ -56,10 +56,10 @@
 ### 已支持模型
 
 - [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
-  - [ ] Index-1.9B-Chat FastApi 部署调用
-  - [ ] Index-1.9B-Chat langchain 接入
-  - [ ] Index-1.9B-Chat WebDemo 部署
-  - [ ] Index-1.9B-Chat Lora 微调
+  - [x] [Index-1.9B-Chat FastApi 部署调用](./bilibili_Index-1.9B/01-Index-1.9B-chat%20FastApi%20部署调用.md) @邓恺俊
+  - [x] [Index-1.9B-Chat langchain 接入](./bilibili_Index-1.9B/02-Index-1.9B-Chat%20接入%20LangChain.md) @张友东
+  - [x] [Index-1.9B-Chat WebDemo 部署](./bilibili_Index-1.9B/03-Index-1.9B-chat%20WebDemo部署.md) @九月
+  - [x] [Index-1.9B-Chat Lora 微调](./bilibili_Index-1.9B/04-Index-1.9B-Chat%20Lora%20微调.md) @姜舒凡
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
   - [x] [Qwen2-7B-Instruct FastApi 部署调用](./Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @康婧淇
@@ -236,17 +236,21 @@
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
-- [小罗](https://github.com/lyj11111111) （Datawhale成员）
 - [张友东](https://github.com/AXYZdong)（Datawhale成员-内容创作者）
+- [小罗](https://github.com/lyj11111111) （Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（Datawhale成员-内容创作者）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
 - [康婧淇](https://github.com/jodie-kang)（Datawhale成员-内容创作者）
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
+- [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+
+> 注：排名根据贡献程度排序
 
 ### 其他
 
