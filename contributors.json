@@ -77,7 +77,7 @@
     },
     "张友东": {
         "info": "[张友东](https://github.com/AXYZdong)（Datawhale成员-内容创作者）",
-        "task_num": 1
+        "task_num": 2
     },
     "谭逸珂": {
         "info": "[谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）",
@@ -101,6 +101,14 @@
     },
     "姜舒凡": {
         "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）",
+        "task_num": 3
+    },
+    "九月": {
+        "info": "[九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）",
+        "task_num": 1
+    },
+    "邓恺俊": {
+        "info": "[邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale意向成员）",
         "task_num": 1
     }
 }
