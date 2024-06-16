@@ -18,12 +18,12 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install fastapi==0.104.1
 pip install uvicorn==0.24.0.post1
-pip install requests==2.25.1
+pip install requests==2.32.3
 pip install modelscope==1.9.5
 pip install transformers==4.39.2
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
+pip install accelerate==0.27.0
 pip install tiktoken==0.7.0
 pip install huggingface_hub==0.23.4
 ```
