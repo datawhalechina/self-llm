@@ -32,12 +32,12 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.9.5
-pip install "transformers>=4.39.0"
+pip install transformers==4.39.2
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
-pip install accelerate==0.27
+pip install accelerate==0.27.0
 pip install transformers_stream_generator==0.0.4
-pip install datasets==2.18.0
+pip install datasets==2.8.0
 pip install peft==0.10.0
 
 # 可选
