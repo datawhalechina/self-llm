@@ -20,7 +20,7 @@ pip install modelscope==1.9.5
 pip install transformers==4.39.2
 pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
+pip install accelerate==0.27.0
 pip install transformers_stream_generator==0.0.4
 pip install tiktoken==0.7.0
 pip install huggingface_hub==0.23.4
@@ -37,7 +37,7 @@ pip install huggingface_hub==0.23.4
 ```python
 # 使用镜像加快下载
 import os
-os.environ['HF_ENDPOINT'] = "https://hf-mirror.com"
+os.environ['HF_ENDPOINT'] = "https://hf-mirror.cyom"
 
 from huggingface_hub import snapshot_download
 
