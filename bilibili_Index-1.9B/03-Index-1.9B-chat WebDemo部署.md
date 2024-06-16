@@ -37,7 +37,7 @@ pip install huggingface_hub==0.23.4
 ```python
 # 使用镜像加快下载
 import os
-os.environ['HF_ENDPOINT'] = "https://hf-mirror.cyom"
+os.environ['HF_ENDPOINT'] = "https://hf-mirror.com"
 
 from huggingface_hub import snapshot_download
 
