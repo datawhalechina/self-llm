@@ -16,12 +16,12 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.11.0
+pip install modelscope==1.9.5
 pip install langchain==0.2.3
-pip install "transformers>=4.41.2" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
-pip install -U huggingface_hub
-pip install sentencepiece
-```  
+pip install transformers==4.39.2 accelerate==0.27.0 tiktoken==0.7.0 einops scipy transformers_stream_generator==0.0.4 peft==0.10.0 deepspeed==0.14.3
+pip install huggingface_hub==0.23.4
+pip install sentencepiece==0.1.99
+```
 
 
 ## 模型下载
