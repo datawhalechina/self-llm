@@ -32,23 +32,21 @@ pip install huggingface_hub==0.23.4
 
 ## 模型下载
 
-由于`modelscope`暂无更新Index-1.9B模型，使用 `huggingface_hub` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径，参数`revision`为模型的版本，master代表主分支，为最新版本。
 
-在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。并运行 `python /root/autodl-tmp/download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 10~20 分钟。
+在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 5 钟。
 
 ```python
-# 使用镜像加快下载
-import os
-os.environ['HF_ENDPOINT'] = "https://hf-mirror.com"
-
 import torch
-from huggingface_hub import snapshot_download
+from modelscope import snapshot_download, AutoModel, AutoTokenizer
+import os
 
-model_dir = snapshot_download('IndexTeam/Index-1.9B-Chat', local_dir='/root/autodl-tmp/IndexTeam/Index-1.9B-Chat', resume_download=True)
+model_dir = snapshot_download('IndexTeam/Index-1.9B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-> 由于huggingface下载较慢，可以使用autodl的学术资源加速，在运行`python /root/autodl-tmp/download.py` 下载前在终端输入`source /etc/network_turbo`，可参考[https://www.autodl.com/docs/network_turbo/](https://www.autodl.com/docs/network_turbo/)
->
+终端出现下图结果表示下载成功。
+
+![](images/image01-0.png)
 
 ## 代码准备
 
