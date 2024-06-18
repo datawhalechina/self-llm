@@ -26,30 +26,21 @@ pip install sentencepiece==0.1.99
 
 ## 模型下载
 
-使用 huggingface 官方提供的 `huggingface-cli` 命令行工具下载模型。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径，参数`revision`为模型的版本，master代表主分支，为最新版本。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8 GB 左右。
+在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 5 钟。
 
-- Huggingface 官方提供的 `huggingface-cli` 命令行工具下载模型。
-
-```python 
-import os
-
-# 下载模型
-
-os.system('huggingface-cli download --resume-download IndexTeam/Index-1.9B-Chat --local-dir /root/autodl-tmp/Index-1.9B-Chat')
-```
-
-- `HF_ENDPOINT` 设置为 `https://hf-mirror.com`，使用镜像站点下载模型。
 ```python
+import torch
+from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
 
-# 设置环境变量
-os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-
-# 下载模型
-os.system('huggingface-cli download --resume-download IndexTeam/Index-1.9B-Chat --local-dir /root/autodl-tmp/Index-1.9B-Chat')
+model_dir = snapshot_download('IndexTeam/Index-1.9B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
+
+终端出现下图结果表示下载成功。
+
+![](images/image01-0.png)
 
 
 ## 代码准备
