@@ -52,8 +52,8 @@ with st.sidebar:
     max_length = st.slider("max_length", 0, 1024, 512, step=1)
 
 # 创建一个标题和一个副标题
-st.title("💬 ChatGLM4 Chatbot")
-st.caption("🚀 A streamlit chatbot powered by Self-LLM")
+st.title("ChatGLM4 Chatbot")
+st.caption("A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
 mode_name_or_path = 'autodl-tmp/ZhipuAI/glm-4-9b-chat'
