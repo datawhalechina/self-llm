@@ -59,7 +59,6 @@
   - [ ] DeepSeek-Coder-V2-Lite-Instruct FastApi 部署调用
   - [ ] DeepSeek-Coder-V2-Lite-Instruct langchain 接入
   - [ ] DeepSeek-Coder-V2-Lite-Instruct WebDemo 部署
-  - [ ] DeepSeek-Coder-V2-Lite-Instruct vLLM 部署调用
   - [ ] DeepSeek-Coder-V2-Lite-Instruct Lora 微调
 
 - [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
