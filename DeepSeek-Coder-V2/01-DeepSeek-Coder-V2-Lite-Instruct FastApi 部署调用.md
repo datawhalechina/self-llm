@@ -79,15 +79,16 @@ import torch
 
 # 设置设备参数
 DEVICE = "cuda"  # 使用CUDA
-DEVICE_ID = "0"  # CUDA设备ID，如果未设置则为空
-CUDA_DEVICE = f"{DEVICE}:{DEVICE_ID}" if DEVICE_ID else DEVICE  # 组合CUDA设备信息
+CUDA_DEVICES = ["0", "1"]  # CUDA设备ID列表，这里是因为我们有两张3090，所以分别为0和1
+DEVICE_IDS = [f"{DEVICE}:{device_id}" for device_id in CUDA_DEVICES]  # 组合CUDA设备信息
 
 # 清理GPU内存函数
 def torch_gc():
     if torch.cuda.is_available():  # 检查是否可用CUDA
-        with torch.cuda.device(CUDA_DEVICE):  # 指定CUDA设备
-            torch.cuda.empty_cache()  # 清空CUDA缓存
-            torch.cuda.ipc_collect()  # 收集CUDA内存碎片
+        for device_id in DEVICE_IDS:  # 循环每个CUDA设备
+            with torch.cuda.device(device_id):  # 指定CUDA设备
+                torch.cuda.empty_cache()  # 清空CUDA缓存
+                torch.cuda.ipc_collect()  # 收集CUDA内存碎片
 
 # 创建FastAPI应用
 app = FastAPI()
