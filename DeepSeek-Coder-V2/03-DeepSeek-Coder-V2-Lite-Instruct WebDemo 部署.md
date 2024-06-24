@@ -27,6 +27,9 @@ pip install huggingface_hub==0.23.4
 pip install flash-attn==2.5.9.post1
 ```
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了DeepSeek-Coder-V2-Lite-Instruct的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Deepseek-coder-v2***
+
 ## 模型下载
 
 使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径，参数`revision`为模型的版本，master代表主分支，为最新版本。

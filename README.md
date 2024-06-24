@@ -56,10 +56,10 @@
 ### 已支持模型
 
 - [DeepSeek-Coder-V2](https://github.com/deepseek-ai/DeepSeek-Coder-V2)
-  - [ ] DeepSeek-Coder-V2-Lite-Instruct FastApi 部署调用
-  - [ ] DeepSeek-Coder-V2-Lite-Instruct langchain 接入
-  - [ ] DeepSeek-Coder-V2-Lite-Instruct WebDemo 部署
-  - [ ] DeepSeek-Coder-V2-Lite-Instruct Lora 微调
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct FastApi 部署调用](./DeepSeek-Coder-V2/01-DeepSeek-Coder-V2-Lite-Instruct%20FastApi%20部署调用.md) @姜舒凡
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct langchain 接入](./DeepSeek-Coder-V2/02-DeepSeek-Coder-V2-Lite-Instruct%20接入%20LangChain.md) @姜舒凡
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct WebDemo 部署](./DeepSeek-Coder-V2/03-DeepSeek-Coder-V2-Lite-Instruct%20WebDemo%20部署.md) @Kailigithub
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct Lora 微调](./DeepSeek-Coder-V2/04-DeepSeek-Coder-V2-Lite-Instruct%20Lora%20微调.md) @余洋
 
 - [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
   - [x] [Index-1.9B-Chat FastApi 部署调用](./bilibili_Index-1.9B/01-Index-1.9B-chat%20FastApi%20部署调用.md) @邓恺俊
