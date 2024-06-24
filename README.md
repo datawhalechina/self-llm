@@ -231,22 +231,23 @@
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
+- [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [王茂霖](https://github.com/mlw67)（Datawhale成员-内容创作者）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（Datawhale成员-内容创作者）
+- [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
 - [小罗](https://github.com/lyj11111111) （Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（Datawhale成员-内容创作者）

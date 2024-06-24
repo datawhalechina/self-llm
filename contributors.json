@@ -25,7 +25,7 @@
     },
     "Kailigithub": {
         "info": "[Kailigithub](https://github.com/Kailigithub) （Datawhale成员）",
-        "task_num": 6
+        "task_num": 7
     },
     "惠佳豪": {
         "info": "[惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）",
@@ -101,7 +101,7 @@
     },
     "姜舒凡": {
         "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）",
-        "task_num": 3
+        "task_num": 5
     },
     "九月": {
         "info": "[九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）",
@@ -110,5 +110,9 @@
     "邓恺俊": {
         "info": "[邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）",
         "task_num": 1
+    },
+    "余洋": {
+        "info": "[余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）",
+        "task_num": 2
     }
 }
