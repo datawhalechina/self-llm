@@ -1,11 +1,11 @@
 # DeepSeek-Coder-V2-Lite-Instruct Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 Qwen2-7B-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 DeepSeek-Coder-V2-Lite-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 
 这个教程会在同目录下给大家提供一个 [nodebook](./04-DeepSeek-Coder-V2-Lite-Instruct%20Lora%20微调.ipynb) 文件，来让大家更好的学习。
 
-> **注意**：微调 DeepSeek-Coder-V2-Lite-Instruct 模型需要 4×3090 显卡。
+> **注意**：微调 DeepSeek-Coder-V2-Lite-Instruct 16B 模型需要 4×3090 显卡。
 
 ## 模型下载  
 
@@ -38,7 +38,7 @@ pip install transformers_stream_generator==0.0.4
 pip install datasets==2.18.0
 pip install peft==0.10.0
 
-# 可选
+# 必选，否则无法使用flash-attn
 MAX_JOBS=8 pip install flash-attn --no-build-isolation 
 ```
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了DeepSeek-Coder-V2-Lite-Instruct的环境镜像，点击下方链接并直接创建Autodl示例即可。
@@ -74,6 +74,7 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 ```
 
 我们所构造的全部指令数据集在根目录下。
+你也可以构造自己的指令数据集放在根目录下。
 
 
 ## 数据格式化
@@ -114,8 +115,12 @@ Assistant: {assistant_message_1}<｜end▁of▁sentence｜>User: {user_message_2
 
 Assistant:
 ```
+以Json文件为例，在读取后如下处理数据：
+df = pd.read_json('./huanhuan.json')
+ds = Dataset.from_pandas(df)
+tokenized_id = ds.map(process_func, remove_columns=ds.column_names)
 
-## 加载tokenizer和半精度模型
+## 加载tokenizer和32位精度模型
 
 DeepSeek-Coder-V2-Lite-Instruct模型需要以32位精度形式加载，对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
