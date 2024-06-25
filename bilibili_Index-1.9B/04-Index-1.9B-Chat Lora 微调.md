@@ -135,7 +135,7 @@ def process_func(example):
 
 ## 加载tokenizer和半精度模型
 
-模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
+模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfloat16`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
 ```python
 tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/Tsumugii24/Index-1.9B-Chat/', use_fast=False, trust_remote_code=True)
