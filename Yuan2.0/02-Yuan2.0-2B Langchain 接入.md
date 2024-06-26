@@ -66,7 +66,7 @@ import torch
 
 class Yuan2_LLM(LLM):
     # 基于本地 Yuan2 自定义 LLM 类
-    tokenizer: AutoTokenizer = None
+    tokenizer: LlamaTokenizer = None
     model: AutoModelForCausalLM = None
 
     def __init__(self, mode_name_or_path :str):
@@ -85,9 +85,9 @@ class Yuan2_LLM(LLM):
                 **kwargs: Any):
 
         prompt += "<sep>"
-        inputs = tokenizer(prompt, return_tensors="pt")["input_ids"].cuda()
-        outputs = model.generate(inputs,do_sample=False,max_length=4000)
-        output = tokenizer.decode(outputs[0])
+        inputs = self.tokenizer(prompt, return_tensors="pt")["input_ids"].cuda()
+        outputs = self.model.generate(inputs,do_sample=False,max_length=4000)
+        output = self.tokenizer.decode(outputs[0])
         response = output.split("<sep>")[-1]
 
         return response
@@ -108,7 +108,7 @@ class Yuan2_LLM(LLM):
 
 ```python
 from LLM import Yuan2_LLM
-llm = Yuan2_LLM('/root/autodl-tmp/YuanLLM/Yuan2-2B-Mars-hf')
+llm = Yuan2_LLM('/root/autodl-fs/YuanLLM/Yuan2-2B-Mars-hf')
 print(llm("你是谁"))
 ```
 
