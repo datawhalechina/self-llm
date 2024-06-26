@@ -55,6 +55,18 @@
 
 ### 已支持模型
 
+- [Yuan2.0](https://github.com/IEIT-Yuan/Yuan-2.0)
+  - [x] [Yuan2.0-2B FastApi 部署调用](./Yuan2.0/01-Yuan2.0-2B%20FastApi%20部署调用.md) @张帆
+  - [x] [Yuan2.0-2B Langchain 接入](./Yuan2.0/02-Yuan2.0-2B%20Langchain%20接入.md) @张帆
+  - [x] [Yuan2.0-2B WebDemo部署](./Yuan2.0/03-Yuan2.0-2B%20WebDemo部署.md) @张帆
+  - [x] [Yuan2.0-2B vLLM部署调用](./Yuan2.0/04-Yuan2.0-2B%20vLLM部署调用.md) @张帆
+  - [x] [Yuan2.0-2B Lora微调](./Yuan2.0/05-Yuan2.0-2B%20Lora微调.md) @张帆
+
+- [Yuan2.0-M32](https://github.com/IEIT-Yuan/Yuan2.0-M32)
+  - [x] [Yuan2.0-M32 FastApi 部署调用](./Yuan2.0-M32/01-Yuan2.0-M32%20FastApi%20部署调用.md) @张帆
+  - [x] [Yuan2.0-M32 Langchain 接入](./Yuan2.0-M32/02-Yuan2.0-M32%20Langchain%20接入.md) @张帆
+  - [x] [Yuan2.0-M32 WebDemo部署](./Yuan2.0-M32/03-Yuan2.0-M32%20WebDemo部署.md) @张帆
+
 - [DeepSeek-Coder-V2](https://github.com/deepseek-ai/DeepSeek-Coder-V2)
   - [x] [DeepSeek-Coder-V2-Lite-Instruct FastApi 部署调用](./DeepSeek-Coder-V2/01-DeepSeek-Coder-V2-Lite-Instruct%20FastApi%20部署调用.md) @姜舒凡
   - [x] [DeepSeek-Coder-V2-Lite-Instruct langchain 接入](./DeepSeek-Coder-V2/02-DeepSeek-Coder-V2-Lite-Instruct%20接入%20LangChain.md) @姜舒凡
