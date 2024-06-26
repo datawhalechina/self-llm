@@ -36,7 +36,7 @@
         "task_num": 5
     },
     "王茂霖": {
-        "info": "[王茂霖](https://github.com/mlw67)（Datawhale成员-内容创作者）",
+        "info": "[王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）",
         "task_num": 5
     },
     "孙健壮": {
@@ -72,11 +72,11 @@
         "task_num": 2
     },
     "小罗": {
-        "info": "[小罗](https://github.com/lyj11111111) （Datawhale成员）",
+        "info": "[小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）",
         "task_num": 1
     },
     "张友东": {
-        "info": "[张友东](https://github.com/AXYZdong)（Datawhale成员-内容创作者）",
+        "info": "[张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）",
         "task_num": 2
     },
     "谭逸珂": {
@@ -84,7 +84,7 @@
         "task_num": 1
     },
     "王熠明": {
-        "info": "[王熠明](https://github.com/Bald0Wang)（Datawhale成员-内容创作者）",
+        "info": "[王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）",
         "task_num": 1
     },
     "何至轩": {
@@ -92,7 +92,7 @@
         "task_num": 1
     },
     "康婧淇": {
-        "info": "[康婧淇](https://github.com/jodie-kang)（Datawhale成员-内容创作者）",
+        "info": "[康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）",
         "task_num": 1
     },
     "三水": {
@@ -114,5 +114,9 @@
     "余洋": {
         "info": "[余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）",
         "task_num": 2
+    },
+    "张帆": {
+        "info": "[张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）",
+        "task_num": 9
     }
 }
