@@ -55,6 +55,12 @@
 
 ### 已支持模型
 
+- [Gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)
+  - [ ] Gemma-2-9b-it FastApi 部署调用
+  - [ ] Gemma-2-9b-it langchain 接入
+  - [ ] Gemma-2-9b-it WebDemo 部署
+  - [ ] Gemma-2-9b-it Peft Lora 微调
+
 - [Yuan2.0](https://github.com/IEIT-Yuan/Yuan-2.0)
   - [x] [Yuan2.0-2B FastApi 部署调用](./Yuan2.0/01-Yuan2.0-2B%20FastApi%20部署调用.md) @张帆
   - [x] [Yuan2.0-2B Langchain 接入](./Yuan2.0/02-Yuan2.0-2B%20Langchain%20接入.md) @张帆
