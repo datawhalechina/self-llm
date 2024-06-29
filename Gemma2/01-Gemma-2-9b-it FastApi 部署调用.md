@@ -20,10 +20,11 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 # 安装 fastapi modelscope
 pip install fastapi
 pip install modelscope
-pip install tansformers==4.42.1
+pip install tansformers==4.42.3
 ```  
 
-> 镜像正在制作中～
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Gemma2 的环境镜像，该镜像适用于该仓库的 Gemma2 教程所有部署环境。点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma2***
 
 
 ## 模型下载  

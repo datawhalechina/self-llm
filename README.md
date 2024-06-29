@@ -59,7 +59,7 @@
   - [x] [Gemma-2-9b-it FastApi 部署调用](./Gemma2/01-Gemma-2-9b-it%20FastApi%20部署调用.md) @不要葱姜蒜
   - [x] [Gemma-2-9b-it langchain 接入](./Gemma2/02-Gemma-2-9b-it%20langchain%20接入.md) @不要葱姜蒜
   - [x] [Gemma-2-9b-it WebDemo 部署](./Gemma2/03-Gemma-2-9b-it%20WebDemo%20部署.md) @不要葱姜蒜
-  - [ ] Gemma-2-9b-it Peft Lora 微调
+  - [x] [Gemma-2-9b-it Peft Lora 微调](./Gemma2/04-Gemma-2-9b-it%20peft%20lora微调.md) @不要葱姜蒜
 
 - [Yuan2.0](https://github.com/IEIT-Yuan/Yuan-2.0)
   - [x] [Yuan2.0-2B FastApi 部署调用](./Yuan2.0/01-Yuan2.0-2B%20FastApi%20部署调用.md) @张帆
