@@ -20,14 +20,14 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 # 安装 fastapi modelscope
 pip install fastapi
 pip install modelscope
-pip install tansformers==4.42.3
-```  
+pip install transformers==4.42.3
+```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Gemma2 的环境镜像，该镜像适用于该仓库的 Gemma2 教程所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma2***
 
 
-## 模型下载  
+## 模型下载
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
@@ -38,7 +38,7 @@ from modelscope import snapshot_download
 model_dir = snapshot_download('LLM-Research/gemma-2-9b-it', cache_dir='/root/autodl-tmp')
 ```
 
-## 代码准备  
+## 代码准备
 
 点击自定义服务，开启AutoDL开放端口。
 
@@ -52,7 +52,7 @@ model_dir = snapshot_download('LLM-Research/gemma-2-9b-it', cache_dir='/root/aut
 
 新建 api.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件。
 
-下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。  
+下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。
 
 ```python
 from fastapi import FastAPI, Request
@@ -128,21 +128,21 @@ if __name__ == '__main__':
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
-```  
+```
 
-## Api 部署  
+## Api 部署
 
-在终端输入以下命令启动api服务：  
+在终端输入以下命令启动api服务：
 
 ```shell
 python api.py
-```  
+```
 
 加载完毕后出现如下信息说明成功。
 
 ![alt text](./images/01-5.png)
 
-默认部署在 6006 端口，通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
+默认部署在 6006 端口，通过 POST 方法进行调用，可以使用 curl 调用，如下所示：
 
 ```shell
 curl -X POST "http://127.0.0.1:6006" \
