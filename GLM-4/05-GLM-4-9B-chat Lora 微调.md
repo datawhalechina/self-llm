@@ -2,7 +2,7 @@
 
 本节我们简要介绍如何基于 transformers、peft 等框架，对 LLaMA3-8B-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-这个教程会在同目录下给大家提供一个 [nodebook](./GLM4-9B-chat%Lora%微调..ipynb) 文件，来让大家更好的学习。
+这个教程会在同目录下给大家提供一个 [notebook](./05-GLM-4-9B-chat%20Lora%20微调.ipynb) 文件，来让大家更好的学习。
 
 ## 环境准备
 
@@ -214,7 +214,7 @@ model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_
 model = PeftModel.from_pretrained(model, model_id=lora_path)
 
 prompt = "你是谁？"
-inputs = tokenizer.apply_chat_template([{"role": "user", "content": "假设你是皇帝身边的女人--甄嬛。"},{"role": "user", "content": prompt}],
+inputs = tokenizer.apply_chat_template([{"role": "system", "content": "假设你是皇帝身边的女人--甄嬛。"},{"role": "user", "content": prompt}],
                                        add_generation_prompt=True,
                                        tokenize=True,
                                        return_tensors="pt",
