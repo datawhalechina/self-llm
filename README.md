@@ -56,190 +56,190 @@
 ### 已支持模型
 
 - [Gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)
-  - [x] [Gemma-2-9b-it FastApi 部署调用](./Gemma2/01-Gemma-2-9b-it%20FastApi%20部署调用.md) @不要葱姜蒜
-  - [x] [Gemma-2-9b-it langchain 接入](./Gemma2/02-Gemma-2-9b-it%20langchain%20接入.md) @不要葱姜蒜
-  - [x] [Gemma-2-9b-it WebDemo 部署](./Gemma2/03-Gemma-2-9b-it%20WebDemo%20部署.md) @不要葱姜蒜
-  - [x] [Gemma-2-9b-it Peft Lora 微调](./Gemma2/04-Gemma-2-9b-it%20peft%20lora微调.md) @不要葱姜蒜
+  - [x] [Gemma-2-9b-it FastApi 部署调用](./models/Gemma2/01-Gemma-2-9b-it%20FastApi%20部署调用.md) @不要葱姜蒜
+  - [x] [Gemma-2-9b-it langchain 接入](./models/Gemma2/02-Gemma-2-9b-it%20langchain%20接入.md) @不要葱姜蒜
+  - [x] [Gemma-2-9b-it WebDemo 部署](./models/Gemma2/03-Gemma-2-9b-it%20WebDemo%20部署.md) @不要葱姜蒜
+  - [x] [Gemma-2-9b-it Peft Lora 微调](./models/Gemma2/04-Gemma-2-9b-it%20peft%20lora微调.md) @不要葱姜蒜
 
 - [Yuan2.0](https://github.com/IEIT-Yuan/Yuan-2.0)
-  - [x] [Yuan2.0-2B FastApi 部署调用](./Yuan2.0/01-Yuan2.0-2B%20FastApi%20部署调用.md) @张帆
-  - [x] [Yuan2.0-2B Langchain 接入](./Yuan2.0/02-Yuan2.0-2B%20Langchain%20接入.md) @张帆
-  - [x] [Yuan2.0-2B WebDemo部署](./Yuan2.0/03-Yuan2.0-2B%20WebDemo部署.md) @张帆
-  - [x] [Yuan2.0-2B vLLM部署调用](./Yuan2.0/04-Yuan2.0-2B%20vLLM部署调用.md) @张帆
-  - [x] [Yuan2.0-2B Lora微调](./Yuan2.0/05-Yuan2.0-2B%20Lora微调.md) @张帆
+  - [x] [Yuan2.0-2B FastApi 部署调用](./models/Yuan2.0/01-Yuan2.0-2B%20FastApi%20部署调用.md) @张帆
+  - [x] [Yuan2.0-2B Langchain 接入](./models/Yuan2.0/02-Yuan2.0-2B%20Langchain%20接入.md) @张帆
+  - [x] [Yuan2.0-2B WebDemo部署](./models/Yuan2.0/03-Yuan2.0-2B%20WebDemo部署.md) @张帆
+  - [x] [Yuan2.0-2B vLLM部署调用](./models/Yuan2.0/04-Yuan2.0-2B%20vLLM部署调用.md) @张帆
+  - [x] [Yuan2.0-2B Lora微调](./models/Yuan2.0/05-Yuan2.0-2B%20Lora微调.md) @张帆
 
 - [Yuan2.0-M32](https://github.com/IEIT-Yuan/Yuan2.0-M32)
-  - [x] [Yuan2.0-M32 FastApi 部署调用](./Yuan2.0-M32/01-Yuan2.0-M32%20FastApi%20部署调用.md) @张帆
-  - [x] [Yuan2.0-M32 Langchain 接入](./Yuan2.0-M32/02-Yuan2.0-M32%20Langchain%20接入.md) @张帆
-  - [x] [Yuan2.0-M32 WebDemo部署](./Yuan2.0-M32/03-Yuan2.0-M32%20WebDemo部署.md) @张帆
+  - [x] [Yuan2.0-M32 FastApi 部署调用](./models/Yuan2.0-M32/01-Yuan2.0-M32%20FastApi%20部署调用.md) @张帆
+  - [x] [Yuan2.0-M32 Langchain 接入](./models/Yuan2.0-M32/02-Yuan2.0-M32%20Langchain%20接入.md) @张帆
+  - [x] [Yuan2.0-M32 WebDemo部署](./models/Yuan2.0-M32/03-Yuan2.0-M32%20WebDemo部署.md) @张帆
 
 - [DeepSeek-Coder-V2](https://github.com/deepseek-ai/DeepSeek-Coder-V2)
-  - [x] [DeepSeek-Coder-V2-Lite-Instruct FastApi 部署调用](./DeepSeek-Coder-V2/01-DeepSeek-Coder-V2-Lite-Instruct%20FastApi%20部署调用.md) @姜舒凡
-  - [x] [DeepSeek-Coder-V2-Lite-Instruct langchain 接入](./DeepSeek-Coder-V2/02-DeepSeek-Coder-V2-Lite-Instruct%20接入%20LangChain.md) @姜舒凡
-  - [x] [DeepSeek-Coder-V2-Lite-Instruct WebDemo 部署](./DeepSeek-Coder-V2/03-DeepSeek-Coder-V2-Lite-Instruct%20WebDemo%20部署.md) @Kailigithub
-  - [x] [DeepSeek-Coder-V2-Lite-Instruct Lora 微调](./DeepSeek-Coder-V2/04-DeepSeek-Coder-V2-Lite-Instruct%20Lora%20微调.md) @余洋
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct FastApi 部署调用](./models/DeepSeek-Coder-V2/01-DeepSeek-Coder-V2-Lite-Instruct%20FastApi%20部署调用.md) @姜舒凡
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct langchain 接入](./models/DeepSeek-Coder-V2/02-DeepSeek-Coder-V2-Lite-Instruct%20接入%20LangChain.md) @姜舒凡
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct WebDemo 部署](./models/DeepSeek-Coder-V2/03-DeepSeek-Coder-V2-Lite-Instruct%20WebDemo%20部署.md) @Kailigithub
+  - [x] [DeepSeek-Coder-V2-Lite-Instruct Lora 微调](./models/DeepSeek-Coder-V2/04-DeepSeek-Coder-V2-Lite-Instruct%20Lora%20微调.md) @余洋
 
 - [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
-  - [x] [Index-1.9B-Chat FastApi 部署调用](./bilibili_Index-1.9B/01-Index-1.9B-chat%20FastApi%20部署调用.md) @邓恺俊
-  - [x] [Index-1.9B-Chat langchain 接入](./bilibili_Index-1.9B/02-Index-1.9B-Chat%20接入%20LangChain.md) @张友东
-  - [x] [Index-1.9B-Chat WebDemo 部署](./bilibili_Index-1.9B/03-Index-1.9B-chat%20WebDemo部署.md) @九月
-  - [x] [Index-1.9B-Chat Lora 微调](./bilibili_Index-1.9B/04-Index-1.9B-Chat%20Lora%20微调.md) @姜舒凡
+  - [x] [Index-1.9B-Chat FastApi 部署调用](./models/bilibili_Index-1.9B/01-Index-1.9B-chat%20FastApi%20部署调用.md) @邓恺俊
+  - [x] [Index-1.9B-Chat langchain 接入](./models/bilibili_Index-1.9B/02-Index-1.9B-Chat%20接入%20LangChain.md) @张友东
+  - [x] [Index-1.9B-Chat WebDemo 部署](./models/bilibili_Index-1.9B/03-Index-1.9B-chat%20WebDemo部署.md) @九月
+  - [x] [Index-1.9B-Chat Lora 微调](./models/bilibili_Index-1.9B/04-Index-1.9B-Chat%20Lora%20微调.md) @姜舒凡
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
-  - [x] [Qwen2-7B-Instruct FastApi 部署调用](./Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @康婧淇
-  - [x] [Qwen2-7B-Instruct langchain 接入](./Qwen2/02-Qwen2-7B-Instruct%20Langchain%20接入.md) @不要葱姜蒜
-  - [x] [Qwen2-7B-Instruct WebDemo 部署](./Qwen2/03-Qwen2-7B-Instruct%20WebDemo部署.md) @三水
-  - [x] [Qwen2-7B-Instruct vLLM 部署调用](./Qwen2/04-Qwen2-7B-Instruct%20vLLM%20部署调用.md) @姜舒凡
-  - [x] [Qwen2-7B-Instruct Lora 微调](./Qwen2/05-Qwen2-7B-Instruct%20Lora%20微调.md) @散步
+  - [x] [Qwen2-7B-Instruct FastApi 部署调用](./models/Qwen2/01-Qwen2-7B-Instruct%20FastApi%20部署调用.md) @康婧淇
+  - [x] [Qwen2-7B-Instruct langchain 接入](./models/Qwen2/02-Qwen2-7B-Instruct%20Langchain%20接入.md) @不要葱姜蒜
+  - [x] [Qwen2-7B-Instruct WebDemo 部署](./models/Qwen2/03-Qwen2-7B-Instruct%20WebDemo部署.md) @三水
+  - [x] [Qwen2-7B-Instruct vLLM 部署调用](./models/Qwen2/04-Qwen2-7B-Instruct%20vLLM%20部署调用.md) @姜舒凡
+  - [x] [Qwen2-7B-Instruct Lora 微调](./models/Qwen2/05-Qwen2-7B-Instruct%20Lora%20微调.md) @散步
 
 - [GLM-4](https://github.com/THUDM/GLM-4.git)
-  - [x] [GLM-4-9B-chat FastApi 部署调用](./GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @张友东
-  - [x] [GLM-4-9B-chat langchain 接入](./GLM-4/02-GLM-4-9B-chat%20langchain%20接入.md) @谭逸珂
-  - [x] [GLM-4-9B-chat WebDemo 部署](./GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @何至轩
-  - [x] [GLM-4-9B-chat vLLM 部署](./GLM-4/04-GLM-4-9B-Chat%20vLLM%20部署调用.md) @王熠明
-  - [x] [GLM-4-9B-chat Lora 微调](./GLM-4/05-GLM-4-9B-chat%20Lora%20微调.md) @肖鸿儒
+  - [x] [GLM-4-9B-chat FastApi 部署调用](./models/GLM-4/01-GLM-4-9B-chat%20FastApi%20部署调用.md) @张友东
+  - [x] [GLM-4-9B-chat langchain 接入](./models/GLM-4/02-GLM-4-9B-chat%20langchain%20接入.md) @谭逸珂
+  - [x] [GLM-4-9B-chat WebDemo 部署](./models/GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @何至轩
+  - [x] [GLM-4-9B-chat vLLM 部署](./models/GLM-4/04-GLM-4-9B-Chat%20vLLM%20部署调用.md) @王熠明
+  - [x] [GLM-4-9B-chat Lora 微调](./models/GLM-4/05-GLM-4-9B-chat%20Lora%20微调.md) @肖鸿儒
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
-  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat langchain 接入](./Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat WebDemo 部署](./Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
-  - [x] [Qwen1.5-7B-chat Lora 微调](./Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
-  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @byx020119
-  - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @丁悦
-  - [x] [Qwen1.5-7B-chat vLLM推理部署](./Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @高立业
-  - [x] [Qwen1.5-7B-chat Lora 微调 接入SwanLab实验管理平台](./Qwen1.5/08-Qwen1.5-7B-chat%20LoRA微调接入实验管理.md) @黄柏特
+  - [x] [Qwen1.5-7B-chat FastApi 部署调用](./models/Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat langchain 接入](./models/Qwen1.5/02-Qwen1.5-7B-Chat%20接入langchain搭建知识库助手.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat WebDemo 部署](./models/Qwen1.5/03-Qwen1.5-7B-Chat%20WebDemo.md) @颜鑫
+  - [x] [Qwen1.5-7B-chat Lora 微调](./models/Qwen1.5/04-Qwen1.5-7B-chat%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [Qwen1.5-72B-chat-GPTQ-Int4 部署环境](./models/Qwen1.5/05-Qwen1.5-7B-Chat-GPTQ-Int4%20%20WebDemo.md) @byx020119
+  - [x] [Qwen1.5-MoE-chat Transformers 部署调用](./models/Qwen1.5/06-Qwen1.5-MoE-A2.7B.md) @丁悦
+  - [x] [Qwen1.5-7B-chat vLLM推理部署](./models/Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @高立业
+  - [x] [Qwen1.5-7B-chat Lora 微调 接入SwanLab实验管理平台](./models/Qwen1.5/08-Qwen1.5-7B-chat%20LoRA微调接入实验管理.md) @黄柏特
 
 - [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
-  - [x] [gemma-2b-it FastApi 部署调用 ](./Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md) @东东
-  - [x] [gemma-2b-it langchain 接入 ](./Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md) @东东
-  - [x] [gemma-2b-it WebDemo 部署 ](./Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md) @东东
-  - [x] [gemma-2b-it Peft Lora 微调 ](./Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @东东
+  - [x] [gemma-2b-it FastApi 部署调用 ](./models/Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md) @东东
+  - [x] [gemma-2b-it langchain 接入 ](./models/Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md) @东东
+  - [x] [gemma-2b-it WebDemo 部署 ](./models/Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md) @东东
+  - [x] [gemma-2b-it Peft Lora 微调 ](./models/Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @东东
 
 - [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
-  - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @郑皓桦
-  - [x] [Phi-3-mini-4k-instruct langchain 接入](./phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @郑皓桦
-  - [x] [Phi-3-mini-4k-instruct WebDemo 部署](./phi-3/03-Phi-3-mini-4k-instruct%20WebDemo部署.md) @丁悦
-  - [x] [Phi-3-mini-4k-instruct Lora 微调](./phi-3/04-Phi-3-mini-4k-Instruct%20Lora%20微调.md) @丁悦
+  - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./models/phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @郑皓桦
+  - [x] [Phi-3-mini-4k-instruct langchain 接入](./models/phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @郑皓桦
+  - [x] [Phi-3-mini-4k-instruct WebDemo 部署](./models/phi-3/03-Phi-3-mini-4k-instruct%20WebDemo部署.md) @丁悦
+  - [x] [Phi-3-mini-4k-instruct Lora 微调](./models/phi-3/04-Phi-3-mini-4k-Instruct%20Lora%20微调.md) @丁悦
 
 - [CharacterGLM-6B](https://github.com/thu-coai/CharacterGLM-6B)
-  - [x] [CharacterGLM-6B Transformers 部署调用](./CharacterGLM/01-CharacterGLM-6B%20Transformer部署调用.md) @孙健壮
-  - [x] [CharacterGLM-6B FastApi 部署调用](./CharacterGLM/02-CharacterGLM-6B%20FastApi部署调用.md) @孙健壮
-  - [x] [CharacterGLM-6B webdemo 部署](./CharacterGLM/03-CharacterGLM-6B-chat.md) @孙健壮
-  - [x] [CharacterGLM-6B Lora 微调](./CharacterGLM/04-CharacterGLM-6B%20Lora微调.md) @孙健壮
+  - [x] [CharacterGLM-6B Transformers 部署调用](./models/CharacterGLM/01-CharacterGLM-6B%20Transformer部署调用.md) @孙健壮
+  - [x] [CharacterGLM-6B FastApi 部署调用](./models/CharacterGLM/02-CharacterGLM-6B%20FastApi部署调用.md) @孙健壮
+  - [x] [CharacterGLM-6B webdemo 部署](./models/CharacterGLM/03-CharacterGLM-6B-chat.md) @孙健壮
+  - [x] [CharacterGLM-6B Lora 微调](./models/CharacterGLM/04-CharacterGLM-6B%20Lora微调.md) @孙健壮
 
 - [LLaMA3-8B-Instruct](https://github.com/meta-llama/llama3.git)
-  - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md) @高立业
-  - [X] [LLaMA3-8B-Instruct langchain 接入](./LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md) @不要葱姜蒜
-  - [x] [LLaMA3-8B-Instruct WebDemo 部署](./LLaMA3/03-LLaMA3-8B-Instruct%20WebDemo%20部署.md) @不要葱姜蒜
-  - [x] [LLaMA3-8B-Instruct Lora 微调](./LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20微调.md) @高立业
+  - [x] [LLaMA3-8B-Instruct FastApi 部署调用](./models/LLaMA3/01-LLaMA3-8B-Instruct%20FastApi%20部署调用.md) @高立业
+  - [X] [LLaMA3-8B-Instruct langchain 接入](./models/LLaMA3/02-LLaMA3-8B-Instruct%20langchain%20接入.md) @不要葱姜蒜
+  - [x] [LLaMA3-8B-Instruct WebDemo 部署](./models/LLaMA3/03-LLaMA3-8B-Instruct%20WebDemo%20部署.md) @不要葱姜蒜
+  - [x] [LLaMA3-8B-Instruct Lora 微调](./models/LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20微调.md) @高立业
 
 - [XVERSE-7B-Chat](https://modelscope.cn/models/xverse/XVERSE-7B-Chat/summary)
-  - [x] [XVERSE-7B-Chat transformers 部署调用](./XVERSE/01-XVERSE-7B-chat%20Transformers推理.md) @郭志航
-  - [x] [XVERSE-7B-Chat FastApi 部署调用](./XVERSE/02-XVERSE-7B-chat%20FastAPI部署.md) @郭志航
-  - [x] [XVERSE-7B-Chat langchain 接入](./XVERSE/03-XVERSE-7B-chat%20langchain%20接入.md) @郭志航
-  - [x] [XVERSE-7B-Chat WebDemo 部署](./XVERSE/04-XVERSE-7B-chat%20WebDemo%20部署.md) @郭志航
-  - [x] [XVERSE-7B-Chat Lora 微调](./XVERSE/05-XVERSE-7B-Chat%20Lora%20微调.md) @郭志航
+  - [x] [XVERSE-7B-Chat transformers 部署调用](./models/XVERSE/01-XVERSE-7B-chat%20Transformers推理.md) @郭志航
+  - [x] [XVERSE-7B-Chat FastApi 部署调用](./models/XVERSE/02-XVERSE-7B-chat%20FastAPI部署.md) @郭志航
+  - [x] [XVERSE-7B-Chat langchain 接入](./models/XVERSE/03-XVERSE-7B-chat%20langchain%20接入.md) @郭志航
+  - [x] [XVERSE-7B-Chat WebDemo 部署](./models/XVERSE/04-XVERSE-7B-chat%20WebDemo%20部署.md) @郭志航
+  - [x] [XVERSE-7B-Chat Lora 微调](./models/XVERSE/05-XVERSE-7B-Chat%20Lora%20微调.md) @郭志航
 
 - [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
-  - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @王茂霖
-  - [X] [TransNormerLLM-7B-Chat langchain 接入](./TransNormer/02-TransNormer-7B%20接入langchain搭建知识库助手.md) @王茂霖
-  - [X] [TransNormerLLM-7B-Chat WebDemo 部署](./TransNormer/03-TransNormer-7B%20WebDemo.md) @王茂霖
-  - [x] [TransNormerLLM-7B-Chat Lora 微调](./TransNormer/04-TrasnNormer-7B%20Lora%20微调.md) @王茂霖
+  - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./models/TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @王茂霖
+  - [X] [TransNormerLLM-7B-Chat langchain 接入](./models/TransNormer/02-TransNormer-7B%20接入langchain搭建知识库助手.md) @王茂霖
+  - [X] [TransNormerLLM-7B-Chat WebDemo 部署](./models/TransNormer/03-TransNormer-7B%20WebDemo.md) @王茂霖
+  - [x] [TransNormerLLM-7B-Chat Lora 微调](./models/TransNormer/04-TrasnNormer-7B%20Lora%20微调.md) @王茂霖
 
 - [BlueLM Vivo 蓝心大模型](https://github.com/vivo-ai-lab/BlueLM.git)
-  - [x] [BlueLM-7B-Chat FatApi 部署调用](./BlueLM/01-BlueLM-7B-Chat%20FastApi%20部署.md) @郭志航
-  - [x] [BlueLM-7B-Chat langchain 接入](./BlueLM/02-BlueLM-7B-Chat%20langchain%20接入.md) @郭志航
-  - [x] [BlueLM-7B-Chat WebDemo 部署](./BlueLM/03-BlueLM-7B-Chat%20WebDemo%20部署.md) @郭志航
-  - [x] [BlueLM-7B-Chat Lora 微调](./BlueLM/04-BlueLM-7B-Chat%20Lora%20微调.md) @郭志航
+  - [x] [BlueLM-7B-Chat FatApi 部署调用](./models/BlueLM/01-BlueLM-7B-Chat%20FastApi%20部署.md) @郭志航
+  - [x] [BlueLM-7B-Chat langchain 接入](./models/BlueLM/02-BlueLM-7B-Chat%20langchain%20接入.md) @郭志航
+  - [x] [BlueLM-7B-Chat WebDemo 部署](./models/BlueLM/03-BlueLM-7B-Chat%20WebDemo%20部署.md) @郭志航
+  - [x] [BlueLM-7B-Chat Lora 微调](./models/BlueLM/04-BlueLM-7B-Chat%20Lora%20微调.md) @郭志航
 
 - [InternLM2](https://github.com/InternLM/InternLM)
-  - [x] [InternLM2-7B-chat FastApi 部署调用](./InternLM2/01-InternLM2-7B-chat%20FastAPI部署.md) @不要葱姜蒜
-  - [x] [InternLM2-7B-chat langchain 接入](./InternLM2/02-InternLM2-7B-chat%20langchain%20接入.md) @不要葱姜蒜
-  - [x] [InternLM2-7B-chat WebDemo 部署](./InternLM2/03-InternLM2-7B-chat%20WebDemo%20部署.md) @郑皓桦
-  - [x] [InternLM2-7B-chat Xtuner Qlora 微调](./InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20微调.md) @郑皓桦
+  - [x] [InternLM2-7B-chat FastApi 部署调用](./models/InternLM2/01-InternLM2-7B-chat%20FastAPI部署.md) @不要葱姜蒜
+  - [x] [InternLM2-7B-chat langchain 接入](./models/InternLM2/02-InternLM2-7B-chat%20langchain%20接入.md) @不要葱姜蒜
+  - [x] [InternLM2-7B-chat WebDemo 部署](./models/InternLM2/03-InternLM2-7B-chat%20WebDemo%20部署.md) @郑皓桦
+  - [x] [InternLM2-7B-chat Xtuner Qlora 微调](./models/InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20微调.md) @郑皓桦
 
 - [DeepSeek 深度求索](https://github.com/deepseek-ai/DeepSeek-LLM)
-  - [x] [DeepSeek-7B-chat FastApi 部署调用](./DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @不要葱姜蒜
-  - [x] [DeepSeek-7B-chat langchain 接入](./DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @不要葱姜蒜
-  - [x] [DeepSeek-7B-chat WebDemo](./DeepSeek/03-DeepSeek-7B-chat%20WebDemo.md) @不要葱姜蒜
-  - [x] [DeepSeek-7B-chat Lora 微调](./DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @不要葱姜蒜
-  - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @不要葱姜蒜
-  - [x] [DeepSeek-MoE-16b-chat Transformers 部署调用](./DeepSeek/06-DeepSeek-MoE-16b-chat%20Transformer部署调用.md) @Kailigithub
-  - [x] [DeepSeek-MoE-16b-chat FastApi 部署调用](./DeepSeek/06-DeepSeek-MoE-16b-chat%20FastApi.md) @Kailigithub
-  - [x] [DeepSeek-coder-6.7b finetune colab](./DeepSeek/07-deepseek_fine_tune.ipynb) @Swiftie
-  - [x] [Deepseek-coder-6.7b webdemo colab](./DeepSeek/08-deepseek_web_demo.ipynb) @Swiftie
+  - [x] [DeepSeek-7B-chat FastApi 部署调用](./models/DeepSeek/01-DeepSeek-7B-chat%20FastApi.md) @不要葱姜蒜
+  - [x] [DeepSeek-7B-chat langchain 接入](./models/DeepSeek/02-DeepSeek-7B-chat%20langchain.md) @不要葱姜蒜
+  - [x] [DeepSeek-7B-chat WebDemo](./models/DeepSeek/03-DeepSeek-7B-chat%20WebDemo.md) @不要葱姜蒜
+  - [x] [DeepSeek-7B-chat Lora 微调](./models/DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./models/DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @不要葱姜蒜
+  - [x] [DeepSeek-MoE-16b-chat Transformers 部署调用](./models/DeepSeek/06-DeepSeek-MoE-16b-chat%20Transformer部署调用.md) @Kailigithub
+  - [x] [DeepSeek-MoE-16b-chat FastApi 部署调用](./models/DeepSeek/06-DeepSeek-MoE-16b-chat%20FastApi.md) @Kailigithub
+  - [x] [DeepSeek-coder-6.7b finetune colab](./models/DeepSeek/07-deepseek_fine_tune.ipynb) @Swiftie
+  - [x] [Deepseek-coder-6.7b webdemo colab](./models/DeepSeek/08-deepseek_web_demo.ipynb) @Swiftie
 
 - [MiniCPM](https://github.com/OpenBMB/MiniCPM.git)
-  - [x] [MiniCPM-2B-chat transformers 部署调用](./MiniCPM/MiniCPM-2B-chat%20transformers%20部署调用.md) @Kailigithub 
-  - [x] [MiniCPM-2B-chat FastApi 部署调用](./MiniCPM/MiniCPM-2B-chat%20FastApi%20部署调用.md) @Kailigithub 
-  - [x] [MiniCPM-2B-chat langchain 接入](./MiniCPM/MiniCPM-2B-chat%20langchain接入.md) @不要葱姜蒜 
-  - [x] [MiniCPM-2B-chat webdemo 部署](./MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
-  - [x] [MiniCPM-2B-chat Lora && Full 微调](./MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
+  - [x] [MiniCPM-2B-chat transformers 部署调用](./models/MiniCPM/MiniCPM-2B-chat%20transformers%20部署调用.md) @Kailigithub 
+  - [x] [MiniCPM-2B-chat FastApi 部署调用](./models/MiniCPM/MiniCPM-2B-chat%20FastApi%20部署调用.md) @Kailigithub 
+  - [x] [MiniCPM-2B-chat langchain 接入](./models/MiniCPM/MiniCPM-2B-chat%20langchain接入.md) @不要葱姜蒜 
+  - [x] [MiniCPM-2B-chat webdemo 部署](./models/MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
+  - [x] [MiniCPM-2B-chat Lora && Full 微调](./models/MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
-  - [x] [Qwen-Audio FastApi 部署调用](./Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @陈思州
-  - [x] [Qwen-Audio WebDemo](./Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @陈思州
+  - [x] [Qwen-Audio FastApi 部署调用](./models/Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @陈思州
+  - [x] [Qwen-Audio WebDemo](./models/Qwen-Audio/02-Qwen-Audio-chat%20WebDemo.md) @陈思州
 
 - [Qwen](https://github.com/QwenLM/Qwen.git)
-  - [x] [Qwen-7B-chat Transformers 部署调用](./Qwen/01-Qwen-7B-Chat%20Transformers部署调用.md) @李娇娇
-  - [x] [Qwen-7B-chat FastApi 部署调用](./Qwen/02-Qwen-7B-Chat%20FastApi%20部署调用.md) @李娇娇
-  - [x] [Qwen-7B-chat WebDemo](./Qwen/03-Qwen-7B-Chat%20WebDemo.md) @李娇娇
-  - [x] [Qwen-7B-chat Lora 微调](./Qwen/04-Qwen-7B-Chat%20Lora%20微调.md) @不要葱姜蒜
-  - [x] [Qwen-7B-chat ptuning 微调](./Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @肖鸿儒
-  - [x] [Qwen-7B-chat 全量微调](./Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
-  - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @李娇娇
-  - [x] [Qwen-7B-chat 低精度训练](./Qwen/08-Qwen-7B-Chat%20Lora%20低精度微调.md) @肖鸿儒
-  - [x] [Qwen-1_8B-chat CPU 部署](./Qwen/09-Qwen-1_8B-chat%20CPU%20部署%20.md) @散步
+  - [x] [Qwen-7B-chat Transformers 部署调用](./models/Qwen/01-Qwen-7B-Chat%20Transformers部署调用.md) @李娇娇
+  - [x] [Qwen-7B-chat FastApi 部署调用](./models/Qwen/02-Qwen-7B-Chat%20FastApi%20部署调用.md) @李娇娇
+  - [x] [Qwen-7B-chat WebDemo](./models/Qwen/03-Qwen-7B-Chat%20WebDemo.md) @李娇娇
+  - [x] [Qwen-7B-chat Lora 微调](./models/Qwen/04-Qwen-7B-Chat%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [Qwen-7B-chat ptuning 微调](./models/Qwen/05-Qwen-7B-Chat%20Ptuning%20微调.md) @肖鸿儒
+  - [x] [Qwen-7B-chat 全量微调](./models/Qwen/06-Qwen-7B-chat%20全量微调.md) @不要葱姜蒜
+  - [x] [Qwen-7B-Chat 接入langchain搭建知识库助手](./models/Qwen/07-Qwen-7B-Chat%20接入langchain搭建知识库助手.md) @李娇娇
+  - [x] [Qwen-7B-chat 低精度训练](./models/Qwen/08-Qwen-7B-Chat%20Lora%20低精度微调.md) @肖鸿儒
+  - [x] [Qwen-1_8B-chat CPU 部署](./models/Qwen/09-Qwen-1_8B-chat%20CPU%20部署%20.md) @散步
 
 - [Yi 零一万物](https://github.com/01-ai/Yi.git)
-  - [x] [Yi-6B-chat FastApi 部署调用](./Yi/01-Yi-6B-Chat%20FastApi%20部署调用.md) @李柯辰
-  - [x] [Yi-6B-chat langchain接入](./Yi/02-Yi-6B-Chat%20接入langchain搭建知识库助手.md) @李柯辰
-  - [x] [Yi-6B-chat WebDemo](./Yi/03-Yi-6B-chat%20WebDemo.md) @肖鸿儒
-  - [x] [Yi-6B-chat Lora 微调](./Yi/04-Yi-6B-Chat%20Lora%20微调.md) @李娇娇
+  - [x] [Yi-6B-chat FastApi 部署调用](./models/Yi/01-Yi-6B-Chat%20FastApi%20部署调用.md) @李柯辰
+  - [x] [Yi-6B-chat langchain接入](./models/Yi/02-Yi-6B-Chat%20接入langchain搭建知识库助手.md) @李柯辰
+  - [x] [Yi-6B-chat WebDemo](./models/Yi/03-Yi-6B-chat%20WebDemo.md) @肖鸿儒
+  - [x] [Yi-6B-chat Lora 微调](./models/Yi/04-Yi-6B-Chat%20Lora%20微调.md) @李娇娇
 
 - [Baichuan 百川智能](https://www.baichuan-ai.com/home)
   - [x] [Baichuan2-7B-chat FastApi 部署调用](./BaiChuan/01-Baichuan2-7B-chat%2BFastApi%2B%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md) @惠佳豪
-  - [x] [Baichuan2-7B-chat WebDemo](./BaiChuan/02-Baichuan-7B-chat%2BWebDemo.md) @惠佳豪
-  - [x] [Baichuan2-7B-chat 接入 LangChain 框架](./BaiChuan/03-Baichuan2-7B-chat%E6%8E%A5%E5%85%A5LangChain%E6%A1%86%E6%9E%B6.md) @惠佳豪
-  - [x] [Baichuan2-7B-chat Lora 微调](./BaiChuan/04-Baichuan2-7B-chat%2Blora%2B%E5%BE%AE%E8%B0%83.md) @惠佳豪
+  - [x] [Baichuan2-7B-chat WebDemo](./models/BaiChuan/02-Baichuan-7B-chat%2BWebDemo.md) @惠佳豪
+  - [x] [Baichuan2-7B-chat 接入 LangChain 框架](./models/BaiChuan/03-Baichuan2-7B-chat%E6%8E%A5%E5%85%A5LangChain%E6%A1%86%E6%9E%B6.md) @惠佳豪
+  - [x] [Baichuan2-7B-chat Lora 微调](./models/BaiChuan/04-Baichuan2-7B-chat%2Blora%2B%E5%BE%AE%E8%B0%83.md) @惠佳豪
 
 - [InternLM](https://github.com/InternLM/InternLM.git)
-  - [x] [InternLM-Chat-7B Transformers 部署调用](./InternLM/01-InternLM-Chat-7B%20Transformers%20部署调用.md) @小罗
-  - [x] [InternLM-Chat-7B FastApi 部署调用](InternLM/02-internLM-Chat-7B%20FastApi.md) @不要葱姜蒜
-  - [x] [InternLM-Chat-7B WebDemo](InternLM/03-InternLM-Chat-7B.md) @不要葱姜蒜
-  - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
-  - [x] [浦语灵笔图文理解&创作 WebDemo](InternLM/05-浦语灵笔图文理解&创作.md) @不要葱姜蒜
-  - [x] [InternLM-Chat-7B 接入 LangChain 框架](InternLM/06-InternLM接入LangChain搭建知识库助手.md) @Logan Zou
+  - [x] [InternLM-Chat-7B Transformers 部署调用](./models/InternLM/01-InternLM-Chat-7B%20Transformers%20部署调用.md) @小罗
+  - [x] [InternLM-Chat-7B FastApi 部署调用](./models/InternLM/02-internLM-Chat-7B%20FastApi.md) @不要葱姜蒜
+  - [x] [InternLM-Chat-7B WebDemo](./models/InternLM/03-InternLM-Chat-7B.md) @不要葱姜蒜
+  - [x] [Lagent+InternLM-Chat-7B-V1.1 WebDemo](./models/InternLM/04-Lagent+InternLM-Chat-7B-V1.1.md) @不要葱姜蒜
+  - [x] [浦语灵笔图文理解&创作 WebDemo](./models/InternLM/05-浦语灵笔图文理解&创作.md) @不要葱姜蒜
+  - [x] [InternLM-Chat-7B 接入 LangChain 框架](./models/InternLM/06-InternLM接入LangChain搭建知识库助手.md) @Logan Zou
 
 - [Atom (llama2)](https://hf-mirror.com/FlagAlpha/Atom-7B-Chat)
-  - [x] [Atom-7B-chat WebDemo](./Atom/01-Atom-7B-chat-WebDemo.md) @Kailigithub
-  - [x] [Atom-7B-chat Lora 微调](./Atom/02-Atom-7B-Chat%20Lora%20微调.md) @Logan Zou
-  - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @陈思州
-  - [x] [Atom-7B-chat 全量微调](./Atom/04-Atom-7B-chat%20全量微调.md) @Logan Zou
+  - [x] [Atom-7B-chat WebDemo](./models/Atom/01-Atom-7B-chat-WebDemo.md) @Kailigithub
+  - [x] [Atom-7B-chat Lora 微调](./models/Atom/02-Atom-7B-Chat%20Lora%20微调.md) @Logan Zou
+  - [x] [Atom-7B-Chat 接入langchain搭建知识库助手](./models/Atom/03-Atom-7B-Chat%20接入langchain搭建知识库助手.md) @陈思州
+  - [x] [Atom-7B-chat 全量微调](./models/Atom/04-Atom-7B-chat%20全量微调.md) @Logan Zou
 
 - [ChatGLM3](https://github.com/THUDM/ChatGLM3.git)
-  - [x] [ChatGLM3-6B Transformers 部署调用](./ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦
-  - [x] [ChatGLM3-6B FastApi 部署调用](./ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦
-  - [x] [ChatGLM3-6B chat WebDemo](ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
-  - [x] [ChatGLM3-6B Code Interpreter WebDemo](ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
-  - [x] [ChatGLM3-6B 接入 LangChain 框架](ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @Logan Zou
-  - [x] [ChatGLM3-6B Lora 微调](ChatGLM/06-ChatGLM3-6B-Lora微调.md) @肖鸿儒
+  - [x] [ChatGLM3-6B Transformers 部署调用](./models/ChatGLM/01-ChatGLM3-6B%20Transformer部署调用.md) @丁悦
+  - [x] [ChatGLM3-6B FastApi 部署调用](./models/ChatGLM/02-ChatGLM3-6B%20FastApi部署调用.md) @丁悦
+  - [x] [ChatGLM3-6B chat WebDemo](./models/ChatGLM/03-ChatGLM3-6B-chat.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B Code Interpreter WebDemo](./models/ChatGLM/04-ChatGLM3-6B-Code-Interpreter.md) @不要葱姜蒜
+  - [x] [ChatGLM3-6B 接入 LangChain 框架](./models/ChatGLM/05-ChatGLM3-6B接入LangChain搭建知识库助手.md) @Logan Zou
+  - [x] [ChatGLM3-6B Lora 微调](./models/ChatGLM/06-ChatGLM3-6B-Lora微调.md) @肖鸿儒
 
 ### 通用环境配置
 
-- [x] [pip、conda 换源](./General-Setting/01-pip、conda换源.md) @不要葱姜蒜
-- [x] [AutoDL 开放端口](./General-Setting/02-AutoDL开放端口.md) @不要葱姜蒜
+- [x] [pip、conda 换源](./models/General-Setting/01-pip、conda换源.md) @不要葱姜蒜
+- [x] [AutoDL 开放端口](./models/General-Setting/02-AutoDL开放端口.md) @不要葱姜蒜
 
 - 模型下载
-  - [x] [hugging face](./General-Setting/03-模型下载.md) @不要葱姜蒜
+  - [x] [hugging face](./models/General-Setting/03-模型下载.md) @不要葱姜蒜
   - [x] [hugging face](./General-Setting/03-模型下载.md) 镜像下载 @不要葱姜蒜
-  - [x] [modelscope](./General-Setting/03-模型下载.md) @不要葱姜蒜
-  - [x] [git-lfs](./General-Setting/03-模型下载.md) @不要葱姜蒜
-  - [x] [Openxlab](./General-Setting/03-模型下载.md)
+  - [x] [modelscope](./models/General-Setting/03-模型下载.md) @不要葱姜蒜
+  - [x] [git-lfs](./models/General-Setting/03-模型下载.md) @不要葱姜蒜
+  - [x] [Openxlab](./models/General-Setting/03-模型下载.md)
 - Issue && PR
-  - [x] [Issue 提交](./General-Setting/04-Issue&PR&update.md) @肖鸿儒
-  - [x] [PR 提交](./General-Setting/04-Issue&PR&update.md) @肖鸿儒
-  - [x] [fork更新](./General-Setting/04-Issue&PR&update.md) @肖鸿儒
+  - [x] [Issue 提交](./models/General-Setting/04-Issue&PR&update.md) @肖鸿儒
+  - [x] [PR 提交](./models/General-Setting/04-Issue&PR&update.md) @肖鸿儒
+  - [x] [fork更新](./models/General-Setting/04-Issue&PR&update.md) @肖鸿儒
 
 ## 致谢
 
