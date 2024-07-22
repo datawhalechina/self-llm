@@ -2,16 +2,19 @@
 
 ## 环境准备  
 
-在 Autodl 平台中租赁一个 RTX 3090/24G 显存的显卡机器。如下图所示，镜像选择 PyTorch-->2.1.0-->3.10(ubuntu20.04)-->12.1（11.3 版本以上的都可以）。
+本文基础环境如下：
 
-![开启机器配置选择](images/01-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-
-接下来，我们打开刚刚租用服务器的 JupyterLab，如下图所示，然后打开其中的终端，开始环境配置、模型下载和运行演示。  
-![开启JupyterLab](images/01-2.png)
-<!-- ![开启终端](images/01-3.png) -->
-
-pip 换源加速下载并安装依赖包
+首先 `pip` 换源加速下载并安装依赖包
 
 ```shell
 # 升级pip
@@ -19,16 +22,12 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install fastapi==0.104.1
-pip install uvicorn==0.24.0.post1
-pip install requests==2.25.1
-pip install modelscope==1.11.0
-pip install transformers==4.41.0
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
-
+pip install fastapi==0.111.1
+pip install uvicorn==0.30.3
+pip install modelscope==1.16.1
+pip install transformers==4.42.4
+pip install streamlit==1.36.0
+pip install accelerate==0.32.1
 ```  
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
@@ -37,9 +36,9 @@ pip install transformers_stream_generator==0.0.4
 
 ## 模型下载  
 
-使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
+新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
 
 ```python
 import torch
@@ -48,12 +47,11 @@ import os
 model_dir = snapshot_download('qwen/Qwen2-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```  
 
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
 ## 代码准备  
 
-在 /root/autodl-tmp 路径下新建 api.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件。
-AutoDL开放端口配置方法写在本项目中General-Setting目录，首次使用请参考该文档，配置方法如下图所示。
-![AutoDL开放端口配置](images/01-4.png)
-下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。  
+新建 `api.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。以下代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue 。  
 
 ```python
 from fastapi import FastAPI, Request
@@ -126,19 +124,14 @@ if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
 ```  
 
+> 注意：记得修改 `model_name_or_path` 为你的模型下载路径哦~
+
 ## Api 部署  
 
 在终端输入以下命令启动api服务：  
 
 ```shell  
-cd /root/autodl-tmp
 python api.py
-
-python /root/autodl-tmp/api.py
-```  
-
-```shell
-python /root/autodl-tmp/api.py
 ```  
 
 加载完毕后出现如下信息说明成功。
