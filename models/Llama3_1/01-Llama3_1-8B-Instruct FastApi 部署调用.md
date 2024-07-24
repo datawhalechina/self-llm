@@ -30,7 +30,7 @@ pip install accelerate==0.32.1
 ```  
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了LLaMA3-1的环境镜像，点击下方链接并直接创建Autodl示例即可。
-> ***xx***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-llama3.1***
 
 
 ## 模型下载  

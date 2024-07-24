@@ -24,11 +24,12 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install modelscope==1.11.0
 pip install langchain==0.1.15
 pip install streamlit==1.36.0
-pip install "transformers>=4.40.0" accelerate tiktoken einops scipy transformers_stream_generator==0.1.16
+pip install transformers==4.42.4
+pip install accelerate==0.32.1
 ```  
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了LLaMA3-1的环境镜像，点击下方链接并直接创建Autodl示例即可。
-> ***xxxx***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-llama3.1***
 
 
 ## 模型下载
@@ -44,6 +45,8 @@ import os
 
 model_dir = snapshot_download('LLM-Research/Meta-Llama-3.1-8B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 ## 代码准备
 
@@ -117,7 +120,7 @@ if prompt := st.chat_input():
 
 在终端中运行以下命令，启动streamlit服务，`server.port`可以更换端口
 ```bash
-streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.port 6006
+streamlit run chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
 运行成功后，在本地浏览器打开http://127.0.0.1:6006/ 即可查看部署的WebDemo，如下所示。

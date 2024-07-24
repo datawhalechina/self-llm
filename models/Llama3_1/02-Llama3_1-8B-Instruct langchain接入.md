@@ -23,17 +23,17 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.11.0
 pip install langchain==0.2.3
-pip install huggingface_hub==0.24.1
-pip install "transformers>=4.41.2" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
+pip install transformers==4.42.4
+pip install accelerate==0.32.1
 ```  
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了LLaMA3-1的环境镜像，点击下方链接并直接创建Autodl示例即可。
-> ***xxxx***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-llama3.1***
 
 
 ## 模型下载
 
-使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
 在新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python model_download.py` 执行下载，模型大小为 16 GB，下载模型大概需要 12 分钟。
 
@@ -44,13 +44,15 @@ import os
 
 model_dir = snapshot_download('LLM-Research/Meta-Llama-3.1-8B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
-
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 ## 代码准备
 
-为便捷构建 LLM 应用，我们需要基于本地部署的 LLaMA3_1_LLM，自定义一个 LLM 类，将 LLaMA3.1 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
+为便捷构建 `LLM` 应用，我们需要基于本地部署的 `LLaMA3_1_LLM`，自定义一个 `LLM` 类，将 `LLaMA3.1` 接入到 `LangChain` 框架中。完成自定义 `LLM` 类之后，可以以完全一致的方式调用 `LangChain` 的接口，而无需考虑底层模型调用的不一致。
 
-基于本地部署的 LLaMA3.1 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+基于本地部署的 `LLaMA3.1` 自定义 `LLM` 类并不复杂，我们只需从 `LangChain.llms.base.LLM` 类继承一个子类，并重写构造函数与 `_call` 函数即可：
+
+在当前路径新建一个 `LLM.py` 文件，并输入以下内容，粘贴代码后记得保存文件。
 
 ```python
 from langchain.llms.base import LLM
@@ -96,14 +98,15 @@ class LLaMA3_1_LLM(LLM):
         return "LLaMA3_1_LLM"
 ```
 
-在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 LLaMA3.1 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 generate 方法，从而实现对模型的调用并返回调用结果。
+在上述类定义中，我们分别重写了构造函数和 `_call` 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 `LLaMA3.1` `模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call` 函数是 `LLM` 类的核心函数，`LangChain` 会调用该函数来调用 `LLM`，在该函数中，我们调用已实例化模型的 `generate` 方法，从而实现对模型的调用并返回调用结果。
 
-在整体项目中，我们将上述代码封装为 LLM.py，后续将直接从该文件中引入自定义的 LLM 类。
-
+在整体项目中，我们将上述代码封装为 `LLM.py`，后续将直接从该文件中引入自定义的 LLM 类。
 
 ## 调用
 
 然后就可以像使用任何其他的langchain大模型功能一样使用了。
+
+> 注意：记得修改模型路径为你的路径哦~
 
 ```python
 from LLM import LLaMA3_1_LLM
