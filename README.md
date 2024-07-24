@@ -282,6 +282,7 @@
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+- [张晋](https://github.com/Jin-Zhang-Yaoguang) （内容创作者-Datawhale成员）
 
 > 注：排名根据贡献程度排序
 
