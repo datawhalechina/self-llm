@@ -77,20 +77,6 @@ def get_model():
   
     return tokenizer, model
 
-def bulid_input(prompt, history=[]):
-    system_format='<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{content}<|eot_id|>'
-    user_format='<|start_header_id|>user<|end_header_id|>\n\n{content}<|eot_id|>'
-    assistant_format='<|start_header_id|>assistant<|end_header_id|>\n\n{content}<|eot_id|>\n'
-    history.append({'role':'user','content':prompt})
-    prompt_str = ''
-    # 拼接历史对话
-    for item in history:
-        if item['role']=='user':
-            prompt_str+=user_format.format(content=item['content'])
-        else:
-            prompt_str+=assistant_format.format(content=item['content'])
-    return prompt_str + '<|start_header_id|>assistant<|end_header_id|>\n\n'
-
 # 加载LLaMA3的model和tokenizer
 tokenizer, model = get_model()
 
@@ -108,19 +94,19 @@ if prompt := st.chat_input():
     # 在聊天界面上显示用户的输入
     st.chat_message("user").write(prompt)
     
-    # 构建输入
-    input_str = bulid_input(prompt=prompt, history=st.session_state["messages"])
-    input_ids = tokenizer.encode(input_str, add_special_tokens=False, return_tensors='pt').cuda()
-    outputs = model.generate(
-        input_ids=input_ids, max_new_tokens=512, do_sample=True,
-        top_p=0.9, temperature=0.5, repetition_penalty=1.1, eos_token_id=tokenizer.encode('<|eot_id|>')[0]
-        )
-    outputs = outputs.tolist()[0][len(input_ids[0]):]
-    response = tokenizer.decode(outputs)
-    response = response.strip().replace('<|eot_id|>', "").replace('<|start_header_id|>assistant<|end_header_id|>\n\n', '').strip()
+    # 将用户输入添加到session_state中的messages列表中
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    # 将对话输入模型，获得返回
+    input_ids = tokenizer.apply_chat_template(st.session_state["messages"],tokenize=False,add_generation_prompt=True)
+    model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
+    generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=512)
+    generated_ids = [
+        output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+    ]
+    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
     # 将模型的输出添加到session_state中的messages列表中
-    # st.session_state.messages.append({"role": "user", "content": prompt})
     st.session_state.messages.append({"role": "assistant", "content": response})
     # 在聊天界面上显示模型的输出
     st.chat_message("assistant").write(response)
@@ -136,5 +122,5 @@ streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.po
 
 运行成功后，在本地浏览器打开http://127.0.0.1:6006/ 即可查看部署的WebDemo，如下所示。
 
-![alt text](./images/03-1.png)
+![alt text](./images/03-2.png)
 
