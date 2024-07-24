@@ -55,6 +55,12 @@
 
 ### 已支持模型
 
+- [Llama3_1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
+  - [ ] Llama3_1-8B-Instruct FastApi 部署调用
+  - [ ] Llama3_1-8B-Instruct langchain 接入
+  - [ ] Llama3_1-8B-Instruct WebDemo 部署
+  - [ ] Llama3_1-8B-Instruct Lora 微调
+
 - [Gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)
   - [x] [Gemma-2-9b-it FastApi 部署调用](./models/Gemma2/01-Gemma-2-9b-it%20FastApi%20部署调用.md) @不要葱姜蒜
   - [x] [Gemma-2-9b-it langchain 接入](./models/Gemma2/02-Gemma-2-9b-it%20langchain%20接入.md) @不要葱姜蒜
