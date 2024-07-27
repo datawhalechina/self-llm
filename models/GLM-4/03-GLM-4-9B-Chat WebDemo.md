@@ -1,10 +1,21 @@
 # GLM-4-9B-Chat WebDemo 部署
 
 ## 环境准备
-在autodl平台中租一个4090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1
-接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](images/image03-1.png)
+本文基础环境如下：
+
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
+
 pip换源和安装依赖包
+
 ```bash
 # 升级pip
 python -m pip install --upgrade pip
@@ -25,18 +36,20 @@ pip install tiktoken
 ## 模型下载
 使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，下载模型大概需要 2 分钟。
+新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python download.py 执行下载，下载模型大概需要 2 分钟。
 
 ```python
-mport torch
+import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
 model_dir = snapshot_download('ZhipuAI/glm-4-9b-chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
 ## 代码准备
 
-在`/root/autodl-tmp`路径下新建 `ChatBot.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
+新建 `ChatBot.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。
 
 ```python
 # 导入所需的库
@@ -101,6 +114,7 @@ if prompt := st.chat_input():
     # print(st.session_state)
 ```
 
+> 注意：记得修改 `model_name_or_path` 为你的模型下载路径哦~
 
 ## 运行 demo
 

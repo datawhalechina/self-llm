@@ -2,6 +2,19 @@
 
 ## 环境准备
 
+本文基础环境如下：
+
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
+
 在 `01-ChatGLM4-9B-chat FastApi 部署调用` 的 `环境准备`和`模型下载`基础上，我们还需要安装 `langchain` 包。如果不需要使用fastapi相关功能，则可以不安装 `fastapi、uvicorn、requests`。
 
 ```bash

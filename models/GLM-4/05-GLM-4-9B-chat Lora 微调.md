@@ -6,10 +6,18 @@
 
 ## 环境准备
 
-在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 `PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1`。
-接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
+本文基础环境如下：
 
-![开启机器配置选择](images/image-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
 ## 环境配置
 
@@ -42,7 +50,7 @@ MAX_JOBS=8 pip install flash-attn --no-build-isolation
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载。
+新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python model_download.py` 执行下载。
 
 ```python
 import torch
@@ -51,6 +59,8 @@ import os
 
 model_dir = snapshot_download('ZhipuAI/glm-4-9b-chat', cache_dir='/root/autodl-tmp/glm-4-9b-chat', revision='master')
 ```
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 ## 指令集构建
 
@@ -123,6 +133,8 @@ tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/glm-4-9b-chat/ZhipuA
 
 model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/glm-4-9b-chat/ZhipuAI/glm-4-9b-chat', device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True)
 ```
+
+> 注意：记得修改路径为你的模型下载路径哦~
 
 ## 定义 LoraConfig
 
@@ -228,3 +240,5 @@ with torch.no_grad():
     outputs = outputs[:, inputs['input_ids'].shape[1]:]
     print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
+
+> 注意：记得修改 `mode_path` 为你的模型下载路径哦~
