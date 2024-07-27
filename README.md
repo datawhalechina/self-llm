@@ -55,6 +55,12 @@
 
 ### 已支持模型
 
+- [Llama3_1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
+  - [x] [Llama3_1-8B-Instruct FastApi 部署调用](./models/Llama3_1/01-Llama3_1-8B-Instruct%20FastApi%20部署调用.md) @不要葱姜蒜
+  - [x] [Llama3_1-8B-Instruct langchain 接入](./models/Llama3_1/02-Llama3_1-8B-Instruct%20langchain接入.md) @张晋
+  - [x] [Llama3_1-8B-Instruct WebDemo 部署](./models/Llama3_1/03-Llama3_1-8B-Instruct%20WebDemo部署.md) @张晋
+  - [x] [Llama3_1-8B-Instruct Lora 微调](./models/Llama3_1/04-Llama3_1-8B--Instruct%20Lora%20微调.md) @不要葱姜蒜
+
 - [Gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)
   - [x] [Gemma-2-9b-it FastApi 部署调用](./models/Gemma2/01-Gemma-2-9b-it%20FastApi%20部署调用.md) @不要葱姜蒜
   - [x] [Gemma-2-9b-it langchain 接入](./models/Gemma2/02-Gemma-2-9b-it%20langchain%20接入.md) @不要葱姜蒜
@@ -175,6 +181,7 @@
   - [x] [MiniCPM-2B-chat langchain 接入](./models/MiniCPM/MiniCPM-2B-chat%20langchain接入.md) @不要葱姜蒜 
   - [x] [MiniCPM-2B-chat webdemo 部署](./models/MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
   - [x] [MiniCPM-2B-chat Lora && Full 微调](./models/MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
+  - [x] 官方友情链接：[面壁小钢炮MiniCPM教程](https://modelbest.feishu.cn/wiki/D2tFw8Pcsi5CIzkaHNacLK64npg) @OpenBMB 
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./models/Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @陈思州
@@ -275,6 +282,7 @@
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+- [张晋](https://github.com/Jin-Zhang-Yaoguang) （内容创作者-Datawhale成员）
 
 > 注：排名根据贡献程度排序
 

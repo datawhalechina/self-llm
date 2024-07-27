@@ -2,13 +2,20 @@
 
 ## 环境准备
 
-在 [AutoDL](https://www.autodl.com/) 平台中租一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 `PyTorch`-->`2.1.0`-->`3.10(ubuntu22.04)`-->`12.1`。
+本文基础环境如下：
 
-![](images/image01-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-接下来打开刚刚租用服务器的 `JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行 `demo`。
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-pip 换源和安装依赖包。
+首先pip 换源加速下载和安装依赖包。
 
 ```bash
 # 升级pip
@@ -33,7 +40,7 @@ pip install tiktoken==0.7.0
 
 使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
-在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载，模型大小为 18 GB，下载模型大概需要 10~20 分钟。
+新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python download.py` 执行下载，模型大小为 18 GB，下载模型大概需要 10~20 分钟。
 
 ```python
 import torch
@@ -42,13 +49,13 @@ import os
 model_dir = snapshot_download('ZhipuAI/glm-4-9b-chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-终端出现下图结果表示下载成功。
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 ![](images/image01-2.png)
 
 ## 代码准备
 
-在 `/root/autodl-tmp` 路径下新建 `api.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。
+新建 `api.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。
 
 ```python
 from fastapi import FastAPI, Request
@@ -112,9 +119,10 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/ZhipuAI/glm-4-9b-chat", trust_remote_code=True)
+    model_name_or_path = '/root/autodl-tmp/ZhipuAI/glm-4-9b-chat'
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(
-        "/root/autodl-tmp/ZhipuAI/glm-4-9b-chat",
+        model_name_or_path,
         torch_dtype=torch.bfloat16,
         trust_remote_code=True,
         device_map="auto",
@@ -125,12 +133,13 @@ if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
 ```
 
+> 注意：记得修改 `model_name_or_path` 为你的模型下载路径哦~
+
 ## Api 部署
 
 在终端输入以下命令启动 `api` 服务。
 
 ```shell
-cd /root/autodl-tmp
 python api.py
 ```
 
