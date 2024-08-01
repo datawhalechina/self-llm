@@ -123,7 +123,17 @@ if prompt := st.chat_input():
 streamlit run chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-运行成功后，在本地浏览器打开http://127.0.0.1:6006/ 即可查看部署的WebDemo，如下所示。
+点击自定义服务
+
+![03-3.png](./images/03-3.png)
+
+![03-4.png](./images/03-4.png)
+
+在本地终端中建立 `ssh` 连接与输入密码
+
+![03-5.png](./images/03-5.png)
+
+在本地浏览器中打开链接 http://localhost:6006/ ，即可查看部署的 `WebDemo` 聊天界面。运行效果如下：
 
 ![alt text](./images/03-2.png)
 
