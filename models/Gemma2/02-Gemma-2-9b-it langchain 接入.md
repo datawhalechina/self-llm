@@ -101,7 +101,7 @@ class Gemma2_LLM(LLM):
 
 ```python
 from LLM import Gemma2_LLM
-llm = Yuan2_LLM('/root/autodl-fs/YuanLLM/Yuan2-2B-Mars-hf')
+llm = Gemma2_LLM('/root/autodl-tmp/LLM-Research/gemma-2-9b-it')
 print(llm("你是谁"))
 ```
 
