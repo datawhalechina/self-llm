@@ -55,6 +55,12 @@
 
 ### 已支持模型
 
+- [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
+  - [ ] OpenELM-3B-Instruct FastApi 部署调用
+  - [ ] OpenELM-3B-Instruct langchain 接入
+  - [ ] OpenELM-3B-Instruct WebDemo 部署
+  - [ ] OpenELM-3B-Instruct Lora 微调
+
 - [Llama3_1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
   - [x] [Llama3_1-8B-Instruct FastApi 部署调用](./models/Llama3_1/01-Llama3_1-8B-Instruct%20FastApi%20部署调用.md) @不要葱姜蒜
   - [x] [Llama3_1-8B-Instruct langchain 接入](./models/Llama3_1/02-Llama3_1-8B-Instruct%20langchain接入.md) @张晋
