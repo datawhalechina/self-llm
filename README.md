@@ -56,10 +56,8 @@
 ### 已支持模型
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
-  - [ ] OpenELM-3B-Instruct FastApi 部署调用
-  - [ ] OpenELM-3B-Instruct langchain 接入
-  - [ ] OpenELM-3B-Instruct WebDemo 部署
-  - [ ] OpenELM-3B-Instruct Lora 微调
+  - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
+  - [x] [OpenELM-3B-Instruct Lora 微调](./models/OpenELM/02-OpenELM-3B-Instruct%20Lora微调.md) @王泽宇
 
 - [Llama3_1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
   - [x] [Llama3_1-8B-Instruct FastApi 部署调用](./models/Llama3_1/01-Llama3_1-8B-Instruct%20FastApi%20部署调用.md) @不要葱姜蒜
@@ -259,27 +257,29 @@
 ### 核心贡献者
 
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）
-- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
-- [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
+- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
-- [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
+- [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
+- [王泽宇](https://github.com/moyitech)（内容创作者-鲸英助教）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
 - [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
+- [张晋](https://github.com/Jin-Zhang-Yaoguang)（内容创作者-Datawhale成员）
 - [小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
@@ -288,7 +288,6 @@
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
-- [张晋](https://github.com/Jin-Zhang-Yaoguang) （内容创作者-Datawhale成员）
 
 > 注：排名根据贡献程度排序
 
