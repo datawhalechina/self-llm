@@ -127,7 +127,7 @@ python /root/api.py
 ```  
 
 加载完毕后出现如下信息说明成功。
-![加载模型](images/01-4.png)
+![加载模型](images/01-1.png)
 
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
 
@@ -136,7 +136,7 @@ curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "Once upon a time there was"}'
 ```  
-![模型调用](images/01-5.png)
+![模型调用](images/01-2.png)
 
 也可以使用 python 中的 requests 库进行调用，如下所示：
 
