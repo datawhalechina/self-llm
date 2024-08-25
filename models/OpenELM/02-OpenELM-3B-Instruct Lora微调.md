@@ -6,21 +6,21 @@
 这个教程会在同目录下给大家提供一个 [nodebook](./02-OpenELM-3B-Instruct%20Lora微调.ipynb) 文件，来让大家更好的学习。
 
 
-## 环境配置
+## 环境准备
 
-在 Autodl 平台中租赁一个 RTX 3090/24G 显存的显卡机器。如下图所示，镜像选择 PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1（11.3 版本以上的都可以）。
+本文基础环境如下：
 
-![03-0](images/01-0.png)
+```
+----------------
+ubuntu 22.04
+python 3.10
+cuda 12.1
+pytorch 2.1.0
+----------------
+```
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-![03-1](images/01-1.png)
-
-接下来，我们打开刚刚租用服务器的 JupyterLab，如下图所示，然后打开其中的终端，开始环境配置、模型下载和运行演示。
-
-![03-2](images/01-2.png)
-
-![03-3](images/01-3.png)
-
-pip换源加速下载并安装依赖包
+首先`pip`换源加速下载并安装依赖包
 
 ```bash
 python -m pip install --upgrade pip
@@ -31,7 +31,14 @@ pip install modelscope==1.16.1
 pip install transformers==4.42.4
 pip install datasets==2.20.0
 pip install peft==0.11.1
+pip install fastapi==0.111.1
+pip install uvicorn==0.30.3
+pip install SentencePiece==0.2.0
+pip install accelerate==0.33.0
 ```
+
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了OpenELM的环境镜像，点击下方链接并直接创建Autodl实例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/OpenELM-3B-Instruct***
 
 ## 模型下载  
 
@@ -191,7 +198,6 @@ lora_path = '/root/autodl-tmp/output/openelm_3B_lora/checkpoint-1200' # 这里�
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/Llama-2-7b-hf', trust_remote_code=True)
-# tokenizer.pad_token = tokenizer.eos_token
 # 加载模型
 model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
 

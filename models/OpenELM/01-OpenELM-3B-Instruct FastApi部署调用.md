@@ -1,21 +1,22 @@
 # Qwen2-7B-Instruct FastApi 部署调用
 
-## 环境准备  
+## 环境准备
 
-在 Autodl 平台中租赁一个 RTX 3090/24G 显存的显卡机器。如下图所示，镜像选择 PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1。
+本文基础环境如下：
 
-![02-0](images/01-0.png)
+```
+----------------
+ubuntu 22.04
+python 3.10
+cuda 12.1
+pytorch 2.1.0
+----------------
+```
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-![02-1](images/01-1.png)
+首先`pip`换源加速下载并安装依赖包
 
-接下来，我们打开刚刚租用服务器的 JupyterLab，如下图所示，然后打开其中的终端，开始环境配置、模型下载和运行演示。  
-![02-2](images/01-2.png)
-![02-3](images/01-3.png)
-
-
-pip 换源加速下载并安装依赖包
-
-```shell
+```bash
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -27,6 +28,11 @@ pip install uvicorn==0.30.3
 pip install SentencePiece==0.2.0
 pip install accelerate==0.33.0
 ```
+
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了OpenELM的环境镜像，点击下方链接并直接创建Autodl实例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/OpenELM-3B-Instruct***
+
+
 
 ## 模型下载  
 
