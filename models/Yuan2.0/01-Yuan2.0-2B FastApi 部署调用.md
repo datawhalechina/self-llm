@@ -174,4 +174,4 @@ if __name__ == '__main__':
     print(get_completion('你好'))
 ```
 
-![模型调用](images/01-6.png)
+![模型调用](images/01-7.png)
