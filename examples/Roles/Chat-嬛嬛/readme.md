@@ -8,6 +8,10 @@
 
 Chat-甄嬛，实现了以《甄嬛传》为切入点，打造一套基于小说、剧本的**个性化 AI** 微调大模型完整流程，通过提供任一小说、剧本，指定人物角色，运行本项目完整流程，让每一位用户都基于心仪的小说、剧本打造一个属于自己的、契合角色人设、具备高度智能的个性化 AI。
 
+> *Chat-嬛嬛模型累计下载量 15.6k+，Modelscope 地址：*[*Link*](https://www.modelscope.cn/models/kmno4zx/huanhuan-chat-internlm2)   
+> *Chat-嬛嬛累计获得 500 star，huahuan-chat 项目地址：*[*Link*](https://github.com/KMnO4-zx/huanhuan-chat.git)，xlab-huanhuan-chat 项目地址：[*Link*](https://github.com/KMnO4-zx/xlab-huanhuan.git)  
+
+
 ***OK，那接下来我将会带领大家亲自动手，一步步实现 Chat-甄嬛 的训练过程，让我们一起来体验一下吧~***
 
 ## Step 1: 环境准备
@@ -123,7 +127,9 @@ pip install datasets==2.20.0
 
 ***1. 从原始数据中提取出角色和对话 &emsp;2. 筛选出我们关注的角色的对话 &emsp;3. 将对话转换成我们需要的格式***
 
-## Step 3: 训练脚本
+> *这一步也可以增加数据增强的环节，比如利用两到三条数据作为 example 丢给LLM，让其生成风格类似的数据。再或者也可以找一部分日常对话的数据集，使用 RAG 生成一些固定角色风格的对话数据。*
+
+## Step 3: 模型训练
 
 那这一步，大家可能再熟悉不过了。在self-llm的每一个模型中，都会有一个 Lora 微调模块，我们只需要将数据处理成我们需要的格式，然后再调用我们的训练脚本即可。
 
@@ -143,3 +149,75 @@ model_dir = snapshot_download('LLM-Research/Meta-Llama-3.1-8B-Instruct', cache_d
 
 > *当然也可以使用 `self-llm` 中的 `lora` 微调教程。教程地址：[Link](https://github.com/datawhalechina/self-llm/blob/master/models/LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20%E5%BE%AE%E8%B0%83.md)*
 
+在命令行运行以下指令：
+    
+```shell
+python train.py
+```
+
+> *注意：记得修改 `train.py` 中的数据集路径和模型路径哦~*
+
+训练大概会需要 *20 ~ 30* 分钟的时间，训练完成之后会在`output`目录下生成`lora`微调模型。可以使用以下代码进行测试：
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+from peft import PeftModel
+
+mode_path = './LLM-Research/Meta-Llama-3___1-8B-Instruct'
+lora_path = './output/llama3_1_instruct_lora/checkpoint-699' # 这里改称你的 lora 输出对应 checkpoint 地址
+
+# 加载tokenizer
+tokenizer = AutoTokenizer.from_pretrained(mode_path, trust_remote_code=True)
+
+# 加载模型
+model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
+
+# 加载lora权重
+model = PeftModel.from_pretrained(model, model_id=lora_path)
+
+prompt = "嬛嬛你怎么了，朕替你打抱不平！"
+
+messages = [
+        {"role": "system", "content": "假设你是皇帝身边的女人--甄嬛。"},
+        {"role": "user", "content": prompt}
+]
+
+input_ids = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+# print(input_ids)
+
+model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
+generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=512)
+
+generated_ids = [
+    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+]
+response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+print('皇上：', prompt)
+print('嬛嬛：',response)
+```
+
+```
+皇上： 嬛嬛你怎么了，朕替你打抱不平！
+嬛嬛： 皇上，臣妾不是故意的。
+```
+
+接下来，我们就可以使用这个嬛嬛模型进行对话了~   
+有兴趣的同学可以尝试使用 self-llm 中的其他模型进行微调，检验你的学习成果！
+
+## 写在最后
+
+Chat-嬛嬛是在去年LLM刚火起来的时候，我们觉得如果不做点什么的话，可能会错过很多有趣的事情。于是就和几个小伙伴一起，花了很多时间，做了这个项目。在这个项目中，我们学到了很多，也遇到了很多问题，但是我们都一一解决了。并且Chat-嬛嬛也为带来了很多奖项，也让我们的项目得到了很多人的关注。所以，我觉得这个项目是非常有意义的，也是非常有趣的。
+
+- *2023 讯飞星火杯人认知大模型场景创新赛 Top50*
+- *2024 书生·浦语大模型挑战赛（春季赛）创意应用奖 Top12*
+
+### Chat-嬛嬛贡献者
+
+- [宋志学](https://github.com/KMnO4-zx)（Datawhale成员-中国矿业大学(北京)）
+- [邹雨横](https://github.com/logan-zou)（Datawhale成员-对外经济贸易大学）
+- [王熠明](https://github.com/Bald0Wang)（Datawhale成员-宁夏大学）
+- [邓宇文](https://github.com/GKDGKD)（Datawhale成员-广州大学）
+- [杜森](https://github.com/coderdeepstudy)（Datawhale成员-南阳理工学院）
+- [肖鸿儒](https://github.com/Hongru0306)（Datawhale成员-同济大学）
