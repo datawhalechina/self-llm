@@ -214,7 +214,7 @@ print('嬛嬛：',response)
 ### Chat-嬛嬛贡献者
 
 - [宋志学](https://github.com/KMnO4-zx)（Datawhale成员-中国矿业大学(北京)）
-- [邹雨横](https://github.com/logan-zou)（Datawhale成员-对外经济贸易大学）
+- [邹雨衡](https://github.com/logan-zou)（Datawhale成员-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（Datawhale成员-宁夏大学）
 - [邓宇文](https://github.com/GKDGKD)（Datawhale成员-广州大学）
 - [杜森](https://github.com/coderdeepstudy)（Datawhale成员-南阳理工学院）
