@@ -1,42 +1,66 @@
-# Qwen1.5-4B-Chat WebDemo 部署
+# Qwen1.5-7B-Chat WebDemo 部署
 
 ## Qwen1.5 介绍
 
 Qwen1.5 是 Qwen2 的测试版，Qwen1.5 是基于 transformer 的 decoder-only 语言模型，已在大量数据上进行了预训练。与之前发布的 Qwen 相比，Qwen1.5 的改进包括 6 种模型大小，包括 0.5B、1.8B、4B、7B、14B 和 72B；Chat模型在人类偏好方面的性能显著提高；基础模型和聊天模型均支持多种语言；所有大小的模型均稳定支持 32K 上下文长度，无需 trust_remote_code。
 
+
+
 ## 环境准备
-在autodl平台中租一个3090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3版本以上的都可以）
-接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](images/Qwen2-Web1.png)
-pip换源和安装依赖包
+本文基础环境如下：
+
 ```
-# 升级pip
-python -m pip install --upgrade pip
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 PyTorch(cuda) 环境，如未安装请自行安装。
+
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
+
+```bash
+pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
-pip install "transformers>=4.37.0"
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
+pip install modelscope==1.16.1
+pip install langchain==0.2.3
+pip install streamlit==1.37.0
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
 
+
+
 ## 模型下载
-使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，下载模型大概需要 2 分钟。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
-```
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-from modelscope import GenerationConfig
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
+
+```python
+# model_download.py
+from modelscope import snapshot_download
+
 model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
+
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
+
 
 ## 代码准备
 
@@ -106,6 +130,7 @@ if prompt := st.chat_input():
 ```
 
 
+
 ## 运行 demo
 
 在终端中运行以下命令，启动streamlit服务，并按照 `autodl` 的指示将端口映射到本地，然后在浏览器中打开链接 http://localhost:6006/ ，即可看到聊天界面。
@@ -114,6 +139,6 @@ if prompt := st.chat_input():
 streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-如下所示：
+效果如下所示：
 
 ![Alt text](images/Qwen2-Web2.png)

@@ -2,21 +2,20 @@
 
 ## **环境准备**
 
-在 `AutoDL` 平台中租赁两个 3090 等 24G*2 显存大小的容器实例，镜像选择如下 `PyTorch`→`2.1.0`→`3.10(ubuntu22.04)`→`12.1`
+本文基础环境如下：
 
-![fig1-1](images/fig1-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-接下来打开本地设备终端使用 `ssh` 的方式访问，在终端中依次复制登录指令和密码完成登录
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-![fig1-2](images/fig1-2.png)
-
-`ssh` 登录成功后的界面如图所示👇
-
-![fig1-3](images/fig1-3.png)
-
-或者也可以直接打开 `AutoDL` 网页端的快捷工具中选择 `JupyterLab` 并在其中点击终端打开（这种方式不需要验证🫠）
-
-![fig1-4](images/fig1-4.png)接下来开始环境配置、模型下载和运行演示 ~
+接下来开始环境配置、模型下载和运行演示 ~
 
 `pip` 换源加速下载并安装依赖包
 
@@ -26,18 +25,10 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
+pip install modelscope==1.16.1
 pip install langchain==0.2.3
-pip install transformers==4.39.2
-pip install accelerate==0.27.0
-pip install tiktoken==0.7.0
-pip install transformers_stream_generator==0.0.4
-pip install peft==0.10.0
-pip install deepspeed==0.14.3
-pip install huggingface_hub==0.23.4
-pip install sentencepiece==0.1.99
-pip install flash-attn==2.5.9.post1
-pip install einops scipy 
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了DeepSeek-Coder-V2-Lite-Instruct的环境镜像，点击下方链接并直接创建Autodl示例即可。

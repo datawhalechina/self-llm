@@ -2,13 +2,22 @@
 
 ## 环境准备
 
-在 [AutoDL](https://www.autodl.com/) 平台中租一个 2* 3090 等 48G 显存的显卡机器，如下图所示镜像选择 `PyTorch`-->`2.1.0`-->`3.10(ubuntu22.04)`-->`12.1`。
+本文基础环境如下：
 
-![03-1.png](images/image03-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-接下来打开刚刚租用服务器的 `JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行 `demo`。
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-pip 换源和安装依赖包。
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
 
 ```bash
 # 更换 pypi 源加速库的安装
@@ -16,15 +25,11 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 # 升级pip
 python -m pip install --upgrade pip
 
-pip install modelscope==1.9.5
-pip install transformers==4.39.2
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.27.0
-pip install transformers_stream_generator==0.0.4
-pip install tiktoken==0.7.0
-pip install huggingface_hub==0.23.4
-pip install flash-attn==2.5.9.post1
+pip install modelscope==1.16.1
+pip install langchain==0.2.3
+pip install streamlit==1.37.0
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了DeepSeek-Coder-V2-Lite-Instruct的环境镜像，点击下方链接并直接创建Autodl示例即可。

@@ -3,43 +3,41 @@
 本节我们简要介绍如何基于 transformers、peft 等框架，对 DeepSeek-Coder-V2-Lite-Instruct 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 
-这个教程会在同目录下给大家提供一个 [nodebook](./04-DeepSeek-Coder-V2-Lite-Instruct%20Lora%20微调.ipynb) 文件，来让大家更好的学习。
+这个教程会在同目录下给大家提供一个 [notebook](./04-DeepSeek-Coder-V2-Lite-Instruct%20Lora%20微调.ipynb) 文件，来让大家更好的学习。
 
 > **注意**：微调 DeepSeek-Coder-V2-Lite-Instruct 模型需要 4×3090 显卡。
 
-## 模型下载  
 
-使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
-
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
-
-```python
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-import os
-model_dir = snapshot_download('deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct', cache_dir='/root/autodl-tmp', revision='master')
-```  
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
+本文基础环境如下：
+
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
+
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
 
 ```bash
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
-pip install "transformers>=4.41.0"
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.27
-pip install transformers_stream_generator==0.0.4
-pip install datasets==2.18.0
-pip install peft==0.10.0
-
-# 可选
-MAX_JOBS=8 pip install flash-attn --no-build-isolation 
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
+pip install peft==0.11.1
+pip install datasets==2.20.0
 ```
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了DeepSeek-Coder-V2-Lite-Instruct的环境镜像，点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Deepseek-coder-v2***
@@ -48,6 +46,30 @@ MAX_JOBS=8 pip install flash-attn --no-build-isolation
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+
+
+
+## 模型下载  
+
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
+
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
+
+```python
+# model_download.py
+import torch
+from modelscope import snapshot_download, AutoModel, AutoTokenizer
+
+model_dir = snapshot_download('deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct', cache_dir='/root/autodl-tmp', revision='master')
+```
+
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
+
 
 ## 指令集构建
 
@@ -78,7 +100,7 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ## 数据格式化
 
-`Lora` 训练的数据是需要经过格式化、编码之后再输入给模型进行训练的，如果是熟悉 `Pytorch` 模型训练流程的同学会知道，我们一般需要将输入文本编码为 input_ids，将输出文本编码为 `labels`，编码之后的结果都是多维的向量。我们首先定义一个预处理函数，这个函数用于对每一个样本，编码其输入、输出文本并返回一个编码后的字典：
+`Lora` 训练的数据是需要经过格式化、编码之后再输入给模型进行训练的，如果是熟悉 `Pytorch` 模型训练流程的同学会知道，我们一般需要将输入文本编码为 `input_ids`，将输出文本编码为 `labels`，编码之后的结果都是多维的向量。我们首先定义一个预处理函数，这个函数用于对每一个样本，编码其输入、输出文本并返回一个编码后的字典：
 
 ```python
 def process_func(example):
@@ -133,8 +155,8 @@ model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True,
 `LoraConfig`这个类中可以设置很多参数，但主要的参数没多少，简单讲一讲，感兴趣的同学可以直接看源码。
 
 - `task_type`：模型类型
-- `target_modules`：需要训练的模型层的名字，主要就是`attention`部分的层，不同的模型对应的层的名字不同，可以传入数组，也可以字符串，也可以正则表达式。
-- `r`：`lora`的秩，具体可以看`Lora`原理
+- `target_modules`：需要训练的模型层的名字，主要就是 `attention` 部分的层，不同的模型对应的层的名字不同，可以传入数组，也可以字符串，也可以正则表达式。
+- `r`：`lora`的秩，具体可以看 `Lora` 原理
 - `lora_alpha`：`Lora alaph`，具体作用参见 `Lora` 原理 
 
 `Lora`的缩放是啥嘞？当然不是`r`（秩），这个缩放就是`lora_alpha/r`, 在这个`LoraConfig`中缩放就是4倍。

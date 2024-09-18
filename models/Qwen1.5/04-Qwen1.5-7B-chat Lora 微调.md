@@ -1,37 +1,48 @@
-# Qwen1.5-7B-chat Lora 微调
+# Qwen1.5-7B-Chat Lora 微调
 
 本节我们简要介绍如何基于 transformers、peft 等框架，对 Qwen1.5-7B-chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 
-这个教程会在同级目录下给大家提供一个 [nodebook](./Qwen1.5-7B-Chat%20Lora.ipynb) 文件，来让大家更好的学习。
+这个教程会在同级目录下给大家提供一个 [notebook](./Qwen1.5-7B-Chat%20Lora.ipynb) 文件，来让大家更好的学习。
+
+
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
+本文基础环境如下：
+
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 PyTorch(cuda) 环境，如未安装请自行安装。
+
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
 
 ```bash
-python -m pip install --upgrade pip
+pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
-pip install "transformers>=4.37.0"
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
-pip install datasets==2.18.0
-pip install peft==0.10.0
-
-MAX_JOBS=8 pip install flash-attn --no-build-isolation
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
+pip install peft==0.11.1
+pip install datasets==2.20.0
 ```
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
 
-
-> 注意：flash-attn 安装会比较慢，大概需要十几分钟。
-
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+
+
 
 ## 指令集构建
 
@@ -58,6 +69,7 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 ```
 
 我们所构造的全部指令数据集在根目录下。
+
 
 
 ## 数据格式化
@@ -95,6 +107,8 @@ You are a helpful assistant.<|im_end|>
 我是一个有用的助手。<|im_end|>
 ```
 
+
+
 ## 加载tokenizer和半精度模型
 
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
@@ -104,6 +118,8 @@ tokenizer = AutoTokenizer.from_pretrained('./qwen/Qwen1.5-7B-Chat/', use_fast=Fa
 
 model = AutoModelForCausalLM.from_pretrained('./qwen/Qwen1.5-7B-Chat/', device_map="auto",torch_dtype=torch.bfloat16)
 ```
+
+
 
 ## 定义LoraConfig
 
@@ -127,6 +143,8 @@ config = LoraConfig(
 )
 ```
 
+
+
 ## 自定义 TrainingArguments 参数
 
 `TrainingArguments`这个类的源码也介绍了每个参数的具体作用，当然大家可以来自行探索，这里就简单说几个常用的。
@@ -140,7 +158,7 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/DeepSeek",
+    output_dir="./output/Qwen1.5-7B-Chat",
     per_device_train_batch_size=4,
     gradient_accumulation_steps=4,
     logging_steps=10,
@@ -151,6 +169,8 @@ args = TrainingArguments(
     gradient_checkpointing=True
 )
 ```
+
+
 
 ## 使用 Trainer 训练
 
@@ -163,6 +183,8 @@ trainer = Trainer(
 )
 trainer.train()
 ```
+
+
 
 ## 加载 lora 权重推理
 

@@ -1,22 +1,42 @@
-# Qwen1.5-MoE-chat Transformers 部署调用
-## Qwen1.5-MoE-chat介绍
+# Qwen1.5-MoE-Chat Transformers 部署调用
+## Qwen1.5-MoE-Chat介绍
 Qwen1.5-MoE-chat仅使用2.7B激活参数，达到和目前最先进的7B模型如Mistral 7B和Qwen1.5-7B模型相当的能力。相比Qwen1.5-7B，Qwen1.5-MoE-A2.7B的训练成本降低了75%，推理速度则提升至1.74倍。
 
 相较于Mixtral-MoE模型，Qwen1.5-MoE在模型结构上有以下改进：使用了finegrained experts，利用已有的Qwen1.8B初始化模型，使用shared experts和routing experts等新的routing机制。
 
 完整介绍参照官方blog：[Qwen1.5-MoE:1/3的激活参数量达到7B模型的性能](https://qwenlm.github.io/zh/blog/qwen-moe/)
 
+
+
 ## 讲讲显存计算
+
 显存计算的考虑会随着模型类型不同，任务不同而变化
 
-这里的Transformers部署调用是推理任务，因而只需要考虑模型参数、KV Cache、中间结果和输入数据。这里的模型为MoE模型，考虑完整模型参数（14.3B）；使用了bf16加载，再考虑中间结果、输入数据和KV Cache等，大概是`2x1.2x14.3`的显存需求，所以我们后面会选择双卡共48G显存
+这里的Transformers部署调用是推理任务，因而只需要考虑模型参数、KV Cache、中间结果和输入数据。这里的模型为MoE模型，考虑完整模型参数（14.3B）；使用了bf16加载，再考虑中间结果、输入数据和KV Cache等，大概是 `2x1.2x14.3` 的显存需求，所以我们后面会选择双卡共48G显存
 
 更完整的显存计算参照这个blog：[【Transformer 基础系列】手推显存占用](https://zhuanlan.zhihu.com/p/648924115)
+
+
+
 ## 环境准备
-在autodl平台中租一个**双卡3090等24G（共计48G）显存**的机器，如下图所示镜像选择PyTorch-->2.1.0-->3.10(ubuntu22.04)-->12.1
-接下来打开刚刚租用服务器的JupyterLab， 图像 并且打开其中的终端开始环境配置、模型下载和运行演示。 
-![Alt text](images/image-1.png)
-pip换源和安装依赖包
+
+本文基础环境如下：
+
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 PyTorch(cuda) 环境，如未安装请自行安装。
+
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
+
 ```shell
 # 因为涉及到访问github因此最好打开autodl的学术镜像加速
 source /etc/network_turbo
@@ -31,16 +51,32 @@ pip install modelscope sentencepiece accelerate fastapi uvicorn requests streaml
 # 安装flash-attention
 pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.4.2/flash_attn-2.4.2+cu122torch2.1cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
 ```
+
+
 ## 模型下载
-使用ModelScope下载模型
+
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
+
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
+
 ```python
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-import os
+# model_download.py
+from modelscope import snapshot_download
+
 model_dir = snapshot_download('qwen/Qwen1.5-MoE-A2.7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
+
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
+
+
 ## 代码准备
-在/root/autodl-tmp路径下新建trains.py文件并在其中输入以下内容
+
+在/root/autodl-tmp路径下新建 `trains.py` 文件并在其中输入以下内容
 ```python
 import torch  # 导入torch库，用于深度学习相关操作
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig  # 三个类分别用于加载分词器、加载因果语言模型和加载生成配置
