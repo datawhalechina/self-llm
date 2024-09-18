@@ -53,6 +53,11 @@
 
 &emsp;&emsp; 本项目拟围绕开源 LLM 应用全流程组织，包括环境配置及使用、部署应用、微调等，每个部分覆盖主流及特点开源 LLM：
 
+### Example 系列
+
+- [Chat-嬛嬛](./examples/Chat-嬛嬛/readme.md)： Chat-甄嬛是利用《甄嬛传》剧本中所有关于甄嬛的台词和语句，基于LLM进行LoRA微调得到的模仿甄嬛语气的聊天语言模型。
+
+
 ### 已支持模型
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
