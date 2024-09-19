@@ -1,17 +1,20 @@
-# Qwen2-7B-Instruct FastApi 部署调用
+# Qwen2.5-7B-Instruct FastApi 部署调用
 
 ## 环境准备  
 
-在 Autodl 平台中租赁一个 RTX 3090/24G 显存的显卡机器。如下图所示，镜像选择 PyTorch-->2.1.0-->3.10(ubuntu20.04)-->12.1（11.3 版本以上的都可以）。
+本文基础环境如下：
 
-![开启机器配置选择](images/01-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-
-接下来，我们打开刚刚租用服务器的 JupyterLab，如下图所示，然后打开其中的终端，开始环境配置、模型下载和运行演示。  
-![开启JupyterLab](images/01-2.png)
-<!-- ![开启终端](images/01-3.png) -->
-
-pip 换源加速下载并安装依赖包
+首先 `pip` 换源加速下载并安装依赖包
 
 ```shell
 # 升级pip
@@ -28,32 +31,30 @@ pip install streamlit==1.24.0
 pip install sentencepiece==0.1.99
 pip install accelerate==0.24.1
 pip install transformers_stream_generator==0.0.4
+```
 
-```  
-
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2***
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen2.5***
 
 
 ## 模型下载  
 
-使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
+新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
 
 ```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen2-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
-```  
+model_dir = snapshot_download('qwen/Qwen2.5-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
+```
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 ## 代码准备  
 
-在 /root/autodl-tmp 路径下新建 api.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件。
-AutoDL开放端口配置方法写在本项目中General-Setting目录，首次使用请参考该文档，配置方法如下图所示。
-![AutoDL开放端口配置](images/01-4.png)
-下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。  
+新建 `api.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。以下代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue 。  
 
 ```python
 from fastapi import FastAPI, Request
@@ -117,14 +118,16 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    model_name_or_path = '/root/autodl-tmp/qwen/Qwen2-7B-Instruct'
+    model_name_or_path = '/root/autodl-tmp/qwen/Qwen2.5-7B-Instruct'
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
 
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
-```  
+```
+
+> 注意：记得修改 `model_name_or_path` 为你的模型下载路径哦~
 
 ## Api 部署  
 
@@ -135,11 +138,11 @@ cd /root/autodl-tmp
 python api.py
 # or
 python /root/autodl-tmp/api.py
-```  
+```
 
 加载完毕后出现如下信息说明成功。
 
-![加载模型](images/01-5.png)
+![alt text](./images/01-1.png)
 
 默认部署在 6006 端口，通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
 
@@ -147,8 +150,8 @@ python /root/autodl-tmp/api.py
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好"}'
-```  
-![模型调用](images/01-6.png)
+```
+![alt text](./images/01-2.png)
 
 也可以使用 python 中的 requests 库进行调用，如下所示：
 
@@ -169,7 +172,7 @@ if __name__ == '__main__':
 得到的返回值如下所示：
 
 ```json
-{"response":"你好！很高兴能为你提供帮助。有什么问题我可以回答或者协助你完成吗？","status":200,"time":"2024-06-07 12:24:31"}
-```  
+{'response': '你好！很高兴为你提供帮助。你可以问我任何问题。', 'status': 200, 'time': '2024-09-19 10:13:08'}
+```
 
-![模型调用](images/01-7.png)
+![alt text](./images/01-3.png)
