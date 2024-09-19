@@ -60,6 +60,13 @@
 
 ### 已支持模型
 
+- [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
+  - [ ] Qwen2.5-7B-Instruct FastApi 部署调用
+  - [ ] Qwen2.5-7B-Instruct langchain 接入
+  - [ ] Qwen2.5-7B-Instruct vLLM 部署调用
+  - [ ] Qwen2.5-7B-Instruct WebDemo 部署
+  - [ ] Qwen2.5-7B-Instruct Lora 微调
+
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
   - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
   - [x] [OpenELM-3B-Instruct Lora 微调](./models/OpenELM/02-OpenELM-3B-Instruct%20Lora微调.md) @王泽宇
