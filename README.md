@@ -61,11 +61,11 @@
 ### 已支持模型
 
 - [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
-  - [ ] Qwen2.5-7B-Instruct FastApi 部署调用
-  - [ ] Qwen2.5-7B-Instruct langchain 接入
-  - [ ] Qwen2.5-7B-Instruct vLLM 部署调用
-  - [ ] Qwen2.5-7B-Instruct WebDemo 部署
-  - [ ] Qwen2.5-7B-Instruct Lora 微调
+  - [x] [Qwen2.5-7B-Instruct FastApi 部署调用](./models/Qwen2.5/01-Qwen2.5-7B-Instruct%20FastApi%20部署调用.md) @娄天奥
+  - [x] [Qwen2.5-7B-Instruct langchain 接入](./models/Qwen2.5/02-Qwen2.5-7B-Instruct%20Langchain%20接入.md) @娄天奥
+  - [x] [Qwen2.5-7B-Instruct vLLM 部署调用](./models/Qwen2.5/03-Qwen2.5-7B-Instruct%20vLLM%20部署调用.md) @姜舒凡
+  - [x] [Qwen2.5-7B-Instruct WebDemo 部署](./models/Qwen2.5/04-Qwen2_5-7B-Instruct%20WebDemo部署.md) @高立业
+  - [x] [Qwen2.5-7B-Instruct Lora 微调](./models/Qwen2.5/05-Qwen2.5-7B-Instruct%20Lora%20微调.md) @左春生
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
   - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
@@ -274,12 +274,13 @@
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
@@ -292,6 +293,8 @@
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
 - [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
 - [张晋](https://github.com/Jin-Zhang-Yaoguang)（内容创作者-Datawhale成员）
+- [娄天奥](https://github.com/lta155)（内容创作者-中国科学院大学-鲸英助教）
+- [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
 - [小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
