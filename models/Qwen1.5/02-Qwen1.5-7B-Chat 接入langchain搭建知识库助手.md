@@ -61,9 +61,9 @@ model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tm
 
 ## 代码准备
 
-为便捷构建 LLM 应用，我们需要基于本地部署的 Qwen2-LM，自定义一个 LLM 类，将 Qwen2 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
+为便捷构建 LLM 应用，我们需要基于本地部署的 Qwen1.5-LM，自定义一个 LLM 类，将 Qwen1.5 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 
-基于本地部署的 Qwen2 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+基于本地部署的 Qwen1.5 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
 
 ```python
 from langchain.llms.base import LLM
@@ -72,8 +72,8 @@ from langchain.callbacks.manager import CallbackManagerForLLMRun
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, LlamaTokenizerFast
 import torch
 
-class Qwen2_LLM(LLM):
-    # 基于本地 Qwen2 自定义 LLM 类
+class Qwen1_5_LLM(LLM):
+    # 基于本地 Qwen1.5 自定义 LLM 类
     tokenizer: AutoTokenizer = None
     model: AutoModelForCausalLM = None
         
@@ -102,10 +102,10 @@ class Qwen2_LLM(LLM):
         return response
     @property
     def _llm_type(self) -> str:
-        return "Qwen2_LLM"
+        return "Qwen1_5_LLM"
 ```
 
-在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 Qwen2 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 generate 方法，从而实现对模型的调用并返回调用结果。
+在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 Qwen1.5 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 generate 方法，从而实现对模型的调用并返回调用结果。
 
 在整体项目中，我们将上述代码封装为 LLM.py，后续将直接从该文件中引入自定义的 LLM 类。
 
@@ -117,8 +117,8 @@ class Qwen2_LLM(LLM):
 然后就可以像使用任何其他的langchain大模型功能一样使用了。
 
 ```python
-from LLM import Qwen2_LLM
-llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-7B-Chat")
+from LLM import Qwen1_5_LLM
+llm = Qwen1_5_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-7B-Chat")
 llm("你是谁")
 ```
 
