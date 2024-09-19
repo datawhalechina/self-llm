@@ -22,15 +22,13 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install fastapi==0.104.1
-pip install uvicorn==0.24.0.post1
-pip install requests==2.25.1
-pip install modelscope==1.11.0
-pip install transformers==4.41.0
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
+pip install requests==2.31.0
+pip install fastapi==0.115.1
+pip install uvicorn==0.30.6
+pip install transformers==4.44.2
+pip install huggingface-hub==0.25.0
+pip install accelerate==0.34.2
+pip install modelscope==1.18.0
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。

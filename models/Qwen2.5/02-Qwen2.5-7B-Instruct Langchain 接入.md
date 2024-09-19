@@ -21,10 +21,11 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.11.0
-pip install langchain==0.2.3
-pip install "transformers>=4.41.2" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
-pip install -U huggingface_hub
+pip install transformers==4.44.2
+pip install huggingface-hub==0.25.0
+pip install accelerate==0.34.2
+pip install modelscope==1.18.0
+pip install langchain==0.3.0
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。
@@ -81,7 +82,7 @@ class Qwen2_5_LLM(LLM):
         messages = [{"role": "user", "content": prompt }]
         input_ids = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         model_inputs = self.tokenizer([input_ids], return_tensors="pt").to('cuda')
-        generated_ids = self.model.generate(model_inputs.input_ids,max_new_tokens=512)
+        generated_ids = self.model.generate(model_inputs.input_ids, attention_mask=model_inputs['attention_mask'], max_new_tokens=512)
         generated_ids = [
             output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
         ]
