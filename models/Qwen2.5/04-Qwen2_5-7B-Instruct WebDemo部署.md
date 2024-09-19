@@ -124,28 +124,6 @@ if prompt := st.chat_input():
 streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-![04-1](./images/04-1.png)
-用户名，主机名的获取方式如图
-
-在本地启动 ssh 连接远程服务器（端口号，用户名，主机名，密码需自行获取）：
-
-![04-2](./images/04-2.png)
-
-```shell
-# ssh 命令格式如下
-ssh -p 46890 root@connect.westc.gpuhub.com -CNg -L 6006:127.0.0.1:6006
-```
-
-命令解释：
-
-- `ssh`: 连接远程服务器
-- `-p 46890`: 指定 ssh 端口 46890
-- `root@connect.westc.gpuhub.com`: 用户名和主机名
-- `-C`: 启用压缩
-- `-N`: 仅端口转发
-- `-g`: 允许远程连接
-- `-L 6006:127.0.0.1:6006`: 本地 6006 转发到远程 6006
-
 在本地浏览器中打开链接 http://localhost:6006/ ，即可查看部署的 `WebDemo` 聊天界面。运行效果如下：
 
-![04-3](./images/04-3.png)
+![04-1](./images/04-1.png)
