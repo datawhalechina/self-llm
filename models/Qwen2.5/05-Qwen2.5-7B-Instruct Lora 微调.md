@@ -24,7 +24,7 @@ pip install peft==0.11.1
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen2.5 的环境镜像，该镜像适用于该仓库除 Qwen-GPTQ 和 vllm 外的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-self-llm***
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
