@@ -291,6 +291,6 @@ streamlit run /root/autodl-tmp/app_qwen.py --server.address 127.0.0.1 --server.p
 
 我们可以观察到经过4步推理和思考，最终的推理结果是**正确的**，且总推理耗时2还是很长的，这也符合了 o1 模型的基本特征，用推理时间的增加换取更高的推理准确率。
 
-**说明：**有读者可能会认为这个问题根本没有难度，但是实际上对于现阶段的大语言模型来说，很少有能够回答正确的，比如我们可以回到 [04-Qwen2_5-7B-Instruct WebDemo 部署](https://github.com/datawhalechina/self-llm/blob/master/models/Qwen2.5/04-Qwen2_5-7B-Instruct WebDemo部署.md) 来尝试一下提问相同的问题，最后得到的结果显然是**错误的**。
+**说明：**有读者可能会认为这个问题根本没有难度，但是实际上对于现阶段的大语言模型来说，很少有能够回答正确的，比如我们可以回到 [04-Qwen2.5-7B-Instruct WebDemo 部署](./04-Qwen2_5-7B-Instruct WebDemo部署.md) 来尝试一下提问相同的问题，最后得到的结果显然是**错误的**。
 
 ![06-6](./images/06-6.png) 
