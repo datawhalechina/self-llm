@@ -66,7 +66,7 @@
   - [x] [Qwen2.5-7B-Instruct vLLM 部署调用](./models/Qwen2.5/03-Qwen2.5-7B-Instruct%20vLLM%20部署调用.md) @姜舒凡
   - [x] [Qwen2.5-7B-Instruct WebDemo 部署](./models/Qwen2.5/04-Qwen2_5-7B-Instruct%20WebDemo部署.md) @高立业
   - [x] [Qwen2.5-7B-Instruct Lora 微调](./models/Qwen2.5/05-Qwen2.5-7B-Instruct%20Lora%20微调.md) @左春生
-  - [x] [06-Qwen2.5-7B-Instruct o1-like 推理链实现](./models/Qwen2.5/06-Qwen2.5-7B-Instruct%20o1-like%20推理链实现.md) @姜舒凡
+  - [x] [Qwen2.5-7B-Instruct o1-like 推理链实现](./models/Qwen2.5/06-Qwen2.5-7B-Instruct%20o1-like%20推理链实现.md) @姜舒凡
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
   - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
