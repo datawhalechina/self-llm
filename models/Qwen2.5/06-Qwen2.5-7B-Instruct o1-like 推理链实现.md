@@ -271,7 +271,7 @@ python -m vllm.entrypoints.openai.api_server --model /root/autodl-tmp/qwen/Qwen2
 
 加载完毕后出现如下信息说明服务成功启动
 
-![03-3](C:/Users/YUI/PycharmProjects/self-llm/models/Qwen2.5/images/03-3.png)
+![03-3](./images/03-3.png)
 
 
 
