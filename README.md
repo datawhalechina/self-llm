@@ -66,6 +66,7 @@
   - [x] [Qwen2.5-7B-Instruct vLLM 部署调用](./models/Qwen2.5/03-Qwen2.5-7B-Instruct%20vLLM%20部署调用.md) @姜舒凡
   - [x] [Qwen2.5-7B-Instruct WebDemo 部署](./models/Qwen2.5/04-Qwen2_5-7B-Instruct%20WebDemo部署.md) @高立业
   - [x] [Qwen2.5-7B-Instruct Lora 微调](./models/Qwen2.5/05-Qwen2.5-7B-Instruct%20Lora%20微调.md) @左春生
+  - [x] [06-Qwen2.5-7B-Instruct o1-like 推理链实现](./models/Qwen2.5/06-Qwen2.5-7B-Instruct%20o1-like%20推理链实现.md) @姜舒凡
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
   - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
@@ -272,9 +273,9 @@
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
