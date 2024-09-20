@@ -162,10 +162,8 @@ Prompt: '可以给我将一个有趣的童话故事吗？', Generated text: ' �
 - `--served-model-name` 指定服务模型的名称。
 - `--max-model-len` 指定模型的最大长度。
 
-这里指定 `--max-model-len=2048` 是因为 `Qwen2.5-7B-Instruct` 模型的最大长度为 `128K`，防止 `vLLM` 初始化 `KV` 缓存时消耗资源过大。
-
 ```bash
-python -m vllm.entrypoints.openai.api_server --model /root/autodl-tmp/qwen/Qwen2.5-7B-Instruct  --served-model-name Qwen2-7B-Instruct --max-model-len=2048
+python -m vllm.entrypoints.openai.api_server --model /root/autodl-tmp/qwen/Qwen2.5-7B-Instruct  --served-model-name Qwen2.5-7B-Instruct --max-model-len=2048
 ```
 
 加载完毕后出现如下信息说明服务成功启动
@@ -185,11 +183,11 @@ curl http://localhost:8000/v1/models
   "object": "list",
   "data": [
     {
-      "id": "Qwen2-7B-Instruct",
+      "id": "Qwen2.5-7B-Instruct",
       "object": "model",
       "created": 1726728585,
       "owned_by": "vllm",
-      "root": "Qwen2-7B-Instruct",
+      "root": "Qwen2.5-7B-Instruct",
       "parent": null,
       "max_model_len": 2048,
       "permission": [
@@ -214,14 +212,13 @@ curl http://localhost:8000/v1/models
 ```
 
 - 使用 `curl` 命令测试 `OpenAI Completions API` 
-- **注意：**这边有个很关键的点是虽然我们下载了 `Qwen2.5-7B-Instruct` ，但是从上面可以看到 `id` 依然是 `Qwen2-7B-Instruct`
 
 
 ```bash
 curl http://localhost:8000/v1/completions \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Qwen2-7B-Instruct",
+        "model": "Qwen2.5-7B-Instruct",
         "prompt": "你好",
         "max_tokens": 500,
         "temperature": 0
@@ -235,7 +232,7 @@ curl http://localhost:8000/v1/completions \
   "id": "cmpl-e98b85ad1b8942f6959993d644634b0a",
   "object": "text_completion",
   "created": 1726729800,
-  "model": "Qwen2-7B-Instruct",
+  "model": "Qwen2.5-7B-Instruct",
   "choices": [
     {
       "index": 0,
@@ -292,7 +289,7 @@ ChatCompletionMessage(content='你好！有什么我可以帮助你的吗？', r
 curl http://localhost:8000/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Qwen2-7B-Instruct",
+        "model": "Qwen2.5-7B-Instruct",
         "messages": [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": "你好"}
@@ -307,7 +304,7 @@ curl http://localhost:8000/v1/chat/completions \
   "id": "chat-78357219240d49248afa0f655f85d0fc",
   "object": "chat.completion",
   "created": 1726730139,
-  "model": "Qwen2-7B-Instruct",
+  "model": "Qwen2.5-7B-Instruct",
   "choices": [
     {
       "index": 0,
@@ -345,7 +342,7 @@ client = OpenAI(
 )
 
 chat_outputs = client.chat.completions.create(
-    model="Qwen2-7B-Instruct",
+    model="Qwen2.5-7B-Instruct",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Qwen2.5和Qwen2相比有进步和区别"},
@@ -361,7 +358,7 @@ python vllm_openai_chat_completions.py
 得到的返回值如下所示
 
 ```
-ChatCompletion(id='chat-0c17fb285541409ab6500a41b9312756', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Qwen2.5是基于Qwen2进行的迭代升级，相较于Qwen2，Qwen2.5在多个方面都有所提升和改进。以下是一些主要的区别和进步：\n\n1. **性能优化**：Qwen2.5在处理速度和响应时间上有所提升，能够更快速地理解和生成回答。\n\n2. **语言理解能力增强**：Qwen2.5对自然语言的理解能力进一步提升，能够更好地理解复杂的语言结构和语义，提供更准确的回答。\n\n3. **知识库更新**：Qwen2.5的知识库进行了更新和扩展，涵盖了更多的信息和最新的数据，使得回答更加准确和全面。\n\n4. **多模态处理能力增强**：Qwen2.5在处理图片、音频等多媒体信息方面的能力有所增强，能够更好地理解和生成基于多种输入形式的回答。\n\n5. **个性化和定制化**：Qwen2.5在个性化服务方面有所改进，能够更好地根据用户的需求提供定制化的回答和建议。\n\n6. **安全性增强**：Qwen2.5在安全性方面进行了加强，能够更好地保护用户的隐私和数据安全。\n\n7. **用户体验优化**：Qwen2.5在用户交互设计方面进行了优化，使得用户与AI的交流更加流畅和自然。\n\n这些改进和提升使得Qwen2.5在处理各种复杂任务和满足用户需求方面表现得更加出色，提供更高质量的服务。', refusal=None, role='assistant', function_call=None, tool_calls=[]), stop_reason=None)], created=1726730431, model='Qwen2-7B-Instruct', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=304, prompt_tokens=33, total_tokens=337, completion_tokens_details=None), prompt_logprobs=None)
+ChatCompletion(id='chat-0c17fb285541409ab6500a41b9312756', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Qwen2.5是基于Qwen2进行的迭代升级，相较于Qwen2，Qwen2.5在多个方面都有所提升和改进。以下是一些主要的区别和进步：\n\n1. **性能优化**：Qwen2.5在处理速度和响应时间上有所提升，能够更快速地理解和生成回答。\n\n2. **语言理解能力增强**：Qwen2.5对自然语言的理解能力进一步提升，能够更好地理解复杂的语言结构和语义，提供更准确的回答。\n\n3. **知识库更新**：Qwen2.5的知识库进行了更新和扩展，涵盖了更多的信息和最新的数据，使得回答更加准确和全面。\n\n4. **多模态处理能力增强**：Qwen2.5在处理图片、音频等多媒体信息方面的能力有所增强，能够更好地理解和生成基于多种输入形式的回答。\n\n5. **个性化和定制化**：Qwen2.5在个性化服务方面有所改进，能够更好地根据用户的需求提供定制化的回答和建议。\n\n6. **安全性增强**：Qwen2.5在安全性方面进行了加强，能够更好地保护用户的隐私和数据安全。\n\n7. **用户体验优化**：Qwen2.5在用户交互设计方面进行了优化，使得用户与AI的交流更加流畅和自然。\n\n这些改进和提升使得Qwen2.5在处理各种复杂任务和满足用户需求方面表现得更加出色，提供更高质量的服务。', refusal=None, role='assistant', function_call=None, tool_calls=[]), stop_reason=None)], created=1726730431, model='Qwen2.5-7B-Instruct', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=304, prompt_tokens=33, total_tokens=337, completion_tokens_details=None), prompt_logprobs=None)
 ```
 
 另外，在以上所有的在请求处理过程中， `API` 后端都会打印相对应的日志和统计信息😊
