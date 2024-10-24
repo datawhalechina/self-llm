@@ -68,6 +68,7 @@
   - [x] [Qwen2.5-7B-Instruct WebDemo 部署](./models/Qwen2.5/04-Qwen2_5-7B-Instruct%20WebDemo部署.md) @高立业
   - [x] [Qwen2.5-7B-Instruct Lora 微调](./models/Qwen2.5/05-Qwen2.5-7B-Instruct%20Lora%20微调.md) @左春生
   - [x] [Qwen2.5-7B-Instruct o1-like 推理链实现](./models/Qwen2.5/06-Qwen2.5-7B-Instruct%20o1-like%20推理链实现.md) @姜舒凡
+  - [x] [Qwen2.5-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5/07-Qwen2.5-7B-Instruct%20Lora%20微调%20SwanLab可视化记录版.md) @林泽毅
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
   - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
@@ -306,6 +307,7 @@
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 
 > 注：排名根据贡献程度排序
 
