@@ -69,7 +69,6 @@ pip install swanlab==0.3.23
   "input": "诈骗罪量刑标准是什么?",
   "output": "诈骗罪指的是以非法占有为目的，使用欺骗方法，骗取数额较大的公私财物的行为..."
 }
-...
 ```
 
 其中，`instruction` 是用户指令，告知模型其需要完成的任务；`input` 是用户输入，即模拟真实场景下用户的问题；`output` 是模型应该给出的输出，即模型的回答。
@@ -113,8 +112,6 @@ print(f"处理完成。输出文件：{output_file}")
 
 
 ## 🤖 模型下载与加载
-
-![07-2](./images/07-2.png)
 
 这里我们使用modelscope下载Qwen2.5-7B-Instruct模型，然后把它加载到Transformers中进行训练：
 
