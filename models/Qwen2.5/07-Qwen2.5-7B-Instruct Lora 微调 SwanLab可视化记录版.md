@@ -13,7 +13,7 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 - [准备数据集](#-准备数据集)
 - [模型下载与加载](#-模型下载与加载)
 - [集成SwanLab](#-集成SwanLab)
-- [开始微调（完整代码）](#-开始微调（完整代码）)
+- [开始微调（完整代码）](#-开始微调)
 - [训练结果演示](#-训练结果演示)
 - [补充](#补充)
 
@@ -154,7 +154,7 @@ trainer = Trainer(
 更多用法可参考[快速开始](https://docs.swanlab.cn/zh/guide_cloud/general/quick-start.html)、[Transformers集成](https://docs.swanlab.cn/zh/guide_cloud/integration/integration-huggingface-transformers.html)。
 
 
-## 🚀 开始微调（完整代码）
+## 🚀 开始微调
 
 查看可视化训练过程：<a href="https://swanlab.cn/@ZeyiLin/Qwen2.5-LoRA-Law/charts" target="_blank">Qwen2.5-LoRA-Law</a>
 
