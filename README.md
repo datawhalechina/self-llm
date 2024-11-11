@@ -61,6 +61,12 @@
 
 ### 已支持模型
 
+- [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
+  - [ ] [Qwen2-vl-2B FastApi 部署调用]
+  - [ ] [Qwen2-vl-2B WebDemo 部署]
+  - [ ] [Qwen2-vl-2B vLLM 部署]
+  - [ ] [Qwen2-vl-2B Lora 微调]
+
 - [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
   - [x] [Qwen2.5-7B-Instruct FastApi 部署调用](./models/Qwen2.5/01-Qwen2.5-7B-Instruct%20FastApi%20部署调用.md) @娄天奥
   - [x] [Qwen2.5-7B-Instruct langchain 接入](./models/Qwen2.5/02-Qwen2.5-7B-Instruct%20Langchain%20接入.md) @娄天奥
