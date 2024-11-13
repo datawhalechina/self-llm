@@ -130,7 +130,7 @@ model = AutoModelForCausalLM.from_pretrained("./qwen/Qwen2___5-7B-Instruct/", de
 model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
 ```
 
-模型大小为 15GB，下载模型大概需要 5 分钟。
+模型大小为 15GB，下载模型我大概花了 15 分钟。
 
 
 ## 集成 SwanLab
@@ -234,12 +234,12 @@ def predict(messages, model, tokenizer):
 model_dir = snapshot_download("Qwen/Qwen2.5-Coder-7B-Instruct", cache_dir="/root/autodl-tmp", revision="master")
 
 # Transformers加载模型权重
-tokenizer = AutoTokenizer.from_pretrained("./qwen/Qwen2___5-Coder-7B-Instruct/", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("./qwen/Qwen2___5-Coder-7B-Instruct/", device_map="auto", torch_dtype=torch.bfloat16)
+tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/Qwen/Qwen2___5-Coder-7B-Instruct/", use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("/root/autodl-tmp/Qwen/Qwen2___5-Coder-7B-Instruct/", device_map="auto", torch_dtype=torch.bfloat16)
 model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
 
 # 处理数据集
-train_jsonl_path = "DISC-Law-SFT-Pair-New.jsonl"
+train_jsonl_path = "DISC-Law-SFT-Pair-QA-released-new.jsonl"
 train_df = pd.read_json(train_jsonl_path, lines=True)[5:5000]
 train_ds = Dataset.from_pandas(train_df)
 train_dataset = train_ds.map(process_func, remove_columns=train_ds.column_names)
