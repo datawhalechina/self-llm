@@ -4,7 +4,8 @@
 
 Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-<!-- 训练过程：<a href="https://swanlab.cn/@ZeyiLin/Qwen2.5-LoRA-Law/charts" target="_blank">Qwen2.5-LoRA-Law</a> -->
+训练过程：<a href="https://swanlab.cn/@Harrison/Qwen2.5-Coder-LoRA-Law/overview" target="_blank">Qwen2.5-Coder-LoRA-Law</a>
+
 
 同时，这个教程会在同目录下给大家提供一个 [notebook](./05-Qwen2.5-Coder-7B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.ipynb)文件，方便大家快速上手。
 
@@ -122,11 +123,11 @@ from transformers import AutoModelForCausalLM, TrainingArguments, Trainer, DataC
 import torch
 
 # 在modelscope上下载Qwen模型到本地目录下
-model_dir = snapshot_download("qwen/Qwen2.5-7B-Instruct", cache_dir="./", revision="master")
+model_dir = snapshot_download("Qwen/Qwen2.5-Coder-7B-Instruct", cache_dir="/root/autodl-tmp", revision="master")
 
 # Transformers加载模型权重
-tokenizer = AutoTokenizer.from_pretrained("./qwen/Qwen2___5-7B-Instruct/", use_fast=False,trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("./qwen/Qwen2___5-7B-Instruct/", device_map="auto",torch_dtype=torch.bfloat16)
+tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/Qwen/Qwen2___5-Coder-7B-Instruct/", use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("/root/autodl-tmp/Qwen/Qwen2___5-Coder-7B-Instruct/", device_map="auto", torch_dtype=torch.bfloat16)
 model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
 ```
 
@@ -156,14 +157,14 @@ trainer = Trainer(
 
 ## 开始微调
 
-<!-- 查看可视化训练过程：<a href="https://swanlab.cn/@ZeyiLin/Qwen2.5-LoRA-Law/charts" target="_blank">Qwen2.5-LoRA-Law</a> -->
+查看可视化训练过程：<a href="https://swanlab.cn/@Harrison/Qwen2.5-Coder-LoRA-Law/overview" target="_blank">Qwen2.5-Coder-LoRA-Law</a>
 
 **本节代码做了以下几件事：**
-1. 下载并加载Qwen2.5-7B-Instruct模型
+1. 下载并加载Qwen2.5-7B-Coder-Instruct模型
 2. 加载数据集，取前5000条数据参与训练，5条数据进行主观评测
 3. 配置Lora，参数为r=64, lora_alpha=16, lora_dropout=0.1
 4. 使用SwanLab记录训练过程，包括超参数、指标和每个epoch的模型输出结果
-5. 训练2个epoch
+5. 训练1个epoch
 
 **完整代码如下**
 
@@ -266,10 +267,10 @@ peft_model = get_peft_model(model, config)
 
 args = TrainingArguments(
     output_dir="./output/Qwen2.5-Coder-7b",
-    per_device_train_batch_size=4,
-    gradient_accumulation_steps=4,
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=8,
     logging_steps=10,
-    num_train_epochs=2,
+    num_train_epochs=1,
     save_steps=100,
     learning_rate=1e-4,
     save_on_each_node=True,
@@ -359,9 +360,13 @@ trainer.train()
 swanlab.finish()
 ```
 
-看到下面的进度条即代表训练开始：
+看到下面的进度条并成功登录 SwanLab 即代表训练开始：
 
 ![05-4](./images/05-4.png)
 
 
 ## 训练结果展示
+
+![05-5](./images/05-5.png)
+
+更多训练细节请参考：<a href="https://swanlab.cn/@Harrison/Qwen2.5-Coder-LoRA-Law/overview" target="_blank">Qwen2.5-Coder-LoRA-Law</a>
