@@ -62,7 +62,7 @@
 ### 已支持模型
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
-  - [ ] Qwen2.5-Coder-7B 部署调用
+  - [ ] Qwen2.5-Coder-7B FastApi部署调用
   - [ ] Qwen2.5-Coder-7B Langchian接入
   - [ ] Qwen2.5-Coder-7B WebDemo 部署
   - [ ] Qwen2.5-Coder-7B vLLM 部署
