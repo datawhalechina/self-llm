@@ -62,12 +62,12 @@
 ### 已支持模型
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
-  - [ ] Qwen2.5-Coder-7B FastApi部署调用
-  - [ ] Qwen2.5-Coder-7B Langchian接入
-  - [ ] Qwen2.5-Coder-7B WebDemo 部署
-  - [ ] Qwen2.5-Coder-7B vLLM 部署
-  - [ ] Qwen2.5-Coder-7B Lora 微调
-  - [ ] Qwen2.5-Coder-7B Lora 微调 SwanLab 可视化记录版
+  - [ ] Qwen2.5-Coder-7B-Instruct FastApi部署调用
+  - [ ] Qwen2.5-Coder-7B-Instruct Langchian接入
+  - [ ] Qwen2.5-Coder-7B-Instruct WebDemo 部署
+  - [ ] Qwen2.5-Coder-7B-Instruct vLLM 部署
+  - [ ] Qwen2.5-Coder-7B-Instruct Lora 微调
+  - [ ] Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版
 
 - [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
   - [ ] [Qwen2-vl-2B FastApi 部署调用]()
