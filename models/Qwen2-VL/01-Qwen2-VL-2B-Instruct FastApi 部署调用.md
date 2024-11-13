@@ -24,6 +24,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install modelscope==1.20.0
 pip install fastapi==0.115.4
 pip install uvicorn==0.32.0
+pip install transformers==4.46.2
 pip install accelerate==1.1.1
 pip install torchvision==0.19.0
 pip install av==13.1.0
@@ -215,7 +216,7 @@ class MessageContent(BaseModel):
     type: str
     text: str = None
     image: str = None
-    video: str = None
+    video: str = None # 添加对video的支持
 
 class ChatMessage(BaseModel):
     messages: List[Dict[str, Union[str, List[Dict[str, str]]]]]
@@ -298,9 +299,9 @@ response = requests.post(url, json=payload)
 print(response.json())
 ```
 
-上述代码中，我们在 `messages` 中添加了一个视频，预览如下：
+上述代码中，我们在 `messages.content` 中添加了一个视频，预览如下：
 
-![alt text](./images/space_woaudio.gif)
+![alt text](./images/01-6.gif)
 
 ```shell
 python fastapi_request_video.py
@@ -320,6 +321,6 @@ python fastapi_request_video.py
 
 本次教程涉及到的代码文件较多，因此额外提供了参考代码供读者参考，但依然建议初学者在理解的基础上妥善使用。
 
-完成上述所有教程后的目录结构应该与下图相似，关于文件路径还请读者根据自己的实际存放情况进行修正。
+完成上述所有教程后的目录结构应该与下图类似，关于文件路径还请读者根据自己的实际存放情况进行修正。
 
 ![alt text](./images/01-2.png)
