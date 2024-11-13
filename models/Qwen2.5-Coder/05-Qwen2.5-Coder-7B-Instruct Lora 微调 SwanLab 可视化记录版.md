@@ -366,7 +366,12 @@ swanlab.finish()
 
 
 ## 训练结果展示
+在我们设置的参数下，大约花了十七分钟就训练好了，训练结束后，在终端中可以看到如下的界面。
 
 ![05-5](./images/05-5.png)
+
+打开SwanLab，可以查看训练过程中记录的参数和指标：
+
+![05-6](./images/05-6.png)
 
 更多训练细节请参考：<a href="https://swanlab.cn/@Harrison/Qwen2.5-Coder-LoRA-Law/overview" target="_blank">Qwen2.5-Coder-LoRA-Law</a>
