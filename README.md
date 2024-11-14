@@ -62,18 +62,18 @@
 ### 已支持模型
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
-  - [ ] Qwen2.5-Coder-7B-Instruct FastApi部署调用
-  - [ ] Qwen2.5-Coder-7B-Instruct Langchian接入
-  - [ ] Qwen2.5-Coder-7B-Instruct WebDemo 部署
-  - [ ] Qwen2.5-Coder-7B-Instruct vLLM 部署
-  - [ ] Qwen2.5-Coder-7B-Instruct Lora 微调
-  - [ ] Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版
+  - [ ] Qwen2.5-Coder-7B-Instruct FastApi部署调用 @赵文恺
+  - [ ] Qwen2.5-Coder-7B-Instruct Langchian接入 @杨晨旭
+  - [ ] Qwen2.5-Coder-7B-Instruct WebDemo 部署 @王泽宇
+  - [ ] Qwen2.5-Coder-7B-Instruct vLLM 部署 @王泽宇
+  - [ ] Qwen2.5-Coder-7B-Instruct Lora 微调 @荞麦
+  - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5-Coder/05-Qwen2.5-Coder-7B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @杨卓
 
 - [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
-  - [ ] [Qwen2-vl-2B FastApi 部署调用]()
-  - [ ] [Qwen2-vl-2B WebDemo 部署]()
-  - [ ] [Qwen2-vl-2B vLLM 部署]()
-  - [ ] [Qwen2-vl-2B Lora 微调]()
+  - [x] [Qwen2-vl-2B FastApi 部署调用](./models/Qwen2-VL/01-Qwen2-VL-2B-Instruct%20FastApi%20部署调用.md) @姜舒凡
+  - [ ] [Qwen2-vl-2B WebDemo 部署]() @赵伟
+  - [ ] [Qwen2-vl-2B vLLM 部署]() @荞麦
+  - [ ] [Qwen2-vl-2B Lora 微调]() @李柯辰
   - [ ] [Qwen2-vl-2B Lora 微调 SwanLab 可视化记录版]()
 
 - [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
