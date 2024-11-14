@@ -1,8 +1,8 @@
 import threading
 from pathlib import Path
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from threading import Thread
-from typing import Dict, List, Tuple
+from typing import Any, Dict, Generator, List, Tuple
 
 import gradio as gr
 from qwen_vl_utils import process_vision_info
@@ -47,17 +47,13 @@ print(
 
 
 def cal_model_size(args):
+    """计算模型在各种数据类型下的存储占用"""
     # modify from https://github.com/huggingface/accelerate/blob/c0552c9012a9bae7f125e1df89cf9ee0b0d250fd/src/accelerate/commands/estimate.py#L285
     model_name = Path(args.model_path).name
     model_path = Path(args.model_path).as_posix()
-    use_fa2 = (
-        "flash_attention_2"
-        if args.flash_attn2 and is_flash_attn_2_available()
-        else None
-    )
     with init_empty_weights():
         model = Qwen2VLForConditionalGeneration.from_pretrained(
-            model_path, torch_dtype="auto", attn_implementation=use_fa2
+            model_path, torch_dtype="auto"
         )
     total_size, largest_layer = calculate_maximum_sizes(model)
     data = []
@@ -92,7 +88,7 @@ def cal_model_size(args):
     print(table)
 
 
-def _get_args():
+def _get_args() -> Namespace:
     parser = ArgumentParser()
 
     parser.add_argument(
@@ -134,14 +130,16 @@ def _get_args():
 
 
 class LazyModelLoader:
+    """延迟加载模型以达到快速显示页面的目的"""
+
     def __init__(self, args):
         self.args = args
         self.model = None
         self.proc = None
         self.lock = threading.Lock()
 
-    def _load_model(self):
-        """加载模型和tokenizer"""
+    def _load_model(self) -> None:
+        """加载模型和processor"""
         with self.lock:
             if self.model is None:  # 确保模型只加载一次
                 print(f"Loading model: {self.args.model_path}")
@@ -158,7 +156,9 @@ class LazyModelLoader:
                 print(f"Model {self.args.model_path} loaded")
                 print(f"{model.device=}")
 
-    def _load_model_processor(self):
+    def _load_model_processor(
+        self,
+    ) -> tuple[Qwen2VLForConditionalGeneration, Qwen2VLProcessor]:
         args = self.args
         device_map = "cpu" if args.cpu else "auto"
         use_fa2 = (
@@ -172,30 +172,30 @@ class LazyModelLoader:
                 "fp32": torch.float32,
                 "bf16": torch.bfloat16,
                 "int4": "auto",
-                "int8": "auto",  # 自己改吧
+                "int8": "auto",  # 不提供量化，自己改吧
             }[args.dtype]
-            if args.dtype != "auto"
+            if args.dtype != "auto"  # auto会采用config中的配置
             else args.dtype
         )
         model = Qwen2VLForConditionalGeneration.from_pretrained(
             args.model_path,
             torch_dtype=dtype,
-            # support eager/flash_attention_2/sdpa
+            # 支持: eager/flash_attention_2/sdpa
             attn_implementation=use_fa2,
-            # auto: distribute to every GPU.
+            # auto: 平均分配到每个 GPU.
             device_map=device_map,
         )
         processor = AutoProcessor.from_pretrained(args.model_path)
         return model, processor
 
-    def get_model(self):
+    def get_model(self) -> Qwen2VLForConditionalGeneration:
         """获取加载的模型，若尚未加载则触发加载"""
         if self.model is None:
             threading.Thread(target=self._load_model).start()
         return self.model
 
-    def get_processor(self):
-        """获取加载的tokenizer"""
+    def get_processor(self) -> Qwen2VLProcessor:
+        """获取加载的processor"""
         if self.proc is None:
             threading.Thread(target=self._load_model).start()
         return self.proc
@@ -207,7 +207,8 @@ def _transform_messages(
     image_extensions=IMAGE_EXTENSIONS,
     user_tag="user",
     assistant_tag="assistant",
-):
+) -> List[Dict[str, Any]]:
+    """gradio的messages格式与qwen2的conversation不一致,需要转换"""
     transformed_messages = [{"role": user_tag, "content": []}]
     for message in messages:
         q = message[0]
@@ -254,11 +255,14 @@ def _gc():
         torch.cuda.empty_cache()
 
 
-def print_like_dislike(x: gr.LikeData):
+# modify from https://github.com/gradio-app/gradio/blob/4e1f7dbcb2ea2a0cc29bb76faf5758a9f4afcd6d/demo/chatbot_examples/run.py#L1
+def print_like_dislike(x: gr.LikeData) -> None:
     print(f"{x.index=} {x.value=}{x.liked=}")
 
 
-def add_message(history: List, message: Dict):
+def add_message(
+    history: List[List[str | Tuple[str, ...]]], message: Dict
+) -> tuple[List[List[str | Tuple[str, ...]]], gr.MultimodalTextbox]:
     for x in message["files"]:
         history.append(((x,), None))
     if message["text"] is not None:
@@ -267,10 +271,10 @@ def add_message(history: List, message: Dict):
 
 
 def _pred(
-    messages,
-    temperature,
-    topk,
-    topp,
+    messages: List[List[str | Tuple[str, ...]]],
+    temperature: float,
+    topk: int,
+    topp: float,
     processor: Qwen2VLProcessor,
     model: Qwen2VLForConditionalGeneration,
 ):
@@ -312,7 +316,12 @@ def _pred(
     return streamer
 
 
-def bot(history: List, temperature, topk, topp):
+def bot(
+    history: List[List[str | Tuple[str, ...]]],
+    temperature: float,
+    topk: int,
+    topp: float,
+) -> Generator[List[List[str | Tuple[str, ...]]], Any, None]:
     _gc()
     model, proc = loader.get_model(), loader.get_processor()
     stream = _pred(history, temperature, topk, topp, processor=proc, model=model)
@@ -323,7 +332,7 @@ def bot(history: List, temperature, topk, topp):
         yield history
 
 
-def web_demo(args):
+def web_demo(args: Namespace):
     with gr.Blocks(fill_height=True) as demo:
         with gr.Column(scale=6):
             chatbot = gr.Chatbot(

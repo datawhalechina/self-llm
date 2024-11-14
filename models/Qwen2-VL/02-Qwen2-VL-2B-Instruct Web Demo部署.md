@@ -28,6 +28,9 @@ pip config set global.index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/si
 pip install qwen_vl_utils==0.0.8 transformers==4.46.2 accelerate==1.1.0 gradio==5.5.0
 pip install torchvision  # 会匹配对应torch版本的依赖
 
+# 如需使用魔搭(国内推荐)下载模型
+pip install modelscope==1.20.0
+
 # 安装flash-attn
 # 如显卡支持flash-attn，在确认对应python、pytorch、cuda版本后, 下载对应的release版本.
 wegt https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post2/flash_attn-2.7.0.post2+cu11torch2.5cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
@@ -35,10 +38,25 @@ wegt https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post2
 # wget https://github.moeyy.xyz/https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post2/flash_attn-2.7.0.post2+cu11torch2.5cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
 pip install flash_attn-2.7.0.post2+cu11torch2.5cxx11abiFALSE-cp310-cp310-linux_x86_64.whl
 ```
-> 如需完整的pip列表(包含依赖)请参考[02-Qwen2-VL-2B-Instruct Web Demo 参考代码/requirements.txt](./02-Qwen2-VL-2B-Instruct%20Web%20Demo%20参考代码/requirements.txt)
+> 完整的pip列表(包含依赖)请参考[02-Qwen2-VL-2B-Instruct Web Demo 参考代码/requirements.txt](./02-Qwen2-VL-2B-Instruct%20Web%20Demo%20参考代码/requirements.txt)
 
 # 下载模型
+## 借助 modelscope 下载
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
+新建 `model_download.py` 文件输入以下代码，并运行 `python model_download.py` 执行下载。
+
+此处使用 `modelscope` 提供的 `snapshot_download` 函数进行下载，该方法对国内的用户十分友好。
+
+```python
+# model_download.py
+from modelscope import snapshot_download
+model_dir = snapshot_download('Qwen/Qwen2-VL-2B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
+```
+
+> 注意：请记得修改 `cache_dir` 为你自己的模型下载路径 ~
+
+## lfs 下载
 ```python
 # 进入autodl-tmp/
 cd autodl-tmp/
