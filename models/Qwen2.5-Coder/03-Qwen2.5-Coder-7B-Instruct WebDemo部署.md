@@ -27,7 +27,7 @@ pip install streamlit==1.37.0
 !pip install accelerate==0.26.0
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen2.5 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen2.5-Coder 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-self-llm***
 
 ## 模型下载
