@@ -113,7 +113,7 @@ print(llm.invoke("你是谁"))
 ```
 
 结果如下：
-![](E:\self-llm\models\Qwen2.5-Coder\images\02-1.png)
+![](./images/02-1.png)
 
 既然是Coder模型，当然要试着让它编写代码
 
@@ -123,7 +123,7 @@ print(text)
 ```
 
 结果如下：
-![](E:\self-llm\models\Qwen2.5-Coder\images\02-2.png)
+![](./images/02-2.png)
 我们试着运行一下这段代码：
-
+![](./images/02-3.png)
 成功运行！
