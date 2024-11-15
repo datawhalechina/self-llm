@@ -2,11 +2,11 @@
 
 ```
 
-# Qwen2.5-7B-Instruct Langchain ½ÓÈë
+# Qwen2.5-7B-Instruct Langchain æ¥å…¥
 
-## »·¾³×¼±¸  
+## ç¯å¢ƒå‡†å¤‡  
 
-±¾ÎÄ»ù´¡»·¾³ÈçÏÂ£º
+æœ¬æ–‡åŸºç¡€ç¯å¢ƒå¦‚ä¸‹ï¼š
 
 ```
 ----------------
@@ -17,14 +17,14 @@ pytorch 2.3.0
 ----------------
 ```
 
-> ±¾ÎÄÄ¬ÈÏÑ§Ï°ÕßÒÑ°²×°ºÃÒÔÉÏ Pytorch(cuda) »·¾³£¬ÈçÎ´°²×°Çë×ÔĞĞ°²×°¡£
+> æœ¬æ–‡é»˜è®¤å­¦ä¹ è€…å·²å®‰è£…å¥½ä»¥ä¸Š Pytorch(cuda) ç¯å¢ƒï¼Œå¦‚æœªå®‰è£…è¯·è‡ªè¡Œå®‰è£…ã€‚
 
-pip »»Ô´¼ÓËÙÏÂÔØ²¢°²×°ÒÀÀµ°ü
+pip æ¢æºåŠ é€Ÿä¸‹è½½å¹¶å®‰è£…ä¾èµ–åŒ…
 
 ```shell
-# Éı¼¶pip
+# å‡çº§pip
 python -m pip install --upgrade pip
-# ¸ü»» pypi Ô´¼ÓËÙ¿âµÄ°²×°
+# æ›´æ¢ pypi æºåŠ é€Ÿåº“çš„å®‰è£…
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install transformers==4.46.2
@@ -35,11 +35,11 @@ pip install accelerate==1.1.1
 
 
 
-## Ä£ĞÍÏÂÔØ
+## æ¨¡å‹ä¸‹è½½
 
-Ê¹ÓÃ `modelscope` ÖĞµÄ `snapshot_download` º¯ÊıÏÂÔØÄ£ĞÍ£¬µÚÒ»¸ö²ÎÊıÎªÄ£ĞÍÃû³Æ£¬²ÎÊı `cache_dir` ÎªÄ£ĞÍµÄÏÂÔØÂ·¾¶¡£
+ä½¿ç”¨ `modelscope` ä¸­çš„ `snapshot_download` å‡½æ•°ä¸‹è½½æ¨¡å‹ï¼Œç¬¬ä¸€ä¸ªå‚æ•°ä¸ºæ¨¡å‹åç§°ï¼Œå‚æ•° `cache_dir` ä¸ºæ¨¡å‹çš„ä¸‹è½½è·¯å¾„ã€‚
 
-ÔÚĞÂ½¨ `model_download.py` ÎÄ¼ş²¢ÔÚÆäÖĞÊäÈëÒÔÏÂÄÚÈİ£¬Õ³Ìù´úÂëºó¼ÇµÃ±£´æÎÄ¼ş£¬ÈçÏÂÍ¼ËùÊ¾¡£²¢ÔËĞĞ `python model_download.py` Ö´ĞĞÏÂÔØ£¬Ä£ĞÍ´óĞ¡Îª 16 GB£¬ÏÂÔØÄ£ĞÍ´ó¸ÅĞèÒª 12 ·ÖÖÓ¡£
+åœ¨æ–°å»º `model_download.py` æ–‡ä»¶å¹¶åœ¨å…¶ä¸­è¾“å…¥ä»¥ä¸‹å†…å®¹ï¼Œç²˜è´´ä»£ç åè®°å¾—ä¿å­˜æ–‡ä»¶ï¼Œå¦‚ä¸‹å›¾æ‰€ç¤ºã€‚å¹¶è¿è¡Œ `python model_download.py` æ‰§è¡Œä¸‹è½½ï¼Œæ¨¡å‹å¤§å°ä¸º 16 GBï¼Œä¸‹è½½æ¨¡å‹å¤§æ¦‚éœ€è¦ 12 åˆ†é’Ÿã€‚
 
 ```python  
 import torch
@@ -48,15 +48,15 @@ import os
 model_dir = snapshot_download('Qwen/Qwen2.5-Coder-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-> ×¢Òâ£º¼ÇµÃĞŞ¸Ä `cache_dir` ÎªÄãµÄÄ£ĞÍÏÂÔØÂ·¾¶Å¶~
+> æ³¨æ„ï¼šè®°å¾—ä¿®æ”¹ `cache_dir` ä¸ºä½ çš„æ¨¡å‹ä¸‹è½½è·¯å¾„å“¦~
 
-## ´úÂë×¼±¸
+## ä»£ç å‡†å¤‡
 
-Îª±ã½İ¹¹½¨ `LLM` Ó¦ÓÃ£¬ÎÒÃÇĞèÒª»ùÓÚ±¾µØ²¿ÊğµÄ `Qwen2_5_Coder`£¬×Ô¶¨ÒåÒ»¸ö `LLM` Àà£¬½« `Qwen2.5-Coder` ½ÓÈëµ½ `LangChain` ¿ò¼ÜÖĞ¡£Íê³É×Ô¶¨Òå `LLM` ÀàÖ®ºó£¬¿ÉÒÔÒÔÍêÈ«Ò»ÖÂµÄ·½Ê½µ÷ÓÃ `LangChain` µÄ½Ó¿Ú£¬¶øÎŞĞè¿¼ÂÇµ×²ãÄ£ĞÍµ÷ÓÃµÄ²»Ò»ÖÂ¡£
+ä¸ºä¾¿æ·æ„å»º `LLM` åº”ç”¨ï¼Œæˆ‘ä»¬éœ€è¦åŸºäºæœ¬åœ°éƒ¨ç½²çš„ `Qwen2_5_Coder`ï¼Œè‡ªå®šä¹‰ä¸€ä¸ª `LLM` ç±»ï¼Œå°† `Qwen2.5-Coder` æ¥å…¥åˆ° `LangChain` æ¡†æ¶ä¸­ã€‚å®Œæˆè‡ªå®šä¹‰ `LLM` ç±»ä¹‹åï¼Œå¯ä»¥ä»¥å®Œå…¨ä¸€è‡´çš„æ–¹å¼è°ƒç”¨ `LangChain` çš„æ¥å£ï¼Œè€Œæ— éœ€è€ƒè™‘åº•å±‚æ¨¡å‹è°ƒç”¨çš„ä¸ä¸€è‡´ã€‚
 
-»ùÓÚ±¾µØ²¿ÊğµÄ `Qwen2_5_Coder` ×Ô¶¨Òå `LLM` Àà²¢²»¸´ÔÓ£¬ÎÒÃÇÖ»Ğè´Ó `LangChain.llms.base.LLM` Àà¼Ì³ĞÒ»¸ö×ÓÀà£¬²¢ÖØĞ´¹¹Ôìº¯ÊıÓë `_call` º¯Êı¼´¿É£º
+åŸºäºæœ¬åœ°éƒ¨ç½²çš„ `Qwen2_5_Coder` è‡ªå®šä¹‰ `LLM` ç±»å¹¶ä¸å¤æ‚ï¼Œæˆ‘ä»¬åªéœ€ä» `LangChain.llms.base.LLM` ç±»ç»§æ‰¿ä¸€ä¸ªå­ç±»ï¼Œå¹¶é‡å†™æ„é€ å‡½æ•°ä¸ `_call` å‡½æ•°å³å¯ï¼š
 
-ÔÚµ±Ç°Â·¾¶ĞÂ½¨Ò»¸ö `LLM.py` ÎÄ¼ş£¬²¢ÊäÈëÒÔÏÂÄÚÈİ£¬Õ³Ìù´úÂëºó¼ÇµÃ±£´æÎÄ¼ş¡£
+åœ¨å½“å‰è·¯å¾„æ–°å»ºä¸€ä¸ª `LLM.py` æ–‡ä»¶ï¼Œå¹¶è¾“å…¥ä»¥ä¸‹å†…å®¹ï¼Œç²˜è´´ä»£ç åè®°å¾—ä¿å­˜æ–‡ä»¶ã€‚
 
 ```python
 from langchain.llms.base import LLM
@@ -66,17 +66,17 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, 
 import torch
 
 class Qwen2_5_Coder(LLM):
-    # »ùÓÚ±¾µØ Qwen2_5-Coder ×Ô¶¨Òå LLM Àà
+    # åŸºäºæœ¬åœ° Qwen2_5-Coder è‡ªå®šä¹‰ LLM ç±»
     tokenizer: AutoTokenizer = None
     model: AutoModelForCausalLM = None        
     def __init__(self, mode_name_or_path :str):
 
         super().__init__()
-        print("ÕıÔÚ´Ó±¾µØ¼ÓÔØÄ£ĞÍ...")
+        print("æ­£åœ¨ä»æœ¬åœ°åŠ è½½æ¨¡å‹...")
         self.tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, use_fast=False)
         self.model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, torch_dtype=torch.bfloat16, device_map="auto")
         self.model.generation_config = GenerationConfig.from_pretrained(mode_name_or_path)
-        print("Íê³É±¾µØÄ£ĞÍµÄ¼ÓÔØ")
+        print("å®Œæˆæœ¬åœ°æ¨¡å‹çš„åŠ è½½")
         
     def _call(self, prompt : str, stop: Optional[List[str]] = None,
                 run_manager: Optional[CallbackManagerForLLMRun] = None,
@@ -96,34 +96,34 @@ class Qwen2_5_Coder(LLM):
         return "Qwen2_5_Coder"
 ```
 
-ÔÚÉÏÊöÀà¶¨ÒåÖĞ£¬ÎÒÃÇ·Ö±ğÖØĞ´ÁË¹¹Ôìº¯ÊıºÍ `_call` º¯Êı£º¶ÔÓÚ¹¹Ôìº¯Êı£¬ÎÒÃÇÔÚ¶ÔÏóÊµÀı»¯µÄÒ»¿ªÊ¼¼ÓÔØ±¾µØ²¿ÊğµÄ `Qwen2_5_Coder` `Ä£ĞÍ£¬´Ó¶ø±ÜÃâÃ¿Ò»´Îµ÷ÓÃ¶¼ĞèÒªÖØĞÂ¼ÓÔØÄ£ĞÍ´øÀ´µÄÊ±¼ä¹ı³¤£»_call` º¯ÊıÊÇ `LLM` ÀàµÄºËĞÄº¯Êı£¬`LangChain` »áµ÷ÓÃ¸Ãº¯ÊıÀ´µ÷ÓÃ `LLM`£¬ÔÚ¸Ãº¯ÊıÖĞ£¬ÎÒÃÇµ÷ÓÃÒÑÊµÀı»¯Ä£ĞÍµÄ `generate` ·½·¨£¬´Ó¶øÊµÏÖ¶ÔÄ£ĞÍµÄµ÷ÓÃ²¢·µ»Øµ÷ÓÃ½á¹û¡£
+åœ¨ä¸Šè¿°ç±»å®šä¹‰ä¸­ï¼Œæˆ‘ä»¬åˆ†åˆ«é‡å†™äº†æ„é€ å‡½æ•°å’Œ `_call` å‡½æ•°ï¼šå¯¹äºæ„é€ å‡½æ•°ï¼Œæˆ‘ä»¬åœ¨å¯¹è±¡å®ä¾‹åŒ–çš„ä¸€å¼€å§‹åŠ è½½æœ¬åœ°éƒ¨ç½²çš„ `Qwen2_5_Coder` `æ¨¡å‹ï¼Œä»è€Œé¿å…æ¯ä¸€æ¬¡è°ƒç”¨éƒ½éœ€è¦é‡æ–°åŠ è½½æ¨¡å‹å¸¦æ¥çš„æ—¶é—´è¿‡é•¿ï¼›_call` å‡½æ•°æ˜¯ `LLM` ç±»çš„æ ¸å¿ƒå‡½æ•°ï¼Œ`LangChain` ä¼šè°ƒç”¨è¯¥å‡½æ•°æ¥è°ƒç”¨ `LLM`ï¼Œåœ¨è¯¥å‡½æ•°ä¸­ï¼Œæˆ‘ä»¬è°ƒç”¨å·²å®ä¾‹åŒ–æ¨¡å‹çš„ `generate` æ–¹æ³•ï¼Œä»è€Œå®ç°å¯¹æ¨¡å‹çš„è°ƒç”¨å¹¶è¿”å›è°ƒç”¨ç»“æœã€‚
 
-ÔÚÕûÌåÏîÄ¿ÖĞ£¬ÎÒÃÇ½«ÉÏÊö´úÂë·â×°Îª `LLM.py`£¬ºóĞø½«Ö±½Ó´Ó¸ÃÎÄ¼şÖĞÒıÈë×Ô¶¨ÒåµÄ LLM Àà¡£
+åœ¨æ•´ä½“é¡¹ç›®ä¸­ï¼Œæˆ‘ä»¬å°†ä¸Šè¿°ä»£ç å°è£…ä¸º `LLM.py`ï¼Œåç»­å°†ç›´æ¥ä»è¯¥æ–‡ä»¶ä¸­å¼•å…¥è‡ªå®šä¹‰çš„ LLM ç±»ã€‚
 
-## µ÷ÓÃ
+## è°ƒç”¨
 
-È»ºó¾Í¿ÉÒÔÏñÊ¹ÓÃÈÎºÎÆäËûµÄlangchain´óÄ£ĞÍ¹¦ÄÜÒ»ÑùÊ¹ÓÃÁË¡£
+ç„¶åå°±å¯ä»¥åƒä½¿ç”¨ä»»ä½•å…¶ä»–çš„langchainå¤§æ¨¡å‹åŠŸèƒ½ä¸€æ ·ä½¿ç”¨äº†ã€‚
 
-> ×¢Òâ£º¼ÇµÃĞŞ¸ÄÄ£ĞÍÂ·¾¶ÎªÄãµÄÂ·¾¶Å¶~
+> æ³¨æ„ï¼šè®°å¾—ä¿®æ”¹æ¨¡å‹è·¯å¾„ä¸ºä½ çš„è·¯å¾„å“¦~
 
 ```python
 from LLM import Qwen2_5_Coder
 llm = Qwen2_5_Coder(mode_name_or_path = "autodl-tmp/Qwen/Qwen2___5-Coder-7B-Instruct")
-print(llm.invoke("ÄãÊÇË­"))
+print(llm.invoke("ä½ æ˜¯è°"))
 ```
 
-½á¹ûÈçÏÂ£º
-![](E:\self-llm\models\Qwen2.5-Coder\images\02-1.png)
+ç»“æœå¦‚ä¸‹ï¼š
+![](./images/02-1.png)
 
-¼ÈÈ»ÊÇCoderÄ£ĞÍ£¬µ±È»ÒªÊÔ×ÅÈÃËü±àĞ´´úÂë
+æ—¢ç„¶æ˜¯Coderæ¨¡å‹ï¼Œå½“ç„¶è¦è¯•ç€è®©å®ƒç¼–å†™ä»£ç 
 
 ```python
-text = llm.invoke("ÎªÎÒÓÃpythonĞ´Ò»¸ö¼òµ¥µÄ²ÂÈ­Ğ¡ÓÎÏ·£¬Èı¾ÖÁ½Ê¤")
+text = llm.invoke("ä¸ºæˆ‘ç”¨pythonå†™ä¸€ä¸ªç®€å•çš„çŒœæ‹³å°æ¸¸æˆï¼Œä¸‰å±€ä¸¤èƒœ")
 print(text)
 ```
 
-½á¹ûÈçÏÂ£º
-![](E:\self-llm\models\Qwen2.5-Coder\images\02-2.png)
-ÎÒÃÇÊÔ×ÅÔËĞĞÒ»ÏÂÕâ¶Î´úÂë£º
-
-³É¹¦ÔËĞĞ£¡
+ç»“æœå¦‚ä¸‹ï¼š
+![](./images/02-2.png)
+æˆ‘ä»¬è¯•ç€è¿è¡Œä¸€ä¸‹è¿™æ®µä»£ç ï¼š
+![](./images/02-3.png)
+æˆåŠŸè¿è¡Œï¼
