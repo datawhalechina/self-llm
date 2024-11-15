@@ -21,7 +21,7 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 
 ## 👋 SwanLab简介
 
-![06-1](./images/06-1.jpg)
+![05-1](./images/05-1.jpg)
 
 [SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，常被称为"中国版 Weights&Biases + Tensorboard"。SwanLab面向AI研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在SwanLab上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
 
@@ -66,7 +66,7 @@ pip install qwen-vl-utils==0.0.8
 
 > 数据集介绍：COCO 2014 Caption数据集是Microsoft Common Objects in Context (COCO)数据集的一部分，主要用于图像描述任务。该数据集包含了大约40万张图像，每张图像都有至少1个人工生成的英文描述语句。这些描述语句旨在帮助计算机理解图像内容，并为图像自动生成描述提供训练数据。
 
-![06-2](./images/06-2.jpg)
+![05-2](./images/05-2.jpg)
 
 在本节的任务中，我们主要使用其中的前500张图像，并对它进行处理和格式调整，目标是组合成如下格式的json文件：
 
@@ -240,7 +240,7 @@ trainer = Trainer(
 
 首次使用SwanLab，需要先在[官网](https://swanlab.cn)注册一个账号，然后在用户设置页面复制你的API Key，然后在训练开始提示登录时粘贴即可，后续无需再次登录：
 
-![06-3](./images/06-3.jpg)
+![05-3](./images/05-3.jpg)
 
 更多用法可参考[快速开始](https://docs.swanlab.cn/zh/guide_cloud/general/quick-start.html)、[Transformers集成](https://docs.swanlab.cn/zh/guide_cloud/integration/integration-huggingface-transformers.html)。
 
@@ -483,18 +483,18 @@ swanlab.finish()
 
 看到下面的进度条即代表训练开始：
 
-![06-4](./images/06-4.jpg)
+![05-4](./images/05-4.jpg)
 
 
 ## 💻 训练结果演示
 
-![06-5](./images/06-5.jpg)
+![05-5](./images/05-5.jpg)
 
 从SwanLab图表中我们可以看到，lr的下降策略是线性下降，loss随epoch呈现下降趋势，而grad_norm则在上升。这种形态往往反映了模型有过拟合的风险，训练不要超过2个epoch。
 
 在`Prediction`图表中记录着模型最终的输出结果，可以看到模型在回答的风格上是用的COCO数据集的简短英文风格进行的描述：
 
-![06-6](./images/06-6.jpg)
+![05-6](./images/05-6.jpg)
 
 而同样的图像，没有被微调的模型输出结果如下：
 
@@ -580,7 +580,7 @@ print(output_text)
 
 使用4张A100 40GB显卡，batch size为4，gradient accumulation steps为4，训练2个epoch的用时为1分钟57秒。
 
-![06-7](./images/06-7.jpg)
+![05-7](./images/05-7.jpg)
 
 ### 注意
 
