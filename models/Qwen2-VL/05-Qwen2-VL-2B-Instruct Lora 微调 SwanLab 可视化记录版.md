@@ -16,6 +16,7 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 - [集成SwanLab](#-集成SwanLab)
 - [开始微调（完整代码）](#-开始微调)
 - [训练结果演示](#-训练结果演示)
+- [推理LoRA微调后的模型](#-推理LoRA微调后的模型)
 - [补充](#补充)
 
 ## 👋 SwanLab简介
@@ -256,7 +257,20 @@ trainer = Trainer(
 4. 使用SwanLab记录训练过程，包括超参数、指标和最终的模型输出结果
 5. 训练2个epoch
 
+开始执行代码时的目录结构应该是：
+```
+|———— train.py
+|———— coco_2014_caption
+|———— coco-2024-dataset.csv
+|———— data_vl.json
+|———— data2csv.py
+|———— csv2json.py
+```
+
+
 **完整代码如下**
+
+train.py：
 
 ```python
 import torch
@@ -495,7 +509,7 @@ swanlab.finish()
 可以明显看到微调后风格的变化。
 
 
-## 推理LoRA微调后的模型
+## 🧐 推理LoRA微调后的模型
 
 加载lora微调后的模型，并进行推理：
 
@@ -570,4 +584,4 @@ print(output_text)
 
 ### 注意
 
-- 在微调脚本中，
+- 在微调脚本中，`val_peft_model`加载的是一共固定的checkpoint文件，如果你添加了数据或超参数，请根据实际情况修改checkpoint文件路径。
