@@ -338,6 +338,7 @@ for item in test_dataset:
 ## 🧐 推理LoRA微调后的模型
 
 加载LoRA微调后的模型，并进行推理。
+
 **完整代码如下：**
 ```python
 from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
