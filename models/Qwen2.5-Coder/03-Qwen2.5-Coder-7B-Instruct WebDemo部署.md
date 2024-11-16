@@ -21,40 +21,25 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install -U huggingface_hub
+pip install modelscope==1.20.0
 pip install streamlit==1.37.0
-!pip install transformers==4.46.2
-!pip install accelerate==0.26.0
+pip install transformers==4.46.2
+pip install accelerate==0.26.0
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen2.5-Coder 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-self-llm***
 
 ## 模型下载
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
-使用 `huggingface_hub` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `local_dir`为模型的下载路径。
+在新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python model_download.py` 执行下载，模型大小为 16 GB，下载模型大概需要 12 分钟。
 
-先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+```python  
+from modelscope import snapshot_download
 
-然后新建名为 `model_download.py` 的 `python` 脚本，并在其中输入以下内容并保存
-
-```python
-# model_download.py
-from huggingface_hub import snapshot_download
-import subprocess
-import os
-
-# 资源加速
-result = subprocess.run('bash -c "source /etc/network_turbo && env | grep proxy"', shell=True, capture_output=True, text=True)
-output = result.stdout
-for line in output.splitlines():
-    if '=' in line:
-        var, value = line.split('=', 1)
-        os.environ[var] = value
-
-snapshot_download(repo_id="Qwen/Qwen2.5-Coder-7B-Instruct", local_dir="./Qwen2.5-Coder-7B-Instruct")
+snapshot_download('Qwen/Qwen2.5-Coder-7B-Instruct', local_dir='/root/autodl-tmp/Qwen2.5-Coder-7B-Instruct')
 ```
-然后在终端中输入 `python model_download.py` 执行下载，这里需要耐心等待一段时间直到模型下载完成。
 
 > 注意：记得修改 `local_dir` 为你的模型下载路径哦~
 
