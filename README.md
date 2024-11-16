@@ -62,11 +62,11 @@
 ### 已支持模型
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
-  - [ ] Qwen2.5-Coder-7B-Instruct FastApi部署调用 @赵文恺
-  - [ ] Qwen2.5-Coder-7B-Instruct Langchian接入 @杨晨旭
-  - [ ] Qwen2.5-Coder-7B-Instruct WebDemo 部署 @王泽宇
-  - [ ] Qwen2.5-Coder-7B-Instruct vLLM 部署 @王泽宇
-  - [ ] Qwen2.5-Coder-7B-Instruct Lora 微调 @荞麦
+  - [x] [Qwen2.5-Coder-7B-Instruct FastApi部署调用](./models/Qwen2.5-Coder/01-Qwen2.5-Coder-7B-Instruct%20FastApi%20部署调用.md) @赵文恺
+  - [x] [Qwen2.5-Coder-7B-Instruct Langchian接入](./models/Qwen2.5-Coder/02-Qwen2.5-7B-Instruct%20Langchain%20接入.md) @杨晨旭
+  - [x] [Qwen2.5-Coder-7B-Instruct WebDemo 部署](./models/Qwen2.5-Coder/03-Qwen2.5-Coder-7B-Instruct%20WebDemo部署.md) @王泽宇
+  - [x] [Qwen2.5-Coder-7B-Instruct vLLM 部署](./models/Qwen2.5-Coder/04-Qwen2.5-Coder-7B-Instruct%20vLLM%20部署调用.md) @王泽宇
+  - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调](./models/Qwen2.5-Coder/Qwen2.5-Coder-7B-Instruct%20Lora%20微调.md) @荞麦
   - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5-Coder/05-Qwen2.5-Coder-7B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @杨卓
 
 - [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
