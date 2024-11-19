@@ -32,7 +32,7 @@ pip install modelscope==1.20.0
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-Coder-fastapi-self-llm***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2.5-coder***
 
 
 ## 模型下载  

@@ -33,6 +33,8 @@ pip install langchain==0.3.7
 pip install accelerate==1.1.1
 ```
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2.5-coder***
 
 
 ## 模型下载

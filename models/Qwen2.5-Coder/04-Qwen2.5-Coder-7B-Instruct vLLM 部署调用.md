@@ -40,8 +40,8 @@ pip install vllm==0.6.3.post1
 pip install accelerate==0.26.0
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了 `Qwen2.5-Coder` 的环境镜像，点击下方链接并直接创建 `AutoDL` 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-self-llm***
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2.5-coder***
 
 
 ## 模型下载  

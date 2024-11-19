@@ -31,11 +31,11 @@ pip install sentencepiece==0.2.0
 pip install accelerate==1.1.1
 pip install datasets==3.1.0
 pip install peft==0.13.2
-
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5-Coder-7B-Instruct的环境镜像。点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-Coder-7B-Instruct***
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2.5的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2.5-coder***
+
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
