@@ -34,6 +34,9 @@ wegt https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.0.post2
 pip install flash_attn-2.7.0.post2+cu12torch2.3cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
 ```
 > 完整的pip列表(包含依赖)请参考[02-Qwen2-VL-2B-Instruct Web Demo 参考代码/requirements.txt](./02-Qwen2-VL-2B-Instruct%20Web%20Demo%20参考代码/requirements.txt)
+>
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2-VL的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2-vl***
 
 # 下载模型(两种下载方法二选一即可~)
 ## 1. 借助 modelscope 下载

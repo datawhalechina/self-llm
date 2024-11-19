@@ -4,8 +4,22 @@
 
 ## 🌍 环境配置
 
-考虑到部分同学在配置环境时可能会遇到一些问题，我们在 AutoDL 平台上提供了预装了 Qwen2-VL 环境的镜像。点击下方链接并直接创建 Autodl 示例即可快速开始：[AutoDL-Qwen2-VL-self-llm](https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2-VL-self-llm)。
+```bash
+python -m pip install --upgrade pip
+# 更换 pypi 源加速库的安装
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
+pip install modelscope==1.18.0
+pip install transformers==4.46.2
+pip install sentencepiece==0.2.0
+pip install accelerate==1.1.1
+pip install datasets==2.18.0
+pip install peft==0.13.2
+pip install qwen-vl-utils==0.0.8
+```
+
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen2-VL的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2-vl***
 
 ## 📚 准备数据集
 

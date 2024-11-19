@@ -17,7 +17,7 @@
     },
     "姜舒凡": {
         "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）",
-        "task_num": 7
+        "task_num": 8
     },
     "李娇娇": {
         "info": "[李娇娇](https://github.com/Aphasia0515) （Datawhale成员）",
@@ -51,12 +51,24 @@
         "info": "[高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）",
         "task_num": 5
     },
+    "王泽宇": {
+        "info": "[王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）",
+        "task_num": 5
+    },
     "Kailigithub": {
         "info": "[Kailigithub](https://github.com/Kailigithub) （Datawhale成员）",
         "task_num": 4
     },
     "郑皓桦": {
         "info": "[郑皓桦](https://github.com/BaiYu96) （内容创作者）",
+        "task_num": 4
+    },
+    "李柯辰": {
+        "info": "[李柯辰](https://github.com/Joe-2002) （Datawhale成员）",
+        "task_num": 4
+    },
+    "林泽毅": {
+        "info": "[林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）",
         "task_num": 4
     },
     "陈思州": {
@@ -71,13 +83,9 @@
         "info": "[颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）",
         "task_num": 3
     },
-    "王泽宇": {
-        "info": "[王泽宇](https://github.com/moyitech)（内容创作者-鲸英助教）",
+    "荞麦": {
+        "info": "[荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）",
         "task_num": 3
-    },
-    "李柯辰": {
-        "info": "[李柯辰](https://github.com/Joe-2002) （Datawhale成员）",
-        "task_num": 2
     },
     "Swiftie": {
         "info": "[Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）",
@@ -105,6 +113,10 @@
     },
     "左春生": {
         "info": "[左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）",
+        "task_num": 2
+    },
+    "杨卓": {
+        "info": "[杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）",
         "task_num": 2
     },
     "小罗": {
@@ -137,6 +149,18 @@
     },
     "邓恺俊": {
         "info": "[邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）",
+        "task_num": 1
+    },
+    "杨晨旭": {
+        "info": "[杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）",
+        "task_num": 1
+    },
+    "赵文恺": {
+        "info": "[赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）",
+        "task_num": 1
+    },
+    "赵伟": {
+        "info": "[赵伟](https://github.com/2710932616)（内容创作者-鲸英助教",
         "task_num": 1
     }
 }

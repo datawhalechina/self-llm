@@ -70,10 +70,11 @@
   - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5-Coder/05-Qwen2.5-Coder-7B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @杨卓
 
 - [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
-  - [ ] [Qwen2-vl-2B FastApi 部署调用]()
-  - [ ] [Qwen2-vl-2B WebDemo 部署]()
-  - [ ] [Qwen2-vl-2B vLLM 部署]()
-  - [ ] [Qwen2-vl-2B Lora 微调]()
+  - [x] [Qwen2-vl-2B FastApi 部署调用](./models/Qwen2-VL/01-Qwen2-VL-2B-Instruct%20FastApi%20部署调用.md) @姜舒凡
+  - [x] [Qwen2-vl-2B WebDemo 部署](./models/Qwen2-VL/02-Qwen2-VL-2B-Instruct%20Web%20Demo部署.md) @赵伟
+  - [x] [Qwen2-vl-2B vLLM 部署](./models/Qwen2-VL/03-Qwen2-VL-2B-Instruct%20vLLM部署调用.md) @荞麦
+  - [x] [Qwen2-vl-2B Lora 微调](./models/Qwen2-VL/04-Qwen2-VL-2B%20Lora%20微调.md) @李柯辰
+  - [x] [Qwen2-vl-2B Lora 微调 SwanLab 可视化记录版](./models/Qwen2-VL/05-Qwen2-VL-2B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @林泽毅
 
 - [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
   - [x] [Qwen2.5-7B-Instruct FastApi 部署调用](./models/Qwen2.5/01-Qwen2.5-7B-Instruct%20FastApi%20部署调用.md) @娄天奥
@@ -299,13 +300,15 @@
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
+- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
+- [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
-- [王泽宇](https://github.com/moyitech)（内容创作者-鲸英助教）
-- [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
+- [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
@@ -313,6 +316,7 @@
 - [张晋](https://github.com/Jin-Zhang-Yaoguang)（内容创作者-Datawhale成员）
 - [娄天奥](https://github.com/lta155)（内容创作者-中国科学院大学-鲸英助教）
 - [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
+- [杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）
 - [小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
@@ -321,7 +325,9 @@
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
-- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
+- [杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）
+- [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
+- [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教
 
 > 注：排名根据贡献程度排序
 
