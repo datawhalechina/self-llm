@@ -70,11 +70,10 @@
   - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5-Coder/05-Qwen2.5-Coder-7B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @杨卓
 
 - [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
-  - [x] [Qwen2-vl-2B FastApi 部署调用](./models/Qwen2-VL/01-Qwen2-VL-2B-Instruct%20FastApi%20部署调用.md) @姜舒凡
-  - [x] [Qwen2-vl-2B WebDemo 部署](./models/Qwen2-VL/02-Qwen2-VL-2B-Instruct%20Web%20Demo部署.md) @赵伟
-  - [ ] [Qwen2-vl-2B vLLM 部署]() @荞麦
-  - [ ] [Qwen2-vl-2B Lora 微调]() @李柯辰
-  - [x] [Qwen2-vl-2B Lora 微调 SwanLab 可视化记录版](./models/Qwen2-VL/05-Qwen2-VL-2B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @林泽毅
+  - [ ] [Qwen2-vl-2B FastApi 部署调用]()
+  - [ ] [Qwen2-vl-2B WebDemo 部署]()
+  - [ ] [Qwen2-vl-2B vLLM 部署]()
+  - [ ] [Qwen2-vl-2B Lora 微调]()
 
 - [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
   - [x] [Qwen2.5-7B-Instruct FastApi 部署调用](./models/Qwen2.5/01-Qwen2.5-7B-Instruct%20FastApi%20部署调用.md) @娄天奥
