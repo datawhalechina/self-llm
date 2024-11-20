@@ -180,3 +180,11 @@ if __name__ == '__main__':
 调用结果如下图所示：
 
 ![](images/image01-5.png)
+
+> 如果在使用本教程时，出现以下错误
+> 
+>`AttributeError: 'ChatGLMForConditionalGeneration' object has no attribute 'chat'`
+> 
+> 原因：ChatGLMForConditionalGeneration 模型对象没有 chat 方法。GLM4 对代码进行了更新，chat 方法已经被替换为 generate 方法。
+> 
+> 解决方法：可参考 https://github.com/datawhalechina/self-llm/issues/249#issuecomment-2417277381
