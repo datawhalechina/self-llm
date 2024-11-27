@@ -616,6 +616,7 @@ print(output_text)
 使用4张A100 40GB显卡，batch size为4，gradient accumulation steps为4，训练2个epoch的用时为1分钟57秒。
 
 ![05-7](./images/05-7.jpg)
+![05-8](./images/05-8.jpg)
 
 ### 注意
 
