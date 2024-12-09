@@ -25,6 +25,10 @@ for task in tasks:
         contributors[name]['task_num'] += 2
     else:
         contributors[name]['task_num'] += 1
+
+contributors['不要葱姜蒜']['task_num'] += 300
+contributors['Logan Zou']['task_num'] += 300
+
 # 排序
 contributors = dict(sorted(contributors.items(), key=lambda x: x[1]['task_num'], reverse=True))
 

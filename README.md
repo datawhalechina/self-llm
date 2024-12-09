@@ -289,13 +289,14 @@
 ### 核心贡献者
 
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）
+- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
@@ -305,7 +306,6 @@
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
-- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
