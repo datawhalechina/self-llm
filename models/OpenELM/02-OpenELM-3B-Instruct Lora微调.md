@@ -134,7 +134,7 @@ model = AutoModelForCausalLM.from_pretrained(
 - `r`：`lora`的秩，具体可以看`Lora`原理
 - `lora_alpha`：`Lora alaph`，具体作用参见 `Lora` 原理 
 
-`Lora`的缩放是啥嘞？当然不是`r`（秩），这个缩放就是`lora_alpha/r`, 在这个`LoraConfig`中缩放就是4倍。
+`Lora`的缩放是啥嘞？当然不是`r`（秩），这个缩放就是`lora_alpha/r`, 在这个`LoraConfig`中缩放就是1倍。
 
 ```python
 config = LoraConfig(
