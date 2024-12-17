@@ -139,6 +139,8 @@
   - [x] [GLM-4-9B-chat WebDemo 部署](./models/GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @何至轩
   - [x] [GLM-4-9B-chat vLLM 部署](./models/GLM-4/04-GLM-4-9B-Chat%20vLLM%20部署调用.md) @王熠明
   - [x] [GLM-4-9B-chat Lora 微调](./models/GLM-4/05-GLM-4-9B-chat%20Lora%20微调.md) @肖鸿儒
+  - [x] [GLM-4-9B-chat-hf Lora 微调](./models/GLM-4/05-GLM-4-9B-chat-hf%20Lora%20微调.md) @付志远
+
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./models/Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
