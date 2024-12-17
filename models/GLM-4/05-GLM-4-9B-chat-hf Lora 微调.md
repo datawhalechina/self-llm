@@ -139,7 +139,7 @@ model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/glm-4-9b-chat/Zhi
 ```python
 config = LoraConfig(
     task_type=TaskType.CAUSAL_LM, 
-    target_modules=["query_key_value", "dense", "dense_h_to_4h", "dense_4h_to_h"],  # 现存问题只微调部分演示即可
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     inference_mode=False, # 训练模式
     r=8, # Lora 秩
     lora_alpha=32, # Lora alaph，具体作用参见 Lora 原理
