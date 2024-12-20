@@ -331,6 +331,7 @@
 - [杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）
 - [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
 - [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
+- [付志远](https://github.com/comfzy)（内容创作者-海南大学）
 
 > 注：排名根据贡献程度排序
 
