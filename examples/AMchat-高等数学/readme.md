@@ -1,7 +1,9 @@
 # AMchat 高等数学大模型
-# 📖 简介
+## 📖 简介
 
 AM (Advanced Mathematics) chat 是一个集成了数学知识和高等数学习题及其解答的大语言模型。该模型使用 Math 和高等数学习题及其解析融合的数据集，基于 InternLM2-Math-7B 模型，通过 xtuner 微调，专门设计用于解答高等数学问题。
+
+你在这里可以学到 **收集数据**、**制作数据集**、**模型微调**和 **部署模型** 的全流程，帮助你更好地理解和掌握大模型应用开发的核心技术。
 
 > *AMchat模型: Modelscope 地址：[*Link*](https://www.modelscope.cn/models/yondong/AMchat/summary)* ， *OpenXLab 地址：[*Link*](https://openxlab.org.cn/models/detail/youngdon/AMchat)*，HuggingFace 地址：[*Link*](https://huggingface.co/axyzdong/AMchat)\
 > *AMchat 项目地址：*[*Link*](https://github.com/AXYZdong/AMchat)\
@@ -9,62 +11,40 @@ AM (Advanced Mathematics) chat 是一个集成了数学知识和高等数学习�
 > *AMchat 视频介绍：*[*Link*](https://www.bilibili.com/video/BV14v421i7So/) 
 
 
-# 🛠️ 使用方法
+## 🛠️ 实现微调模型
 
-## 快速开始
+接下来，我们将演示如何基于 Xtuner QLoRA 框架，快速实现一个用于高等数学的微调模型。 本教程将详细讲解针对 internLM2 进行数学微调的全流程，涵盖数据准备、微调执行以模型部署等环节。
 
-### 1. 下载模型
+本次微调示例选用 internlm2-math-7b 模型。你需要准备一台配备 24GB 显存的机器进行微调（例如 NVIDIA GeForce RTX 3090）。
 
-<details>
-<summary> 从 ModelScope </summary>
+微调模型的第一步是准备高质量的训练数据。对于数学大模型而言，你需要收集数学题目，数据来源可以是公开的数学数据集或自行收集的数据。
 
-参考 [模型的下载](https://www.modelscope.cn/docs/%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8B%E8%BD%BD) 。
+在准备完成数据来源以及获取到对应数据后，你需要使用该数据制作成结构化的数据集，以便于模型进行微调训练。
 
-```bash
-pip install modelscope
+
+### Step 1: 数据准备
+
+我们可以用调用api的方式让一些大模型自动生成数学题目，然后再将生成的数学题目进行答案的标注。
+
+另外，我们也可以自己从一些考研数学题库中通过OCR的方式获取数学题目，然后再进行答案的标注。
+
+对与每一条数据，需要整理成如下格式：
+
+```json
+{
+    "conversation": [
+        {
+            "input": "设 a_{n}=\\frac{3}{2} \\int_{0}^{\\frac{n}{n+1}} x^{n-1} \\sqrt{1+x^{n}} \\mathrm{~d} x, 则 \\lim _{n \\rightarrow \\infty} n a_{n}=\\\\",
+            "output": "\\left(1+\\mathrm{e}^{-1}\\right)^{\\frac{3}{2}}-1 \\\\ 解\\\\\\\\\\begin{aligned}\\\\a_{n} & =\\frac{3}{2} \\int_{0}^{\\frac{n}{n+1}} x^{n-1} \\sqrt{1+x^{n}} \\mathrm{~d} x=\\frac{3}{2} \\cdot \\frac{1}{n} \\int_{0}^{\\frac{n}{n+1}}\\left(1+x^{n}\\right)^{\\frac{1}{2}} \\mathrm{~d}\\left(1+x^{n}\\right) \\\\\\\\& =\\left.\\frac{3}{2} \\cdot \\frac{1}{n} \\cdot \\frac{2}{3}\\left(1+x^{n}\\right)^{\\frac{3}{2}}\\right|_{0} ^{\\frac{n}{n+1}}=\\frac{1}{n}\\left\\{\\left[1+\\left(\\frac{n}{n+1}\\right)^{n}\\right]^{\\frac{3}{2}}-1\\right\\} .\\\\\\end{aligned}\\\\\\\\\\\\由 \\lim _{n \\rightarrow \\infty}\\left(\\frac{n+1}{n}\\right)^{n}=\\mathrm{e}, 知 \\lim _{n \\rightarrow \\infty}\\left(\\frac{n}{n+1}\\right)^{n}=\\frac{1}{\\mathrm{e}}, 故\\\\\\\\\\lim _{n \\rightarrow \\infty} n a_{n}=\\lim _{n \\rightarrow \\infty}\\left\\{\\left[1+\\left(\\frac{n}{n+1}\\right)^{n}\\right]^{\\frac{3}{2}}-1\\right\\}=\\left(1+\\mathrm{e}^{-1}\\right)^{\\frac{3}{2}}-1 .\\\\"
+        }
+    ]
+}
 ```
 
-```python
-from modelscope.hub.snapshot_download import snapshot_download
-model_dir = snapshot_download('yondong/AMchat', cache_dir='./')
-```
-
-</details>
+每个 "conversation" 字段包含一个对话，对话中包含一个输入和一个输出。输入是数学题目，输出是数学题目的答案。
 
 
-<details>
-<summary> 从 OpenXLab </summary>
-
-参考 [下载模型](https://openxlab.org.cn/docs/models/%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B.html) 。
-
-```bash
-pip install openxlab
-```
-
-```python
-from openxlab.model import download
-download(model_repo='youngdon/AMchat', 
-        model_name='AMchat', output='./')
-```
-
-</details>
-
-### 2. 本地部署
-
-```bash
-git clone https://github.com/AXYZdong/AMchat.git
-python start.py
-```
-
-### 3. Docker部署
-
-```bash
-docker run -t -i --rm --gpus all -p 8501:8501 guidonsdocker/amchat:latest bash start.sh
-```
-
-## 重新训练
-
-### 环境搭建
+### Step 2: 环境准备
 
 1. clone 项目
 
@@ -81,21 +61,9 @@ conda activate AMchat
 pip install xtuner
 ```
 
-### XTuner微调
+### Step 3:  模型微调
 
-1. 准备配置文件
-
-```bash
-# 列出所有内置配置
-xtuner list-cfg
-
-mkdir -p /root/math/data
-mkdir /root/math/config && cd /root/math/config
-
-xtuner copy-cfg internlm2_chat_7b_qlora_oasst1_e3 .
-```
-
-2. 模型下载
+1. 基座模型下载
 
 ```bash
 mkdir -p /root/math/model
@@ -109,6 +77,17 @@ import os
 model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm2-math-7b', cache_dir='/root/math/model')
 ```
 
+2. 准备配置文件
+
+```bash
+# 列出所有内置配置
+xtuner list-cfg
+
+mkdir -p /root/math/data
+mkdir /root/math/config && cd /root/math/config
+
+xtuner copy-cfg internlm2_chat_7b_qlora_oasst1_e3 .
+```
 
 3. 修改配置文件
 
@@ -371,7 +350,6 @@ xtuner convert merge \
 ```bash
 streamlit run web_demo.py --server.address=0.0.0.0 --server.port 7860
 ```
-
 
 
 ### 致谢每一位贡献者 
