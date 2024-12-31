@@ -33,3 +33,15 @@ Chat-甄嬛，实现了以《甄嬛传》为切入点，打造一套基于小说
 > *Tianji 视频介绍：*[*Link*](https://www.bilibili.com/video/BV1cvbyefEfp)
 
 - *2024 书生·浦语社区优秀大模型应用*
+
+### [AMchat-高等数学](./AMchat-高等数学/readme.md)
+
+AM (Advanced Mathematics) chat 是一个集成了数学知识和高等数学习题及其解答的大语言模型。该模型使用 Math 和高等数学习题及其解析融合的数据集，基于 InternLM2-Math-7B 模型，通过 xtuner 微调，专门设计用于解答高等数学问题。
+
+> *AMchat 项目地址：*[*Link*](https://github.com/AXYZdong/AMchat)\
+> *AMchat模型: Modelscope 地址：[*Link*](https://www.modelscope.cn/models/yondong/AMchat/summary)* ， *OpenXLab 地址：[*Link*](https://openxlab.org.cn/models/detail/youngdon/AMchat)*，HuggingFace 地址：[*Link*](https://huggingface.co/axyzdong/AMchat)\
+> *AMchat GGFU模型地址：[Link](https://huggingface.co/axyzdong/AMchat-GGUF)*\
+> *AMchat 应用地址：*[*Link*](https://openxlab.org.cn/apps/detail/youngdon/AMchat)\
+> *AMchat 视频介绍：*[*Link*](https://www.bilibili.com/video/BV14v421i7So/) 
+
+- *2024 书生·浦语大模型挑战赛（春季赛）创意应用奖 Top12*
