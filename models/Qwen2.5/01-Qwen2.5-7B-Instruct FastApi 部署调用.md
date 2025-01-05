@@ -93,7 +93,7 @@ async def create_item(request: Request):
 
     # 调用模型进行对话生成
     input_ids = tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
-    model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
+    model_inputs = tokenizer([input_ids], return_tensors="pt").to(model.device)
     generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=512)
     generated_ids = [
         output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     # 加载预训练的分词器和模型
     model_name_or_path = '/root/autodl-tmp/qwen/Qwen2.5-7B-Instruct'
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
-    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
+    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map=CUDA_DEVICE, torch_dtype=torch.bfloat16)
 
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
