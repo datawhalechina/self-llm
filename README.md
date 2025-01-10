@@ -61,6 +61,12 @@
 
 ### 已支持模型
 
+- [phi4](https://huggingface.co/microsoft/phi-4)
+  - [ ] phi4 FastApi 部署调用
+  - [ ] phi4 langchain 接入
+  - [ ] phi4 WebDemo 部署
+  - [ ] phi4 Lora 微调
+
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
   - [x] [Qwen2.5-Coder-7B-Instruct FastApi部署调用](./models/Qwen2.5-Coder/01-Qwen2.5-Coder-7B-Instruct%20FastApi%20部署调用.md) @赵文恺
   - [x] [Qwen2.5-Coder-7B-Instruct Langchian接入](./models/Qwen2.5-Coder/02-Qwen2.5-7B-Instruct%20Langchain%20接入.md) @杨晨旭
