@@ -4,7 +4,7 @@
 
 本文基础环境如下：
 
-```python
+```
 ----------------
 ubuntu 22.04
 python 3.12
@@ -17,7 +17,7 @@ pytorch 2.3.0
 
 pip 换源加速下载并安装依赖包
 
-```python
+```bash
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
