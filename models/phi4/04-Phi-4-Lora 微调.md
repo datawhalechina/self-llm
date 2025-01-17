@@ -1,6 +1,6 @@
-# Qwen2.5-7B-Instruct Lora 微调
+# Phi-4 Lora 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，对 Phi4 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
+本节我们简要介绍如何基于 transformers、peft 等框架，对 Phi-4 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
 这个教程会在同目录下给大家提供一个 [nodebook](04-Phi-4-Lora.ipynb) 文件，来让大家更好的学习。
 
@@ -36,7 +36,7 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen2.5 的环境镜像，该镜像适用于该仓库除 Qwen-GPTQ 和 vllm 外的所有部署环境。点击下方链接并直接创建 Autodl 示例即可。
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Phi-4 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen2.5-self-llm***
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
