@@ -263,4 +263,4 @@ with torch.no_grad():
     print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 > 注意修改为自己的模型路径哦~
-
+![result](./images/image04-4.png)
