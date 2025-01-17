@@ -127,7 +127,7 @@ def process_func(example):
     }
 ```
 
-`Qwen2` 采用的 `Prompt Template`格式如下：
+`Phi-4` 采用的 `Prompt Template`格式如下：
 
 ```text
 <|im_start|>system
@@ -145,9 +145,10 @@ You are a helpful assistant.<|im_end|>
 `model` 以半精度形式加载, 如果你的显卡比较新的话，可以用 `torch.bfolat` 形式加载。对于自定义模型，必须指定 `trust_remote_code=True` ，以确保加载自定义代码时不会报错。
 
 ```python
-tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/qwen/Qwen2.5-7B-Instruct/', use_fast=False, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/LLM-Research/phi-4', use_fast=False, trust_remote_code=True)
+tokenizer.pad_token_id = tokenizer.eos_token_id = 100265  # 100265 == '<|im_end|>'
 
-model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/qwen/Qwen2.5-7B-Instruct/', device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/LLM-Research/phi-4', device_map="auto",torch_dtype=torch.bfloat16)
 ```
 > 注意：此处要记得修改为自己的模型路径哦~
 
@@ -195,12 +196,12 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="./output/Qwen2.5_instruct_lora",
-    per_device_train_batch_size=4,
+    output_dir="./output/phi4_lora",
+    per_device_train_batch_size=1,
     gradient_accumulation_steps=4,
     logging_steps=10,
     num_train_epochs=3,
-    save_steps=100,  # 为了快速演示，这里设置10，建议你设置成100
+    save_steps=100, 
     learning_rate=1e-4,
     save_on_each_node=True,
     gradient_checkpointing=True
@@ -228,50 +229,37 @@ trainer.train()  # 开始训练
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
-from peft import PeftModel  
+from peft import PeftModel
 
-model_path = '/root/autodl-tmp/qwen/Qwen2.5-7B-Instruct/'
-lora_path = 'lora_path'
+mode_path = '/root/autodl-tmp/LLM-Research/phi-4'
+lora_path = 'output/phi4_lora/checkpoint-300' # 这里改称你的 lora 输出对应 checkpoint 地址
 
 # 加载tokenizer
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+tokenizer = AutoTokenizer.from_pretrained(mode_path, trust_remote_code=True)
 
 # 加载模型
-model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
 
 # 加载lora权重
-model = PeftModel.from_pretrained(model, model_id=lora_path, config=config)
+model = PeftModel.from_pretrained(model, model_id=lora_path)
 
-# 定义用户输入
 prompt = "你是谁？"
-
-# 构建对话上下文
-messages = [
+inputs = tokenizer.apply_chat_template([
     {"role": "system", "content": "现在你要扮演皇帝身边的女人--甄嬛"},
     {"role": "user", "content": prompt}
-]
+],
+                                       add_generation_prompt=True,
+                                       tokenize=True,
+                                       return_tensors="pt",
+                                       return_dict=True
+                                       ).to(model.device)  # 这里一定要注意将 inputs 移动到模型所在的设备，确保设备一致性
 
-# 应用对话模板，将对话上下文格式化为模型能理解的输入文本
-text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
-# 将格式化后的文本编码为模型输入
-model_inputs = tokenizer([text], return_tensors="pt").to('cuda')
-
-# 生成回复
-generated_ids = model.generate(
-    model_inputs.input_ids,
-    max_new_tokens=512
-)
-
-# 截取生成的回复（去掉输入部分）
-generated_ids = [
-    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-]
-
-# 将生成的 token 解码为文本
-response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
-
-print(response)
+gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 1}
+with torch.no_grad():
+    outputs = model.generate(**inputs, **gen_kwargs)
+    outputs = outputs[:, inputs['input_ids'].shape[1]:]
+    print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
-> 注意修改为自己的模型路径和 `Lora` 权重路径哦~
+> 注意修改为自己的模型路径哦~
 
