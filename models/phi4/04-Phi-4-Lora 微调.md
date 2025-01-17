@@ -223,6 +223,8 @@ trainer.train()  # 开始训练
 ```
 ![train](./images/image04-3.png)
 
+> 训练大概要30分钟左右哦~
+
 ## 加载 lora 权重推理
 
 训练好了之后可以使用如下方式加载 `lora`权重进行推理：
