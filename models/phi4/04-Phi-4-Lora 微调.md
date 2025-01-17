@@ -42,6 +42,7 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
 ## 环境准备
+
 在 Autodl 平台中租赁一个GPU型号为 `RTX 4090*2卡` 的显卡，镜像选择 `phi4`，点击 `立即创建` 创建实例，如下图所示。接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
 ![开启机器配置选择](./images/image04-1.png)
 
@@ -57,7 +58,7 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
-model_dir = snapshot_download('qwen/Qwen2.5-7B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('LLM-Research/phi-4', cache_dir='/root/autodl-tmp', revision='master')
 ```
 > 注意：记得修改 cache_dir 为你的模型下载路径哦~
 
