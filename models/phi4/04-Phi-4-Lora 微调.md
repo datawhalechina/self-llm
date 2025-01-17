@@ -264,6 +264,7 @@ with torch.no_grad():
 ```
 ![result](./images/image04-4.png)
 
-> 注意修改为自己的模型路径哦~
+> 注意修改为自己的模型路径哦~‘
+
 > 如果显示 `Some parameters are on the meta device because they were offloaded to the cpu.` 的报错，需要将实例关机，重启后单独运行本条代码。
 
