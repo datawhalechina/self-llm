@@ -221,6 +221,7 @@ trainer = Trainer(
 )
 trainer.train()  # 开始训练
 ```
+![train](./images/image04-3.png)
 
 ## 加载 lora 权重推理
 
