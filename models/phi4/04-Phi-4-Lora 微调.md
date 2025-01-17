@@ -175,14 +175,6 @@ config = LoraConfig(
 )
 ```
 
-> `target_modules` 参数用于指定需要微调的模型层，选择不同的层可以针对性地优化模型的行为。以下是常见层的功能：
-> `q_proj` , `k_proj` , `v_proj`：查询、键、值投影层，注意力机制的核心部分，分别生成查询 `Query`、键 `Key` 和值 `Value` 向量。
-> `o_proj`：输出投影层，将注意力机制的输出映射回模型的隐藏维度。
-> `gate_proj`：门控投影层：在 `MLP` 中控制信息流动，通常与激活函数 `SwiGLU` 结合使用。
-> `up_proj` 和 `down_proj`：上投影层和下投影层，`MLP` 的一部分，分别将输入映射到高维度和从高维度映射回原始维度。
-
-通用任务一般选择`target_modules = ["q_proj", "k_proj", "v_proj", "o_proj"]`；如果是复杂任务，则选择`target_modules = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]`。
-
 ## 自定义 TrainingArguments 参数
 
 `TrainingArguments`这个类的源码也介绍了每个参数的具体作用，当然大家可以来自行探索，这里就简单说几个常用的。
