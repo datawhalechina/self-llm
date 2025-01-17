@@ -48,12 +48,14 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 
 ## 模型下载
 
-`modelscope` 是一个模型管理和下载工具，支持从 Hugging Face 等平台快速下载模型。这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
+`modelscope` 是一个模型管理和下载工具，支持从 Hugging Face 等平台快速下载模型。
+
+这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
 
 在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。并在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
 
 > 注意不要在notebook中直接运行，要不然会出现如下图的情况:
-![Phi-4-图1](images/image05-1.png)
+![Phi-4-图1](./images/image04-2.png)
 ```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
