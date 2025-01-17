@@ -41,6 +41,10 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
+## 环境准备
+在 Autodl 平台中租赁一个GPU型号为 `RTX 4090*2卡` 的显卡，镜像选择 `phi4`，点击 `立即创建` 创建实例，如下图所示。接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
+![开启机器配置选择](assets/03-1.png)
+
 ## 模型下载
 
 `modelscope` 是一个模型管理和下载工具，支持从 Hugging Face 等平台快速下载模型。这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
