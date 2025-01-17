@@ -52,7 +52,7 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 
 这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
 
-在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。并在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
+在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中粘贴以下代码，请及时保存文件。并在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 15GB，下载模型大概需要 5 分钟。
 ![模型下载](./images/image04-2.png)
 > 注意不要在notebook中直接运行哦~
 ```python
