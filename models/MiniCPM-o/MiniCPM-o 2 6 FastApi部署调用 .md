@@ -12,12 +12,12 @@ Python  3.12(ubuntu22.04)
 Cuda  12.1
 ```
 
-新建 `JupyterLa .ipynb` 文件进行  `pip` 换源加速及安装魔搭依赖（或打开终端，将每行命令前的 ‘!’ 去掉）
+打开终端或新建 `JupyterLa .ipynb` 文件，换源加速及安装魔搭依赖
 
 ```shell
-!pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-!pip install modelscope==1.20.0
+pip install modelscope==1.20.0
 ```
 
 ![image.png](images/01-1.png)
@@ -27,7 +27,7 @@ Cuda  12.1
 下载到所属路径下，一键`pip`安装
 
 ```shell
-!pip install -r requirements_o2.6.txt
+pip install -r requirements_o2.6.txt
 ```
 
 ![image.png](images/01-2.png)
@@ -35,7 +35,7 @@ Cuda  12.1
 或手动`pip`安装
 
 ```shell
-!pip install Pillow==10.1.0 torch==2.3.1 torchaudio==2.3.1 torchvision==0.18.1 transformers==4.44.2 sentencepiece==0.2.0 vector-quantize-pytorch==1.18.5 vocos==0.1.0 accelerate==1.2.1 timm==0.9.10 soundfile==0.12.1 librosa==0.9.0 decord moviepy fastapi uvicorn python-multipart
+pip install Pillow==10.1.0 torch==2.3.1 torchaudio==2.3.1 torchvision==0.18.1 transformers==4.44.2 sentencepiece==0.2.0 vector-quantize-pytorch==1.18.5 vocos==0.1.0 accelerate==1.2.1 timm==0.9.10 soundfile==0.12.1 librosa==0.9.0 decord moviepy fastapi uvicorn python-multipart
 ```
 
 检查是否有漏装或者报错
@@ -303,11 +303,11 @@ send_request({
 
 <img src="images/01-6.jpg" width = "300" height = "300" alt="image.jpg" align=center />
 
-在ipynb文件或在终端运行命令（去掉 ’!’ ）进行单张图片单轮对话：
+运行命令进行单张图片单轮对话：
 
 ```shell
 # cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
-!python 1image_1conv.py
+python 1image_1conv.py
 ```
 
 调用结果如下所示：
@@ -363,11 +363,10 @@ if response.status_code == 200:
 
 <img src="images/01-6.jpg" width = "300" height = "300" alt="image.jpg" align=center />
 
-在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
+运行命令进行单张图片多轮对话：
 
 ```shell
-# cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
-!python 1image_mconv.py
+python 1image_mconv.py
 ```
 
 调用结果如下所示：
@@ -421,11 +420,10 @@ send_request({
 
 <img src="images/01-6.jpg" width = "300" height = "300" alt="image.jpg" align=center /> <img src="images/01-9.jpg" width = "300" height = "300" alt="image.jpg" align=center />
 
-在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
+运行命令进行单张图片多轮对话：
 
 ```shell
-# cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
-!python mimage.py
+python mimage.py
 ```
 
 调用结果如下所示：
@@ -470,11 +468,10 @@ else:
 
 [video.mp4](images/01-11.mp4)
 
-在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
+运行命令进行单张图片多轮对话：
 
 ```shell
-# cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
-!python 1video.py
+python 1video.py
 ```
 
 调用结果如下所示：
