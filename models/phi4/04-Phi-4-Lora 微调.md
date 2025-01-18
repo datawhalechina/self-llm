@@ -33,7 +33,6 @@ pip install sentencepiece==0.2.0
 pip install accelerate==0.34.2  # 用于分布式训练和混合精度训练
 pip install datasets==2.20.0  # 用于加载和处理数据集
 pip install peft==0.11.1  # 用于 LoRA 微调
-
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Phi-4 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
@@ -41,26 +40,25 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
-## 环境准备
-
-在 Autodl 平台中租赁一个GPU型号为 `RTX 4090*2卡` 的显卡，镜像选择 `phi4`，点击 `立即创建` 创建实例，如下图所示。接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。
-![开启机器配置选择](./images/image04-1.png)
-
 ## 模型下载
 
 `modelscope` 是一个模型管理和下载工具，支持从 Hugging Face 等平台快速下载模型。
 
 这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
 
-在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中粘贴以下代码，请及时保存文件。在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 28GB，下载模型大概需要20分钟左右。
-![模型下载](./images/image04-2.png)
+在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中粘贴以下代码，请及时保存文件。在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 28GB，下载模型大概需要20分钟左右。 
+
+![模型下载](./images/image04-1.png)
+
 > 注意不要在notebook中直接运行哦~
+
 ```python
 import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
 model_dir = snapshot_download('LLM-Research/phi-4', cache_dir='/root/autodl-tmp', revision='master')
 ```
+
 > 注意：记得修改 cache_dir 为你的模型下载路径哦~
 
 ## 指令集构建
@@ -150,6 +148,7 @@ tokenizer.pad_token_id = tokenizer.eos_token_id = 100265  # 100265 == '<|im_end|
 
 model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/LLM-Research/phi-4', device_map="auto",torch_dtype=torch.bfloat16)
 ```
+
 > 注意：此处要记得修改为自己的模型路径哦~
 
 ## 定义 LoraConfig
@@ -213,7 +212,7 @@ trainer = Trainer(
 )
 trainer.train()  # 开始训练
 ```
-![train](./images/image04-3.png)
+![train](./images/image04-2.png)
 
 > 训练大概要30分钟左右哦~
 
@@ -256,9 +255,8 @@ with torch.no_grad():
     outputs = outputs[:, inputs['input_ids'].shape[1]:]
     print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
-![result](./images/image04-4.png)
+![result](./images/image04-3.png)
 
 > 注意修改为自己的模型路径哦~‘
 
 > 如果显示 `Some parameters are on the meta device because they were offloaded to the cpu.` 的报错，需要将实例关机，重启后单独运行本条代码。
-
