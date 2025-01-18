@@ -76,9 +76,9 @@
   - [ ] internlm3-8b-instruct Lora 微调 @九月
 
 - [phi4](https://huggingface.co/microsoft/phi-4)
-  - [ ] phi4 FastApi 部署调用 @杜森
+  - [x] [phi4 FastApi 部署调用](./models/phi4/01-Phi-4%20FastApi%20部署调用.md) @杜森
   - [x] [phi4 langchain 接入](./models/phi4/02-Phi-4-Langchain接入.md) @小罗
-  - [ ] phi4 WebDemo 部署 @杜森
+  - [x] [phi4 WebDemo 部署](./models/phi4/03-Phi-4%20WebDemo部署.md) @杜森
   - [x] [phi4 Lora 微调](./models/phi4/04-Phi-4-Lora%20微调.md) @郑远婧
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
@@ -316,18 +316,19 @@
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
+- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
-- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
+- [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
@@ -341,17 +342,18 @@
 - [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
 - [杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）
 - [小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）
+- [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+- [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
+- [付志远](https://github.com/comfzy)（内容创作者-海南大学）
+- [杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）
+- [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
 - [康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
-- [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
-- [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
 - [杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）
-- [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
 - [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
-- [付志远](https://github.com/comfzy)（内容创作者-海南大学）
 
 > 注：排名根据贡献程度排序
 
