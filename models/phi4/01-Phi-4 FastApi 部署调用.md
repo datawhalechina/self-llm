@@ -131,25 +131,28 @@ python api.py
 python /root/api.py
 ```  
 
-加载完毕后出现如下信息说明成功。
+默认部署在 6006 端口，加载完毕后出现如下信息说明成功。
 ![加载模型](images/image01-1.png)
 
-默认部署在 6006 端口，通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
+## 调用API
+
+### Curl 调用  
+通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
 
 ```shell
 curl -X POST "http://127.0.0.1:6006" -H "Content-Type: application/json" -d "{\"prompt\": \"你好\", \"history\": []}"
 ```  
 
 ![模型调用](images/image01-2.png)
+### ApiPost 调用
+使用 apipost软件 测试 history 的用法：
 
-使用 apipost 测试 history 的用法：
-
-header参数：
+Header参数：
 ```
 Content-Type: application/json
 ```
 
-json参数：
+Json参数：
 ```json
 {
     "prompt": "刚才我们再聊什么？",
