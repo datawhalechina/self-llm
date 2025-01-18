@@ -1,0 +1,6 @@
+pip install modelscope==1.20.0
+pip install fastapi==0.115.4
+pip install uvicorn==0.32.0
+pip install accelerate==1.1.1
+pip install torchvision==0.19.0
+pip install av==13.1.0

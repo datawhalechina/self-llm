@@ -21,12 +21,12 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.11.0
-pip install langchain==0.1.15
-pip install streamlit==1.36.0
-pip install transformers==4.42.4
+pip install modelscope==1.16.1
+pip install langchain==0.2.3
+pip install streamlit==1.37.0
+pip install transformers==4.43.2
 pip install accelerate==0.32.1
-```  
+```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了LLaMA3-1的环境镜像，点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-llama3.1***
@@ -67,7 +67,7 @@ st.title("💬 LLaMA3.1 Chatbot")
 st.caption("🚀 A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
-mode_name_or_path = '/root/autodl-tmp/LLM-Research/Meta-Llama-3.1-8B-Instruct'
+mode_name_or_path = '/root/autodl-tmp/LLM-Research/Meta-Llama-3___1-8B-Instruct'
 
 # 定义一个函数，用于获取模型和tokenizer
 @st.cache_resource
@@ -123,7 +123,17 @@ if prompt := st.chat_input():
 streamlit run chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-运行成功后，在本地浏览器打开http://127.0.0.1:6006/ 即可查看部署的WebDemo，如下所示。
+点击自定义服务
+
+![03-3.png](./images/03-3.png)
+
+![03-4.png](./images/03-4.png)
+
+在本地终端中建立 `ssh` 连接与输入密码
+
+![03-5.png](./images/03-5.png)
+
+在本地浏览器中打开链接 http://localhost:6006/ ，即可查看部署的 `WebDemo` 聊天界面。运行效果如下：
 
 ![alt text](./images/03-2.png)
 

@@ -133,11 +133,7 @@ if __name__ == '__main__':
 ```shell  
 cd /root/autodl-tmp
 python api.py
-
-python /root/autodl-tmp/api.py
-```  
-
-```shell
+# or
 python /root/autodl-tmp/api.py
 ```  
 

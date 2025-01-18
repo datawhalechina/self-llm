@@ -8,21 +8,20 @@
 
 ## **环境准备**
 
-在 `AutoDL` 平台中租赁一个 3090 等 24G 显存大小的容器实例，镜像选择如下 `PyTorch`→`2.1.0`→`3.10(ubuntu22.04)`→`12.1`
+本文基础环境如下：
 
-![fig4-1](./images/fig4-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-接下来打开本地设备终端使用 `ssh` 的方式访问，在终端中依次复制登录指令和密码完成登录
+> 本文默认学习者已安装好以上 `PyTorch` (`cuda`) 环境，如未安装请自行安装。
 
-![fig4-2](./images/fig4-2.png)
-
-`ssh` 登录成功后的界面如图所示👇
-
-![fig4-3](./images/fig4-3.png)
-
-或者也可以直接打开 `AutoDL` 网页端的快捷工具中选择 `JupyterLab` 并在其中点击终端打开（这种方式不需要验证🫠）
-
-![fig4-14](./images/fig4-4.png)接下来开始环境配置、模型下载和运行演示 ~
+接下来开始环境配置、模型下载和运行演示 ~
 
 `pip` 换源加速下载并安装依赖包
 
@@ -31,24 +30,15 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
-pip install transformers==4.39.2
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.27.0
-pip install transformers_stream_generator==0.0.4
-pip install datasets==2.8.0
-pip install peft==0.10.0
-
-# 可选
-MAX_JOBS=8 pip install flash-attn --no-build-isolation 
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
+pip install peft==0.11.1
+pip install datasets==2.20.0
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 `AutoDL` 平台准备了 `Index-1.9B-Chat` 的环境镜像。点击下方链接并直接创建 `Autodl` 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Index***
-
-
-> 注意：`flash-attn` 安装会比较慢，大概需要十几分钟。
 
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
 
@@ -56,21 +46,26 @@ MAX_JOBS=8 pip install flash-attn --no-build-isolation
 
 ## 模型下载  
 
-使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径，参数`revision`为模型的版本，master代表主分支，为最新版本。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
-在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 5 钟。
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
 
 ```python
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-import os
+# model_download.py
+from modelscope import snapshot_download
 
-model_dir = snapshot_download('IndexTeam/Index-1.9B-Chat', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-终端出现下图结果表示下载成功。
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 ![](images/image01-0.png)
+
+
 
 ## 指令集构建
 

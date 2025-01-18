@@ -25,9 +25,9 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install fastapi==0.111.1
 pip install uvicorn==0.30.3
 pip install modelscope==1.16.1
-pip install transformers==4.42.4
+pip install transformers==4.43.2
 pip install accelerate==0.32.1
-```  
+```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了LLaMA3-1的环境镜像，点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-llama3.1***
@@ -44,7 +44,7 @@ import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
 model_dir = snapshot_download('LLM-Research/Meta-Llama-3.1-8B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
-```  
+```
 
 > 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
-```  
+```
 
 > 注意：记得修改 `model_name_or_path` 为你的模型下载路径哦~
 
@@ -131,7 +131,7 @@ if __name__ == '__main__':
 
 ```shell  
 python api.py
-```  
+```
 
 加载完毕后出现如下信息说明成功。
 
@@ -143,7 +143,7 @@ python api.py
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好"}'
-```  
+```
 ![alt text](./images/01-2.png)
 
 也可以使用 python 中的 requests 库进行调用，如下所示：
@@ -166,6 +166,6 @@ if __name__ == '__main__':
 
 ```json
 {"response":"你好！很高兴能为你提供帮助。有什么问题我可以回答或者协助你完成吗？","status":200,"time":"2024-06-07 12:24:31"}
-```  
+```
 
 ![alt text](./images/01-3.png)

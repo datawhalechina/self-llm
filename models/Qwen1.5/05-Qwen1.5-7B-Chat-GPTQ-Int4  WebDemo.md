@@ -8,15 +8,9 @@ Qwen1.5-72b 版本有BF16、INT8、INT4三个版本，三个版本性能接近�
 
 在此提供环境准备教程。本教程以 *Qwen1.5-7B-Chat-GPTQ-Int4*为例，同样适用于其他大小的*GPTQ-Int4*版本。
 
+
+
 ## 环境准备
-
-### 平台及cuda部分
-
-在autodl平台中租一个4090等24G显存的显卡机器，如下图所示镜像选择PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（严格按照cuda11.8版本）
-接下来打开刚刚租用服务器的JupyterLab，并且打开其中的终端开始环境配置。
-
-
-![Alt text](images/Qwen1.5-7b-gptq-int4-1.png)
 
 说明：
 - 确保显卡驱动支持cuda11.8
@@ -30,7 +24,7 @@ nvcc -V
 # 查看输出若为Cuda compilation tools, release 11.8 则跳过平台及cuda部分
 ```
 ---
-如果后续由于Autodl的环境更新，无法选择cuda11.8，则可通过以下方式**自行搭建cuda11.8**环境。该方法已经通过测试。
+可通过以下方式**自行搭建cuda11.8**环境。该方法已经通过测试。
 ```shell
 # 下载驱动并安装
 wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
@@ -49,9 +43,12 @@ export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH
 source ~/.bashrc 
 nvcc -V 
 ```
---- 
+---
+
+
 
 ### 虚拟环境配置
+
 由于base环境的torch不一定满足要求，创建虚拟环境。
 ```shell
 # 创建虚拟环境
@@ -75,23 +72,37 @@ pip install "git+https://github.com/PanQiWei/AutoGPTQ.git@v0.7.1"
 > Note: The pre-compiled `auto-gptq` packages strongly depend on the version of `torch` and its CUDA version. Moreover, due to recent update, 
 > you may also encounter unsupported version errors from `transformers`, `optimum`, or `peft`.
 > We recommend using the latest versions meeting the following requirements:
+>
 > - torch==2.1 auto-gptq>=0.5.1 transformers>=4.35.0 optimum>=1.14.0 peft>=0.6.1
 > - torch>=2.0,<2.1 auto-gptq<0.5.0 transformers<4.35.0 optimum<1.14.0 peft>=0.5.0,<0.6.0
 
 至此，环境部分准备完成。
 
+
+
 ## 模型下载
-使用 modelscope 中的snapshot_download函数下载模型，第一个参数为模型名称，参数cache_dir为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 python /root/autodl-tmp/download.py 执行下载，下载模型大概需要 2 分钟。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
-```
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-from modelscope import GenerationConfig
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
+
+```python
+# model_download.py
+from modelscope import snapshot_download
+
 model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat-GPTQ-Int4', cache_dir='/root/autodl-tmp', revision='master')
 ```
-说明：下载后需要确认下载的Qwen1.5-7B-Chat-GPTQ-Int4文件名称，可能由于解码问题不正确导致后续bug。
+
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
+> 说明：下载后需要确认下载的 `Qwen1.5-7B-Chat-GPTQ-Int4` 文件名称，可能由于解码问题不正确导致后续bug。
+
+
+
 ## 代码准备
 
 在`/root/autodl-tmp`路径下新建 `chatBot.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出issue。

@@ -2,12 +2,22 @@
 
 ## 环境准备  
 
-在 Autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8（11.3 版本以上的都可以）。
-接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行演示。  
+本文基础环境如下：
 
-![开启机器配置选择](images/1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-pip 换源加速下载并安装依赖包
+> 本文默认学习者已安装好以上 PyTorch(cuda) 环境，如未安装请自行安装。
+
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
 
 ```shell
 # 升级pip
@@ -15,33 +25,38 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install fastapi==0.104.1
-pip install uvicorn==0.24.0.post1
-pip install requests==2.25.1
-pip install modelscope==1.11.0
-pip install transformers==4.37.0
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
-```  
+pip install fastapi==0.111.1
+pip install uvicorn==0.30.3
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
+```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
 
 
+
 ## 模型下载  
 
-使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 14GB，下载模型大概需要 2 分钟。
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
 
 ```python
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-import os
+# model_download.py
+from modelscope import snapshot_download
+
 model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
-```  
+```
+
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
+
 
 ## 代码准备  
 
@@ -116,7 +131,9 @@ if __name__ == '__main__':
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
-```  
+```
+
+
 
 ## Api 部署  
 
@@ -125,7 +142,7 @@ if __name__ == '__main__':
 ```shell  
 cd /root/autodl-tmp
 python api.py
-```  
+```
 
 加载完毕后出现如下信息说明成功。
 
@@ -137,7 +154,7 @@ python api.py
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好"}'
-```  
+```
 
 也可以使用 python 中的 requests 库进行调用，如下所示：
 
@@ -159,6 +176,6 @@ if __name__ == '__main__':
 
 ```json
 {"response":"你好！有什么我可以帮助你的吗？","status":200,"time":"2024-02-05 18:08:19"}
-```  
+```
 
 ![Alt text](images/6.png)

@@ -3,7 +3,7 @@
   <h1>开源大模型食用指南</h1>
 </div>
 
-&emsp;&emsp;本项目是一个围绕开源大模型、针对国内初学者、基于 AutoDL 平台的中国宝宝专属大模型教程，针对各类开源大模型提供包括环境配置、本地部署、高效微调等技能在内的全流程指导，简化开源大模型的部署、使用和应用流程，让更多的普通学生、研究者更好地使用开源大模型，帮助开源、自由的大模型更快融入到普通学习者的生活中。
+&emsp;&emsp;本项目是一个围绕开源大模型、针对国内初学者、基于 Linux 平台的中国宝宝专属大模型教程，针对各类开源大模型提供包括环境配置、本地部署、高效微调等技能在内的全流程指导，简化开源大模型的部署、使用和应用流程，让更多的普通学生、研究者更好地使用开源大模型，帮助开源、自由的大模型更快融入到普通学习者的生活中。
 
 &emsp;&emsp;本项目的主要内容包括：
 
@@ -53,7 +53,58 @@
 
 &emsp;&emsp; 本项目拟围绕开源 LLM 应用全流程组织，包括环境配置及使用、部署应用、微调等，每个部分覆盖主流及特点开源 LLM：
 
+### Example 系列
+
+- [Chat-嬛嬛](./examples/Chat-嬛嬛/readme.md)： Chat-甄嬛是利用《甄嬛传》剧本中所有关于甄嬛的台词和语句，基于LLM进行LoRA微调得到的模仿甄嬛语气的聊天语言模型。
+
+- [Tianji-天机](./examples/Tianji-天机/readme.md)：天机是一款基于人情世故社交场景，涵盖提示词工程 、智能体制作、 数据获取与模型微调、RAG 数据清洗与使用等全流程的大语言模型系统应用教程。
+
 ### 已支持模型
+
+
+- [MiniCPM-o-2_6](https://github.com/OpenBMB/MiniCPM-o)
+  - [ ] minicpm-o-2.6 FastApi 部署调用 @林恒宇
+  - [ ] minicpm-o-2.6 WebDemo 部署 @九月
+  - [ ] minicpm-o-2.6 vLLM 部署 @邓恺俊
+  - [ ] minicpm-o-2.6 可视化 Lora 微调 @林泽毅
+
+- [InternLM3](https://github.com/InternLM/InternLM)
+  - [ ] internlm3-8b-instruct FastApi 部署调用 @苏向标
+  - [ ] internlm3-8b-instruct Langchian接入 @赵文恺
+  - [ ] internlm3-8b-instruct WebDemo 部署 @王泽宇
+  - [ ] internlm3-8b-instruct vLLM 部署 @陈睿
+  - [ ] internlm3-8b-instruct Lora 微调 @九月
+
+- [phi4](https://huggingface.co/microsoft/phi-4)
+  - [x] [phi4 FastApi 部署调用](./models/phi4/01-Phi-4%20FastApi%20部署调用.md) @杜森
+  - [x] [phi4 langchain 接入](./models/phi4/02-Phi-4-Langchain接入.md) @小罗
+  - [x] [phi4 WebDemo 部署](./models/phi4/03-Phi-4%20WebDemo部署.md) @杜森
+  - [x] [phi4 Lora 微调](./models/phi4/04-Phi-4-Lora%20微调.md) @郑远婧
+
+- [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
+  - [x] [Qwen2.5-Coder-7B-Instruct FastApi部署调用](./models/Qwen2.5-Coder/01-Qwen2.5-Coder-7B-Instruct%20FastApi%20部署调用.md) @赵文恺
+  - [x] [Qwen2.5-Coder-7B-Instruct Langchian接入](./models/Qwen2.5-Coder/02-Qwen2.5-7B-Instruct%20Langchain%20接入.md) @杨晨旭
+  - [x] [Qwen2.5-Coder-7B-Instruct WebDemo 部署](./models/Qwen2.5-Coder/03-Qwen2.5-Coder-7B-Instruct%20WebDemo部署.md) @王泽宇
+  - [x] [Qwen2.5-Coder-7B-Instruct vLLM 部署](./models/Qwen2.5-Coder/04-Qwen2.5-Coder-7B-Instruct%20vLLM%20部署调用.md) @王泽宇
+  - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调](./models/Qwen2.5-Coder/Qwen2.5-Coder-7B-Instruct%20Lora%20微调.md) @荞麦
+  - [x] [Qwen2.5-Coder-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5-Coder/05-Qwen2.5-Coder-7B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @杨卓
+
+- [Qwen2-vl](https://github.com/QwenLM/Qwen2-VL)
+  - [x] [Qwen2-vl-2B FastApi 部署调用](./models/Qwen2-VL/01-Qwen2-VL-2B-Instruct%20FastApi%20部署调用.md) @姜舒凡
+  - [x] [Qwen2-vl-2B WebDemo 部署](./models/Qwen2-VL/02-Qwen2-VL-2B-Instruct%20Web%20Demo部署.md) @赵伟
+  - [x] [Qwen2-vl-2B vLLM 部署](./models/Qwen2-VL/03-Qwen2-VL-2B-Instruct%20vLLM部署调用.md) @荞麦
+  - [x] [Qwen2-vl-2B Lora 微调](./models/Qwen2-VL/04-Qwen2-VL-2B%20Lora%20微调.md) @李柯辰
+  - [x] [Qwen2-vl-2B Lora 微调 SwanLab 可视化记录版](./models/Qwen2-VL/05-Qwen2-VL-2B-Instruct%20Lora%20微调%20SwanLab%20可视化记录版.md) @林泽毅
+  - [x] [Qwen2-vl-2B Lora 微调案例 - LaTexOCR](./models/Qwen2-VL/06-Qwen2-VL-2B-Instruct%20Lora%20微调案例%20-%20LaTexOCR.md) @林泽毅
+
+- [Qwen2.5](https://github.com/QwenLM/Qwen2.5)
+  - [x] [Qwen2.5-7B-Instruct FastApi 部署调用](./models/Qwen2.5/01-Qwen2.5-7B-Instruct%20FastApi%20部署调用.md) @娄天奥
+  - [x] [Qwen2.5-7B-Instruct langchain 接入](./models/Qwen2.5/02-Qwen2.5-7B-Instruct%20Langchain%20接入.md) @娄天奥
+  - [x] [Qwen2.5-7B-Instruct vLLM 部署调用](./models/Qwen2.5/03-Qwen2.5-7B-Instruct%20vLLM%20部署调用.md) @姜舒凡
+  - [x] [Qwen2.5-7B-Instruct WebDemo 部署](./models/Qwen2.5/04-Qwen2_5-7B-Instruct%20WebDemo部署.md) @高立业
+  - [x] [Qwen2.5-7B-Instruct Lora 微调](./models/Qwen2.5/05-Qwen2.5-7B-Instruct%20Lora%20微调.md) @左春生
+  - [x] [Qwen2.5-7B-Instruct o1-like 推理链实现](./models/Qwen2.5/06-Qwen2.5-7B-Instruct%20o1-like%20推理链实现.md) @姜舒凡
+  - [x] [Qwen2.5-7B-Instruct Lora 微调 SwanLab 可视化记录版](./models/Qwen2.5/07-Qwen2.5-7B-Instruct%20Lora%20微调%20SwanLab可视化记录版.md) @林泽毅
 
 - [Apple OpenELM](https://machinelearning.apple.com/research/openelm)
   - [x] [OpenELM-3B-Instruct FastApi 部署调用](./models/OpenELM/01-OpenELM-3B-Instruct%20FastApi部署调用.md) @王泽宇
@@ -108,6 +159,8 @@
   - [x] [GLM-4-9B-chat WebDemo 部署](./models/GLM-4/03-GLM-4-9B-Chat%20WebDemo.md) @何至轩
   - [x] [GLM-4-9B-chat vLLM 部署](./models/GLM-4/04-GLM-4-9B-Chat%20vLLM%20部署调用.md) @王熠明
   - [x] [GLM-4-9B-chat Lora 微调](./models/GLM-4/05-GLM-4-9B-chat%20Lora%20微调.md) @肖鸿儒
+  - [x] [GLM-4-9B-chat-hf Lora 微调](./models/GLM-4/05-GLM-4-9B-chat-hf%20Lora%20微调.md) @付志远
+
 
 - [Qwen 1.5](https://github.com/QwenLM/Qwen1.5.git)
   - [x] [Qwen1.5-7B-chat FastApi 部署调用](./models/Qwen1.5/01-Qwen1.5-7B-Chat%20FastApi%20部署调用.md) @颜鑫
@@ -186,6 +239,7 @@
   - [x] [MiniCPM-2B-chat webdemo 部署](./models/MiniCPM/MiniCPM-2B-chat%20WebDemo部署.md) @Kailigithub 
   - [x] [MiniCPM-2B-chat Lora && Full 微调](./models/MiniCPM/MiniCPM-2B-chat%20Lora%20&&%20Full%20微调.md) @不要葱姜蒜 
   - [x] 官方友情链接：[面壁小钢炮MiniCPM教程](https://modelbest.feishu.cn/wiki/D2tFw8Pcsi5CIzkaHNacLK64npg) @OpenBMB 
+  - [x] 官方友情链接：[MiniCPM-Cookbook](https://github.com/OpenBMB/MiniCPM-CookBook) @OpenBMB
 
 - [Qwen-Audio](https://github.com/QwenLM/Qwen-Audio.git)
   - [x] [Qwen-Audio FastApi 部署调用](./models/Qwen-Audio/01-Qwen-Audio-chat%20FastApi.md) @陈思州
@@ -257,37 +311,49 @@
 ### 核心贡献者
 
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）
+- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
+- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
+- [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
+- [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
-- [王泽宇](https://github.com/moyitech)（内容创作者-鲸英助教）
-- [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
+- [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
 - [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
 - [张晋](https://github.com/Jin-Zhang-Yaoguang)（内容创作者-Datawhale成员）
+- [娄天奥](https://github.com/lta155)（内容创作者-中国科学院大学-鲸英助教）
+- [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
+- [杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）
 - [小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）
+- [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+- [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
+- [付志远](https://github.com/comfzy)（内容创作者-海南大学）
+- [杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）
+- [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
 - [康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
-- [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
-- [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
+- [杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）
+- [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
 
 > 注：排名根据贡献程度排序
 
@@ -308,6 +374,6 @@
 ### Star History
 
 <div align=center style="margin-top: 30px;">
-  <img src="./images/star-history-2024825.png"/>
+  <img src="./images/star-history-2024129.png"/>
 </div>
 

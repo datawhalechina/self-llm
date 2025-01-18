@@ -1,0 +1,10 @@
+# requirements.txt
+qwen_vl_utils==0.0.8
+transformers==4.46.2
+accelerate==1.1.1
+gradio==5.5.0
+torchvision==0.19.0
+modelscope==1.20.0
+# # 如果安装了flash-attn，则会多出这两个库
+# einops==0.8.0
+# flash-attn==2.7.0

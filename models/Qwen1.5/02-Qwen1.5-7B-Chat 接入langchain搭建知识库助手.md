@@ -2,12 +2,22 @@
 
 ## 环境准备  
 
-在 autodl 平台中租赁一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 PyTorch-->2.0.0-->3.8(ubuntu20.04)-->11.8  
+本文基础环境如下：
 
-![机器配置选择](images/1.png)
-接下来打开刚刚租用服务器的 JupyterLab，并且打开其中的终端开始环境配置、模型下载和运行 demo。
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-pip 换源加速下载并安装依赖包
+> 本文默认学习者已安装好以上 PyTorch(cuda) 环境，如未安装请自行安装。
+
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
 
 ```shell
 # 升级pip
@@ -15,36 +25,45 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.11.0
-pip install langchain==0.1.15
-pip install "transformers>=4.37.0" accelerate tiktoken einops scipy transformers_stream_generator==0.0.4 peft deepspeed
-pip install -U huggingface_hub
-```  
+pip install modelscope==1.16.1
+pip install langchain==0.2.3
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
+```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
 
 
+
+
 ## 模型下载
 
-使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
-在 /root/autodl-tmp 路径下新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 14 GB，下载模型大概需要 2 分钟。
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
 
-```python  
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
 
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-import os
+```python
+# model_download.py
+from modelscope import snapshot_download
+
 model_dir = snapshot_download('qwen/Qwen1.5-7B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
+
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
+
 
 
 ## 代码准备
 
-为便捷构建 LLM 应用，我们需要基于本地部署的 Qwen2-LM，自定义一个 LLM 类，将 Qwen2 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
+为便捷构建 LLM 应用，我们需要基于本地部署的 Qwen1.5-LM，自定义一个 LLM 类，将 Qwen1.5 接入到 LangChain 框架中。完成自定义 LLM 类之后，可以以完全一致的方式调用 LangChain 的接口，而无需考虑底层模型调用的不一致。
 
-基于本地部署的 Qwen2 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
+基于本地部署的 Qwen1.5 自定义 LLM 类并不复杂，我们只需从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 _call 函数即可：
 
 ```python
 from langchain.llms.base import LLM
@@ -53,8 +72,8 @@ from langchain.callbacks.manager import CallbackManagerForLLMRun
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, LlamaTokenizerFast
 import torch
 
-class Qwen2_LLM(LLM):
-    # 基于本地 Qwen2 自定义 LLM 类
+class Qwen1_5_LLM(LLM):
+    # 基于本地 Qwen1.5 自定义 LLM 类
     tokenizer: AutoTokenizer = None
     model: AutoModelForCausalLM = None
         
@@ -83,12 +102,14 @@ class Qwen2_LLM(LLM):
         return response
     @property
     def _llm_type(self) -> str:
-        return "Qwen2_LLM"
+        return "Qwen1_5_LLM"
 ```
 
-在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 Qwen2 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 generate 方法，从而实现对模型的调用并返回调用结果。
+在上述类定义中，我们分别重写了构造函数和 _call 函数：对于构造函数，我们在对象实例化的一开始加载本地部署的 Qwen1.5 模型，从而避免每一次调用都需要重新加载模型带来的时间过长；_call 函数是 LLM 类的核心函数，LangChain 会调用该函数来调用 LLM，在该函数中，我们调用已实例化模型的 generate 方法，从而实现对模型的调用并返回调用结果。
 
 在整体项目中，我们将上述代码封装为 LLM.py，后续将直接从该文件中引入自定义的 LLM 类。
+
+
 
 
 ## 调用
@@ -96,8 +117,8 @@ class Qwen2_LLM(LLM):
 然后就可以像使用任何其他的langchain大模型功能一样使用了。
 
 ```python
-from LLM import Qwen2_LLM
-llm = Qwen2_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-7B-Chat")
+from LLM import Qwen1_5_LLM
+llm = Qwen1_5_LLM(mode_name_or_path = "/root/autodl-tmp/qwen/Qwen1.5-7B-Chat")
 llm("你是谁")
 ```
 

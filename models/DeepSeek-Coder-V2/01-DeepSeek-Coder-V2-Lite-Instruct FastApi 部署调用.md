@@ -2,33 +2,20 @@
 
 ## **环境准备**
 
-在 `AutoDL` 平台中租赁两个 3090 等 24G*2 显存大小的容器实例，镜像选择如下 `PyTorch`→`2.1.0`→`3.10(ubuntu22.04)`→`12.1`
+本文基础环境如下：
 
-![fig1-1](images/fig1-1.png)
-
-接下来打开本地设备终端使用 `ssh` 的方式访问，在终端中依次复制登录指令和密码完成登录
-
-![fig1-2](images/fig1-2.png)
-
-`ssh` 登录成功后的界面如图所示👇
-
-![fig1-3](images/fig1-3.png)
-
-或者也可以直接打开 `AutoDL` 网页端的快捷工具中选择 `JupyterLab` 并在其中点击终端打开（这种方式不需要验证🫠）
-
-![fig1-4](images/fig1-4.png)
-
-然后我们可以检查一下自己创建的容器示例的卡数是否是正确的，这一步将保证我们后续的显存是足够的
-
-```bash
-nvidia-smi
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
 ```
 
-![fig1-8](images/fig1-8.png)
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-接下来开始环境配置、模型下载和运行演示 ~
-
-`pip` 换源加速下载并安装依赖包
+首先 `pip` 换源加速下载并安装依赖包
 
 ```bash
 # 升级pip
@@ -36,17 +23,11 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install fastapi==0.104.1
-pip install uvicorn==0.24.0.post1
-pip install requests==2.32.3
-pip install modelscope==1.9.5
-pip install transformers==4.39.2
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.27.0
-pip install tiktoken==0.7.0
-pip install huggingface_hub==0.23.4
-pip install flash-attn==2.5.9.post1
+pip install fastapi==0.111.1
+pip install uvicorn==0.30.3
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了DeepSeek-Coder-V2-Lite-Instruct的环境镜像，点击下方链接并直接创建Autodl示例即可。
@@ -56,11 +37,11 @@ pip install flash-attn==2.5.9.post1
 
 ## 模型下载
 
-使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，master代表主分支，也是一般模型上传的默认分支。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
 先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
 
-然后新建名为 `model_download.py` 的 `python` 脚本，并在其中输入以下内容并保存
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
 
 ```python
 # model_download.py
@@ -71,6 +52,8 @@ model_dir = snapshot_download('deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct', cac
 ```
 
 然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
 
 
@@ -89,7 +72,7 @@ import torch
 
 # 设置设备参数
 DEVICE = "cuda"  # 使用CUDA
-CUDA_DEVICES = ["0", "1"]  # CUDA设备ID列表，这里是因为我们有两张3090，所以分别为0和1
+CUDA_DEVICES = ["0", "1", "2", "3"]  # CUDA设备ID列表，这里假设我们有四张N卡，所以编号分别为0，1，2，3
 DEVICE_IDS = [f"{DEVICE}:{device_id}" for device_id in CUDA_DEVICES]  # 组合CUDA设备信息
 
 # 清理GPU内存函数
@@ -111,37 +94,25 @@ async def create_item(request: Request):
     json_post = json.dumps(json_post_raw)  # 将JSON数据转换为字符串
     json_post_list = json.loads(json_post)  # 将字符串转换为Python对象
     prompt = json_post_list.get('prompt')  # 获取请求中的提示
-    history = json_post_list.get('history')  # 获取请求中的历史记录
-    max_length = json_post_list.get('max_length')  # 获取请求中的最大长度
-    top_p = json_post_list.get('top_p')  # 获取请求中的top_p参数
-    top_k = json_post_list.get('top_k')  # 获取请求中的top_k参数
-    temperature = json_post_list.get('temperature')  # 获取请求中的温度参数
-    repetition_penalty = json_post_list.get('repetition_penalty')  # 获取请求中的重复惩罚参数
-    
-    model_input = []
-    for q, a in history:
-        model_input.append({"role": "user", "content": q})
-        model_input.append({"role": "assistant", "content": a})
-    model_input.append({"role": "user", "content": prompt})
+
+    messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+    ]
 
     # 调用模型进行对话生成
-    model_output = generator(
-        model_input, 
-        max_new_tokens=max_length if max_length else 1024,
-        top_k=top_k if top_k else 5, # 如果未提供top_k参数，默认使用0.5
-        top_p=top_p if top_p else 0.7,  # 如果未提供top_p参数，默认使用0.7
-        temperature=temperature if temperature else 0.95,  # 如果未提供温度参数，默认使用0.95, 
-        repetition_penalty=repetition_penalty if repetition_penalty else 1.1, # 如果未提供重复惩罚参数，默认使用1.1, 
-        do_sample=True
-    )
-    response = model_output[0]['generated_text'][-1]['content']
-    history.append([prompt, response])
+    input_ids = tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
+    model_inputs = tokenizer([input_ids], return_tensors="pt").to('cuda')
+    generated_ids = model.generate(model_inputs.input_ids,max_new_tokens=512)
+    generated_ids = [
+        output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+    ]
+    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     now = datetime.datetime.now()  # 获取当前时间
     time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
     # 构建响应JSON
     answer = {
         "response": response,
-        "history": history,
         "status": 200,
         "time": time
     }
@@ -154,17 +125,10 @@ async def create_item(request: Request):
 # 主函数入口
 if __name__ == '__main__':
     # 加载预训练的分词器和模型
-    mode_name_or_path = '/root/autodl-tmp/deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct'
-    tokenizer = AutoTokenizer.from_pretrained(mode_name_or_path, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(mode_name_or_path, trust_remote_code=True, torch_dtype=torch.bfloat16, device_map="auto")
-    generator = pipeline(
-        "text-generation",
-        model=model,
-        tokenizer=tokenizer, 
-        trust_remote_code=True, 
-        device_map="auto"
-    )
-    
+    model_name_or_path = '/root/autodl-tmp/deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct'
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False)
+    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", torch_dtype=torch.bfloat16)
+
     # 启动FastAPI应用
     # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
     uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用

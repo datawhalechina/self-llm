@@ -1,14 +1,23 @@
-# Index-1.9B-chat FastApi 部署调用
+# Index-1.9B-Chat FastApi 部署调用
 
 ## 环境准备
 
-在 [AutoDL](https://www.autodl.com/) 平台中租一个 3090 等 24G 显存的显卡机器，如下图所示镜像选择 `PyTorch`-->`2.1.0`-->`3.10(ubuntu22.04)`-->`12.1`。
+本文基础环境如下：
 
-![](images/image01-1.png)
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
 
-接下来打开刚刚租用服务器的 `JupyterLab`，并且打开其中的终端开始环境配置、模型下载和运行 `demo`。
+> 本文默认学习者已安装好以上 PyTorch(cuda) 环境，如未安装请自行安装。
 
-pip 换源和安装依赖包。
+接下来开始环境配置、模型下载和运行演示 ~
+
+`pip` 换源加速下载并安装依赖包
 
 ```bash
 # 升级pip
@@ -16,37 +25,39 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install fastapi==0.104.1
-pip install uvicorn==0.24.0.post1
-pip install requests==2.32.3
-pip install modelscope==1.9.5
-pip install transformers==4.39.2
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.27.0
-pip install tiktoken==0.7.0
-pip install huggingface_hub==0.23.4
+pip install fastapi==0.111.1
+pip install uvicorn==0.30.3
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
 ```
 
 
 
 ## 模型下载
 
-使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径，参数`revision`为模型的版本，master代表主分支，为最新版本。
+使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为自定义的模型下载路径，参数`revision`为模型仓库分支版本，`master `代表主分支，也是一般模型上传的默认分支。
 
-在 `/root/autodl-tmp` 路径下新建 `download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python /root/autodl-tmp/download.py` 执行下载，模型大小为 8 GB，下载模型大概需要 5 钟。
+先切换到 `autodl-tmp` 目录，`cd /root/autodl-tmp` 
+
+然后新建名为 `model_download.py` 的 `python` 文件，并在其中输入以下内容并保存
 
 ```python
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
-import os
+# model_download.py
+from modelscope import snapshot_download
 
 model_dir = snapshot_download('IndexTeam/Index-1.9B-Chat', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
+然后在终端中输入 `python model_download.py` 执行下载，注意该模型权重文件比较大，因此这里需要耐心等待一段时间直到模型下载完成。
+
+> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+
 终端出现下图结果表示下载成功。
 
 ![](images/image01-0.png)
+
+
 
 ## 代码准备
 

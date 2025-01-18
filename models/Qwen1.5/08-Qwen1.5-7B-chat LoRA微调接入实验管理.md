@@ -9,31 +9,40 @@ SwanLab是一款开源、轻量级的AI实验跟踪工具，提供了一个跟�
 
 ## 环境配置
 
-在完成基本环境配置和本地模型部署的情况下，你还需要安装一些第三方库，可以使用以下命令：
+本文基础环境如下：
 
-```bash
+```
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.1
+pytorch 2.3.0
+----------------
+```
+
+> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
+
+首先 `pip` 换源加速下载并安装依赖包
+
+```shell
+# 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.9.5
-pip install "transformers>=4.37.0"
-pip install streamlit==1.24.0
-pip install sentencepiece==0.1.99
-pip install accelerate==0.24.1
-pip install transformers_stream_generator==0.0.4
-pip install datasets==2.18.0
-pip install peft==0.10.0
-
-MAX_JOBS=8 pip install flash-attn --no-build-isolation
+pip install modelscope==1.16.1
+pip install transformers==4.43.2
+pip install accelerate==0.32.1
+pip install peft==0.11.1
+pip install datasets==2.20.0
 ```
+
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Qwen1.5的环境镜像，该镜像适用于该仓库除Qwen-GPTQ和vllm外的所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-Qwen1.5***
 
-
-> 注意：flash-attn 安装会比较慢，大概需要十几分钟。
-
 在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+
+
 
 ## 指令集构建
 
@@ -60,6 +69,8 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 ```
 
 我们所构造的全部指令数据集在根目录下。
+
+
 
 
 ## 数据格式化
@@ -97,6 +108,8 @@ You are a helpful assistant.<|im_end|>
 我是一个有用的助手。<|im_end|>
 ```
 
+
+
 ## 加载tokenizer和半精度模型
 
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
@@ -106,6 +119,8 @@ tokenizer = AutoTokenizer.from_pretrained('./qwen/Qwen1.5-7B-Chat/', use_fast=Fa
 
 model = AutoModelForCausalLM.from_pretrained('./qwen/Qwen1.5-7B-Chat/', device_map="auto",torch_dtype=torch.bfloat16)
 ```
+
+
 
 ## 定义LoraConfig
 
@@ -128,6 +143,8 @@ config = LoraConfig(
     lora_dropout=0.1# Dropout 比例
 )
 ```
+
+
 
 ## 自定义 TrainingArguments 参数
 
@@ -154,7 +171,10 @@ args = TrainingArguments(
 )
 ```
 
+
+
 ## 利用SwanLab实现模型实验管理
+
 在配置完参数后我们推荐使用模型实验管理工具来记录实验的训练情况，这样我们就不需要待在服务器命令行前盯着打印的结果了。
 
 [SwanLab](https://swanlab.cn/)是一个高效，好用的模型实验管理python库，可以很方便地对我们的训练任务进行记录，并提供可视化的分析图表.
@@ -206,13 +226,17 @@ trainer.train()
 
 训练启动后会要求我们输入SwanLab的API-key，只需要输入我们在个人设置界面获得的API-key即可。
 
+
+
 ## 查看训练进展
+
 SwanLab目前支持了在Jupyter界面中直接开启看板，来很方便的了解训练的情况。
 
 ![image.png](./images/swanlabdisplay.png)
 
 当然也可以直接登录官网，在我们的个人账号下进行查看。
 ![image.png](./images/swanlabchart.png)
+
 
 
 ## 加载 lora 权重推理
