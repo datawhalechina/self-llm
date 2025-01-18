@@ -120,8 +120,8 @@ if __name__ == '__main__':
 
 ## Api 部署  
 
-在终端输入以下命令启动api服务：  
-
+#### 启动api服务
+在终端输入以下命令
 ```shell  
 cd /root/autodl-tmp
 python api.py
@@ -134,9 +134,16 @@ python /root/api.py
 默认部署在 6006 端口，加载完毕后出现如下信息说明成功。
 ![加载模型](images/image01-1.png)
 
-## 调用API
+#### （可选）AutoDL平台-SSH端口映射
 
-### Curl 调用  
+```bash
+ssh -CNg -L 6006:127.0.0.1:6006 -p 【你的autodl机器的ssh端口】 root@[你的autodl机器地址]
+ssh -CNg -L 6006:127.0.0.1:6006 -p 36494 root@region-45.autodl.pro
+```
+
+## 调用Api
+
+### 方式1：Curl 调用  
 通过 POST 方法进行调用，可以使用 curl 调用，如下所示：  
 
 ```shell
@@ -144,15 +151,74 @@ curl -X POST "http://127.0.0.1:6006" -H "Content-Type: application/json" -d "{\"
 ```  
 
 ![模型调用](images/image01-2.png)
-### ApiPost 调用
-使用 apipost软件 测试 history 的用法：
 
-Header参数：
+### 方式2：Python requests库调用
+
+#### 代码准备
+
+在`/root/autodl-tmp`路径下新建 `py_api.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。
+
+```python
+import requests
+
+url = "http://127.0.0.1:6006/"
+# 参数history可以为空列表，即[]，此时代表没有历史对话
+payload = {
+    "prompt": "刚才我们再聊什么？",
+    "history": [
+        {
+            "role": "user",
+            "content": "今天星期几"
+        },
+        {
+            "role": "assistant",
+            "content": "今天星期三"
+        },
+        {
+            "role": "user",
+            "content": "明天星期几？"
+        },
+        {
+            "role": "assistant",
+            "content": "明天是星期四。"
+        }
+    ]
+}
+headers = {
+    "Content-Type": "application/json",
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.94 Safari/537.37",
+    "Connection": "keep-alive"
+}
+
+response = requests.request("POST", url, json=payload, headers=headers)
+
+print(response.text)
+```
+
+#### 运行代码
+
+在终端输入以下命令运行代码：
+
+```shell
+python /root/autodl-tmp/py_api.py
+```
+
+#### 调用结果：
+![python-requests](images/image01-3.png)
+
+
+### 方式3：ApiPost 调用
+使用 ApiPost软件 测试 history 的用法：
+
+#### Header 参数：
 ```
 Content-Type: application/json
 ```
 
-Json参数：
+#### Json 参数：
+
 ```json
 {
     "prompt": "刚才我们再聊什么？",
@@ -178,8 +244,8 @@ Json参数：
 ```
 
 图示效果：
-![apipost](images/image01-3.png)
 ![apipost](images/image01-4.png)
+![apipost](images/image01-5.png)
 
 
 
