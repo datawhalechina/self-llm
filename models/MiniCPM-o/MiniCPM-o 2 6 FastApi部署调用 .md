@@ -14,7 +14,7 @@ Cuda  12.1
 
 新建 `JupyterLa .ipynb` 文件进行  `pip` 换源加速及安装魔搭依赖（或打开终端，将每行命令前的 ‘!’ 去掉）
 
-```
+```shell
 !pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 !pip install modelscope==1.20.0
@@ -26,7 +26,7 @@ Cuda  12.1
 
 下载到所属路径下，一键`pip`安装
 
-```
+```shell
 !pip install -r requirements_o2.6.txt
 ```
 
@@ -34,7 +34,7 @@ Cuda  12.1
 
 或手动`pip`安装
 
-```
+```shell
 !pip install Pillow==10.1.0 torch==2.3.1 torchaudio==2.3.1 torchvision==0.18.1 transformers==4.44.2 sentencepiece==0.2.0 vector-quantize-pytorch==1.18.5 vocos==0.1.0 accelerate==1.2.1 timm==0.9.10 soundfile==0.12.1 librosa==0.9.0 decord moviepy fastapi uvicorn python-multipart
 ```
 
@@ -50,7 +50,7 @@ Cuda  12.1
 
 使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
-```
+```python
 from modelscope import snapshot_download
 # cache_dir记得修改为自己的目录路径
 model_dir = snapshot_download('OpenBMB/MiniCPM-o-2_6', cache_dir='/root/autodl-tmp', revision='master')
@@ -66,7 +66,7 @@ model_dir = snapshot_download('OpenBMB/MiniCPM-o-2_6', cache_dir='/root/autodl-t
 
 新建 `api_server.py` 文件并粘贴以下代码，均已详细注释，检查是否有将主程序入口的 `model`、`tokenizer` 中的模型路径替换为自己刚下载的模型文件具体路径：
 
-```
+```python
 # 导入必要的库
 from fastapi import FastAPI, Request  # FastAPI框架相关
 from transformers import AutoModel, AutoTokenizer  # Hugging Face transformers模型相关
@@ -252,7 +252,7 @@ if __name__ == '__main__':
 
 在终端输入以下命令启动`fastapi`服务
 
-```
+```shell
 # cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
 python api_server.py
 ```
@@ -267,7 +267,7 @@ python api_server.py
 
 新建 `1image_1conv.py` 文件并粘贴以下代码，注意在注释位置修改自己具体输入图片的存放路径：
 
-```
+```python
 import requests
 import base64, os
 
@@ -305,7 +305,7 @@ send_request({
 
 在ipynb文件或在终端运行命令（去掉 ’!’ ）进行单张图片单轮对话：
 
-```
+```shell
 # cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
 !python 1image_1conv.py
 ```
@@ -320,7 +320,7 @@ send_request({
 
 新建 `1image_mconv.py` 文件并粘贴以下代码，同样注意修改为自己具体输入图片的存放路径：
 
-```
+```python
 import requests
 import base64
 
@@ -365,7 +365,7 @@ if response.status_code == 200:
 
 在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
 
-```
+```shell
 # cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
 !python 1image_mconv.py
 ```
@@ -378,7 +378,7 @@ if response.status_code == 200:
 
 新建 `mimage.py` 文件并粘贴以下代码，同样注意修改为自己具体输入图片的存放路径：
 
-```
+```python
 import requests
 import base64, os
 
@@ -423,7 +423,7 @@ send_request({
 
 在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
 
-```
+```shell
 # cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
 !python mimage.py
 ```
@@ -438,7 +438,7 @@ send_request({
 
 新建 `1video.py` 文件并粘贴以下代码，同样注意修改为自己具体输入图片的存放路径：
 
-```
+```python
 import requests
 import base64, os
 
@@ -472,7 +472,7 @@ else:
 
 在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
 
-```
+```shell
 # cd到自己存放代码的文件的路径，如 cd /root/autodl-tmp
 !python 1video.py
 ```
