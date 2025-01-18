@@ -61,11 +61,25 @@
 
 ### 已支持模型
 
+
+- [MiniCPM-o-2_6](https://github.com/OpenBMB/MiniCPM-o)
+  - [ ] minicpm-o-2.6 FastApi 部署调用 @林恒宇
+  - [ ] minicpm-o-2.6 WebDemo 部署 @九月
+  - [ ] minicpm-o-2.6 vLLM 部署 @邓恺俊
+  - [ ] minicpm-o-2.6 可视化 Lora 微调 @林泽毅
+
+- [InternLM3](https://github.com/InternLM/InternLM)
+  - [ ] internlm3-8b-instruct FastApi 部署调用 @苏向标
+  - [ ] internlm3-8b-instruct Langchian接入 @赵文恺
+  - [ ] internlm3-8b-instruct WebDemo 部署 @王泽宇
+  - [ ] internlm3-8b-instruct vLLM 部署 @陈睿
+  - [ ] internlm3-8b-instruct Lora 微调 @九月
+
 - [phi4](https://huggingface.co/microsoft/phi-4)
-  - [ ] phi4 FastApi 部署调用
-  - [ ] phi4 langchain 接入
-  - [ ] phi4 WebDemo 部署
-  - [ ] phi4 Lora 微调
+  - [ ] phi4 FastApi 部署调用 @杜森
+  - [x] [phi4 langchain 接入](./models/phi4/02-Phi-4-Langchain接入.md) @小罗
+  - [ ] phi4 WebDemo 部署 @杜森
+  - [x] [phi4 Lora 微调](./models/phi4/04-Phi-4-Lora%20微调.md) @郑远婧
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
   - [x] [Qwen2.5-Coder-7B-Instruct FastApi部署调用](./models/Qwen2.5-Coder/01-Qwen2.5-Coder-7B-Instruct%20FastApi%20部署调用.md) @赵文恺
