@@ -20,7 +20,7 @@ Cuda  12.1
 !pip install modelscope==1.20.0
 ```
 
-![image.png](01-1.png)
+![image.png](images/01-1.png)
 
 官方环境打包文件传送门：https://github.com/OpenBMB/MiniCPM-o/blob/main/requirements_o2.6.txt
 
@@ -30,7 +30,7 @@ Cuda  12.1
 !pip install -r requirements_o2.6.txt
 ```
 
-![image.png](01-2.png)
+![image.png](images/01-2.png)
 
 或手动`pip`安装
 
@@ -40,7 +40,7 @@ Cuda  12.1
 
 检查是否有漏装或者报错
 
-![image.png](01-3.png)
+![image.png](images/01-3.png)
 
 # 模型下载
 
@@ -56,7 +56,7 @@ from modelscope import snapshot_download
 model_dir = snapshot_download('OpenBMB/MiniCPM-o-2_6', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-![image.png](01-4.png)
+![image.png](images/01-4.png)
 
 魔搭社区传送门：[MiniCPM-o-2_6 · 模型库](https://www.modelscope.cn/models/OpenBMB/MiniCPM-o-2_6)
 
@@ -259,7 +259,7 @@ python api_server.py
 
 出现如下信息说明启动成功，默认部署在`6006` 端口
 
-![image.png](01-5.png)
+![image.png](images/01-5.png)
 
 # 单张图片输入-单轮对话
 
@@ -301,7 +301,7 @@ send_request({
 
 样例图片如下图：
 
-![image.jpg](01-6.jpg)
+<img src="images/01-6.jpg" width = "300" height = "300" alt="image.jpg" align=center />
 
 在ipynb文件或在终端运行命令（去掉 ’!’ ）进行单张图片单轮对话：
 
@@ -312,7 +312,7 @@ send_request({
 
 调用结果如下所示：
 
-![image.png](01-7.png)
+![image.png](images/01-7.png)
 
 # 单张照片输入-多次对话
 
@@ -361,7 +361,7 @@ if response.status_code == 200:
 
 样例图片同上图的猫猫：
 
-![image.jpg](01-6.jpg)
+<img src="images/01-6.jpg" width = "300" height = "300" alt="image.jpg" align=center />
 
 在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
 
@@ -372,7 +372,7 @@ if response.status_code == 200:
 
 调用结果如下所示：
 
-![image.png](01-8.png)
+![image.png](images/01-8.png)
 
 # 多张图片输入-对话
 
@@ -419,9 +419,7 @@ send_request({
 
 样例图片同上的猫猫和新的勾勾：
 
-![image.jpg](01-6.jpg)
-
-![image.jpg](01-9.jpg)
+<img src="images/01-6.jpg" width = "300" height = "300" alt="image.jpg" align=center /> <img src="images/01-9.jpg" width = "300" height = "300" alt="image.jpg" align=center />
 
 在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
 
@@ -432,7 +430,7 @@ send_request({
 
 调用结果如下所示：
 
-![image.png](01-10.png)
+![image.png](images/01-10.png)
 
 # 视频输入-对话
 
@@ -470,7 +468,7 @@ else:
 
 样例视频：
 
-[video.mp4](01-11.mp4)
+[video.mp4](images/01-11.mp4)
 
 在 `ipynb` 文件或在终端运行命令（去掉 ’!’ ）进行单张图片多轮对话：
 
@@ -481,4 +479,4 @@ else:
 
 调用结果如下所示：
 
-![image.png](01-12.png)
+![image.png](images/01-12.png)
