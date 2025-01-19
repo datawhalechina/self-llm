@@ -28,13 +28,26 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
+# FastAPI 相关依赖
+pip install requests==2.32.3
+pip install fastapi==0.104.1
+pip install uvicorn==0.24.0
+
+# Langchain 相关依赖
+pip install langchain==0.3.7
+
+# WebDemo 相关依赖
+pip install streamlit==1.41.1
+
+# LoRA微调 相关依赖
+pip install peft==0.11.1          # 用于 LoRA 微调
+
+# 通用依赖
 pip install modelscope==1.22.0    # 用于模型下载和管理
 pip install transformers==4.47.1  # Hugging Face 的模型库，用于加载和训练模型
-pip install streamlit==1.41.1
-pip install sentencepiece==0.2.0
+pip install sentencepiece==0.2.0  # 用于处理文本数据
 pip install accelerate==0.34.2    # 用于分布式训练和混合精度训练
 pip install datasets==2.20.0      # 用于加载和处理数据集
-pip install peft==0.11.1          # 用于 LoRA 微调
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
