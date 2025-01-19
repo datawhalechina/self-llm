@@ -11,7 +11,7 @@ InternLM3 开源了一个具有 80 亿参数的指令模型，名为 **InternLM3
 
 本文基础环境如下：
 
-```c
+```
 ----------------
 ubuntu 22.04
 python 3.12
@@ -24,7 +24,7 @@ pytorch 2.3.0
 
 首先 `pip` 换源加速下载并安装依赖包
 
-```c
+```shell
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
@@ -49,7 +49,7 @@ pip install modelscope==1.11.0
 
 新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件，如下图所示。并运行 `python model_download.py` 执行下载，模型大小约为 17.5GB，下载模型大概需要 10-15 分钟。
 
-```py
+```python
 #模型下载
 from modelscope import snapshot_download
 model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct',cache_dir='/root/autodl-tmp', revision='master')
@@ -149,7 +149,7 @@ python api.py
 
 命令行:
 
-```c
+```shell
 curl -X POST "http://127.0.0.1:6006" \
      -H 'Content-Type: application/json' \
      -d '{"prompt": "你好"}'
@@ -157,7 +157,7 @@ curl -X POST "http://127.0.0.1:6006" \
 
 返回结果:
 
-![image-20250118163400910](/images/01-2.png)
+![image-20250118163400910](images/01-2.png)
 
 
 
