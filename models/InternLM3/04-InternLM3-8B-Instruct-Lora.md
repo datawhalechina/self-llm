@@ -93,7 +93,30 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 `Lora` 训练的数据是需要经过格式化、编码之后再输入给模型进行训练的，如果是熟悉 `Pytorch` 模型训练流程的同学会知道，我们一般需要将输入文本编码为 `input_ids`，将输出文本编码为 `labels`，编码之后的结果都是多维的向量。
 
-在这里我们首先定义一个预处理函数 `process_func`，这个函数用于对每一个样本，编码其输入、输出文本并返回一个编码后的字典，方便模型使用：
+为了得到 InternLM3-8b-Instruct 的 Prompt Template，使用 tokenizer 构建 messages 并打印， 查看 chat_template 的输出格式
+
+```python
+messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": '你好呀'},
+            {"role": "assistant", "content": '有什么可以帮你的？'}
+            ]
+# 使用chat_template将messages格式化并打印
+print(tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True))
+
+
+## 得到输出结果如下
+
+# <s><|im_start|>system
+# You are a helpful assistant.<|im_end|>
+# <|im_start|>user
+# 你好呀<|im_end|>
+# <|im_start|>assistant
+# 有什么可以帮你的？<|im_end|>
+# <|im_start|>assistant
+```
+
+然后我们就可以定义预处理函数 `process_func`，这个函数用于对每一个样本，编码其输入、输出文本并返回一个编码后的字典，方便模型使用：
 
 ```python
 system_prompt = '现在你要扮演皇帝身边的女人--甄嬛'
@@ -103,7 +126,7 @@ def process_func(example):
     input_ids, attention_mask, labels = [], [], []
     # 构建指令部分的输入
     instruction = tokenizer(
-        f"<|im_start|>system\n{system_prompt}<|im_end|>\n" 
+        f"<s><|im_start|>system\n{system_prompt}<|im_end|>\n" 
         f"<|im_start|>user\n{example['instruction'] + example['input']}<|im_end|>\n"  
         f"<|im_start|>assistant\n",  
         add_special_tokens=False   
@@ -135,7 +158,7 @@ def process_func(example):
 > 补充: `InternLM3-8b-Instruct` 采用的 `Prompt Template`格式如下：
 
 ```text
-<|im_start|>system
+<s><|im_start|>system
 You are a helpful assistant.<|im_end|>
 <|im_start|>user
 你是谁？<|im_end|>
@@ -164,6 +187,46 @@ model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",
 
 > 注意：此处要记得修改为自己的模型路径哦~
 
+如果想要查看模型结构，可以打印模型：
+
+```python
+print(model)
+
+# 输出结果如下
+
+# InternLM3ForCausalLM(
+#   (model): InternLM3Model(
+#     (embed_tokens): Embedding(128512, 4096, padding_idx=2)
+#     (layers): ModuleList(
+#       (0-47): 48 x InternLM3DecoderLayer(
+#         (self_attn): InternLM3SdpaAttention(
+#           (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+#           (k_proj): Linear(in_features=4096, out_features=256, bias=False)
+#           (v_proj): Linear(in_features=4096, out_features=256, bias=False)
+#           (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+#           (rotary_emb): InternLM3RotaryEmbedding()
+#         )
+#         (mlp): InternLM3MLP(
+#           (gate_proj): Linear(in_features=4096, out_features=10240, bias=False)
+#           (up_proj): Linear(in_features=4096, out_features=10240, bias=False)
+#           (down_proj): Linear(in_features=10240, out_features=4096, bias=False)
+#           (act_fn): SiLU()
+#         )
+#         (input_layernorm): InternLM3RMSNorm((4096,), eps=1e-05)
+#         (post_attention_layernorm): InternLM3RMSNorm((4096,), eps=1e-05)
+#       )
+#     )
+#     (norm): InternLM3RMSNorm((4096,), eps=1e-05)
+#     (rotary_emb): InternLM3RotaryEmbedding()
+#   )
+#   (lm_head): Linear(in_features=4096, out_features=128512, bias=False)
+# )
+```
+
+上面打印了 `InternLM3Model` 的模型结构， 可以看到里面的 `self_attn` 和 `mlp` 是两个主要的模块， 因此可以考虑将这两个模块作为 **LoRA** 微调 的  `target_modules` , 包括 `q_proj`, `k_proj`, `v_proj`, `o_proj` 以及 `gate_proj`、`up_proj` 和 `down_proj` 。
+
+通常我们只对 `self_attn` 模块中的 `q_proj`, `k_proj`, `v_proj`, `o_proj`进行微调， 本教程里我们也将对这四个模块进行微调演示， 感兴趣的同学可以自行尝试添加对 `mlp` 中的三个 `proj` 模块进行微调。
+
 ## 定义 LoraConfig
 
 `LoraConfig`类用于设置 Lora 微调参数，虽然可以设置很多参数，但主要的参数没多少，简单讲一讲，感兴趣的同学可以直接看源码。
@@ -181,7 +244,7 @@ from peft import LoraConfig, TaskType, get_peft_model
 
 config = LoraConfig(
     task_type=TaskType.CAUSAL_LM, 
-    target_modules=["o_proj", "qkv_proj"], # , "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj" # 可以添加更多微调的target_modules
+    target_modules=["q_proj", "k_proj","v_proj", "o_proj"], # 可以自行添加更多微调的target_modules
     inference_mode=False,     # 训练模式
     r=8,                      # Lora 秩
     lora_alpha=32,            # Lora alaph，具体作用参见 Lora 原理
@@ -229,7 +292,7 @@ trainer.train()                  # 开始训练
 ```
 ![train](./images/image04-2.png)
 
-> 如上配置中, 训练时间大概为30分钟左右, 其中3729组数据, 训练轮次为3轮, 每4步梯度累加更新一次(real batch size=1*4=4), 每100步保存一次checkpoint, 总共大约2800步 (3729/4*3~=2796)
+> 如上配置中, 训练时间大概为 30-40 分钟, 其中 3729 组数据, 训练轮次为 3 轮, 每 4 步梯度累加更新一次(`real batch size=1*4=4`), 每 100 步保存一次 checkpoint, 总共大约 2800 步 (3729/4*3 ~= 2796)
 
 ## 加载 lora 权重推理
 
@@ -241,13 +304,16 @@ import torch
 from peft import PeftModel
 
 model_path = '/root/autodl-tmp/Shanghai_AI_Laboratory/internlm3-8b-instruct'
-lora_path = '/root/autodl-tmp/internlm3-8b-instruct_lora_output/checkpoint-2796' # 这里改称你的 lora 输出对应 checkpoint 地址和最终的epoch数值2796
+lora_path = '/root/autodl-tmp/internlm3-8b-instruct_lora_output/checkpoint-2796' # 这里改成 LoRA 输出对应 checkpoint 地址和最终的 epoch 数值 2796
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
 # 加载模型
-model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
+model = AutoModelForCausalLM.from_pretrained(model_path, 
+                                             device_map="auto",
+                                             torch_dtype=torch.bfloat16, 
+                                             trust_remote_code=True).eval()
 
 # 加载lora权重
 model = PeftModel.from_pretrained(model, model_id=lora_path)
@@ -257,10 +323,8 @@ system_prompt = "现在你要扮演皇帝身边的女人--甄嬛"
 print("prompt: ", prompt)
 print("system_prompt: ", system_prompt)
 
-inputs = tokenizer.apply_chat_template([
-    {"role": "system", "content": },
-    {"role": "user", "content": prompt}
-],
+inputs = tokenizer.apply_chat_template([{"role": "system", "content": system_prompt},
+                                        {"role": "user", "content": prompt}],
                                        add_generation_prompt=True,
                                        tokenize=True,
                                        return_tensors="pt",
@@ -272,7 +336,7 @@ gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 1}
 with torch.no_grad():
     outputs = model.generate(**inputs, **gen_kwargs)
     outputs = outputs[:, inputs['input_ids'].shape[1]:]
-    print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+    print("output: ", tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 ![result](./images/image04-3.png)
 
