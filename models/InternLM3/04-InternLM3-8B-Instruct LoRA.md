@@ -1,10 +1,10 @@
-# InternLM3-8b-Instruct Lora 微调
+# InternLM3-8b-Instruct LoRA 微调
 
-本节我们简要介绍如何基于 transformers、peft 等框架，使用由笔者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目中的**嬛嬛数据集**作为微调数据集，对 InternLM3-8b-Instruct 模型进行 Lora 微调, 以构建一个能够模拟甄嬛对话风格的个性化 LLM , 数据集路径为[`../../dataset/huanhuan.json`](../../dataset/huanhuan.json)。
+本节我们简要介绍如何基于 transformers、peft 等框架，使用由笔者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目中的**嬛嬛数据集**作为微调数据集，对 InternLM3-8b-Instruct 模型进行 LoRA 微调, 以构建一个能够模拟甄嬛对话风格的个性化 LLM , 数据集路径为[`../../dataset/huanhuan.json`](../../dataset/huanhuan.json)。
 
-> **Lora** 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
+> **LoRA** 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 LoRA](https://zhuanlan.zhihu.com/p/650197598)。
 
-> 本教程会在同目录下给大家提供一个 [**notebook** 文件 (04-InternLM3-8b-Instruct-Lora.ipynb)](04-InternLM3-8b-Instruct-Lora.ipynb) ，来帮助大家更好的学习。
+> 本教程会在同目录下给大家提供一个 [**notebook** 文件 (04-InternLM3-8B-Instruct LoRA.ipynb)](04-InternLM3-8B-Instruct%20LoRA.ipynb) ，来帮助大家更好的学习。
 
 ## 环境配置
 
@@ -28,13 +28,26 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.22.0  # 用于模型下载和管理
-pip install transformers==4.47.1  # Hugging Face 的模型库，用于加载和训练模型
+# FastAPI 相关依赖
+pip install requests==2.32.3
+pip install fastapi==0.104.1
+pip install uvicorn==0.24.0
+
+# Langchain 相关依赖
+pip install langchain==0.3.7
+
+# WebDemo 相关依赖
 pip install streamlit==1.41.1
-pip install sentencepiece==0.2.0
-pip install accelerate==0.34.2  # 用于分布式训练和混合精度训练
-pip install datasets==2.20.0  # 用于加载和处理数据集
-pip install peft==0.11.1  # 用于 LoRA 微调
+
+# LoRA微调 相关依赖
+pip install peft==0.11.1          # 用于 LoRA 微调
+
+# 通用依赖
+pip install modelscope==1.22.0    # 用于模型下载和管理
+pip install transformers==4.47.1  # Hugging Face 的模型库，用于加载和训练模型
+pip install sentencepiece==0.2.0  # 用于处理文本数据
+pip install accelerate==0.34.2    # 用于分布式训练和混合精度训练
+pip install datasets==2.20.0      # 用于加载和处理数据集
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
@@ -44,12 +57,12 @@ pip install peft==0.11.1  # 用于 LoRA 微调
 
 `modelscope` 是一个模型管理和下载工具，支持从魔搭 (Modelscope) 等平台快速下载模型。
 
-这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
+这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数 `model_name_or_path` 为模型名称或者本地路径，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
 
 在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中粘贴以下代码，并保存文件。
 
 ```python
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
+from modelscope import snapshot_download
 
 model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', cache_dir='./', revision='master')
 ```
@@ -91,7 +104,7 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 ## 数据格式化
 
-`Lora` 训练的数据是需要经过格式化、编码之后再输入给模型进行训练的，如果是熟悉 `Pytorch` 模型训练流程的同学会知道，我们一般需要将输入文本编码为 `input_ids`，将输出文本编码为 `labels`，编码之后的结果都是多维的向量。
+`LoRA` 训练的数据是需要经过格式化、编码之后再输入给模型进行训练的，如果是熟悉 `Pytorch` 模型训练流程的同学会知道，我们一般需要将输入文本编码为 `input_ids`，将输出文本编码为 `labels`，编码之后的结果都是多维的向量。
 
 为了得到 InternLM3-8b-Instruct 的 Prompt Template，使用 tokenizer 构建 messages 并打印， 查看 chat_template 的输出格式
 
@@ -229,15 +242,15 @@ print(model)
 
 ## 定义 LoraConfig
 
-`LoraConfig`类用于设置 Lora 微调参数，虽然可以设置很多参数，但主要的参数没多少，简单讲一讲，感兴趣的同学可以直接看源码。
+`LoraConfig`类用于设置 LoRA 微调参数，虽然可以设置很多参数，但主要的参数没多少，简单讲一讲，感兴趣的同学可以直接看源码。
 
 - `task_type`：模型类型
 - `target_modules`：需要训练的模型层的名字，主要就是 `attention`部分的层，不同的模型对应的层的名字不同，可以传入数组，也可以字符串，也可以正则表达式。
-- `r`：`lora`的秩，具体可以看 `Lora`原理。
-- `lora_alpha`：`Lora alaph` ，具体作用参见 `Lora` 原理。
-- `lora_dropout`: `Lora` 层的 `Dropout` 比例，用于防止过拟合，具体作用参见 `Lora` 原理。 
+- `r`：`LoRA`的秩，具体可以看 `LoRA`原理。
+- `lora_alpha`：`LoRA alaph` ，具体作用参见 `LoRA` 原理。
+- `lora_dropout`: `LoRA` 层的 `Dropout` 比例，用于防止过拟合，具体作用参见 `LoRA` 原理。 
 
-`Lora`的缩放是啥嘞？当然不是 `r`（秩），这个缩放就是 `lora_alpha/r`, 在这个 `LoraConfig`中缩放就是 4 倍。
+`LoRA`的缩放是啥嘞？当然不是 `r`（秩），这个缩放就是 `lora_alpha/r`, 在这个 `LoraConfig`中缩放就是 4 倍。
 
 ```python
 from peft import LoraConfig, TaskType, get_peft_model
@@ -246,8 +259,8 @@ config = LoraConfig(
     task_type=TaskType.CAUSAL_LM, 
     target_modules=["q_proj", "k_proj","v_proj", "o_proj"], # 可以自行添加更多微调的target_modules
     inference_mode=False,     # 训练模式
-    r=8,                      # Lora 秩
-    lora_alpha=32,            # Lora alaph，具体作用参见 Lora 原理
+    r=8,                      # LoRA 秩
+    lora_alpha=32,            # LoRA alaph，具体作用参见 LoRA 原理
     lora_dropout=0.1          # Dropout 比例
 )
 ```
@@ -294,9 +307,9 @@ trainer.train()                  # 开始训练
 
 > 如上配置中, 训练时间大概为 30-40 分钟, 其中 3729 组数据, 训练轮次为 3 轮, 每 4 步梯度累加更新一次(`real batch size=1*4=4`), 每 100 步保存一次 checkpoint, 总共大约 2800 步 (3729/4*3 ~= 2796)
 
-## 加载 lora 权重推理
+## 加载 LoRA 权重推理
 
-训练好了之后可以使用如下方式加载 `lora`权重进行推理：
+训练好了之后可以使用如下方式加载 `LoRA`权重进行推理：
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
