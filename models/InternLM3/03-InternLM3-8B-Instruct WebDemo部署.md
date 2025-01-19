@@ -1,49 +1,69 @@
 # InternLM3-8B-Instruct WebDemo 部署
 
-## 环境准备
+## 环境配置
+
+实验所依赖的基础开发环境如下：
 
 ```
 ----------------
 ubuntu 22.04
-python 3.12
+Python 3.12.3
 cuda 12.1
 pytorch 2.3.0
 ----------------
 ```
-
 > 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
-pip 换源加速下载并安装依赖包
+首先 `pip` 换源加速下载并安装依赖包：
 
 ```shell
-# 升级 pip
+# 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.22.3
+# FastAPI 相关依赖
+pip install requests==2.32.3
+pip install fastapi==0.104.1
+pip install uvicorn==0.24.0
+
+# Langchain 相关依赖
+pip install langchain==0.3.7
+
+# WebDemo 相关依赖
 pip install streamlit==1.41.1
-pip install transformers==4.48.0
-pip install accelerate==1.3.0
-pip install sentencepiece==0.2.0
+
+# LoRA微调 相关依赖
+pip install peft==0.11.1          # 用于 LoRA 微调
+
+# 通用依赖
+pip install modelscope==1.22.0    # 用于模型下载和管理
+pip install transformers==4.47.1  # Hugging Face 的模型库，用于加载和训练模型
+pip install sentencepiece==0.2.0  # 用于处理文本数据
+pip install accelerate==0.34.2    # 用于分布式训练和混合精度训练
+pip install datasets==2.20.0      # 用于加载和处理数据集
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了InternLM3的环境镜像，点击下方链接并直接创建Autodl示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2.5-coder***（待修改）
-
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/InternLM3-self-llm***
 
 ## 模型下载
-使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir` 为模型的下载路径。
 
-在新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件，如下图所示。并运行 `python model_download.py` 执行下载，模型大小为 16 GB，下载模型大概需要 12 分钟。
+`modelscope` 是一个模型管理和下载工具，支持从魔搭 (Modelscope) 等平台快速下载模型。
 
-```python  
+这里使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数 `model_name_or_path` 为模型名称或者本地路径，第二个参数 `cache_dir` 为模型的下载路径，第三个参数 `revision` 为模型的版本号。
+
+在 `/root/autodl-tmp` 路径下新建 `model_download.py` 文件并在其中粘贴以下代码，并保存文件。
+
+```python
 from modelscope import snapshot_download
 
-snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', local_dir='/root/autodl-tmp/internlm3-8b-instruct')
+model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', cache_dir='./', revision='master')
 ```
 
-> 注意：记得修改 `local_dir` 为你的模型下载路径哦~
+> 注意：记得修改 cache_dir 为你的模型下载路径哦~
+
+在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 18GB 左右，下载模型大概需要5-30分钟。
 
 ## 代码准备
 
@@ -68,7 +88,7 @@ st.title("💬 InternLM3-8B Chatbot")
 st.caption("🚀 A streamlit chatbot powered by Self-LLM")
 
 # 定义模型路径
-model_name_or_path = './internlm3-8b-instruct'
+model_name_or_path = '/root/autodl-tmp/Shanghai_AI_Laboratory/internlm3-8b-instruct'
 
 # 定义一个函数，用于获取模型和tokenizer
 @st.cache_resource
