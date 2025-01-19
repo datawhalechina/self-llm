@@ -1,18 +1,19 @@
 # MiniCPM-o 2.6 FastApi部署调用
 
-# 基础部署
-
----
+## 环境配置
 
 基础环境如下：
 
 ```
-PyTorch  2.3.0
-Python  3.12(ubuntu22.04)
-Cuda  12.1
+----------------
+ubuntu 22.04
+Python 3.12.3
+cuda 12.1
+pytorch 2.3.0
+----------------
 ```
 
-打开终端或新建 `JupyterLa .ipynb` 文件，换源加速及安装魔搭依赖
+打开终端或新建 `Jupyter.ipynb` 文件，换源加速及安装魔搭依赖
 
 ```shell
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -42,9 +43,7 @@ pip install Pillow==10.1.0 torch==2.3.1 torchaudio==2.3.1 torchvision==0.18.1 tr
 
 ![image.png](images/01-3.png)
 
-# 模型下载
-
----
+## 模型下载
 
 下载 `MiniCPM-o 2.6`模型文件
 
@@ -60,9 +59,7 @@ model_dir = snapshot_download('OpenBMB/MiniCPM-o-2_6', cache_dir='/root/autodl-t
 
 魔搭社区传送门：[MiniCPM-o-2_6 · 模型库](https://www.modelscope.cn/models/OpenBMB/MiniCPM-o-2_6)
 
-# API Server 部署
-
----
+## API Server 部署
 
 新建 `api_server.py` 文件并粘贴以下代码，均已详细注释，检查是否有将主程序入口的 `model`、`tokenizer` 中的模型路径替换为自己刚下载的模型文件具体路径：
 
@@ -261,9 +258,7 @@ python api_server.py
 
 ![image.png](images/01-5.png)
 
-# 单张图片输入-单轮对话
-
----
+## 单张图片输入-单轮对话
 
 新建 `1image_1conv.py` 文件并粘贴以下代码，注意在注释位置修改自己具体输入图片的存放路径：
 
@@ -314,9 +309,7 @@ python 1image_1conv.py
 
 ![image.png](images/01-7.png)
 
-# 单张照片输入-多次对话
-
----
+## 单张照片输入-多次对话
 
 新建 `1image_mconv.py` 文件并粘贴以下代码，同样注意修改为自己具体输入图片的存放路径：
 
@@ -373,7 +366,7 @@ python 1image_mconv.py
 
 ![image.png](images/01-8.png)
 
-# 多张图片输入-对话
+## 多张图片输入-对话
 
 新建 `mimage.py` 文件并粘贴以下代码，同样注意修改为自己具体输入图片的存放路径：
 
@@ -430,9 +423,7 @@ python mimage.py
 
 ![image.png](images/01-10.png)
 
-# 视频输入-对话
-
----
+## 视频输入-对话
 
 新建 `1video.py` 文件并粘贴以下代码，同样注意修改为自己具体输入图片的存放路径：
 
