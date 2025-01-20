@@ -1,4 +1,6 @@
 <h1>InternLM3-8b-instruct o1-like 推理链实现</h1>
+oOpenAI o1于2024年9月13日正式发布，作为OpenAI最新发布的最强推理模型，标志着AI行业进入了一个新时代。
+o1在测试化学、物理和生物学专业知识的基准GPQA-diamond上，全面超过了人类博士专家，OpenAI宣称“通用人工智能(AGI)之路，已经没有任何阻碍”。不同于传统的语言模型，o1在回答之前会生成一个内部的思维链。这个思路链是一个逐步推导、逐步分解问题的过程，它模拟了人类思考的方式，使得模型能够更深入地理解问题并给出更准确的答案。虽然复杂的思维过程会略微影响回答速度，但是准确率相较于其他模型有着显著的提升，许多研究者争先恐后的挖掘o1背后的原理。
 
 
 ## 环境配置依赖
@@ -113,4 +115,4 @@ export GROQ_API_KEY=gsk...
 ```
 ## 推理结果
 
-<img, src="https://github.com/models/InternLM3/images/o1-like.png" />
+<img src="https://github.com/riannyway/self-llm/blob/Llama3-8b-instruct/models/InternLM3/images/o1-like.png?raw=true" />
