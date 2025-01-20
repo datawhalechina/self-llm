@@ -14,6 +14,7 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 - 数据集：[few_shot_ner_sft](https://huggingface.co/datasets/qgyd2021/few_shot_ner_sft)
 - 显存需求：约33GB，如显存不足，请调低per_device_train_batch_size
 
+<br>
 
 ## 目录
 
@@ -29,6 +30,7 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 - [推理训练好的模型](#推理训练好的模型)
 - [相关链接](#相关链接)
 
+<br>
 
 ## 知识点：什么是命名实体识别?
 
@@ -37,6 +39,8 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 ![05-1](./images/image05-1.png)
 
 NER 也是一项非常实用的技术，包括在互联网数据标注、搜索引擎、推荐系统、知识图谱、医疗保健等诸多领域有广泛应用。
+
+<br>
 
 ## SwanLab简介
 
@@ -56,6 +60,7 @@ Github: https://github.com/swanhubx/swanlab
 
 机器学习模型训练往往伴随着大量的超参数、指标、日志等数据，很多关键信息往往存在于实验的中间而非结尾，如果不对连续的指标通过图表进行可视化，往往会错失发现问题的最佳时机，甚至错过关键信息。同时不进行可视化，也难以对比多个实验之间的差异。 可视化也为AI研究者提供了良好的交流基础，研究者们可以基于图表进行沟通、分析与优化，而非以往看着枯燥的终端打印。这打破了团队沟通的壁垒，提高了整体的研发效率。
 
+<br>
 
 ## 环境配置
 
@@ -87,6 +92,8 @@ pip install datasets==3.2.0  # 用于加载和处理数据集
 pip install peft==0.14.0  # 用于 LoRA 微调
 pip install swanlab==0.4.3  # 用于监控训练过程与评估模型效果
 ```
+
+<br>
 
 ## 准备数据集
 
@@ -124,6 +131,8 @@ few_shot_ner_sft由不同来源、不同类型的几十万条数据组成，应�
 
 ![05-4](./images/image05-4.png)
 
+<br>
+
 ## 加载模型
 
 这里我们使用modelscope下载Phi-4模型（modelscope在国内，所以直接用下面的代码自动下载即可，不用担心速度和稳定性问题），然后把它加载到Transformers中进行训练：
@@ -145,6 +154,8 @@ model = AutoModelForCausalLM.from_pretrained(model_dir, device_map="auto", torch
 model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
 ```
 
+<br>
+
 ## 配置LoRA
 
 ```python
@@ -161,6 +172,8 @@ config = LoraConfig(
 
 model = get_peft_model(model, config)
 ```
+
+<br>
 
 ## 配置SwanLab可视化工具
 
@@ -182,6 +195,7 @@ trainer = Trainer(
 
 ![05-5](./images/image05-5.png)
 
+<br>
 
 ## 完整微调代码
 
@@ -414,8 +428,11 @@ swanlab.finish()
 
 ![05-6](./images/image05-6.png)
 
+<br>
 
 ## 训练结果演示
+
+访问可视化训练过程：[ZeyiLin/Phi-4-Lora-Ner](https://swanlab.cn/@ZeyiLin/Phi-4-NER-fintune/runs/mygq7su87kms6f8bqlzdi/chart)
 
 在SwanLab上查看最终的训练结果：
 
@@ -429,7 +446,7 @@ swanlab.finish()
 
 至此，你已经完成了Phi-4 Lora微调的训练！如果需要加强微调效果，可以尝试增加训练的数据量。
 
-
+<br>
 
 ## 推理训练好的模型
 
@@ -505,6 +522,8 @@ print(response)
 {"entity_text": "肾影", "entity_label": "sym"}
 {"entity_text": "肾", "entity_label": "bod"}
 ```
+
+<br>
 
 ## 相关链接
 
