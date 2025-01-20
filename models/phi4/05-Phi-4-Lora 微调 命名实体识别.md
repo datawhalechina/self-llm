@@ -20,15 +20,15 @@ Lora 是一种高效微调方法，深入了解其原理可参见博客：[知�
 
 - [知识点：什么是命名实体识别?](#知识点什么是命名实体识别)
 - [SwanLab简介](#swanlab简介) 
-- [环境配置](#环境配置)
-- [准备数据集](#准备数据集)
-- [模型下载与加载](#模型下载与加载)
-- [配置LoRA](#配置lora)
-- [配置SwanLab可视化工具](#配置swanlab可视化工具)
-- [完整微调代码](#完整微调代码)
-- [训练结果演示](#训练结果演示)
-- [推理训练好的模型](#推理训练好的模型)
-- [相关链接](#相关链接)
+- [1. 环境配置](#1-环境配置)
+- [2. 准备数据集](#2-准备数据集)
+- [3. 加载模型](#3-加载模型)
+- [4. 配置LoRA](#4-配置lora)
+- [5. 配置SwanLab可视化工具](#5-配置swanlab可视化工具)
+- [6. 完整微调代码](#6-完整微调代码)
+- [7. 训练结果演示](#7-训练结果演示)
+- [8. 推理训练好的模型](#8-推理训练好的模型)
+- [9. 相关链接](#9-相关链接)
 
 <br>
 
@@ -62,7 +62,7 @@ Github: https://github.com/swanhubx/swanlab
 
 <br>
 
-## 环境配置
+## 1. 环境配置
 
 本文基础环境如下：
 
@@ -95,7 +95,7 @@ pip install swanlab==0.4.3  # 用于监控训练过程与评估模型效果
 
 <br>
 
-## 准备数据集
+## 2. 准备数据集
 
 本节使用的是HuggingFace上的 [few_shot_ner_sft](https://huggingface.co/datasets/qgyd2021/few_shot_ner_sft) 数据集，该数据集主要被用于训练命名实体识别模型。
 
@@ -133,7 +133,7 @@ few_shot_ner_sft由不同来源、不同类型的几十万条数据组成，应�
 
 <br>
 
-## 加载模型
+## 3. 加载模型
 
 这里我们使用modelscope下载Phi-4模型（modelscope在国内，所以直接用下面的代码自动下载即可，不用担心速度和稳定性问题），然后把它加载到Transformers中进行训练：
 
@@ -156,7 +156,7 @@ model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方
 
 <br>
 
-## 配置LoRA
+## 4. 配置LoRA
 
 ```python
 from peft import LoraConfig, TaskType, get_peft_model
@@ -175,7 +175,7 @@ model = get_peft_model(model, config)
 
 <br>
 
-## 配置SwanLab可视化工具
+## 5. 配置SwanLab可视化工具
 
 SwanLab与Transformers已经做好了集成，用法是在Trainer的callbacks参数中添加SwanLabCallback实例，就可以自动记录超参数和训练指标，简化代码如下：
 
@@ -197,7 +197,7 @@ trainer = Trainer(
 
 <br>
 
-## 完整微调代码
+## 6. 完整微调代码
 
 开始训练时的目录结构：
 
@@ -430,7 +430,7 @@ swanlab.finish()
 
 <br>
 
-## 训练结果演示
+## 7. 训练结果演示
 
 访问可视化训练过程：[ZeyiLin/Phi-4-Lora-Ner](https://swanlab.cn/@ZeyiLin/Phi-4-NER-fintune/runs/mygq7su87kms6f8bqlzdi/chart)
 
@@ -448,7 +448,7 @@ swanlab.finish()
 
 <br>
 
-## 推理训练好的模型
+## 8. 推理训练好的模型
 
 训好的Lora模型默认被保存在`./output/Phi4-NER/`目录下，你可以使用下面的代码进行推理：
 
@@ -525,7 +525,7 @@ print(response)
 
 <br>
 
-## 相关链接
+## 9. 相关链接
 
 - 代码：文本的完整微调代码部分，或本目录下的`05-Phi-4-Lora-Ner.py`
 - SwanLab：[官网](https://swanlab.cn/)、[Github](https://github.com/swanhubx/swanlab)
