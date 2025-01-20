@@ -1,9 +1,5 @@
-<h1>InternLM3-8b-instruct部署</h1>
+<h1>InternLM3-8b-instruct o1-like 推理链实现</h1>
 
-VLLM (Virtual-Large-Language-Model)是伯克利大学开源的大语言模型高速推理框架，使用了全新的注意力算法「PagedAttention」，
-有效地管理Attention中的K和V。本小节我们将要基于VLLM，完成对InternLM3-8b-insturct的部署。
-
-<p>具体内容可查阅官方文档：[https://github.com/vllm-project/vllm]</p>
 
 ## 环境配置依赖
 
