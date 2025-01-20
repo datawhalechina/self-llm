@@ -112,4 +112,5 @@ if __name__ == "__main__":
 export GROQ_API_KEY=gsk...
 ```
 ## 推理结果
-<img, src=>
+
+<img, src="https://github.com/models/InternLM3/images/o1-like.png" />
