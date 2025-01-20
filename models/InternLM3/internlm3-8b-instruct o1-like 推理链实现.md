@@ -12,7 +12,7 @@ o1在测试化学、物理和生物学专业知识的基准GPQA-diamond上，全
 ----------------------
  Transformer >=4.48 
  Torch == 2.3.0     
- Cuda ==  12.1      
+ Cuda ==  12.1  
 ----------------------
 ```
 
@@ -25,7 +25,9 @@ o1在测试化学、物理和生物学专业知识的基准GPQA-diamond上，全
 ```shell
 # 升级pip
 python -m pip install --upgrade pip
-pip install vllm --download vllm
+pip install vllm
+pip install modelscope
+pip install streamlit
 ```
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/InternLM3-self-llm***
