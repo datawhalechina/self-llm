@@ -48,7 +48,7 @@ model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', ca
 
 > 注意：记得修改 cache_dir 为你的模型下载路径哦~
 在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 18GB 左右，下载模型大概需要5-30分钟。
-<img src="">
+<img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/o1.png?raw=true">
 
 ## 代码实现
 ```
