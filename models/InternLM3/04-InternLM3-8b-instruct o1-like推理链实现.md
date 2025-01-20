@@ -51,7 +51,7 @@ model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', ca
 
 ```shell
 import streamlit as st
-from g1 import generate_response
+from o1-like import generate_response
 import json
 
 def main():
