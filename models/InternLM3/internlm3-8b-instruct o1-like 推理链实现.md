@@ -117,4 +117,4 @@ export GROQ_API_KEY=gsk...
 将gsk...替换为自己的api_key即可。
 
 ## 结果展示
-<img src="https://github.com/riannyway/self-llm/blob/Llama3-8b-instruct/models/InternLM3/images/o1-like.png?raw=true">
+<img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/o1-like.png?raw=true">
