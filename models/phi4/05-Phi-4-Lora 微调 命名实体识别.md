@@ -1,8 +1,8 @@
-# Phi-4 Lora 微调
+# Phi-4 Lora 微调 命名实体识别任务 SwanLab 可视化记录版
 
 本节我们简要介绍如何基于 transformers、peft 等框架，对 Phi-4 模型进行 Lora 微调，并将其应用于命名实体识别（NER）任务，同时使用 [SwanLab](https://github.com/swanhubx/swanlab) 监控训练过程与评估模型效果。
 
-![05-9](./images/image05-9.png)
+![](./images/image05-9.png)
 
 Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
@@ -42,9 +42,10 @@ NER 也是一项非常实用的技术，包括在互联网数据标注、搜索�
 
 ![05-2](./images/image05-2.png)
 
-[SwanLab](https://swanlab.cn/) 是一个开源的模型训练记录工具，常被称为"中国版 Weights&Biases + Tensorboard"。SwanLab面向AI研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在SwanLab上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
+SwanLab 是一个开源的模型训练记录工具，常被称为"中国版 Weights&Biases + Tensorboard"。SwanLab面向AI研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在SwanLab上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
 
 官网: https://swanlab.cn/
+
 Github: https://github.com/swanhubx/swanlab
 
 **为什么要记录训练？**
