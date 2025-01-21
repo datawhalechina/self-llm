@@ -72,7 +72,7 @@
   - [ ] internlm3-8b-instruct FastApi 部署调用 @苏向标
   - [ ] internlm3-8b-instruct Langchian接入 @赵文恺
   - [ ] internlm3-8b-instruct WebDemo 部署 @王泽宇
-  - [ ] internlm3-8b-instruct vLLM 部署 @陈睿
+  - [ ] internlm3-8b-instruct o1-like推理链实现 @陈睿
   - [ ] internlm3-8b-instruct Lora 微调 @九月
 
 - [phi4](https://huggingface.co/microsoft/phi-4)
