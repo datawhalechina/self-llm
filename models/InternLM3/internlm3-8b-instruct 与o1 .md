@@ -51,27 +51,23 @@ model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', ca
 
 ## 核心代码
 ```
-from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, LlamaTokenizerFast
+from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 import torch
 
 class InternLM3_8B_Instruct:
-    # 自定义类来处理与 internlm3-8b-instruct 模型的交互
     tokenizer: AutoTokenizer = None
     model: AutoModelForCausalLM = None
 
     def __init__(self, model_name_or_path: str):
-        print("正在从本地加载模型...")
+        print("正在从本地加载模型")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=False, trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(model_name_or_path, torch_dtype=torch.bfloat16, device_map="auto", trust_remote_code=True)
         self.model.generation_config = GenerationConfig.from_pretrained(model_name_or_path, trust_remote_code=True)
-        print("完成本地模型的加载")
 
     def generate_response(self, prompt: str, max_new_tokens: int = 512):
-        # 准备输入
         input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids.to('cuda')
         attention_mask = input_ids.ne(self.tokenizer.pad_token_id).long().to('cuda')
 
-        # 生成响应
         with torch.no_grad():
             generated_ids = self.model.generate(
                 input_ids,
@@ -79,15 +75,29 @@ class InternLM3_8B_Instruct:
                 max_new_tokens=max_new_tokens
             )
 
-        # 解码生成的内容
         response = self.tokenizer.decode(generated_ids[0], skip_special_tokens=True)
         return response
 
+    def generate_response_stream(self, prompt: str, max_new_tokens: int = 512):
+        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids.to('cuda')
+        attention_mask = input_ids.ne(self.tokenizer.pad_token_id).long().to('cuda')
+
+        with torch.no_grad():
+            for output in self.model.stream_generate(
+                input_ids,
+                attention_mask=attention_mask,
+                max_new_tokens=max_new_tokens
+            ):
+                # Decode and yield the output token by token
+                output_str = self.tokenizer.decode(output, skip_special_tokens=True)
+                yield output_str
+
 if __name__ == '__main__':
-    # 指定模型路径
     model_path = "/root/autodl-tmp/Shanghai_AI_Laboratory/internlm3-8b-instruct"
     llm = InternLM3_8B_Instruct(model_path)
-    prompt="""你是一位在数学竞赛领域具有丰富经验的数学专家。你通过系统性的思考和严谨的推理来解决问题。在面对以下数学问题时，请遵循以下思考过程：
+    prompt = """
+你是一位在数学竞赛领域具有丰富经验的数学专家。你通过系统性的思考和严谨的推理来解决问题。
+在面对以下数学问题时，请遵循以下思考过程：
 ## 深入理解问题
 在尝试解决问题之前，请花时间完全理解问题：
 - 实际上被问的是哪个问题？
@@ -135,16 +145,19 @@ if __name__ == '__main__':
 
 专注于清晰、逻辑性的思路进展，详细解释你的数学推理。以提问者使用的语言提供答案，并在最后使用 '\\boxed{}' 重复最终答案。
 
-现在，请解决以下数学问题[5的十次方等于多少？]"""
-    response = llm.generate_response(prompt = prompt)
+现在，请解决以下数学问题[5的十次方等于多少？]
+"""
+    # Generate response in one go
+    response = llm.generate_response(prompt=prompt)
     print(response)
 
+    # # 流式输出
+    # print("Streaming response:")
+    # for part in llm.generate_response_stream(prompt=prompt):
+    #     print(part, end='', flush=True)
+
 ```
-要注意的是，学习者们需要自行在grouq(可访问grouq cloud，可能需要科学上网)并在powershell中配置临时变量api_key，具体代码如下：
-```
-export GROQ_API_KEY=gsk...
-```
-将gsk...替换为自己的api_key即可。
+
 
 ## 结果展示
 <img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/o1.png?raw=true">
