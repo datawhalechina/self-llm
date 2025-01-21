@@ -1,13 +1,23 @@
 <h1>InternLM3-8b-instruct与o1</h1>
-Open AI o1（又名o1，也称草莓模型，这个名字的又来是因为早期人们发现gpt总是数不对strawberry中有几个r），是Open AI于2024年9月12日发布的一款通过大规模强化学习算法训练的大模型。区别于其他大模型产品，o1不需要用户再输入复杂的提示词，而是通过强化学习，将思维链内化后进行持续训练
-<img src="">
-如图，通过思维链式的问题拆解，模型可以不断验证、纠错，尝试新的方法，这一过程显著提升了模型的推理能力。此外
-o1的性能随着更多的强化学习（训练时间计算）和更多的思考时间（测试时间计算）而持续提高。
+
+Open AI o1（又名o1，也称草莓模型，这个名字的又来是因为早期人们发现gpt总是数不对strawberry中有几个r），是Open AI于2024年9月12日发布的一款通过大规模强化学习算法训练的大模型。区别于其他大模型产品，o1不需要用户再输入复杂的提示词，而是通过强化学习，将思维链内化后进行持续训练。
+
+<img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/o1-1.png?raw=true">
+
+<p>如图，通过思维链式的问题拆解，模型可以不断验证、纠错，尝试新的方法，这一过程显著提升了模型的推理能力。</p>
+OpenAI o1的关键技术在于RL的搜索与学习机制。基于大型语言模型（LLM）已有的推理能力，通过迭代式的Bootstrap，模型能够产生合理的推理过程。这一过程不仅限于COT，还可能包括在常识问答（Common Sense QA）中对问题答案的潜在推理反思。通过将这种合理推理过程融入训练，模型学会了潜在的推理。随后，利用强大的计算资源实现Post-Training阶段的Scaling。这一技术路线与STaR的扩展版本非常相似。
+
+
+<p>同时，OpenAI o1的出现验证了后训练扩展律（Post-Training Scaling Laws），为上述技术路线的成功提供了有力支持。后训练扩展律的出现让许多学者重新思考推理的定义，一个合理的回答是“将思考时间转化为能力”，即通过增加思考推理时间来提升模型能力。随着在Post-Training阶段RL搜索的增强和在推理阶段的搜索时间增强，模型的能力得到了提升。模型在这过程中学习的是合理推理的过程，TreeSearch在其中起到了诱导合理推理过程产生的作用，或基于合理推理过程构建相应的偏序对形成系统的奖励信号。在模型的训练过程中，TreeSearch方法有助于构建系统的奖励信号，这在后续的技术路径推演中会提到。在推理阶段，搜索过程可能基于多样的TreeSearch方法实现。更有趣的是，模型的Bootstrap有助于构建新的高质量数据，这些数据中的Rationales促进了模型的进一步提升。</p>
+
+<img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/70fc262cd3a3cba523257d3a54afb73.png?raw=true">
+
+此外，o1的性能随着更多的强化学习（训练时间计算）和更多的思考时间（测试时间计算）而持续提高。
 在数学方面，在2024年的AIME（一个旨在挑战美国最聪明高中生的考试）测评中，GPT-4o只解决了13%的问题，o1的得分是83%。
 在编码方面，GPT-4o在竞争性编程问题(Codeforces)上的得分是11%，o1 是89%。
 在博士级别的科学问题(GPQA Diamond)，GPT4o是56.1%，o1则超越人类博士69.7%，达到了恐怖的78%。
-<img src="">
 虽然在写作、文字编辑等自然领域反而逊色于gpt-4o体现出o1仍存在适用性问题，但是强大的推理能力让许多研究者们趋之若鹜，短短数个月的时间里出现了不少类似o1推理链的构想。
+
 ## 环境配置依赖
 
 环境依赖如下：
@@ -22,12 +32,12 @@ o1的性能随着更多的强化学习（训练时间计算）和更多的思考
  >本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
 
 ## 准备工作
-
-首先 `pip` 换源加速下载并安装依赖包：
-
 ```shell
 # 升级pip
 python -m pip install --upgrade pip
+# 更换 pypi 源加速库的安装
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
 pip install modelscope
 pip install accelerate
 ```
@@ -53,7 +63,7 @@ model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm3-8b-instruct', ca
 <img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/o1.png?raw=true">
 
 ## 核心代码
-```
+```python
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 import torch
 
@@ -160,7 +170,12 @@ if __name__ == '__main__':
     #     print(part, end='', flush=True)
 
 ```
-
+将代码保存到文件中，需要修改存放模型的路径，接着使用命令
+```python
+python 文件名.py
+```
+即可运行。
 
 ## 结果展示
-<img src="https://github.com/riannyway/self-llm/blob/patch-1/models/InternLM3/images/o1.png?raw=true">
+![image](https://github.com/user-attachments/assets/ca4c7636-33c5-4560-9aaf-0eeb753b137c)
+
