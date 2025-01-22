@@ -15,16 +15,16 @@
         "info": "[郭志航](https://github.com/acwwt)（内容创作者）",
         "task_num": 11
     },
+    "林泽毅": {
+        "info": "[林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）",
+        "task_num": 10
+    },
     "张帆": {
         "info": "[张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）",
         "task_num": 9
     },
     "姜舒凡": {
         "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）",
-        "task_num": 8
-    },
-    "林泽毅": {
-        "info": "[林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）",
         "task_num": 8
     },
     "李娇娇": {
@@ -71,8 +71,8 @@
         "info": "[李柯辰](https://github.com/Joe-2002) （Datawhale成员）",
         "task_num": 4
     },
-    "九月": {
-        "info": "[九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）",
+    "程宏": {
+        "info": "[程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）",
         "task_num": 4
     },
     "陈思州": {
@@ -173,6 +173,14 @@
     },
     "赵伟": {
         "info": "[赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）",
+        "task_num": 1
+    },
+    "苏向标": {
+        "info": "[苏向标](https://github.com/gzhuuser)（内容创作者-广州大学-鲸英助教）",
+        "task_num": 1
+    },
+    "陈睿": {
+        "info": "[陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）",
         "task_num": 1
     }
 }

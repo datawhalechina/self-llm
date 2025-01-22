@@ -63,17 +63,17 @@
 
 
 - [MiniCPM-o-2_6](https://github.com/OpenBMB/MiniCPM-o)
-  - [ ] minicpm-o-2.6 FastApi 部署调用 @林恒宇
-  - [ ] minicpm-o-2.6 WebDemo 部署 @九月
-  - [ ] minicpm-o-2.6 vLLM 部署 @邓恺俊
+  - [x] [minicpm-o-2.6 FastApi 部署调用](./models/MiniCPM-o/01MiniCPM-o%202%206%20FastApi部署调用%20.md) @林恒宇
+  - [x] [minicpm-o-2.6 WebDemo 部署](./models/MiniCPM-o/02minicpm-o-2.6WebDemo_streamlit.py) @程宏
+  - [x] [minicpm-o-2.6 多模态语音能力](./models/MiniCPM-o/03-MiniCPM-o-2.6%20多模态语音能力.md) @邓恺俊
   - [ ] minicpm-o-2.6 可视化 Lora 微调 @林泽毅
 
 - [InternLM3](https://github.com/InternLM/InternLM)
-  - [ ] internlm3-8b-instruct FastApi 部署调用 @苏向标
-  - [ ] internlm3-8b-instruct Langchian接入 @赵文恺
-  - [ ] internlm3-8b-instruct WebDemo 部署 @王泽宇
-  - [ ] internlm3-8b-instruct o1-like推理链实现 @陈睿
-  - [ ] internlm3-8b-instruct Lora 微调 @九月
+  - [x] [internlm3-8b-instruct FastApi 部署调用](./models/InternLM3/01-InternLM3-8B-Instruct%20FastAPI.md) @苏向标
+  - [x] [internlm3-8b-instruct Langchian接入](./models/InternLM3/02-internlm3-8b-Instruct%20Langchain%20接入.md) @赵文恺
+  - [x] [internlm3-8b-instruct WebDemo 部署](./models/InternLM3/03-InternLM3-8B-Instruct%20WebDemo部署.md) @王泽宇
+  - [x] [internlm3-8b-instruct Lora 微调](./models/InternLM3/04-InternLM3-8B-Instruct%20LoRA.md) @程宏
+  - [x] [internlm3-8b-instruct o1-like推理链实现](./models/InternLM3/05-internlm3-8b-instruct%20与o1%20.md) @陈睿
 
 - [phi4](https://huggingface.co/microsoft/phi-4)
   - [x] [phi4 FastApi 部署调用](./models/phi4/01-Phi-4%20FastApi%20部署调用.md) @杜森
@@ -144,7 +144,7 @@
 - [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
   - [x] [Index-1.9B-Chat FastApi 部署调用](./models/bilibili_Index-1.9B/01-Index-1.9B-chat%20FastApi%20部署调用.md) @邓恺俊
   - [x] [Index-1.9B-Chat langchain 接入](./models/bilibili_Index-1.9B/02-Index-1.9B-Chat%20接入%20LangChain.md) @张友东
-  - [x] [Index-1.9B-Chat WebDemo 部署](./models/bilibili_Index-1.9B/03-Index-1.9B-chat%20WebDemo部署.md) @九月
+  - [x] [Index-1.9B-Chat WebDemo 部署](./models/bilibili_Index-1.9B/03-Index-1.9B-chat%20WebDemo部署.md) @程宏
   - [x] [Index-1.9B-Chat Lora 微调](./models/bilibili_Index-1.9B/04-Index-1.9B-Chat%20Lora%20微调.md) @姜舒凡
 
 - [Qwen2](https://github.com/QwenLM/Qwen2)
@@ -315,9 +315,9 @@
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
-- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
@@ -329,7 +329,7 @@
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
-- [九月](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
+- [程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
@@ -355,6 +355,8 @@
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）
 - [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
+- [苏向标](https://github.com/gzhuuser)（内容创作者-广州大学-鲸英助教）
+- [陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）
 
 > 注：排名根据贡献程度排序
 

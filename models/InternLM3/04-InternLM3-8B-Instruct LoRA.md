@@ -51,7 +51,7 @@ pip install datasets==2.20.0      # 用于加载和处理数据集
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/InternLM3-self-llm***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-internlm3***
 
 ## 模型下载
 
