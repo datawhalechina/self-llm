@@ -357,7 +357,7 @@
 - [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
 - [苏向标](https://github.com/gzhuuser)（内容创作者-广州大学-鲸英助教）
 - [陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）
-- [林恒宇](https://github.com/riannyway)（内容创作者-广东东软学院-鲸英助教）
+- [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
 
 > 注：排名根据贡献程度排序
 
