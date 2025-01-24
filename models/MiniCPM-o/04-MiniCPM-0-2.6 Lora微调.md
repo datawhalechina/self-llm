@@ -6,6 +6,7 @@
 
 本文我们将简要介绍基于 transformers、peft 等框架，使用 MiniCPM-O-2.6 模型在**LaTeX_OCR** 上进行Lora微调训练，同时使用 [SwanLab](https://github.com/swanhubx/swanlab) 监控训练过程与评估模型效果。
 
+> LoRA 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 LoRA]([text](https://zhuanlan.zhihu.com/p/650197598))。
 
 * 训练过程：[ZeyiLin/minicpm-o-2-6-latexcor](https://swanlab.cn/@ZeyiLin/minicpm-o-2-6-latexcor/runs/iap4t0w75otvng2e8bss4/chart)
 * 代码：见此文档同目录下文件夹`04-MiniCPM-0-2.6 Lora微调 参考代码`
