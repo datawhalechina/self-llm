@@ -43,6 +43,10 @@ pip install Pillow==10.1.0 torch==2.3.1 torchaudio==2.3.1 torchvision==0.18.1 tr
 
 ![image.png](images/01-3.png)
 
+
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-minicpm-o***
+
 ## 模型下载
 
 下载 `MiniCPM-o 2.6`模型文件

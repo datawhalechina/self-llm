@@ -27,6 +27,9 @@ pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorc
 pip install accelerate==1.2.1 timm==0.9.10 soundfile==0.12.1 librosa==0.9.0 vector-quantize-pytorch==1.18.5 vocos==0.1.0
 ```
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 InternLM3-8b-Instruct 的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-minicpm-o***
+
 ## 模型下载  
 
 使用 `modelscope` 中的 `snapshot_download` 函数下载模型，第一个参数为模型名称，参数 `cache_dir`为模型的下载路径。
