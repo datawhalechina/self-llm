@@ -73,7 +73,7 @@
   - [x] [minicpm-o-2.6 FastApi 部署调用](./models/MiniCPM-o/01MiniCPM-o%202%206%20FastApi部署调用%20.md) @林恒宇
   - [x] [minicpm-o-2.6 WebDemo 部署](./models/MiniCPM-o/02minicpm-o-2.6WebDemo_streamlit.py) @程宏
   - [x] [minicpm-o-2.6 多模态语音能力](./models/MiniCPM-o/03-MiniCPM-o-2.6%20多模态语音能力.md) @邓恺俊
-  - [x] [minicpm-o-2.6 可视化 Lora 微调](./models/MiniCPM-o/04-MiniCPM-0-2.6%20Lora微调.md) @林泽毅
+  - [x] [minicpm-o-2.6 可视化 LaTeX_OCR Lora 微调](./models/MiniCPM-o/04-MiniCPM-0-2.6%20Lora微调.md) @林泽毅
 
 - [InternLM3](https://github.com/InternLM/InternLM)
   - [x] [internlm3-8b-instruct FastApi 部署调用](./models/InternLM3/01-InternLM3-8B-Instruct%20FastAPI.md) @苏向标
