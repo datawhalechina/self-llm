@@ -27,14 +27,14 @@ pip install modelscope==1.22.3
 pip install streamlit==1.41.1
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen2.5 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 DeepSeek-R1-Distill 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/DeepSeek-R1-Distill-self-llm***
 
 ## 模型下载
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
 
-在 /root/autodl-tmp 路径下新建 download.py 新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。并运行 `python /root/autodl-tmp/model_download.py` 执行下载。
+新建 `model_download.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。并运行 `python model_download.py` 执行下载。
 
 ```python
 from modelscope import snapshot_download
@@ -46,7 +46,7 @@ model_dir = snapshot_download('deepseek-ai/DeepSeek-R1-Distill-Qwen-7B', cache_d
 
 ## 代码准备
 
-在 `/root/autodl-tmp`路径下新建 `chatBot.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。
+新建 `chatBot.py` 文件并在其中输入以下内容，粘贴代码后记得保存文件。下面的代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue。
 
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -136,7 +136,7 @@ if prompt := st.chat_input():
 在终端中运行以下命令，启动 streamlit 服务，`server.port` 可以更换端口
 
 ```bash
-streamlit run /root/autodl-tmp/chatBot.py --server.address 127.0.0.1 --server.port 6006
+streamlit run chatBot.py --server.address 127.0.0.1 --server.port 6006
 ```
 
 在本地浏览器中打开链接 http://localhost:6006/ ，即可查看部署的 `WebDemo` 聊天界面。运行效果如下：
