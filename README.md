@@ -68,6 +68,10 @@
 
 ### 已支持模型
 
+- [DeepSeek-R1-Distill](https://www.modelscope.cn/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B)
+  - [x] [DeepSeek-R1-Distill-Qwen-7B FastApi 部署调用](./models/DeepSeek-R1-Distill-Qwen/01-DeepSeek-R1-Distill-Qwen-7B%20FastApi%20部署调用.md) @骆秀韬
+  - [x] [DeepSeek-R1-Distill-Qwen-7B Langchain 接入](./models/DeepSeek-R1-Distill-Qwen/02-DeepSeek-R1-Distill-Qwen-7B%20Langchain%20接入.md) @骆秀韬
+  - [x] [DeepSeek-R1-Distill-Qwen-7B WebDemo 部署](./models/DeepSeek-R1-Distill-Qwen/03-DeepSeek-R1-Distill-Qwen-7B%20WebDemo部署.md) @骆秀韬
 
 - [MiniCPM-o-2_6](https://github.com/OpenBMB/MiniCPM-o)
   - [x] [minicpm-o-2.6 FastApi 部署调用](./models/MiniCPM-o/01MiniCPM-o%202%206%20FastApi部署调用%20.md) @林恒宇
@@ -341,6 +345,7 @@
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
 - [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
+- [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
