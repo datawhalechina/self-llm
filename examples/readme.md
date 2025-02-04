@@ -12,8 +12,8 @@
 
 Chat-甄嬛，实现了以《甄嬛传》为切入点，打造一套基于小说、剧本的**个性化 AI** 微调大模型完整流程，通过提供任一小说、剧本，指定人物角色，运行本项目完整流程，让每一位用户都基于心仪的小说、剧本打造一个属于自己的、契合角色人设、具备高度智能的个性化 AI。
 
-> *Chat-嬛嬛模型累计下载量 15.6k+，Modelscope 地址：*[*Link*](https://www.modelscope.cn/models/kmno4zx/huanhuan-chat-internlm2)   
-> *Chat-嬛嬛累计获得 500 star，huahuan-chat 项目地址：*[*Link*](https://github.com/KMnO4-zx/huanhuan-chat.git)，xlab-huanhuan-chat 项目地址：[*Link*](https://github.com/KMnO4-zx/xlab-huanhuan.git) 
+> *Chat-嬛嬛模型累计下载量 15.6k+，Modelscope 地址：*[*Link*](https://www.modelscope.cn/models/kmno4zx/huanhuan-chat-internlm2)
+> *Chat-嬛嬛累计获得 500 star，huahuan-chat 项目地址：*[*Link*](https://github.com/KMnO4-zx/huanhuan-chat.git)，xlab-huanhuan-chat 项目地址：[*Link*](https://github.com/KMnO4-zx/xlab-huanhuan.git)
 
 - *2023 讯飞星火杯人认知大模型场景创新赛 Top50*
 - *2024 书生·浦语大模型挑战赛（春季赛）创意应用奖 Top12*
@@ -38,10 +38,17 @@ Chat-甄嬛，实现了以《甄嬛传》为切入点，打造一套基于小说
 
 AM (Advanced Mathematics) chat 是一个集成了数学知识和高等数学习题及其解答的大语言模型。该模型使用 Math 和高等数学习题及其解析融合的数据集，基于 InternLM2-Math-7B 模型，通过 xtuner 微调，专门设计用于解答高等数学问题。
 
-> *AMchat 项目地址：*[*Link*](https://github.com/AXYZdong/AMchat)\
-> *AMchat模型: Modelscope 地址：[*Link*](https://www.modelscope.cn/models/yondong/AMchat/summary)* ， *OpenXLab 地址：[*Link*](https://openxlab.org.cn/models/detail/youngdon/AMchat)*，HuggingFace 地址：[*Link*](https://huggingface.co/axyzdong/AMchat)\
-> *AMchat GGFU模型地址：[Link](https://huggingface.co/axyzdong/AMchat-GGUF)*\
-> *AMchat 应用地址：*[*Link*](https://openxlab.org.cn/apps/detail/youngdon/AMchat)\
-> *AMchat 视频介绍：*[*Link*](https://www.bilibili.com/video/BV14v421i7So/) 
+> *AMchat 项目地址：*[*Link*](https://github.com/AXYZdong/AMchat)
+> *AMchat模型: Modelscope 地址：[*Link*](https://www.modelscope.cn/models/yondong/AMchat/summary)* ， *OpenXLab 地址：[*Link*](https://openxlab.org.cn/models/detail/youngdon/AMchat)*，HuggingFace 地址：[*Link*](https://huggingface.co/axyzdong/AMchat)
+> *AMchat GGFU模型地址：[Link](https://huggingface.co/axyzdong/AMchat-GGUF)*
+> *AMchat 应用地址：*[*Link*](https://openxlab.org.cn/apps/detail/youngdon/AMchat)
+> *AMchat 视频介绍：*[*Link*](https://www.bilibili.com/video/BV14v421i7So/)
 
 - *2024 书生·浦语大模型挑战赛（春季赛）创意应用奖 Top12*
+
+### [数字生命](./数字生命/readme.md)
+
+本项目将以我为原型，利用特制的数据集对大语言模型进行微调，致力于创造一个能够真正反映我的个性特征的AI数字人——包括但不限于我的语气、表达方式和思维模式等等，因此无论是日常聊天还是分享心情，它都以一种既熟悉又舒适的方式交流，仿佛我在他们身边一样。整个流程是可迁移复制的，亮点是数据集的制作。
+> *MBTI数据集github地址（[[https://huggingface.co/datasets/pandalla/Machine_Mindset_MBTI_dataset`]]）
+
+- *2024 大模型微调挑战赛（冬季赛）最佳创意奖 Top3*
