@@ -333,7 +333,7 @@
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-鲸英助教）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
@@ -397,4 +397,3 @@
 <div align=center style="margin-top: 30px;">
   <img src="./images/star-history-2024129.png"/>
 </div>
-
