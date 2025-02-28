@@ -35,7 +35,7 @@ cd llama.cpp
 ```
 
 直接从[release](https://github.com/ggerganov/llama.cpp/releases/tag/b3878) 中下载最新的预编译好的文件到本地并解压缩到llama.cpp目录下. ==**注意: 请下载带有CUDA 编译的版本, 请根据自己的Cuda版本进行选择**==
-![[models/Llama3_1/images/06-1.png]]
+![06-1.png](./images/06-2.png)
 #### 创建虚拟环境
 ##### 使用conda
 
@@ -73,7 +73,7 @@ python convert_hf_to_gguf.py --outfile <gguf_path> <base_model_path>
 请确保在运行这些脚本之前，所有路径和文件名都是正确的，并且所需的依赖项已经安装完毕。
 
 通过日志可以看到导出成功
-![[models/Llama3_1/images/06-2.png]]
+![06-2.png](./images/06-2.png)
 #### 转换LoRA 适配器
 
 继续使用下面的命令运行脚本
