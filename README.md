@@ -132,6 +132,8 @@
   - [x] [Llama3_1-8B-Instruct langchain 接入](./models/Llama3_1/02-Llama3_1-8B-Instruct%20langchain接入.md) @张晋
   - [x] [Llama3_1-8B-Instruct WebDemo 部署](./models/Llama3_1/03-Llama3_1-8B-Instruct%20WebDemo部署.md) @张晋
   - [x] [Llama3_1-8B-Instruct Lora 微调](./models/Llama3_1/04-Llama3_1-8B--Instruct%20Lora%20微调.md) @不要葱姜蒜
+  - [x] [Llama3_1-8b-Instruct LoRA GGUF 转换](./models/Llama3_1/06-Llama3_1-8b-Instruct%20LoRA%20GGUF%20转换.md) @BoyuanGao
+  - [x] [Llama3_1-8b-Instruct Ollama 部署](./models/Llama3_1/07-Llama3_1-8b-Instruct%20Ollama%20部署.md) @BoyuanGao
 
 - [Gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)
   - [x] [Gemma-2-9b-it FastApi 部署调用](./models/Gemma2/01-Gemma-2-9b-it%20FastApi%20部署调用.md) @不要葱姜蒜
