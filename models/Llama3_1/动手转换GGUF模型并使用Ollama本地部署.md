@@ -121,7 +121,7 @@ ollama create <modelname> -F my_lora_adapter.Modelfile
 ```
 再次执行`ollama list` 即可看到自己的模型啦
 
-![06-3.png](models/Llama3_1/images/06-3.png)
+![06-3.png](./images/06-3.png)
 
 # 总结
 
