@@ -72,6 +72,14 @@
 
 ### 已支持模型
 
+- [Gemma3](https://huggingface.co/google/gemma-3-4b-it)
+  - [ ] gemma-3-4b-it FastApi 部署调用
+  - [ ] gemma-3-4b-it vLLM 部署
+  - [ ] gemma-3-4b-it ollama + open-webui部署
+  - [ ] gemma-3-4b-it evalscope 智商情商评测
+  - [ ] gemma-3-4b-it Lora 微调
+  - [ ] gemma-3-4b-it Docker 镜像
+
 - [DeepSeek-R1-Distill](https://www.modelscope.cn/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B)
   - [x] [DeepSeek-R1-Distill-Qwen-7B FastApi 部署调用](./models/DeepSeek-R1-Distill-Qwen/01-DeepSeek-R1-Distill-Qwen-7B%20FastApi%20部署调用.md) @骆秀韬
   - [x] [DeepSeek-R1-Distill-Qwen-7B Langchain 接入](./models/DeepSeek-R1-Distill-Qwen/02-DeepSeek-R1-Distill-Qwen-7B%20Langchain%20接入.md) @骆秀韬
