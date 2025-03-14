@@ -1,0 +1,44 @@
+{
+  "additional_special_tokens": [
+    "<image>",
+    "</image>",
+    "<ref>",
+    "</ref>",
+    "<box>",
+    "</box>",
+    "<quad>",
+    "</quad>",
+    "<point>",
+    "</point>",
+    "<slice>",
+    "</slice>"
+  ],
+  "bos_token": {
+    "content": "<s>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  },
+  "eos_token": {
+    "content": "</s>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  },
+  "pad_token": {
+    "content": "<unk>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  },
+  "unk_token": {
+    "content": "<unk>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  }
+}
