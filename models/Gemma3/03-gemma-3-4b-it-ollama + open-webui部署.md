@@ -91,12 +91,12 @@ export HF_ENDPOINT=https://hf-mirror.com
 
 ## 访问 open-webui
 
-打开浏览器，访问 http://localhost:8080 即可访问 open-webui。
+打开浏览器，访问 http://localhost:6006 即可访问 open-webui。
 
 在开启ollama服务并运行gemma 3-4b模型后，openwebui会**自动检测到ollama服务**并**自动调用gemma 3-4b模型**。
 
-[03-1](./images/03-1.png)
+![03-1](./images/03-1.png)
 
 ## 测试gemma 3-4b 模型可用性
 
-[03-2](./images/03-2.png)
+![03-2](./images/03-2.png)
