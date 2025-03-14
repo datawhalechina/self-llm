@@ -1,5 +1,9 @@
 # ollama + open-webui 部署 gemma 3-4b 模型
 
+Ollama 是一个开源的大语言模型服务工具，旨在帮助用户快速在**本地**运行大模型。
+
+Open WebUI 是一个**可扩展、功能丰富、用户友好的自托管WebUI**，旨在完全离线操作。它支持各种LLM运行程序，包括Ollama和OpenAI兼容的API。
+
 本教程使用 ollama **本地部署** gemma 3-4b 模型，并使用 open-webui 部署 web 界面。
 
 ## 环境准备
