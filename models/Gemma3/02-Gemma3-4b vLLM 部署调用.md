@@ -36,8 +36,8 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install modelscope==1.23.2
 pip install openai==1.66.3
 pip install tqdm==4.66.2
-pip install transformers==4.50.0
-pip install vllm==0.7.4
+pip install git+https://github.com/huggingface/transformers.git
+pip install git+https://github.com/vllm-project/vllm.git
 pip install ninja==1.11.1.3
 MAX_JOBS=8 pip install flash-attn --no-build-isolation
 ```
