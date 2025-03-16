@@ -31,14 +31,8 @@ pip install evalscope[all]           # 安装所有 backends (Native, OpenCompas
 ```
 ## 模型评测方法
 1. **创建vLLM服务器**
-这里首先使用vLLM创建兼容 OpenAI API 接口的服务器，然后使用evalscope进行评测。当然接入其他的api也是可以的。
-```
-python -m vllm.entrypoints.openai.api_server \
-  --model /root/autodl-tmp/LLM-Research/gemma-3-4b-it \
-  --served-model-name Gemma3-4b \
-  --max-model-len=4096
-```
-2. **执行评测**
+这里首先使用ollama创建兼容 OpenAI API 接口的服务器，然后使用evalscope进行评测。当然接入其他的api也是可以的。
+1. **执行评测**
 新建eval_api.py文件，并输入以下代码：
 ```
 # 导入执行任务的函数和任务配置类
@@ -56,7 +50,7 @@ from evalscope.config import TaskConfig
 # 配置任务参数
 task_cfg = TaskConfig(
     model='Gemma3-4b',  # 指定使用的模型
-    api_url='http://0.0.0.0:8000/v1/chat/completions',  # 指定API端点
+    api_url='http://localhost:11434/v1/chat/completions',  # 指定API端点
     api_key='sk-xxxxxxx',  # API密钥（需替换为实际密钥）
     eval_type='service',  # 指定评估类型为服务模式
     datasets=['iquiz'],  # 指定使用的数据集
