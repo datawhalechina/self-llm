@@ -10,14 +10,16 @@
 - EvalScope是魔搭社区官方推出的模型评测与性能基准测试框架，内置多个常用测试基准和评测指标，如MMLU、CMMLU、C-Eval、GSM8K、ARC、HellaSwag、TruthfulQA、MATH和HumanEval等；支持多种类型的模型评测，包括LLM、多模态LLM、embedding模型和reranker模型。EvalScope还适用于多种评测场景，如端到端RAG评测、竞技场模式和模型推理性能压测等。此外，通过ms-swift训练框架的无缝集成，可一键发起评测，实现了模型训练到评测的全链路支持。
 官网地址：https://evalscope.readthedocs.io/zh-cn/latest/get_started
 # evalscope评测使用方法
-## 环境准备
-1. **创建conda环境：**
-```
-# 建议使用 python 3.10
-conda create -n evalscope python=3.10
+## 环境准备  
+本文基础环境如下：
 
-# 激活conda环境
-conda activate evalscope
+```
+----------------
+ubuntu 22.04
+python 3.12
+Cuda  12.4
+PyTorch  2.5.1
+----------------
 ```
 2. **pip安装evalscope：**
 ```
@@ -32,6 +34,20 @@ pip install evalscope[all]           # 安装所有 backends (Native, OpenCompas
 ## 模型评测方法
 1. **创建vLLM服务器**
 这里首先使用ollama创建兼容 OpenAI API 接口的服务器，然后使用evalscope进行评测。当然接入其他的api也是可以的。
+```bash
+curl -L https://git.886.be/https://github.com/ollama/ollama/releases/download/v0.6.0/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz
+sudo tar -C /usr -xzf ollama-linux-amd64.tgz
+```
+```bash
+ollama serve #运行ollama服务器
+```
+
+新建一个bash窗口
+```bash
+ollama run gemma3:4b
+```
+此时可以在控制台直接与模型对话。
+
 1. **执行评测**
 新建eval_api.py文件，并输入以下代码：
 ```
@@ -49,11 +65,11 @@ from evalscope.config import TaskConfig
 
 # 配置任务参数
 task_cfg = TaskConfig(
-    model='Gemma3-4b',  # 指定使用的模型
-    api_url='http://localhost:11434/v1/chat/completions',  # 指定API端点
-    api_key='sk-xxxxxxx',  # API密钥（需替换为实际密钥）
+    model='gemma3:4b',  # 指定使用的模型
+    api_url='http://localhost:11434/v1/chat/completions',  # 指定API端点，这里使用的是ollama默认的api接口
+    api_key='sk-xxxxxxx',  # API密钥（需替换为实际密钥，ollama 的api_key）
     eval_type='service',  # 指定评估类型为服务模式
-    datasets=['iquiz'],  # 指定使用的数据集
+    datasets=['iquiz'],  # 指定使用的数据集(这个测试集可以快速测试模型的智商和情商)
     generation_config={  # 文本生成配置
         'max_tokens': 4096,  # 最大令牌数
         'max_new_tokens': 4096,  # 最大新生成令牌数
@@ -65,6 +81,8 @@ task_cfg = TaskConfig(
 # 执行任务
 run_task(task_cfg=task_cfg)
 ```
+
+新建一个bash窗口，也就是控制台中执行。
 控制台运行`python eval_api.py`命令即可。
 等待3分钟左右评测就完成啦，控制台输出的结果如下图所示：
 ![](./images/04-01.png)
