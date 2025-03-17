@@ -73,12 +73,11 @@
 ### 已支持模型
 
 - [Gemma3](https://huggingface.co/google/gemma-3-4b-it)
-  - [ ] gemma-3-4b-it FastApi 部署调用
-  - [ ] gemma-3-4b-it vLLM 部署
-  - [ ] gemma-3-4b-it ollama + open-webui部署
-  - [ ] gemma-3-4b-it evalscope 智商情商评测
-  - [ ] gemma-3-4b-it Lora 微调
-  - [ ] gemma-3-4b-it Docker 镜像
+  - [x] [gemma-3-4b-it FastApi 部署调用](./models/Gemma3/01-gemma-3-4b-it%20FastApi%20部署调用.md) @杜森
+  - [x] [gemma-3-4b-it ollama + open-webui部署](./models/Gemma3/03-gemma-3-4b-it-ollama%20+%20open-webui部署.md) @孙超
+  - [x] [gemma-3-4b-it evalscope 智商情商评测](./models/Gemma3/04-Gemma3-4b%20%20evalscope智商情商评测.md) @张龙斐
+  - [x] [gemma-3-4b-it Lora 微调](./models/Gemma3/05-gemma-3-4b-it%20LoRA.md) @荞麦
+  - [x] [gemma-3-4b-it Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma3) @姜舒凡
 
 - [DeepSeek-R1-Distill](https://www.modelscope.cn/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B)
   - [x] [DeepSeek-R1-Distill-Qwen-7B FastApi 部署调用](./models/DeepSeek-R1-Distill-Qwen/01-DeepSeek-R1-Distill-Qwen-7B%20FastApi%20部署调用.md) @骆秀韬
@@ -351,15 +350,16 @@
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
+- [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
+- [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
-- [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
-- [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
+- [杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
@@ -372,7 +372,6 @@
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
 - [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
 - [付志远](https://github.com/comfzy)（内容创作者-海南大学）
-- [杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）
 - [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
@@ -384,6 +383,8 @@
 - [苏向标](https://github.com/gzhuuser)（内容创作者-广州大学-鲸英助教）
 - [陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）
 - [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
+- [张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）
+- [孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）
 
 > 注：排名根据贡献程度排序
 

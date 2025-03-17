@@ -25,7 +25,7 @@
     },
     "姜舒凡": {
         "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）",
-        "task_num": 8
+        "task_num": 9
     },
     "李娇娇": {
         "info": "[李娇娇](https://github.com/Aphasia0515) （Datawhale成员）",
@@ -59,6 +59,10 @@
         "info": "[高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）",
         "task_num": 5
     },
+    "荞麦": {
+        "info": "[荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）",
+        "task_num": 5
+    },
     "Kailigithub": {
         "info": "[Kailigithub](https://github.com/Kailigithub) （Datawhale成员）",
         "task_num": 4
@@ -75,6 +79,10 @@
         "info": "[程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）",
         "task_num": 4
     },
+    "骆秀韬": {
+        "info": "[骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）",
+        "task_num": 4
+    },
     "陈思州": {
         "info": "[陈思州](https://github.com/jjyaoao) （Datawhale成员）",
         "task_num": 3
@@ -87,12 +95,8 @@
         "info": "[颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）",
         "task_num": 3
     },
-    "荞麦": {
-        "info": "[荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）",
-        "task_num": 3
-    },
-    "骆秀韬": {
-        "info": "[骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）",
+    "杜森": {
+        "info": "[杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）",
         "task_num": 3
     },
     "Swiftie": {
@@ -143,10 +147,6 @@
         "info": "[付志远](https://github.com/comfzy)（内容创作者-海南大学）",
         "task_num": 2
     },
-    "杜森": {
-        "info": "[杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）",
-        "task_num": 2
-    },
     "郑远婧": {
         "info": "[郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）",
         "task_num": 2
@@ -189,6 +189,14 @@
     },
     "林恒宇": {
         "info": "[林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）",
+        "task_num": 1
+    },
+    "张龙斐": {
+        "info": "[张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）",
+        "task_num": 1
+    },
+    "孙超": {
+        "info": "[孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）",
         "task_num": 1
     }
 }

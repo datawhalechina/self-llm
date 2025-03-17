@@ -33,7 +33,7 @@ pip install modelscope==1.22.3
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 gemma-3-4b-it 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/DeepSeek-R1-Distill-Qwen***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma3***
 
 ## 模型下载
 

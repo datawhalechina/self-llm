@@ -40,8 +40,8 @@ pip install accelerate==1.5.1    # 用于分布式训练和混合精度训练
 pip install datasets==3.3.2      # 用于加载和处理数据集
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 gemma-3-4b-it的环境镜像，点击下方链接并直接创建 AutoDL 示例即可。
-> 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 gemma-3-4b-it 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma3***
 
 ## 模型下载
 
