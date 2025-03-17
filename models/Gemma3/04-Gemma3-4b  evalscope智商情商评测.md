@@ -32,7 +32,7 @@ pip install evalscope[perf]          # 安装 模型压测模块 依赖
 pip install evalscope[all]           # 安装所有 backends (Native, OpenCompass, VLMEvalKit, RAGEval)
 ```
 ## 模型评测方法
-1. **创建vLLM服务器**
+1. **创建ollama服务器**
 这里首先使用ollama创建兼容 OpenAI API 接口的服务器，然后使用evalscope进行评测。当然接入其他的api也是可以的。
 ```bash
 curl -L https://git.886.be/https://github.com/ollama/ollama/releases/download/v0.6.0/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz
@@ -73,7 +73,7 @@ task_cfg = TaskConfig(
     generation_config={  # 文本生成配置
         'max_tokens': 4096,  # 最大令牌数
         'max_new_tokens': 4096,  # 最大新生成令牌数
-        'temperature': 1.0,  # 温度参数
+        'temperature': 1.0,  # 温度参数，这里设置为1.0，模型的输出随机性较大，所以可能会有些实验误差
     },
     work_dir='outputs/Gemma3-4b',  # 输出目录
 )
@@ -86,6 +86,7 @@ run_task(task_cfg=task_cfg)
 控制台运行`python eval_api.py`命令即可。
 等待3分钟左右评测就完成啦，控制台输出的结果如下图所示：
 ![](./images/04-01.png)
+实验结果可能有误差，因为在评测任务配置中我们把temperature调到了1.0，如果调小一些，可能会得到更精确的结果。
 可以看到模型的得分还是不错的，模型评测的文件保存在`/root/outputs/Gemma3-4b/20250315_164601/reviews/Gemma3-4b`目录下。
 ![](./images/04-05.png)
 ## evalscope简介：
