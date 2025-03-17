@@ -29,7 +29,7 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 # LoRA微调 相关依赖
-pip install peft== 0.14.0        # 用于 LoRA 微调
+pip install peft==0.14.0        # 用于 LoRA 微调
 
 # 通用依赖
 pip install modelscope==1.22.0    # 用于模型下载和管理
