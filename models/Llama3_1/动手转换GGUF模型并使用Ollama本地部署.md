@@ -48,6 +48,7 @@ cd llama.cpp
 ```
 
 直接从[release](https://github.com/ggerganov/llama.cpp/releases/tag/b3878) 中下载最新的预编译好的文件到本地并解压缩到llama.cpp目录下. ==**注意: 请下载带有CUDA 编译的版本, 请根据自己的Cuda版本进行选择**==
+
 ![06-1.png](./images/06-1.png)
 #### 创建虚拟环境
 ##### 使用conda
@@ -67,12 +68,12 @@ python -m venv llamacpp
 #### 安装环境依赖
 
 ```shell
-pip install requirement.txt
+pip install -r .\requirements.txt
 ```
 
 #### 转换基础模型
 
-运行`convert-hf-to-gguf.py`, 此脚本用于将 Hugging Face 格式的模型转换为 GGUF 格式。请按照以下步骤操作：
+运行`convert_hf_to_gguf.py`, 此脚本用于将 Hugging Face 格式的模型转换为 GGUF 格式。请按照以下步骤操作：
 
 1. 确保您已经在`llama.cpp`目录下，并且已经激活了 Python 虚拟环境。
 
@@ -104,9 +105,9 @@ python .\convert_lora_to_gguf.py --outfile <lora_gguf_path> --base <base_model_p
 
 `Modelfile`是一个模型的配置文件, 需要包含如下信息:
 
-*   `FROM`(必须):模型的GGUF 文件地址
+*  `FROM`(必须):模型的GGUF 文件地址
 *  `ADAPTER`: 模型的LORA 适配器地址, 也需要转化为GGUF 文件
-*   `TEMPLATE`: 模型的提示模板, **建议直接沿用基模型的TEMPLATE**
+*  `TEMPLATE`: 模型的提示模板, **建议直接沿用基模型的TEMPLATE**
 
 ```Modelfile
 FROM /path/to/model.gguf
@@ -117,7 +118,7 @@ TEMPLATE 基础模型的template
 创建`my_lora_adapter.Modelfile` 文件, 并按照上述模板填写信息, 完成创建后通过下面的语句创建模型
 
 ```shell
-ollama create <modelname> -F my_lora_adapter.Modelfile
+ollama create <modelname> -f my_lora_adapter.Modelfile
 ```
 再次执行`ollama list` 即可看到自己的模型啦
 
