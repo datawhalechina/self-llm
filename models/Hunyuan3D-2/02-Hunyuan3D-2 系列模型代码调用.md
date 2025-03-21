@@ -14,8 +14,6 @@
 
 # 单视图白模生成
 
----
-
 让我们先来进行单视图基础白模生成模型Dit的代码调用，这里以调用hunyuan3d-dit-v2-0模型为例
 
 在项目目录下新建代码文件，并在其中输入以下内容，粘贴代码后请及时保存文件
@@ -122,8 +120,6 @@ hunyuan3d-dit-v2-mv实测默认参数下输出为36s左右，显存占用约为7
 
 # 单视图的纹理合成
 
----
-
 现在我们成功生成了基础白模，当然也少不了图像纹理的合成Paint
 
 如果您使用的是指定本地数据盘路径存储模型文件，需要引用的Hunyuan3DPaintPipeline方法代码中去修改指向的路径规则，在项目仓库下：Hunyuan3D-2/hy3dgen/texgen/pipelines.py:55
@@ -170,8 +166,6 @@ mesh.export('demo_textured.glb')
 [demo_textured.glb.gif](images/demo_textured.glb.gif)
 
 # 多视图的纹理合成
-
----
 
 最后让我们来尝试通过多视图来合成纹理，请输入下式代码
 
@@ -226,8 +220,6 @@ print("--- %s seconds ---" % (time.time() - start_time))
 [demo_textured_mv.glb.gif](images/demo_textured_mv.glb.gif)
 
 # 输出效果样例
-
----
 
 单式图纹理渲染
 

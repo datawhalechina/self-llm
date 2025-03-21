@@ -55,10 +55,8 @@ python3 gradio_app.py --model_path tencent/Hunyuan3D-2 --subfolder hunyuan3d-dit
 
 ## 启动示例
 
----
-
 ![image%203.png](images/image%203.png)
 
-![image%204.png](image%204.png)
+![image%204.png](images/image%204.png)
 
-![image%205.png](image%205.png)
+![image%205.png](images/image%205.png)
