@@ -57,8 +57,8 @@ python3 gradio_app.py --model_path tencent/Hunyuan3D-2 --subfolder hunyuan3d-dit
 
 ---
 
-![image.png](image.png)
+![image%203.png](images/image%203.png)
 
-![image.png](image%201.png)
+![image%204.png](image%204.png)
 
-![image.png](image%202.png)
+![image%205.png](image%205.png)

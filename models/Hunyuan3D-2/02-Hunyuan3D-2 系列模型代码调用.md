@@ -55,13 +55,13 @@ mesh.export(f'demo.glb')
 
 示例输入图像为我们可爱小鲸鱼的正面靓图：
 
-![front.png](front.png)
+![front.png](images/front.png)
 
 hunyuan3d-dit-v2-0实测默认参数下生成白模输出为27s左右，显存占用约为7GB；hunyuan3d-dit-v2-mni输出为15s左右，显存占用约为4GB
 
 输出的glb文件可以通过在线转换器或Blender进行阅览和使用，可以看到在单图生成下，小鲸鱼的尾巴似乎有点过于“板正”了哈哈
 
-![demo.glb.gif](demo.glb.gif)
+![demo.glb.gif](images/demo.glb.gif)
 
 # 多视图白模生成
 
@@ -110,13 +110,13 @@ mesh.export(f'demo_mv.glb')
 
 示例输入图像为小鲸鱼的三视图：
 
-![346878472-0048e224fff0f1973c2180c85a476ffac50e11042a04ef26992ba274cf403da9.png](346878472-0048e224fff0f1973c2180c85a476ffac50e11042a04ef26992ba274cf403da9.png)
+![346878472-0048e224fff0f1973c2180c85a476ffac50e11042a04ef26992ba274cf403da9.png](images/346878472-0048e224fff0f1973c2180c85a476ffac50e11042a04ef26992ba274cf403da9.png)
 
 hunyuan3d-dit-v2-mv实测默认参数下输出为36s左右，显存占用约为7GB
 
 同样的，输出的glb文件可以通过在线转换器或Blender进行阅览和使用
 
-![demo_mv.glb.gif](demo_mv.glb.gif)
+![demo_mv.glb.gif](images/demo_mv.glb.gif)
 
 通过多视图的输入，小鲸鱼的尾巴可以完整准确的表达出来
 
@@ -167,7 +167,7 @@ mesh.export('demo_textured.glb')
 
 渲染纹理后我们的小鲸鱼颜色就出来啦，但由于单图输入背部显得黝黑黝黑的
 
-[https://www.notion.so](https://www.notion.so)
+[demo_textured.glb.gif](images/demo_textured.glb.gif)
 
 # 多视图的纹理合成
 
@@ -223,7 +223,7 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 进行多视图输入的纹理合成模型加载后，整体显存要求为18GB左右，且耗时较长，在默认参数下实测需要6min的输出时间
 
-[https://www.notion.so](https://www.notion.so)
+[demo_textured_mv.glb.gif](images/demo_textured_mv.glb.gif)
 
 # 输出效果样例
 
@@ -231,8 +231,8 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 单式图纹理渲染
 
-[https://www.notion.so](https://www.notion.so)
+[demo_textured+(1).glb.gif](images/demo_textured+(1).glb.gif)
 
 多视图纹理渲染
 
-[https://www.notion.so](https://www.notion.so)
+[demo_textured_mv+(1).glb.gif](images/demo_textured_mv+(1).glb.gif)
