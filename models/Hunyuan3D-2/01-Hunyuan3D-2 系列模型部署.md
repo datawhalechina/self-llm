@@ -58,6 +58,9 @@ cd hy3dgen/texgen/differentiable_renderer
 python3 setup.py install
 ```
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Hunyuan3D-2 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Hunyuan3D-2***
+
 # 模型下载
 
 执行官方代码会自动拉取huggingface模型，并存储至根目录缓存

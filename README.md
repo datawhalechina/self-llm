@@ -77,6 +77,7 @@
   - [x] [Hunyuan3D-2 系列模型代码调用](./models/Hunyuan3D-2/02-Hunyuan3D-2%20系列模型代码调用.md) @林恒宇
   - [x] [Hunyuan3D-2 系列模型Gradio部署](./models/Hunyuan3D-2/03-Hunyuan3D-2%20系列模型Gradio部署.md) @林恒宇
   - [x] [Hunyuan3D-2 系列模型API Server](./models/Hunyuan3D-2/04-Hunyuan3D-2%20系列模型API%20Server.md) @林恒宇
+  - [x] [Hunyuan3D-2 Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/Hunyuan3D-2) @林恒宇
 
 - [Gemma3](https://huggingface.co/google/gemma-3-4b-it)
   - [x] [gemma-3-4b-it FastApi 部署调用](./models/Gemma3/01-gemma-3-4b-it%20FastApi%20部署调用.md) @杜森
@@ -351,6 +352,7 @@
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
+- [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
@@ -388,7 +390,6 @@
 - [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
 - [苏向标](https://github.com/gzhuuser)（内容创作者-广州大学-鲸英助教）
 - [陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）
-- [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
 - [张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）
 - [孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）
 
