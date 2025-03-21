@@ -161,9 +161,9 @@ mesh.export('demo_textured.glb')
 
 加载hunyuan3d-paint-v2-0的纹理合成模型后，整体显存要求为14GB左右
 
-渲染纹理后我们的小鲸鱼颜色就出来啦，但由于单图输入背部显得黝黑黝黑的
+渲染纹理后我们的小鲸鱼颜色就出来啦，但由于单图输入背部显得黝黑黝黑的,尾巴也被吃掉了！
 
-[demo_textured.glb.gif](images/demo_textured.glb.gif)
+![demo_textured.glb.gif](images/demo_textured.glb.gif)
 
 # 多视图的纹理合成
 
@@ -217,14 +217,14 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 进行多视图输入的纹理合成模型加载后，整体显存要求为18GB左右，且耗时较长，在默认参数下实测需要6min的输出时间
 
-[demo_textured_mv.glb.gif](images/demo_textured_mv.glb.gif)
+![demo_textured_mv.glb.gif](images/demo_textured_mv.glb.gif)
 
 # 输出效果样例
 
 单式图纹理渲染
 
-[demo_textured+(1).glb.gif](images/demo_textured+(1).glb.gif)
+![demo_textured+(1).glb.gif](images/demo_textured+(1).glb.gif)
 
 多视图纹理渲染
 
-[demo_textured_mv+(1).glb.gif](images/demo_textured_mv+(1).glb.gif)
+![demo_textured_mv+(1).glb.gif](images/demo_textured_mv+(1).glb.gif)
