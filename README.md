@@ -72,6 +72,12 @@
 
 ### 已支持模型
 
+- [Hunyuan3D-2](https://huggingface.co/tencent/Hunyuan3D-2)
+  - [x] [Hunyuan3D-2 系列模型部署](./models/Hunyuan3D-2/01-Hunyuan3D-2%20系列模型部署.md) @林恒宇
+  - [x] [Hunyuan3D-2 系列模型代码调用](./models/Hunyuan3D-2/02-Hunyuan3D-2%20系列模型代码调用.md) @林恒宇
+  - [x] [Hunyuan3D-2 系列模型Gradio部署](./models/Hunyuan3D-2/03-Hunyuan3D-2%20系列模型Gradio部署.md) @林恒宇
+  - [x] [Hunyuan3D-2 系列模型API Server](./models/Hunyuan3D-2/04-Hunyuan3D-2%20系列模型API%20Server.md) @林恒宇
+
 - [Gemma3](https://huggingface.co/google/gemma-3-4b-it)
   - [x] [gemma-3-4b-it FastApi 部署调用](./models/Gemma3/01-gemma-3-4b-it%20FastApi%20部署调用.md) @杜森
   - [x] [gemma-3-4b-it ollama + open-webui部署](./models/Gemma3/03-gemma-3-4b-it-ollama%20+%20open-webui部署.md) @孙超
