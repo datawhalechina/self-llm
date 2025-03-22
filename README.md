@@ -72,6 +72,9 @@
 
 ### 已支持模型
 
+- [SpatialLM](https://github.com/manycore-research/SpatialLM)
+  - [x] [SpatialLM 3D点云理解与目标检测模型部署](./models/SpatialLM/readme.md) @王泽宇
+
 - [Hunyuan3D-2](https://huggingface.co/tencent/Hunyuan3D-2)
   - [x] [Hunyuan3D-2 系列模型部署](./models/Hunyuan3D-2/01-Hunyuan3D-2%20系列模型部署.md) @林恒宇
   - [x] [Hunyuan3D-2 系列模型代码调用](./models/Hunyuan3D-2/02-Hunyuan3D-2%20系列模型代码调用.md) @林恒宇
@@ -349,9 +352,9 @@
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
+- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
