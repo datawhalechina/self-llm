@@ -4,9 +4,13 @@
 仓库地址：
 - https://github.com/manycore-research/SpatialLM
 
-模型地址：
+Hugging Face 模型地址：
 - https://huggingface.co/manycore-research/SpatialLM-Llama-1B
 - https://huggingface.co/manycore-research/SpatialLM-Qwen-0.5B
+
+ModelScope 模型地址：
+- https://modelscope.cn/models/manycore-research/SpatialLM-Llama-1B
+- https://modelscope.cn/models/manycore-research/SpatialLM-Qwen-0.5B
 
 SpatialLM是一款专门为三维空间理解设计的大语言模型，通过三维点云数据，生成结构化的三维场景理解输出，包括墙壁、门、窗等建筑元素，以及带有语义类别的定向物体边界框。与传统需要专用设备进行数据采集的方法不同，SpatialLM能够处理来自多种来源的点云数据，如：单目视频序列、RGBD图像和LiDAR传感器等。  
 ![](./images/01.png)
