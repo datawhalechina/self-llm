@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llama-4-Scout 对话助手</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .chat-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #e1f5fe;
+            margin-left: auto;
+            text-align: right;
+            border-bottom-right-radius: 5px;
+        }
+        .bot-message {
+            background-color: #f0f0f0;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #loading {
+            text-align: center;
+            display: none;
+        }
+        #model-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffab91;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .control-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+        #clear-btn {
+            background-color: #f44336;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+        #clear-btn:hover {
+            background-color: #d32f2f;
+        }
+        .session-info {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        .settings-container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .settings-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        .settings-content {
+            display: none;
+        }
+        .settings-content.active {
+            display: block;
+        }
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        .slider-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .slider-container .slider-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .slider-container .value-display {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="model-loading">
+        模型正在加载中，请稍候... 首次加载可能需要1-2分钟
+    </div>
+    
+    <h1>Llama-4-Scout 对话助手</h1>
+    
+    <div class="session-info">
+        会话ID: <span id="chat-id">{{ chat_id }}</span>
+    </div>
+    
+    <div class="settings-container">
+        <div class="settings-header" id="settings-toggle">
+            <h3>模型参数设置</h3>
+            <span>▼</span>
+        </div>
+        <div class="settings-content" id="settings-content">
+            <div class="slider-container">
+                <label for="max-tokens-slider">模型生成长度上限</label>
+                <div class="slider-info">
+                    <span>256</span>
+                    <span class="value-display" id="max-tokens-value">1024</span>
+                    <span>2048</span>
+                </div>
+                <input type="range" id="max-tokens-slider" min="256" max="2048" step="128" value="1024">
+            </div>
+            <div class="slider-container">
+                <label for="history-length-slider">最大对话记忆轮数</label>
+                <div class="slider-info">
+                    <span>2</span>
+                    <span class="value-display" id="history-length-value">10</span>
+                    <span>20</span>
+                </div>
+                <input type="range" id="history-length-slider" min="2" max="20" step="1" value="10">
+            </div>
+        </div>
+    </div>
+    
+    <div class="control-buttons">
+        <button id="clear-btn" disabled>清除对话历史</button>
+    </div>
+    
+    <div class="chat-container" id="chat-container">
+        <div class="message bot-message">
+            您好！我是由MetaAI开发的Llama-4-Scout-17B-16E-Instruct。请问有什么我可以帮助您的？我的中文不好，您可以尽量用英文和我沟通。
+        </div>
+    </div>
+    
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>正在生成回答，请稍候...</p>
+    </div>
+    
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="在此输入您的问题..." disabled>
+        <button id="send-btn" disabled>发送</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat-container');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const loading = document.getElementById('loading');
+            const modelLoading = document.getElementById('model-loading');
+            const chatId = document.getElementById('chat-id').textContent;
+            
+            // 设置相关元素
+            const settingsToggle = document.getElementById('settings-toggle');
+            const settingsContent = document.getElementById('settings-content');
+            const maxTokensSlider = document.getElementById('max-tokens-slider');
+            const maxTokensValue = document.getElementById('max-tokens-value');
+            const historyLengthSlider = document.getElementById('history-length-slider');
+            const historyLengthValue = document.getElementById('history-length-value');
+            
+            // 默认值
+            let maxNewTokens = 1024;
+            let maxHistoryLength = 10;
+            
+            // 聊天历史存储
+            const chatHistory = [];
+            
+            // 切换设置面板
+            settingsToggle.addEventListener('click', function() {
+                settingsContent.classList.toggle('active');
+                settingsToggle.querySelector('span').textContent = 
+                    settingsContent.classList.contains('active') ? '▲' : '▼';
+            });
+            
+            // 更新拖动条值显示和实时应用
+            maxTokensSlider.addEventListener('input', function() {
+                maxNewTokens = parseInt(this.value);
+                maxTokensValue.textContent = maxNewTokens;
+            });
+            
+            historyLengthSlider.addEventListener('input', function() {
+                maxHistoryLength = parseInt(this.value);
+                historyLengthValue.textContent = maxHistoryLength;
+            });
+            
+            // 清理响应中的特殊标记
+            function cleanResponse(text) {
+                // 移除各种结束标记
+                return text.replace(/<\|eot\|>/g, '')
+                           .replace(/<eot>/g, '')
+                           .replace(/<\/eot>/g, '')
+                           .trim();
+            }
+            
+            // 检查模型是否已加载
+            function checkModelStatus() {
+                fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_input: '', chat_id: chatId })
+                })
+                .then(response => {
+                    if (response.status === 503) {
+                        // 模型仍在加载，继续等待
+                        setTimeout(checkModelStatus, 5000);
+                    } else {
+                        // 模型已加载，启用输入
+                        modelLoading.style.display = 'none';
+                        sendBtn.disabled = false;
+                        userInput.disabled = false;
+                        clearBtn.disabled = false;
+                        
+                        // 激活设置面板
+                        settingsContent.classList.add('active');
+                        settingsToggle.querySelector('span').textContent = '▲';
+                    }
+                })
+                .catch(error => {
+                    // 发生错误，继续等待
+                    setTimeout(checkModelStatus, 5000);
+                });
+            }
+            
+            // 启动检查
+            checkModelStatus();
+
+            function addMessage(content, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+                
+                // 清理机器人响应中的特殊标记
+                if (!isUser) {
+                    content = cleanResponse(content);
+                }
+                
+                messageDiv.textContent = content;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // 保存到本地历史记录（可选，因为服务器已经保存了）
+                chatHistory.push({
+                    role: isUser ? 'user' : 'assistant',
+                    content: content
+                });
+            }
+
+            async function sendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+
+                // 添加用户消息到聊天框
+                addMessage(message, true);
+                userInput.value = '';
+                
+                // 显示加载中
+                loading.style.display = 'block';
+                sendBtn.disabled = true;
+                userInput.disabled = true;
+                clearBtn.disabled = true;
+                
+                try {
+                    const response = await fetch('/api/generate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            user_input: message,
+                            chat_id: chatId,
+                            max_new_tokens: maxNewTokens,
+                            max_history_length: maxHistoryLength
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // 添加AI回复到聊天框
+                        addMessage(data.response, false);
+                    } else {
+                        addMessage(`错误: ${data.error || '服务器错误'}`, false);
+                    }
+                } catch (error) {
+                    addMessage(`发生错误: ${error.message}`, false);
+                } finally {
+                    loading.style.display = 'none';
+                    sendBtn.disabled = false;
+                    userInput.disabled = false;
+                    clearBtn.disabled = false;
+                }
+            }
+            
+            // 清除对话历史
+            async function clearHistory() {
+                try {
+                    clearBtn.disabled = true;
+                    
+                    const response = await fetch('/api/clear_history', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ chat_id: chatId })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // 清除聊天界面
+                        chatContainer.innerHTML = '';
+                        // 添加欢迎消息
+                        const welcomeDiv = document.createElement('div');
+                        welcomeDiv.className = 'message bot-message';
+                        welcomeDiv.textContent = '您好！我是由MetaAI开发的Llama-4-Scout-17B-16E-Instruct。请问有什么我可以帮助您的？我的中文不好，您可以尽量用英文和我沟通。';
+                        chatContainer.appendChild(welcomeDiv);
+                        
+                        // 清除本地历史
+                        chatHistory.length = 0;
+                    } else {
+                        alert('清除历史失败: ' + (data.error || '未知错误'));
+                    }
+                } catch (error) {
+                    alert('清除历史时发生错误: ' + error.message);
+                } finally {
+                    clearBtn.disabled = false;
+                }
+            }
+
+            // 添加事件监听器
+            sendBtn.addEventListener('click', sendMessage);
+            clearBtn.addEventListener('click', clearHistory);
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !sendBtn.disabled) {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
