@@ -81,6 +81,9 @@
   - [ ] Qwen3-7B-Instruct Lora 微调及SwanLab 可视化记录
   - [ ] Qwen3-7B-Instruct Docker 镜像
 
+- [Llama4](https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct)
+  - [x] [Llama4 对话助手](./models/Llama4/01-Llama4-对话助手/01-Llama4-对话助手.md) @姜舒凡
+
 - [SpatialLM](https://github.com/manycore-research/SpatialLM)
   - [x] [SpatialLM 3D点云理解与目标检测模型部署](./models/SpatialLM/readme.md) @王泽宇
 
