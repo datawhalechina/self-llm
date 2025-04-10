@@ -1,0 +1,7 @@
+# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+transformers==4.48.2
+accelerate==1.6.0
+flask==3.1.0
+blobfile==3.0.0
+pillow==10.4.0
+modelscope==1.22.3
