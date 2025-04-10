@@ -21,7 +21,7 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 限制上传文件大小
 app.config['MAX_CONTENT_PATH'] = None
 
 # 全局变量存储预加载的模型和tokenizer
-MODEL_ID = "/mnt/shufan/moonshotai/Kimi-VL-A3B-Thinking"
+MODEL_ID = "请修改我！！！"  # 替换为实际的模型路径或名称
 tokenizer = None
 model = None
 processor = None
