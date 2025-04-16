@@ -192,7 +192,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",torch_dtype=torch.bfloat16)
 
 # 加载lora权重
-model = PeftModel.from_pretrained(model, model_id=lora_path, config=config)
+model = PeftModel.from_pretrained(model, model_id=lora_path)
 
 prompt = "你是谁？"
 messages = [
