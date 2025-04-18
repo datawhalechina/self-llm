@@ -81,6 +81,10 @@
   - [ ] Qwen3-7B-Instruct Lora 微调及SwanLab 可视化记录
   - [ ] Qwen3-7B-Instruct Docker 镜像
 
+- [Kimi](https://github.com/MoonshotAI/Kimi-VL)
+  - [x] [Kimi-VL-A3B 技术报告解读）](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
+  - [x] [Kimi-VL-A3B-Thinking WebDemo 部署（网页对话助手）](./models/Kimi-VL/01-Kimi-VL-对话助手.md) @姜舒凡
+
 - [Llama4](https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct)
   - [x] [Llama4 对话助手](./models/Llama4/01-Llama4-对话助手/01-Llama4-对话助手.md) @姜舒凡
 
@@ -361,9 +365,9 @@
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
