@@ -67,7 +67,7 @@ model_dir = snapshot_download('Qwen3-8B', cache_dir='/root/autodl-tmp', revision
 
 `vLLM` 提供了非常方便的封装，我们直接传入模型名称或模型路径即可，不必手动初始化模型和分词器。
 
-然后，通过使用分词器的apply_chat_templat函数，将我们的 prompt（提示词）格式化为模型所需的输入格式。
+然后，通过使用分词器的 apply_chat_template 函数，将我们的 prompt（提示词）格式化为模型所需的输入格式。
 
 默认情况下，Qwen3启用了思考能力，类似于QwQ-32B。这意味着该模型将利用其推理能力来提升生成回答的质量。例如，当在tokenizer.apply_chat_template中显式设置enable_thinking=True或保留其默认值时，模型将进入思考模式。
 
@@ -212,7 +212,7 @@ VLLM_USE_MODELSCOPE=true vllm serve /root/autodl-tmp/Qwen/Qwen3-8B --served-mode
 
 加载完毕后出现如下信息说明服务成功启动
 
-![02-1](./image.png)
+![02-01](./images/02-01.png)
 
 - 通过 `curl` 命令查看当前的模型列表
 
@@ -332,4 +332,4 @@ ChatCompletion(id='chatcmpl-301a933793e44f1abc01483a52a076a4', choices=[Choice(f
 
 另外，在以上所有的在请求处理过程中， `API` 后端都会打印相对应的日志和统计信息:
 
-![02-2](./image_2.png)
+![02-02](./images/02-02.png)
