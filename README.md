@@ -79,11 +79,11 @@
   - [ ] Qwen3-8B Evalscope 智商情商评测
   - [ ] Qwen3-8B Lora 微调及SwanLab 可视化记录
   - [ ] Qwen3-30B-A3B 微调及SwanLab 可视化记录
-  - [ ] QWen3 Think 解密 Blog
+  - [ ] [Qwen3 Think 解密 Blog](./models/Qwen3/07-Qwen3-Think-解密-Blog.md) @樊奇
   - [ ] Qwen3-8B Docker 镜像
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
-  - [x] [Kimi-VL-A3B 技术报告解读）](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
+  - [x] [Kimi-VL-A3B 技术报告解读](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
   - [x] [Kimi-VL-A3B-Thinking WebDemo 部署（网页对话助手）](./models/Kimi-VL/01-Kimi-VL-对话助手.md) @姜舒凡
 
 - [Llama4](https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct)
