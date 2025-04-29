@@ -72,14 +72,14 @@
 
 ### 已支持模型
 
-- Qwen3
+- [Qwen3](https://github.com/QwenLM/Qwen3)
   - [ ] Qwen3 模型结构解析 Blog
-  - [ ] Qwen3-7B-Instruct vllm 部署调用
-  - [ ] Qwen3-7B-Instruct open-webui 部署
-  - [ ] Qwen3-7B-Instruct Windows LMStudio 部署
-  - [ ] Qwen3-7B-Instruct Evalscope 智商情商评测
-  - [ ] Qwen3-7B-Instruct Lora 微调及SwanLab 可视化记录
-  - [ ] Qwen3-7B-Instruct Docker 镜像
+  - [ ] Qwen3-8B vllm 部署调用
+  - [ ] Qwen3-8B Windows LMStudio 部署调用 
+  - [ ] Qwen3-8B Evalscope 智商情商评测
+  - [ ] Qwen3-8B Lora 微调及SwanLab 可视化记录
+  - [ ] Qwen3-30B-A3B 微调及SwanLab 可视化记录
+  - [ ] Qwen3-8B Docker 镜像
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
   - [x] [Kimi-VL-A3B 技术报告解读）](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
