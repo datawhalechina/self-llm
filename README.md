@@ -79,6 +79,7 @@
   - [ ] Qwen3-8B Evalscope 智商情商评测
   - [ ] Qwen3-8B Lora 微调及SwanLab 可视化记录
   - [ ] Qwen3-30B-A3B 微调及SwanLab 可视化记录
+  - [ ] QWen3 Think 解密 Blog
   - [ ] Qwen3-8B Docker 镜像
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
