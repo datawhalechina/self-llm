@@ -8,7 +8,7 @@
 
 > 本教程会在同目录下给大家提供一个 [**notebook 文件** Qwen3-30B-A3B 微调及 SwanLab 可视化记录.ipynb](./06-Qwen3-30B-A3B%20微调及%20SwanLab%20可视化记录.ipynb) ，来帮助大家更好的学习。
 
-- 代码：文本的完整微调代码部分，或本目录下的`06-Qwen3-30B-A3B 微调及 SwanLab 可视化记录.ipynb`
+- 代码：文本的完整微调代码部分，或本目录下的 [06-Qwen3-30B-A3B 微调及 SwanLab 可视化记录.ipynb](./06-Qwen3-30B-A3B%20微调及%20SwanLab%20可视化记录.ipynb)
 - 可视化训练过程：[KMnO4-zx/Qwen3-8B/Qwen3-30B-A3B-LoRA](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
 - 模型：[Qwen3-30B-A3B](https://modelscope.cn/models/Qwen/Qwen3-30B-A3B)
 - 数据集：[huanhuan](../../dataset/huanhuan.json)
