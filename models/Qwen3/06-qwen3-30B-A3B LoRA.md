@@ -12,7 +12,7 @@
 - 可视化训练过程：[KMnO4-zx/Qwen3-8B/Qwen3-30B-A3B-LoRA](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
 - 模型：[Qwen3-30B-A3B](https://modelscope.cn/models/Qwen/Qwen3-30B-A3B)
 - 数据集：[huanhuan](../../dataset/huanhuan.json)
-- 显存需求：约 60GB，如显存不足，请调低 per_device_train_batch_size
+- 显存需求：约 85GB，如显存不足，请调低 per_device_train_batch_size。（模型本身占 60GB 左右，对显存要求较高，笔者采用一张 H20 进行训练）
 
 <br>
 
