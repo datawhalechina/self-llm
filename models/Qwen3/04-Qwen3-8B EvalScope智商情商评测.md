@@ -58,7 +58,7 @@ pip install evalscope[all]           # 安装所有 backends (Native, OpenCompas
 可以点击[这里](https://modelscope.cn/datasets/AI-ModelScope/IQuiz/dataPeview)看看你能答对多少，再期待一下AI模型的表现吧。
 
 ### 步骤一： **创建vLLM服务器**
-这里我们参照[第2节教程内容（02-Qwen3-8B-vLLM部署调用）](./02-Qwen3-8B-vLLM 部署调用.md)，使用vLLM创建兼容 OpenAI API 接口的服务器，然后使用 EvalScope进行评测。当然接入其他的 api 也是可以的。
+这里我们参照[第2节教程内容（02-Qwen3-8B-vLLM部署调用）](./02-Qwen3-8B-vLLM%20部署调用.md)，使用vLLM创建兼容 OpenAI API 接口的服务器，然后使用 EvalScope进行评测。当然接入其他的 api 也是可以的。
 
 在终端输入以下命令，即可用 vLLM 部署 Qwen3-8B 模型到一个兼容 OpenAI API 接口的服务器上。
 ```bash
