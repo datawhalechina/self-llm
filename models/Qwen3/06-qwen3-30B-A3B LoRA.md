@@ -1,14 +1,14 @@
-# 05-qwen3-30-a3b LoRA 微调
+# 06-Qwen3-30B-A3B LoRA 微调
 
 本节我们简要介绍如何基于 transformers、peft 等框架，使用由笔者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目中的**嬛嬛数据集**作为微调数据集，对 Qwen3-30B-A3B 模型进行 LoRA 微调, 以构建一个能够模拟甄嬛对话风格的个性化 LLM , 数据集路径为[`../../dataset/huanhuan.json`](../../dataset/huanhuan.json)。同时使用 [SwanLab](https://github.com/swanhubx/swanlab) 监控训练过程与评估模型效果。
 
-![](./images/image05-1.png)
+![](./images/06-01.png)
 
 > **LoRA** 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 LoRA](https://zhuanlan.zhihu.com/p/650197598)。
 
-> 本教程会在同目录下给大家提供一个 [**notebook** 文件 (05-Qwen3-30B-A3B-LoRA.ipynb)](05-Qwen3-30B-A3B-LoRA.ipynb) ，来帮助大家更好的学习。
+> 本教程会在同目录下给大家提供一个 [**notebook** 文件 (06-Qwen3-30B-A3B-LoRA.ipynb)](06-Qwen3-30B-A3B-LoRA.ipynb) ，来帮助大家更好的学习。
 
-- 代码：文本的完整微调代码部分，或本目录下的`05-Qwen3-30B-A3B-LoRA.py`
+- 代码：文本的完整微调代码部分，或本目录下的`06-Qwen3-30B-A3B-LoRA.py`
 - 可视化训练过程：[KMnO4-zx/Qwen3-8B/Qwen3-30B-A3B-LoRA](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
 - 模型：[Qwen3-30B-A3B](https://modelscope.cn/models/Qwen/Qwen3-30B-A3B)
 - 数据集：[huanhuan](../../dataset/huanhuan.json)
@@ -18,15 +18,21 @@
 
 ## 目录
 
-- [1. 环境配置](#1-环境配置)
-- [2. 准备数据集](#2-准备数据集)
-- [3. 加载模型](#3-加载模型)
-- [4. 配置 LoRA](#4-配置lora)
-- [5. 配置 SwanLab 可视化工具](#5-配置swanlab可视化工具)
-- [6. 完整微调代码](#6-完整微调代码)
-- [7. 训练结果演示](#7-训练结果演示)
-- [8. 推理训练好的模型](#8-推理训练好的模型)
-- [9. 相关链接](#9-相关链接)
+- [06-Qwen3-30B-A3B LoRA 微调](#06-qwen3-30b-a3b-lora-微调)
+  - [目录](#目录)
+  - [1. 环境配置](#1-环境配置)
+  - [2. 模型下载](#2-模型下载)
+  - [3. 指令集构建](#3-指令集构建)
+  - [4. 数据格式化](#4-数据格式化)
+  - [5. 加载 tokenizer 和半精度模型 (model)](#5-加载-tokenizer-和半精度模型-model)
+  - [6. 定义 LoraConfig](#6-定义-loraconfig)
+  - [7. 自定义 TrainingArguments 参数](#7-自定义-trainingarguments-参数)
+  - [8. SwanLab 可视化](#8-swanlab-可视化)
+    - [SwanLab 简介](#swanlab-简介)
+    - [实例化 SwanLabCallback](#实例化-swanlabcallback)
+  - [9. 使用 Trainer 训练](#9-使用-trainer-训练)
+  - [10. 训练结果演示](#10-训练结果演示)
+  - [11. 加载 LoRA 权重推理](#11-加载-lora-权重推理)
 
 <br>
 
@@ -342,7 +348,7 @@ args = TrainingArguments(
 
 ### SwanLab 简介
 
-![](./images/image05-2.png)
+![](./images/06-02.png)
 
 [SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
 
@@ -386,7 +392,7 @@ trainer.train()                  # 开始训练
 
 看到下面的进度条即代表训练开始：
 
-![05-6](./images/image05-6.png)
+![06-3](./images/06-03.png)
 
 <br>
 
@@ -398,7 +404,7 @@ trainer.train()                  # 开始训练
 
 可以看到在 1 个 epoch 之后，微调后的 Qwen3-30B-A3B 的 loss 降低到了不错的水平。
 
-![05-7](./images/image05-7.png)
+![06-4](./images/06-04.png)
 
 至此，你已经完成了 Qwen3-30B-A3B Lora 微调的训练！如果需要加强微调效果，可以尝试增加训练的数据量。
 
