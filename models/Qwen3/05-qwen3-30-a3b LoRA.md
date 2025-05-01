@@ -1,4 +1,4 @@
-# 05-gemma-3-4b-it LoRA 微调
+# 05-qwen3-30-a3b LoRA 微调
 
 本节我们简要介绍如何基于 transformers、peft 等框架，使用由笔者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目中的**嬛嬛数据集**作为微调数据集，对 Qwen3-30B-A3B 模型进行 LoRA 微调, 以构建一个能够模拟甄嬛对话风格的个性化 LLM , 数据集路径为[`../../dataset/huanhuan.json`](../../dataset/huanhuan.json)。同时使用 [SwanLab](https://github.com/swanhubx/swanlab) 监控训练过程与评估模型效果。
 
@@ -9,10 +9,10 @@
 > 本教程会在同目录下给大家提供一个 [**notebook** 文件 (05-Qwen3-30B-A3B-LoRA.ipynb)](05-Qwen3-30B-A3B-LoRA.ipynb) ，来帮助大家更好的学习。
 
 - 代码：文本的完整微调代码部分，或本目录下的`05-Qwen3-30B-A3B-LoRA.py`
-- 可视化训练过程：[ZeyiLin/Qwen3-30B-A3B-LoRA](https://swanlab.cn/@ZeyiLin/Qwen3-30B-A3B-LoRA/runs/mygq7su87kms6f8bqlzdi/chart)
-- 模型：[Qwen3-30B-A3B](https://modelscope.cn/models/LLM-Research/Qwen3-30B-A3B)
-- 数据集：[few_shot_ner_sft](https://huggingface.co/datasets/qgyd2021/few_shot_ner_sft)
-- 显存需求：约 33GB，如显存不足，请调低 per_device_train_batch_size
+- 可视化训练过程：[KMnO4-zx/Qwen3-8B/Qwen3-30B-A3B-LoRA](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
+- 模型：[Qwen3-30B-A3B](https://modelscope.cn/models/Qwen/Qwen3-30B-A3B)
+- 数据集：[huanhuan](../../dataset/huanhuan.json)
+- 显存需求：约 60GB，如显存不足，请调低 per_device_train_batch_size
 
 <br>
 
@@ -51,18 +51,14 @@ pytorch 2.5.1
 # 升级pip
 python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/**simple**
 
-# LoRA微调 相关依赖
-pip install peft==0.14.0        # 用于 LoRA 微调
-
-# 通用依赖
-pip install modelscope==1.22.0    # 用于模型下载和管理
-#pip install transformers==4.49.0  # Hugging Face 的模型库，用于加载和训练模型
-#下载transformers github repo，在transformers 文件夹下执行命令“pip install -e .”
-pip install sentencepiece==0.2.0  # 用于处理文本数据
-pip install accelerate==1.5.1    # 用于分布式训练和混合精度训练
-pip install datasets==3.3.2      # 用于加载和处理数据集
+pip install modelscope==1.25.0 # 用于模型下载和管理
+pip install transformers==4.51.3 # Hugging Face 的模型库，用于加载和训练模型
+pip install accelerate==1.6.0 # 用于分布式训练和混合精度训练
+pip install datasets==3.5.1 # 用于加载和处理数据集
+pip install peft==0.15.2 # 用于 LoRA 微调
+pip install swanlab==0.5.7 # 用于监控训练过程与评估模型效果
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen3 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
@@ -84,7 +80,7 @@ model_dir = snapshot_download('/data/Qwen/Qwen3-30B-A3B', cache_dir='./', revisi
 
 > 注意：记得修改 cache_dir 为你的模型下载路径哦~
 
-在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 8.75GB 左右，下载模型大概需要 5-30 分钟。
+在终端运行 `python /root/autodl-tmp/model_download.py` 执行下载，模型大小为 57GB 左右，下载时间较久。
 
 ## 3. 指令集构建
 
@@ -120,6 +116,10 @@ LLM 的微调一般指指令微调过程。所谓指令微调，是说我们使�
 
 为了得到 Qwen3-30B-A3B 的 Prompt Template，使用 tokenizer 构建 messages 并打印， 查看 chat_template 的输出格式
 
+由于 `Qwen3` 是混合推理模型，因此可以手动选择开启思考模式
+
+不开启 `thinking mode`
+
 ```python
 messages = [
             {"role": "system", "content": "You are a helpful assistant."},
@@ -127,25 +127,63 @@ messages = [
             {"role": "assistant", "content": '有什么可以帮你的？'}
             ]
 # 使用chat_template将messages格式化并打印
-print(tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True))
+text = tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
+    enable_thinking=False
+)
 
+print(text)
+```
 
-## 得到输出结果如下
+得到输出结果如下
 
-# <|im_start|>system
-# You are a helpful assistant.<|im_end|>
-# <|im_start|>user
-# 你好，你是谁？<|im_end|>
-# <|im_start|>assistant
-# <think>
+```text
+<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+你好，你是谁？<|im_end|>
+<|im_start|>assistant
+<think>
 
-# </think>
+</think>
 
-# 我是一个AI助手，旨在帮助你解决问题<|im_end|>
-# <|im_start|>assistant
-# <think>
+我是一个AI助手，旨在帮助你解决问题<|im_end|>
+<|im_start|>assistant
+<think>
 
-# </think>
+</think>
+```
+
+开启 `thinking mode`
+
+```python
+text = tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
+    enable_thinking=True
+)
+
+print(text)
+```
+
+输出如下
+
+```text
+<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+你好，你是谁？<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+我是一个AI助手，旨在帮助你解决问题<|im_end|>
+<|im_start|>assistant
+
 ```
 
 然后我们就可以定义预处理函数 `process_func`，这个函数用于对每一个样本，编码其输入、输出文本并返回一个编码后的字典，方便模型使用：
@@ -166,6 +204,7 @@ def process_func(example):
     response = tokenizer(f"{example['output']}", add_special_tokens=False)
     # 拼接指令和回复部分的 input_ids
     input_ids = instruction["input_ids"] + response["input_ids"] + [tokenizer.pad_token_id]
+    attention_mask = instruction["attention_mask"] + response["attention_mask"] + [1]  # 因为eos token咱们也是要关注的所以 补充为1
     # 构建标签
     # 对于指令部分，使用 -100 忽略其损失计算；对于回复部分，保留其 input_ids 作为标签
     labels = [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.pad_token_id]
@@ -181,25 +220,6 @@ def process_func(example):
     }
 ```
 
-> 补充: Qwen3-30B-A3B 采用的 `Prompt Template`格式如下：
-
-```text
-<|im_start|>system
-You are a helpful assistant.<|im_end|>
-<|im_start|>user
-你好，你是谁？<|im_end|>
-<|im_start|>assistant
-<think>
-
-</think>
-
-我是一个AI助手，旨在帮助你解决问题<|im_end|>
-<|im_start|>assistant
-<think>
-
-</think>
-```
-
 ## 5. 加载 tokenizer 和半精度模型 (model)
 
 `tokenizer` 是将文本转换为模型 (`model`) 能理解的数字的工具，`model` 是根据这些数字生成文本的核心部分。
@@ -207,7 +227,7 @@ You are a helpful assistant.<|im_end|>
 以半精度形式加载 `model`, 如果你的显卡比较新的话，可以用 `torch.bfolat` 形式加载。对于自定义模型，必须指定 `trust_remote_code=True` ，以确保加载自定义代码时不会报错。
 
 ```python
-model_path = '/root/autodl-tmp/LLM-Research/Qwen3-30B-A3B'
+model_path = 'Qwen/Qwen3-30B-A3B'
 
 tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False, trust_remote_code=True)
 
@@ -222,78 +242,48 @@ model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto",
 
 ```python
 print(model)
-
-# 输出结果如下
-'''
-Gemma3ForConditionalGeneration(
-  (vision_tower): SiglipVisionModel(
-    (vision_model): SiglipVisionTransformer(
-      (embeddings): SiglipVisionEmbeddings(
-        (patch_embedding): Conv2d(3, 1152, kernel_size=(14, 14), stride=(14, 14), padding=valid)
-        (position_embedding): Embedding(4096, 1152)
-      )
-      (encoder): SiglipEncoder(
-        (layers): ModuleList(
-          (0-26): 27 x SiglipEncoderLayer(
-            (self_attn): SiglipSdpaAttention(
-              (k_proj): Linear(in_features=1152, out_features=1152, bias=True)
-              (v_proj): Linear(in_features=1152, out_features=1152, bias=True)
-              (q_proj): Linear(in_features=1152, out_features=1152, bias=True)
-              (out_proj): Linear(in_features=1152, out_features=1152, bias=True)
-            )
-            (layer_norm1): LayerNorm((1152,), eps=1e-06, elementwise_affine=True)
-            (mlp): SiglipMLP(
-              (activation_fn): PytorchGELUTanh()
-              (fc1): Linear(in_features=1152, out_features=4304, bias=True)
-              (fc2): Linear(in_features=4304, out_features=1152, bias=True)
-            )
-            (layer_norm2): LayerNorm((1152,), eps=1e-06, elementwise_affine=True)
-          )
-        )
-      )
-      (post_layernorm): LayerNorm((1152,), eps=1e-06, elementwise_affine=True)
-    )
-  )
-  (multi_modal_projector): Gemma3MultiModalProjector(
-    (mm_soft_emb_norm): Gemma3RMSNorm((1152,), eps=1e-06)
-    (avg_pool): AvgPool2d(kernel_size=4, stride=4, padding=0)
-  )
-  (language_model): Gemma3ForCausalLM(
-    (model): Gemma3TextModel(
-      (embed_tokens): Gemma3TextScaledWordEmbedding(262208, 2560, padding_idx=0)
-      (layers): ModuleList(
-        (0-33): 34 x Gemma3DecoderLayer(
-          (self_attn): Gemma3Attention(
-            (q_proj): Linear(in_features=2560, out_features=2048, bias=False)
-            (k_proj): Linear(in_features=2560, out_features=1024, bias=False)
-            (v_proj): Linear(in_features=2560, out_features=1024, bias=False)
-            (o_proj): Linear(in_features=2048, out_features=2560, bias=False)
-            (q_norm): Gemma3RMSNorm((256,), eps=1e-06)
-            (k_norm): Gemma3RMSNorm((256,), eps=1e-06)
-          )
-          (mlp): Gemma3MLP(
-            (gate_proj): Linear(in_features=2560, out_features=10240, bias=False)
-            (up_proj): Linear(in_features=2560, out_features=10240, bias=False)
-            (down_proj): Linear(in_features=10240, out_features=2560, bias=False)
-            (act_fn): PytorchGELUTanh()
-          )
-          (input_layernorm): Gemma3RMSNorm((2560,), eps=1e-06)
-          (post_attention_layernorm): Gemma3RMSNorm((2560,), eps=1e-06)
-          (pre_feedforward_layernorm): Gemma3RMSNorm((2560,), eps=1e-06)
-          (post_feedforward_layernorm): Gemma3RMSNorm((2560,), eps=1e-06)
-        )
-      )
-      (norm): Gemma3RMSNorm((2560,), eps=1e-06)
-      (rotary_emb): Gemma3RotaryEmbedding()
-      (rotary_emb_local): Gemma3RotaryEmbedding()
-    )
-    (lm_head): Linear(in_features=2560, out_features=262208, bias=False)
-  )
-)
-'''
 ```
 
-上面打印了 `Gemma3Model` 的模型结构， 可以看到里面的 `self_attn` 和 `mlp` 是两个主要的模块， 因此可以考虑将这两个模块作为 **LoRA** 微调 的 `target_modules` , 包括 `q_proj`, `k_proj`, `v_proj`, `o_proj` 以及 `gate_proj`、`up_proj` 和 `down_proj` 。
+输出结果如下
+
+```text
+Qwen3MoeForCausalLM(
+  (model): Qwen3MoeModel(
+    (embed_tokens): Embedding(151936, 2048)
+    (layers): ModuleList(
+      (0-47): 48 x Qwen3MoeDecoderLayer(
+        (self_attn): Qwen3MoeAttention(
+          (q_proj): Linear(in_features=2048, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=2048, bias=False)
+          (q_norm): Qwen3MoeRMSNorm((128,), eps=1e-06)
+          (k_norm): Qwen3MoeRMSNorm((128,), eps=1e-06)
+        )
+        (mlp): Qwen3MoeSparseMoeBlock(
+          (gate): Linear(in_features=2048, out_features=128, bias=False)
+          (experts): ModuleList(
+            (0-127): 128 x Qwen3MoeMLP(
+              (gate_proj): Linear(in_features=2048, out_features=768, bias=False)
+              (up_proj): Linear(in_features=2048, out_features=768, bias=False)
+              (down_proj): Linear(in_features=768, out_features=2048, bias=False)
+              (act_fn): SiLU()
+            )
+          )
+        )
+        (input_layernorm): Qwen3MoeRMSNorm((2048,), eps=1e-06)
+        (post_attention_layernorm): Qwen3MoeRMSNorm((2048,), eps=1e-06)
+      )
+    )
+    (norm): Qwen3MoeRMSNorm((2048,), eps=1e-06)
+    (rotary_emb): Qwen3MoeRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=151936, bias=False)
+)
+
+```
+
+上面打印了 `Qwen3MoeForCausalLM` 的模型结构， 可以看到里面的 `self_attn` 和 `mlp` 是两个主要的模块， 因此可以考虑将这两个模块作为 **LoRA** 微调 的 `target_modules` , 包括 `q_proj`, `k_proj`, `v_proj`, `o_proj` 以及 `gate_proj`、`up_proj` 和 `down_proj` 。
 
 通常我们只对 `self_attn` 模块中的 `q_proj`, `k_proj`, `v_proj`, `o_proj`进行微调， 本教程里我们也将对这四个模块进行微调演示， 感兴趣的同学可以自行尝试添加对 `mlp` 中的三个 `proj` 模块进行微调。
 
@@ -335,19 +325,36 @@ config = LoraConfig(
 
 ```python
 args = TrainingArguments(
-    output_dir="/root/autodl-tmp/gemma-3-4b-it_lora_output",
-    per_device_train_batch_size=1,
-    gradient_accumulation_steps=4,
+    output_dir="./output/Qwen3_30B_A3B_lora",
+    per_device_train_batch_size=16,
+    gradient_accumulation_steps=1,
     logging_steps=10,
-    num_train_epochs=3,
+    num_train_epochs=1,
     save_steps=100,
     learning_rate=1e-4,
     save_on_each_node=True,
-    gradient_checkpointing=True
+    gradient_checkpointing=True,
+    report_to="none",
 )
 ```
 
-## 8. 实例化 SwanLabCallback
+## 8. SwanLab 可视化
+
+### SwanLab 简介
+
+![](./images/image05-2.png)
+
+[SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
+
+**为什么要记录训练**
+
+相较于软件开发，模型训练更像一个实验科学。一个品质优秀的模型背后，往往是成千上万次实验。研究者需要不断尝试、记录、对比，积累经验，才能找到最佳的模型结构、超参数与数据配比。在这之中，如何高效进行记录与对比，对于研究效率的提升至关重要。
+
+### 实例化 SwanLabCallback
+
+建议先在 [SwanLab 官网](https://swanlab.cn/) 注册账号，然后在训练初始化阶段选择
+
+`(2) Use an existing SwanLab account` 并使用 private API Key 登录
 
 SwanLab 与 Transformers 已经做好了集成，用法是在 Trainer 的 callbacks 参数中添加 SwanLabCallback 实例，就可以自动记录超参数和训练指标，简化代码如下：
 
@@ -360,12 +367,6 @@ swanlab_callback = SwanLabCallback(
     experiment_name="Qwen3-30B-A3B-Lora"
 )
 ```
-
-首次使用 SwanLab，需要先在[官网](https://swanlab.cn/)注册一个账号，然后在[用户设置](https://swanlab.cn/settings)页面复制你的 API Key，然后在训练开始提示登录时粘贴即可，后续无需再次登录：
-
-![05-5](./images/image05-5.png)
-
-<br>
 
 ## 9. 使用 Trainer 训练
 
@@ -391,19 +392,15 @@ trainer.train()                  # 开始训练
 
 ## 10. 训练结果演示
 
-访问可视化训练过程：[ZeyiLin/Phi-4-Lora-Ner](https://swanlab.cn/@ZeyiLin/Phi-4-NER-fintune/runs/mygq7su87kms6f8bqlzdi/chart)
+访问可视化训练过程：[Qwen3-8B/Qwen3_30B_A3B-Lora](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
 
 在 SwanLab 上查看最终的训练结果：
 
-可以看到在 1 个 epoch 之后，微调后的 Phi-4 的 loss 降低到了不错的水平。
+可以看到在 1 个 epoch 之后，微调后的 Qwen3-30B-A3B 的 loss 降低到了不错的水平。
 
 ![05-7](./images/image05-7.png)
 
-可以看到在一些测试样例上，微调后的 Phi-4 能够给出准确的 NER 结果：
-
-![05-8](./images/image05-8.png)
-
-至此，你已经完成了 Phi-4 Lora 微调的训练！如果需要加强微调效果，可以尝试增加训练的数据量。
+至此，你已经完成了 Qwen3-30B-A3B Lora 微调的训练！如果需要加强微调效果，可以尝试增加训练的数据量。
 
 <br>
 
@@ -416,21 +413,21 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from peft import PeftModel
 
-model_path = '/root/autodl-tmp/LLM-Research/gemma-3-4b-it'
-lora_path = '/root/autodl-tmp/LLM-Research/gemma-3-4b-it_lora_output/checkpoint-2790' # 这里改成 LoRA 输出对应 checkpoint 地址和最终的 epoch 数值 2796
+model_path = 'Qwen/Qwen3-30B-A3B'
+lora_path = 'output/Qwen3_30B_A3B_lora/checkpoint-234' # 这里改称你的 lora 输出对应 checkpoint 地址
 
 # 加载tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
+
 # 加载模型
 model = AutoModelForCausalLM.from_pretrained(model_path,
-                                             device_map="auto",
-                                             torch_dtype=torch.bfloat16,
-                                             trust_remote_code=True).eval()
+                                            device_map="auto",
+                                            torch_dtype=torch.bfloat16,
+                                            trust_remote_code=True).eval()
 
 # 加载lora权重
 model = PeftModel.from_pretrained(model, model_id=lora_path)
-
 prompt = "你是谁？"
 system_prompt = "现在你要扮演皇帝身边的女人--甄嬛"
 print("prompt: ", prompt)
@@ -449,7 +446,13 @@ gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 1}
 with torch.no_grad():
     outputs = model.generate(**inputs, **gen_kwargs)
     outputs = outputs[:, inputs['input_ids'].shape[1]:]
-    print("output: ", tokenizer.decode(outputs[0], skip_special_tokens=True))
+    print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+```
+
+```text
+prompt:  你是谁？
+system_prompt:  现在你要扮演皇帝身边的女人--甄嬛
+我是甄嬛，家父是大理寺少卿甄远道。
 ```
 
 > 注意修改为自己的模型路径哦~
