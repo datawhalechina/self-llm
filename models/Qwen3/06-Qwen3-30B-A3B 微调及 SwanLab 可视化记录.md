@@ -1,4 +1,4 @@
-# 06-Qwen3-30B-A3B LoRA 微调
+# 06-Qwen3-30B-A3B 微调及 SwanLab 可视化记录
 
 本节我们简要介绍如何基于 transformers、peft 等框架，使用由笔者合作开源的 [Chat-甄嬛](https://github.com/KMnO4-zx/huanhuan-chat) 项目中的**嬛嬛数据集**作为微调数据集，对 Qwen3-30B-A3B 模型进行 LoRA 微调, 以构建一个能够模拟甄嬛对话风格的个性化 LLM , 数据集路径为[`../../dataset/huanhuan.json`](../../dataset/huanhuan.json)。同时使用 [SwanLab](https://github.com/swanhubx/swanlab) 监控训练过程与评估模型效果。
 
@@ -6,9 +6,9 @@
 
 > **LoRA** 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出 LoRA](https://zhuanlan.zhihu.com/p/650197598)。
 
-> 本教程会在同目录下给大家提供一个 [**notebook** 文件 (06-Qwen3-30B-A3B-LoRA.ipynb)](06-Qwen3-30B-A3B-LoRA.ipynb) ，来帮助大家更好的学习。
+> 本教程会在同目录下给大家提供一个 [**notebook 文件** Qwen3-30B-A3B 微调及 SwanLab 可视化记录.ipynb](./06-Qwen3-30B-A3B%20微调及%20SwanLab%20可视化记录.ipynb) ，来帮助大家更好的学习。
 
-- 代码：文本的完整微调代码部分，或本目录下的`06-Qwen3-30B-A3B-LoRA.py`
+- 代码：文本的完整微调代码部分，或本目录下的`06-Qwen3-30B-A3B 微调及 SwanLab 可视化记录.ipynb`
 - 可视化训练过程：[KMnO4-zx/Qwen3-8B/Qwen3-30B-A3B-LoRA](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
 - 模型：[Qwen3-30B-A3B](https://modelscope.cn/models/Qwen/Qwen3-30B-A3B)
 - 数据集：[huanhuan](../../dataset/huanhuan.json)
@@ -18,7 +18,7 @@
 
 ## 目录
 
-- [06-Qwen3-30B-A3B LoRA 微调](#06-qwen3-30b-a3b-lora-微调)
+- [06-Qwen3-30B-A3B 微调及 SwanLab 可视化记录](#06-qwen3-30b-a3b-微调及-swanlab-可视化记录)
   - [目录](#目录)
   - [1. 环境配置](#1-环境配置)
   - [2. 模型下载](#2-模型下载)
