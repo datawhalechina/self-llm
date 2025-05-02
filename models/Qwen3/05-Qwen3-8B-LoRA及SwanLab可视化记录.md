@@ -273,7 +273,9 @@ TrainOutput(global_step=699, training_loss=2.6425710331557988, metrics={'train_r
 
 ![](./images/05-1.png)
 
+示例的训练记录公开链接如下，供参考
 
+[图表 ｜ Qwen3-Lora/Qwen3-8B-LoRA-shufan.jiang](https://swanlab.cn/@datawhale-kmno4/Qwen3-Lora/runs/nwvcclgt7s1r57euwr0pm/chart)
 
 
 
