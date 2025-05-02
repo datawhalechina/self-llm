@@ -49,7 +49,7 @@ pip install vllm
 ```python
 from modelscope import snapshot_download
 
-model_dir = snapshot_download('Qwen3-8B', cache_dir='/root/autodl-tmp', revision='master')
+model_dir = snapshot_download('Qwen/Qwen3-8B', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
 然后在终端中输入 `python model_download.py` 执行下载，这里需要耐心等待一段时间直到模型下载完成。
