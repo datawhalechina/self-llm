@@ -10,9 +10,7 @@
 - **分布式推理**：框架支持在多 `GPU` 环境中进行分布式推理，通过模型并行策略和高效的数据通信，提升了处理大型模型的能力。
 - **开源共享**：`vLLM` 由于其开源的属性，拥有活跃的社区支持，这也便于开发者贡献和改进，共同推动技术发展。
 
-
-
-## 环境准备  
+## 环境准备
 
 本文基础环境如下：
 
@@ -37,8 +35,8 @@ pip install modelscope
 pip install vllm
 ```
 
-> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen3-8B 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen3-8B-self-llm***
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen3 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen3***
 
 ## 模型下载
 
@@ -56,10 +54,9 @@ model_dir = snapshot_download('Qwen/Qwen3-8B', cache_dir='/root/autodl-tmp', rev
 
 > 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
 
-
 ## **代码准备**
 
-### **Python脚本**
+### **Python 脚本**
 
 新建 `vllm_model.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。下面的代码有很详细的注释，如有不理解的地方，欢迎大家提 `issue`。
 
@@ -69,7 +66,7 @@ model_dir = snapshot_download('Qwen/Qwen3-8B', cache_dir='/root/autodl-tmp', rev
 
 然后，通过使用分词器的 apply_chat_template 函数，将我们的 prompt（提示词）格式化为模型所需的输入格式。
 
-默认情况下，Qwen3启用了思考能力，类似于QwQ-32B。这意味着该模型将利用其推理能力来提升生成回答的质量。例如，当在tokenizer.apply_chat_template中显式设置enable_thinking=True或保留其默认值时，模型将进入思考模式。
+默认情况下，Qwen3 启用了思考能力，类似于 QwQ-32B。这意味着该模型将利用其推理能力来提升生成回答的质量。例如，当在 tokenizer.apply_chat_template 中显式设置 enable_thinking=True 或保留其默认值时，模型将进入思考模式。
 
 我们可以通过这个代码示例熟悉下 ` vLLM` 引擎的使用方式。被注释的部分内容可以丰富模型的能力，但不是必要的，大家可以按需选择，自己多多动手尝试 ~
 
@@ -92,7 +89,7 @@ def get_completion(prompts, model, tokenizer=None, temperature=0.6, top_p=0.95, 
     return outputs
 
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
     # 初始化 vLLM 推理引擎
     model='/root/autodl-tmp/Qwen/Qwen3-8B' # 指定模型路径
     tokenizer = AutoTokenizer.from_pretrained(model, use_fast=False) # 加载分词器
@@ -114,9 +111,10 @@ if __name__ == "__main__":
     # 打印输出。
     for output in outputs:
         prompt = output.prompt
-        generated_text = output.outputs[0].text  
+        generated_text = output.outputs[0].text
         print(f"Prompt: {prompt!r}, \nResponse: {generated_text!r}")
 ```
+
 运行代码
 
 ```bash
@@ -126,7 +124,7 @@ python vllm_model.py
 结果如下：
 
 ```bash
-Prompt: '<|im_start|>user\n给我一个关于大模型的简短介绍。<|im_end|>\n<|im_start|>assistant\n', 
+Prompt: '<|im_start|>user\n给我一个关于大模型的简短介绍。<|im_end|>\n<|im_start|>assistant\n',
 Response: '<think>\n好的，用户让我给他一个关于大模型的简短介绍。首先，我需要确定“大模型”指的是什么。通常来说，大模型指的是大规模预训练模型，比如像GPT、BERT这样的深度学习模型。用户可能对AI领域不太熟悉，所以需要解释清楚基本概念。\n\n接下来，我要考虑用户的需求。他们可能是在寻找一个简短的概述，不需要太技术性的术语，但又要涵盖关键点。可能需要包括定义、特点、应用领域以及优势。不过用户要求的是简短，所以不能太冗长。\n\n然后，我需要检查是否有遗漏的重要信息。比如，大模型的规模通常以参数量衡量，比如百亿或千亿参数。此外，它们通常使用Transformer架构，这可能需要提到。另外，应用场景如自然语言处理、图像识别、语音处理等也是重点。\n\n还要注意用户可能的背景。如果是普通用户，可能需要更通俗的解释，避免使用太多专业术语。但如果是技术人员，可能需要更详细的技术细节。不过用户没有说明，所以保持中立，简明扼要。\n\n另外，用户可能想知道大模型的优势，比如强大的泛化能力、多任务处理能力，以及在不同领域的应用实例。同时，可能存在的挑战，比如计算资源需求高、训练成本大，这些是否需要提及？但用户要的是简短介绍，可能不需要深入讨论缺点。\n\n最后，确保语言简洁，结构清晰，分点或分段说明。可能需要用一两句话概括定义，接着说明特点，然后应用领域，最后总结优势。这样用户能快速抓住重点。\n</think>\n\n大模型（Large Language Models, LLMs）是基于深度学习的先进人工智能技术，通过海量文本数据训练，具备强大的语言理解和生成能力。它们通常拥有数十亿至数千亿参数，能够完成文本生成、问答、翻译、编程等复杂任务，广泛应用于智能助手、内容创作、数据分析等领域，显著提升了人机交互的效率与智能化水平。'
 ```
 
@@ -153,7 +151,7 @@ def get_completion(prompts, model, tokenizer=None, temperature=0.6, top_p=0.95, 
     return outputs
 
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
     # 初始化 vLLM 推理引擎
     model='/root/autodl-tmp/Qwen/Qwen3-8B' # 指定模型路径
     tokenizer = AutoTokenizer.from_pretrained(model, use_fast=False) # 加载分词器
@@ -175,17 +173,16 @@ if __name__ == "__main__":
     # 打印输出。
     for output in outputs:
         prompt = output.prompt
-        generated_text = output.outputs[0].text  
+        generated_text = output.outputs[0].text
         print(f"Prompt: {prompt!r},Response: {generated_text!r}")
 ```
 
 结果如下：
 
 ```bash
-Prompt: '<|im_start|>user\n你是谁？<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n', 
+Prompt: '<|im_start|>user\n你是谁？<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n',
 Response: '我是通义千问，由通义实验室研发的超大规模语言模型。我能够回答各种问题、创作文字，比如写故事、写邮件、写剧本，还能进行逻辑推理、多语言理解、代码编写等。我旨在成为你最得力的助手，帮助你解决各种问题。有什么我可以帮你的吗？'
 ```
-
 
 ### 创建兼容 OpenAI API 接口的服务器
 
@@ -202,9 +199,9 @@ Response: '我是通义千问，由通义实验室研发的超大规模语言模
 - `--served-model-name` 指定服务模型的名称。
 - `--max-model-len` 指定模型的最大长度。
 - `--enable-reasoning` 开启思考模式
-- `--reasoning-parser` 指定如何解析模型生成的推理内容。设置 --enable-reasoning 参数时，--reasoning-parser 是必需的。推理模型会在输出中包含一个额外的 reasoning_content 字段，该字段包含导致最终结论的推理步骤。通过指定合适的解析器，可以正确提取和格式化这些推理内容。例如deepseek_r1解析器适用于 DeepSeek R1 系列模型，能够解析 <think> ... </think> 格式的内容
+- `--reasoning-parser` 指定如何解析模型生成的推理内容。设置 --enable-reasoning 参数时，--reasoning-parser 是必需的。推理模型会在输出中包含一个额外的 reasoning_content 字段，该字段包含导致最终结论的推理步骤。通过指定合适的解析器，可以正确提取和格式化这些推理内容。例如 deepseek_r1 解析器适用于 DeepSeek R1 系列模型，能够解析 <think> ... </think> 格式的内容
 
-我们复制以下命令到终端上，就可以成功启动 Qwen3-8 B模型的 API 接口
+我们复制以下命令到终端上，就可以成功启动 Qwen3-8 B 模型的 API 接口
 
 ```bash
 VLLM_USE_MODELSCOPE=true vllm serve /root/autodl-tmp/Qwen/Qwen3-8B --served-model-name Qwen3-8B --max_model_len 8192 --enable-reasoning --reasoning-parser deepseek_r1
@@ -220,14 +217,42 @@ VLLM_USE_MODELSCOPE=true vllm serve /root/autodl-tmp/Qwen/Qwen3-8B --served-mode
 curl http://localhost:8000/v1/models
 ```
 
-​	得到的返回值如下所示
+​ 得到的返回值如下所示
 
 ```json
-{"object":"list","data":[{"id":"Qwen3-8B","object":"model","created":1745950421,"owned_by":"vllm","root":"/root/autodl-tmp/Qwen/Qwen3-8B","parent":null,"max_model_len":8192,"permission":[{"id":"modelperm-3f20f566536d445cbfbf5a9ddb115204","object":"model_permission","created":1745950421,"allow_create_engine":false,"allow_sampling":true,"allow_logprobs":true,"allow_search_indices":false,"allow_view":true,"allow_fine_tuning":false,"organization":"*","group":null,"is_blocking":false}]}]}
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "Qwen3-8B",
+      "object": "model",
+      "created": 1745950421,
+      "owned_by": "vllm",
+      "root": "/root/autodl-tmp/Qwen/Qwen3-8B",
+      "parent": null,
+      "max_model_len": 8192,
+      "permission": [
+        {
+          "id": "modelperm-3f20f566536d445cbfbf5a9ddb115204",
+          "object": "model_permission",
+          "created": 1745950421,
+          "allow_create_engine": false,
+          "allow_sampling": true,
+          "allow_logprobs": true,
+          "allow_search_indices": false,
+          "allow_view": true,
+          "allow_fine_tuning": false,
+          "organization": "*",
+          "group": null,
+          "is_blocking": false
+        }
+      ]
+    }
+  ]
+}
 ```
 
-- 使用 `curl` 命令测试 `OpenAI Completions API` 
-
+- 使用 `curl` 命令测试 `OpenAI Completions API`
 
 ```bash
 curl http://localhost:8000/v1/completions \
@@ -240,14 +265,34 @@ curl http://localhost:8000/v1/completions \
     }'
 ```
 
-​	得到的返回值如下所示
+​ 得到的返回值如下所示
 
 ```json
-{"id":"cmpl-fb7fa8e981164942b1e126afe43b2acf","object":"text_completion","created":1745950506,"model":"Qwen3-8B","choices":[{"index":0,"text":"嗯，好的，我现在要算5的阶乘是多少。首先，我得回忆一下阶乘的定义。阶乘就是从1乘到那个数本身，对吧？比如n的阶乘就是n×(n-1)×(n-2)×…×1。那这样的话，5的阶乘应该是5×4×3×2×1。不过，我是不是应该再仔细确认一下这个定义有没有错误？\n\n让我再想想，比如3的阶乘是3×2×1=6，对吧？那4的阶乘就是4×3×2×1=24，对吗？那5的阶乘应该就是5×4×3×2×1。那这样的话，先算5×4=20，然后20×3=60，接着60×2=120，最后120×1=120。所以结果应该是120？\n\n不过，有没有可能我哪里算错了？比如，是不是有时候阶乘的定义是从0开始？比如0的阶乘是1？不过题目是问5的阶乘，所以应该没问题。那再检查一下每一步的乘法是否正确。\n\n首先，5×4=20，没错。然后20×3=60，对的。接下来60×2=120，没错。最后乘以1的话，结果还是120。所以应该是对的。\n\n或者有没有可能我漏掉了某个步骤？比如，是不是应该包括更多的数？比如，5的阶乘是不是应该包括5×4×3×2×1，而没有其他数？是的，没错。所以结果应该是120。\n\n不过，为了确保万无一失，我可以换一种方式计算。比如，先算4的阶乘是24，然后5的阶乘就是5×24=120。这样是不是更快捷？是的，这样算的话，结果也是一样的。所以两种方法都得到120，应该没错。\n\n或者，我可以使用计算器来验证一下，不过现在假设没有计算器的话，手动计算应该没问题。再试一次：5×4=20，20×3=60，60×2=120，120×1=120。没错，结果一致。\n\n所以，我觉得5的阶乘应该是120。不过，有没有可能我记错了阶乘的定义？比如，是不是有时候阶乘是从0开始的？比如，0! =1，1! =1，2! =2，3! =6，4! =24，5! =120。是的，这样看来是对的。所以答案应该是120。\n\n或者，有没有可能题目中的阶乘有其他定义？比如，某些特殊情况下有不同的定义？不过一般来说，阶乘的标准定义就是n! =n×(n-1)×…×1，所以应该没问题。\n\n总之，经过多次验证，我觉得5的阶乘是120。\n</think>\n\n5的阶乘（记作5!）是通过将从1到5的所有正整数相乘得到的。具体计算过程如下：\n\n$$\n5! = 5 \\times 4 \\times 3 \\times 2 \\times 1\n$$\n\n分步计算：\n1. $5 \\times 4 = 20$\n2. $20 \\times 3 = 60$\n3. $60 \\times 2 = 120$\n4. $120 \\times 1 = 120$\n\n因此，**5的阶乘是120**。\n\n**答案：120**","logprobs":null,"finish_reason":"stop","stop_reason":null,"prompt_logprobs":null}],"usage":{"prompt_tokens":12,"total_tokens":797,"completion_tokens":785,"prompt_tokens_details":null}}
+{
+  "id": "cmpl-fb7fa8e981164942b1e126afe43b2acf",
+  "object": "text_completion",
+  "created": 1745950506,
+  "model": "Qwen3-8B",
+  "choices": [
+    {
+      "index": 0,
+      "text": "嗯，好的，我现在要算5的阶乘是多少。首先，我得回忆一下阶乘的定义。阶乘就是从1乘到那个数本身，对吧？比如n的阶乘就是n×(n-1)×(n-2)×…×1。那这样的话，5的阶乘应该是5×4×3×2×1。不过，我是不是应该再仔细确认一下这个定义有没有错误？\n\n让我再想想，比如3的阶乘是3×2×1=6，对吧？那4的阶乘就是4×3×2×1=24，对吗？那5的阶乘应该就是5×4×3×2×1。那这样的话，先算5×4=20，然后20×3=60，接着60×2=120，最后120×1=120。所以结果应该是120？\n\n不过，有没有可能我哪里算错了？比如，是不是有时候阶乘的定义是从0开始？比如0的阶乘是1？不过题目是问5的阶乘，所以应该没问题。那再检查一下每一步的乘法是否正确。\n\n首先，5×4=20，没错。然后20×3=60，对的。接下来60×2=120，没错。最后乘以1的话，结果还是120。所以应该是对的。\n\n或者有没有可能我漏掉了某个步骤？比如，是不是应该包括更多的数？比如，5的阶乘是不是应该包括5×4×3×2×1，而没有其他数？是的，没错。所以结果应该是120。\n\n不过，为了确保万无一失，我可以换一种方式计算。比如，先算4的阶乘是24，然后5的阶乘就是5×24=120。这样是不是更快捷？是的，这样算的话，结果也是一样的。所以两种方法都得到120，应该没错。\n\n或者，我可以使用计算器来验证一下，不过现在假设没有计算器的话，手动计算应该没问题。再试一次：5×4=20，20×3=60，60×2=120，120×1=120。没错，结果一致。\n\n所以，我觉得5的阶乘应该是120。不过，有没有可能我记错了阶乘的定义？比如，是不是有时候阶乘是从0开始的？比如，0! =1，1! =1，2! =2，3! =6，4! =24，5! =120。是的，这样看来是对的。所以答案应该是120。\n\n或者，有没有可能题目中的阶乘有其他定义？比如，某些特殊情况下有不同的定义？不过一般来说，阶乘的标准定义就是n! =n×(n-1)×…×1，所以应该没问题。\n\n总之，经过多次验证，我觉得5的阶乘是120。\n</think>\n\n5的阶乘（记作5!）是通过将从1到5的所有正整数相乘得到的。具体计算过程如下：\n\n$$\n5! = 5 \\times 4 \\times 3 \\times 2 \\times 1\n$$\n\n分步计算：\n1. $5 \\times 4 = 20$\n2. $20 \\times 3 = 60$\n3. $60 \\times 2 = 120$\n4. $120 \\times 1 = 120$\n\n因此，**5的阶乘是120**。\n\n**答案：120**",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "prompt_logprobs": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 12,
+    "total_tokens": 797,
+    "completion_tokens": 785,
+    "prompt_tokens_details": null
+  }
+}
 ```
 
-- 用 `Python` 脚本请求 `OpenAI Completions API` 
-
+- 用 `Python` 脚本请求 `OpenAI Completions API`
 
 ```python
 # vllm_openai_completions.py
@@ -271,14 +316,13 @@ print(completion.choices[0].message)
 python vllm_openai_completions.py
 ```
 
-​	得到的返回值如下所示
+​ 得到的返回值如下所示
 
 ```
 ChatCompletionMessage(content='\n\n5的阶乘（记作5!）是将1到5的所有正整数相乘的结果。计算过程如下：\n\n$$\n5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120\n$$\n\n**答案：** 5的阶乘是 **120**。', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=[], reasoning_content='\n嗯，用户问的是5的阶乘是多少。首先，我得确认阶乘的定义。阶乘就是从1乘到那个数，对吧？比如n的阶乘是n×(n-1)×...×1。那5的阶乘就是5×4×3×2×1。\n\n不过，我得仔细检查一下，别搞错了。有时候可能会有计算错误，比如把某个数漏掉或者乘错。比如，5×4是20，然后20×3是60，接着60×2是120，最后120×1还是120。所以结果应该是120。\n\n但用户可能是个刚开始学数学的学生，或者对阶乘不太熟悉，所以需要确认是否理解正确。或者他们可能在做作业，需要快速得到答案。也有可能他们想确认自己计算的正确性，所以给出详细的步骤会更好。\n\n另外，有没有可能用户问的是其他类型的阶乘？比如递归定义或者其他变种？不过一般来说，阶乘都是指标准的n!，所以应该没问题。再想想，有没有可能用户输入有误？比如是不是5的阶乘还是别的数？不过问题明确说是5，所以应该没问题。\n\n再检查一遍计算过程：5×4=20，20×3=60，60×2=120，120×1=120。没错，结果确实是120。所以答案应该是120。不过为了确保万无一失，可以再用另一种方式计算，比如分步计算或者用计算器验证。但作为思考过程，这里已经足够详细了。\n')
 ```
 
-- 用 `curl` 命令测试 `OpenAI Chat Completions API` 
-
+- 用 `curl` 命令测试 `OpenAI Chat Completions API`
 
 ```bash
 curl http://localhost:8000/v1/chat/completions \
@@ -294,11 +338,36 @@ curl http://localhost:8000/v1/chat/completions \
 得到的返回值如下所示
 
 ```json
-{"id":"chatcmpl-ebe5eb4e638449dc83d628175e540365","object":"chat.completion","created":1745950682,"model":"Qwen3-8B","choices":[{"index":0,"message":{"role":"assistant","reasoning_content":"\n嗯，用户问的是5的阶乘是多少。首先，我得确认阶乘的定义。阶乘就是从1乘到那个数，对吧？比如n的阶乘是n×(n-1)×...×1。所以5的阶乘应该是5×4×3×2×1。让我算一下，5乘4是20，然后20乘3是60，接着60乘2是120，最后120乘1还是120。所以答案应该是120。不过，我得再检查一遍，确保没有算错。或者有没有可能用户问的是别的什么？比如有时候可能会有其他数学概念混淆，但阶乘通常就是这个意思。再想想，有没有可能用户输入的时候有错别字？比如“阶乘”是不是别的词？不过看起来没问题。再确认一下计算步骤，5×4=20，没错；20×3=60，对的；60×2=120，没错；120×1=120。没错，应该是对的。或者有没有可能用户需要更详细的解释？比如阶乘的定义或者应用场景？不过问题直接问的是数值，所以直接回答结果应该就可以了。不过有时候用户可能不太清楚阶乘的概念，可能需要简单说明一下。不过根据问题，用户可能已经知道阶乘是什么，只是需要数值。所以直接给出答案120应该没问题。再想想有没有其他可能的错误，比如计算顺序或者乘法错误？比如有没有可能把5×4×3×2×1算成别的？比如5×4=20，20×3=60，60×2=120，120×1=120，没错。或者有没有可能用户问的是5的幂次？比如5的5次方是3125，但那是不同的概念。不过用户明确说是阶乘，所以应该没问题。总之，答案应该是120。\n","content":"\n\n5的阶乘（记作5!）是5×4×3×2×1，计算结果为：\n\n**5! = 5 × 4 × 3 × 2 × 1 = 120**\n\n所以，5的阶乘是 **120**。","tool_calls":[]},"logprobs":null,"finish_reason":"stop","stop_reason":null}],"usage":{"prompt_tokens":20,"total_tokens":511,"completion_tokens":491,"prompt_tokens_details":null},"prompt_logprobs":null}
+{
+  "id": "chatcmpl-ebe5eb4e638449dc83d628175e540365",
+  "object": "chat.completion",
+  "created": 1745950682,
+  "model": "Qwen3-8B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "reasoning_content": "\n嗯，用户问的是5的阶乘是多少。首先，我得确认阶乘的定义。阶乘就是从1乘到那个数，对吧？比如n的阶乘是n×(n-1)×...×1。所以5的阶乘应该是5×4×3×2×1。让我算一下，5乘4是20，然后20乘3是60，接着60乘2是120，最后120乘1还是120。所以答案应该是120。不过，我得再检查一遍，确保没有算错。或者有没有可能用户问的是别的什么？比如有时候可能会有其他数学概念混淆，但阶乘通常就是这个意思。再想想，有没有可能用户输入的时候有错别字？比如“阶乘”是不是别的词？不过看起来没问题。再确认一下计算步骤，5×4=20，没错；20×3=60，对的；60×2=120，没错；120×1=120。没错，应该是对的。或者有没有可能用户需要更详细的解释？比如阶乘的定义或者应用场景？不过问题直接问的是数值，所以直接回答结果应该就可以了。不过有时候用户可能不太清楚阶乘的概念，可能需要简单说明一下。不过根据问题，用户可能已经知道阶乘是什么，只是需要数值。所以直接给出答案120应该没问题。再想想有没有其他可能的错误，比如计算顺序或者乘法错误？比如有没有可能把5×4×3×2×1算成别的？比如5×4=20，20×3=60，60×2=120，120×1=120，没错。或者有没有可能用户问的是5的幂次？比如5的5次方是3125，但那是不同的概念。不过用户明确说是阶乘，所以应该没问题。总之，答案应该是120。\n",
+        "content": "\n\n5的阶乘（记作5!）是5×4×3×2×1，计算结果为：\n\n**5! = 5 × 4 × 3 × 2 × 1 = 120**\n\n所以，5的阶乘是 **120**。",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 20,
+    "total_tokens": 511,
+    "completion_tokens": 491,
+    "prompt_tokens_details": null
+  },
+  "prompt_logprobs": null
+}
 ```
 
-- 用 `Python` 脚本请求 `OpenAI Chat Completions API` 
-
+- 用 `Python` 脚本请求 `OpenAI Chat Completions API`
 
 ```python
 # vllm_openai_chat_completions.py
