@@ -7,16 +7,16 @@
         "info": "[邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）",
         "task_num": 305
     },
+    "姜舒凡": {
+        "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）",
+        "task_num": 13
+    },
     "肖鸿儒": {
         "info": "[肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）",
         "task_num": 11
     },
     "郭志航": {
         "info": "[郭志航](https://github.com/acwwt)（内容创作者）",
-        "task_num": 11
-    },
-    "姜舒凡": {
-        "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）",
         "task_num": 11
     },
     "林泽毅": {
@@ -33,7 +33,11 @@
     },
     "李娇娇": {
         "info": "[李娇娇](https://github.com/Aphasia0515) （Datawhale成员）",
-        "task_num": 6
+        "task_num": 8
+    },
+    "高立业": {
+        "info": "[高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）",
+        "task_num": 7
     },
     "丁悦": {
         "info": "[丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）",
@@ -57,10 +61,6 @@
     },
     "东东": {
         "info": "[东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）",
-        "task_num": 5
-    },
-    "高立业": {
-        "info": "[高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）",
         "task_num": 5
     },
     "荞麦": {
@@ -155,12 +155,12 @@
         "info": "[郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）",
         "task_num": 2
     },
-    "谭逸珂": {
-        "info": "[谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）",
-        "task_num": 1
-    },
     "王熠明": {
         "info": "[王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）",
+        "task_num": 2
+    },
+    "谭逸珂": {
+        "info": "[谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）",
         "task_num": 1
     },
     "何至轩": {
@@ -197,6 +197,10 @@
     },
     "孙超": {
         "info": "[孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）",
+        "task_num": 1
+    },
+    "樊奇": {
+        "info": "[樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）",
         "task_num": 1
     }
 }

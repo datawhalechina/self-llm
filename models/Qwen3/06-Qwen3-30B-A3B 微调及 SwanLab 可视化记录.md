@@ -398,7 +398,7 @@ trainer.train()                  # 开始训练
 
 ## 10. 训练结果演示
 
-访问可视化训练过程：[Qwen3-8B/Qwen3_30B_A3B-Lora](https://swanlab.cn/@kmno4/Qwen3-8B/runs/q0bfaarpeohafvgpjpg9q/chart)
+访问可视化训练过程：[Qwen3-8B/Qwen3_30B_A3B-Lora](https://swanlab.cn/@datawhale-kmno4/Qwen3-Lora/overview)
 
 在 SwanLab 上查看最终的训练结果：
 

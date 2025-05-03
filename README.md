@@ -74,13 +74,13 @@
 
 - [Qwen3](https://github.com/QwenLM/Qwen3)
   - [ ] Qwen3 模型结构解析 Blog
-  - [ ] Qwen3-8B vllm 部署调用
-  - [ ] Qwen3-8B Windows LMStudio 部署调用 
-  - [ ] Qwen3-8B Evalscope 智商情商评测
-  - [ ] Qwen3-8B Lora 微调及SwanLab 可视化记录
-  - [ ] Qwen3-30B-A3B 微调及SwanLab 可视化记录
-  - [ ] [Qwen3 Think 解密 Blog](./models/Qwen3/07-Qwen3-Think-解密-Blog.md) @樊奇
-  - [ ] Qwen3-8B Docker 镜像
+  - [x] [Qwen3-8B vllm 部署调用](./models/Qwen3/02-Qwen3-8B-vLLM%20部署调用.md) @李娇娇
+  - [x] [Qwen3-8B Windows LMStudio 部署调用](./models/Qwen3/03-Qwen3-7B-Instruct%20Windows%20LMStudio%20部署.md) @王熠明
+  - [x] [Qwen3-8B Evalscope 智商情商评测](./models/Qwen3/04-Qwen3-8B%20EvalScope智商情商评测.md) @李娇娇
+  - [x] [Qwen3-8B Lora 微调及SwanLab 可视化记录](./models/Qwen3/05-Qwen3-8B-LoRA及SwanLab可视化记录.md) @姜舒凡
+  - [x] [Qwen3-30B-A3B 微调及SwanLab 可视化记录](./models/Qwen3/06-Qwen3-30B-A3B%20微调及%20SwanLab%20可视化记录.md) @高立业
+  - [x] [Qwen3 Think 解密 Blog](./models/Qwen3/07-Qwen3-Think-解密-Blog.md) @樊奇
+  - [x] [Qwen3-8B Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen3) @高立业
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
   - [x] [Kimi-VL-A3B 技术报告解读](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
@@ -364,20 +364,20 @@
 
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
+- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
-- [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
+- [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
 - [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
-- [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
@@ -401,8 +401,8 @@
 - [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
 - [付志远](https://github.com/comfzy)（内容创作者-海南大学）
 - [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
-- [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
+- [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
 - [康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）
 - [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
@@ -412,6 +412,7 @@
 - [陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）
 - [张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）
 - [孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）
+- [樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）
 
 > 注：排名根据贡献程度排序
 
