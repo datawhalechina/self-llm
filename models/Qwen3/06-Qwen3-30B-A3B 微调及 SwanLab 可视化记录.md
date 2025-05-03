@@ -68,7 +68,7 @@ pip install swanlab==0.5.7 # 用于监控训练过程与评估模型效果
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen3 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-qwen3***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen3***
 
 ## 2. 模型下载
 
