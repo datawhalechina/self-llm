@@ -42,7 +42,7 @@ args = TrainingArguments(
 
 if "__main__" == __name__:
     # 将JSON文件转换为CSV文件,处理数据集
-    df = pd.read_json('../dataset/huanhuan.json')
+    df = pd.read_json('../../dataset/huanhuan.json')
     ds = Dataset.from_pandas(df)
     # 加载tokenizer
     tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/THUCoAI/CharacterGLM-6B", trust_remote_code=True)

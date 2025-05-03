@@ -31,7 +31,7 @@ pip install datasets peft
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了Gemma2 的环境镜像，该镜像适用于该仓库的 Gemma2 教程所有部署环境。点击下方链接并直接创建Autodl示例即可。
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma2***
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+在本节教程里，我们将微调数据集放置在根目录 [/dataset](../../dataset/huanhuan.json)。
 
 ## 指令集构建
 

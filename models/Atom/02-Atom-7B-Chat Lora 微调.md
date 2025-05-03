@@ -17,7 +17,7 @@ pip install datasets==2.10.1
 pip install accelerate==0.20.3
 ```
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.jsonl)，将基座模型参数放置在根目录 [/model](../model)。
+在本节教程里，我们将微调数据集放置在根目录 [/dataset](../../dataset/huanhuan.jsonl)，将基座模型参数放置在根目录 [/model](../../models)。
 
 ## 指令集构建
 

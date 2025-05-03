@@ -37,7 +37,7 @@ pip install peft==0.13.2
 > ***https://www.codewithgpu.com/i/datawhalechina/self-llm/qwen2.5-coder***
 
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+在本节教程里，我们将微调数据集放置在根目录 [/dataset](../../dataset/huanhuan.json)。
 
 ## 指令集构建
 

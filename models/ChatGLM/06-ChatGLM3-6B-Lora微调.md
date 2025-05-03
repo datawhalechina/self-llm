@@ -20,7 +20,7 @@ pip install datasets==2.10.1
 pip install accelerate==0.21.0
 ```
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.jsonl)。
+在本节教程里，我们将微调数据集放置在根目录 [/dataset](../../dataset/huanhuan.jsonl)。
 
 ## 指令集构建
 
