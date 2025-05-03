@@ -73,7 +73,7 @@
 ### 已支持模型
 
 - [Qwen3](https://github.com/QwenLM/Qwen3)
-  - [ ] Qwen3 模型结构解析 Blog
+  - [x] [Qwen3 模型结构解析 Blog](./models/Qwen3/01-Qwen3-模型结构解析-Blog.md) @王泽宇
   - [x] [Qwen3-8B vllm 部署调用](./models/Qwen3/02-Qwen3-8B-vLLM%20部署调用.md) @李娇娇
   - [x] [Qwen3-8B Windows LMStudio 部署调用](./models/Qwen3/03-Qwen3-7B-Instruct%20Windows%20LMStudio%20部署.md) @王熠明
   - [x] [Qwen3-8B Evalscope 智商情商评测](./models/Qwen3/04-Qwen3-8B%20EvalScope智商情商评测.md) @李娇娇
