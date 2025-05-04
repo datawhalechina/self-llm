@@ -22,7 +22,7 @@ pip install transformers_stream_generator
 pip install bitsandbytes==0.41.1
 ```
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.json)。
+在本节教程里，我们将微调数据集放置在根目录 [/dataset](../../dataset/huanhuan.json)。
 
 ## 指令集构建
 

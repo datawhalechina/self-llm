@@ -53,7 +53,7 @@ print(f"模型下载完成，保存路径为：{model_dir}")
 }
 ```
 
-所有的示例微调数据集位于 [/dataset](../dataset/huanhuan.json)
+所有的示例微调数据集位于 [/dataset](../../dataset/huanhuan.json)
 
 ## 数据准备
 

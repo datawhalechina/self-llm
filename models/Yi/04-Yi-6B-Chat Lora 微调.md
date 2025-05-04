@@ -19,7 +19,7 @@ pip install tiktoken
 pip install transformers_stream_generator
 ```
 
-在本节教程里，我们将微调数据集放置在根目录 [/dataset](../dataset/huanhuan.jsonl)。
+在本节教程里，我们将微调数据集放置在根目录 [/dataset](../../dataset/huanhuan.jsonl)。
 
 ## 指令集构建
 

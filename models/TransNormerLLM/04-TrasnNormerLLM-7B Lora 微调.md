@@ -68,7 +68,7 @@ MAX_JOBS=8 pip install flash-attn --no-build-isolation
 
 > 注意：flash-attn 安装会比较慢，大概需要十几分钟。
 
-在本节教程里，我们将微调数据集 `huanhuan.json` 放置在根目录 [/dataset](../dataset/huanhuan.json)，该样本数据取自 [huanhuan.json](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)
+在本节教程里，我们将微调数据集 `huanhuan.json` 放置在根目录 [/dataset](../../dataset/huanhuan.json)，该样本数据取自 [huanhuan.json](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)
 
 ## 指令集构建
 
