@@ -82,6 +82,7 @@
   - [x] [Qwen3 Think 解密 Blog](./models/Qwen3/07-Qwen3-Think-解密-Blog.md) @樊奇
   - [x] [Qwen3-8B Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen3) @高立业
   - [x] [Qwen3-0.6B 的小模型有什么用](./models//Qwen3/08-Qwen3_0_6B的小模型有什么用.md) @不要葱姜蒜
+  - [x] [Qwen3-1.7B 医学推理式对话微调 及 SwanLab 可视化记录](./models/Qwen3/09-Qwen3-1.7B-医学推理式对话微调%20及%20SwanLab%20可视化记录.md) @林泽毅
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
   - [x] [Kimi-VL-A3B 技术报告解读](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
