@@ -929,10 +929,8 @@ Congratulations！看到了这，你已经初步实现了一个简单的RL实战
 
 # 参考文献
 
-综述：https://arxiv.org/abs/2001.06921
-deepseek-r1：https://arxiv.org/abs/2501.12948
-数学原理：https://blog.csdn.net/weixin\_38991876/article/details/146474767
-Unsloth：https://docs.unsloth.ai/
-<br>
+- 综述：https://arxiv.org/abs/2001.06921
+- deepseek-r1：https://arxiv.org/abs/2501.12948
+- 数学原理：https://blog.csdn.net/weixin\_38991876/article/details/146474767
+- Unsloth：https://docs.unsloth.ai/
 
-<br>
