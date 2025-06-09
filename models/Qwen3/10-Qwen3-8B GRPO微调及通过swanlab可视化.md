@@ -1,3 +1,5 @@
+# Qwen3-8B GRPO微调及通过swanlab可视化
+
 > 半小时学会使用 GRPO 通过 Unsloth 训练自己的类 DeepSeek-R1 推理模型。
 
 # 强化学习（RL）

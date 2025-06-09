@@ -21,7 +21,7 @@
     },
     "林泽毅": {
         "info": "[林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）",
-        "task_num": 10
+        "task_num": 11
     },
     "张帆": {
         "info": "[张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）",
@@ -201,6 +201,10 @@
     },
     "樊奇": {
         "info": "[樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）",
+        "task_num": 1
+    },
+    "郭宣伯": {
+        "info": "[郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）",
         "task_num": 1
     }
 }

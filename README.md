@@ -85,6 +85,7 @@
   - [x] [Qwen3-8B Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/Qwen3) @高立业
   - [x] [Qwen3-0.6B 的小模型有什么用](./models//Qwen3/08-Qwen3_0_6B的小模型有什么用.md) @不要葱姜蒜
   - [x] [Qwen3-1.7B 医学推理式对话微调 及 SwanLab 可视化记录](./models/Qwen3/09-Qwen3-1.7B-医学推理式对话微调%20及%20SwanLab%20可视化记录.md) @林泽毅
+  - [x] [Qwen3-8B GRPO微调及通过swanlab可视化](./models/Qwen3/10-Qwen3-8B%20GRPO微调及通过swanlab可视化.md) @郭宣伯
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
   - [x] [Kimi-VL-A3B 技术报告解读](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
@@ -417,6 +418,7 @@
 - [张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）
 - [孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）
 - [樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）
+- [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
 
 > 注：排名根据贡献程度排序
 
