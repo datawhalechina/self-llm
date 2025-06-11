@@ -1,0 +1,119 @@
+name: New Model Request
+description: 请求新增模型或新增模型教程
+title: "[New Model] "
+labels: ["enhancement", "new-model"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您提出新模型请求！请填写以下信息帮助我们了解您的需求。
+        
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: 请求类型
+      description: 请选择您的请求类型
+      options:
+        - 新增模型支持
+        - 新增模型教程
+        - 新增模型部署方式
+        - 其他
+    validations:
+      required: true
+      
+  - type: input
+    id: model-name
+    attributes:
+      label: 模型名称
+      description: 请填写您希望新增的模型名称
+      placeholder: 例如：MiniCPM 4.0、Qwen4
+    validations:
+      required: true
+      
+  - type: input
+    id: model-source
+    attributes:
+      label: 模型来源
+      description: 请提供模型的官方链接或Hugging Face链接
+      placeholder: 例如：https://huggingface.co/Qwen/Qwen3-14B
+    validations:
+      required: true
+      
+  - type: textarea
+    id: tutorial-type
+    attributes:
+      label: 希望的教程类型
+      description: 请描述您希望的教程类型（如果是新增教程请求）
+      placeholder: |
+        例如：
+        - FastAPI 部署调用
+        - WebDemo 部署
+        - Langchain 接入
+        - LoRA 微调
+        - vLLM 部署调用
+        - 全量微调
+    validations:
+      required: false
+      
+  - type: textarea
+    id: model-description
+    attributes:
+      label: 模型描述
+      description: 请简要描述该模型的特点和用途
+      placeholder: 请描述模型的主要特性、参数规模、适用场景等
+    validations:
+      required: true
+      
+  - type: textarea
+    id: use-case
+    attributes:
+      label: 使用场景
+      description: 请描述您计划如何使用这个模型
+      placeholder: 例如：用于对话系统、代码生成、文本分析等
+    validations:
+      required: true
+      
+  - type: textarea
+    id: technical-requirements
+    attributes:
+      label: 技术要求
+      description: 请描述模型的技术要求（如果已知）
+      placeholder: |
+        例如：
+        - 最低GPU显存要求
+        - 推荐的硬件配置
+        - 特殊的依赖库
+        - 许可证要求
+    validations:
+      required: false
+      
+  - type: checkboxes
+    id: contribution-willingness
+    attributes:
+      label: 贡献意愿
+      description: 请选择您的参与意愿
+      options:
+        - label: 我愿意协助编写相关教程
+          required: false
+        - label: 我愿意提供测试和反馈
+          required: false
+        - label: 我愿意分享使用经验
+          required: false
+          
+  - type: input
+    id: contact-info
+    attributes:
+      label: 联系方式（可选）
+      description: 如果您愿意参与贡献，请提供联系方式
+      placeholder: 例如：GitHub用户名、邮箱等
+    validations:
+      required: false
+      
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: 其他信息
+      description: 请提供任何其他相关信息
+      placeholder: 包括相关资料链接、参考文档等
+    validations:
+      required: false

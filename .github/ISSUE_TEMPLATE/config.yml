@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 查看文档
+    url: https://github.com/datawhalechina/self-llm
+    about: 查看项目文档和使用指南
+  - name: 🔍 搜索已有Issue
+    url: https://github.com/datawhalechina/self-llm/issues
+    about: 搜索是否已有相关问题或请求
+  

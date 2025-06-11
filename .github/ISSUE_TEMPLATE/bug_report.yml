@@ -1,0 +1,98 @@
+name: Bug Report
+description: 报告项目中的bug问题
+title: "[Bug] 具体模型-具体教程-负责人-具体bug"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您报告bug！请填写以下信息帮助我们更好地定位和解决问题。
+        
+  - type: input
+    id: model
+    attributes:
+      label: 出bug的具体模型
+      description: 请填写出现问题的具体模型名称
+      placeholder: 例如：Qwen3-8B、ChatGLM3-6B、InternLM2-7B等
+    validations:
+      required: true
+      
+  - type: input
+    id: tutorial
+    attributes:
+      label: 出bug的具体模型教程
+      description: 请填写出现问题的具体教程名称
+      placeholder: 例如：Qwen3-8B vLLM 部署调用、ChatGLM3-6B FastApi部署调用等
+    validations:
+      required: true
+      
+  - type: input
+    id: maintainer
+    attributes:
+      label: 教程负责人
+      description: 请填写该教程的具体负责人（对应教程@后的名字）
+      placeholder: 例如：不要葱姜蒜、张三、李四等
+    validations:
+      required: true
+      
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug描述
+      description: 请详细描述遇到的问题
+      placeholder: 请描述您遇到的具体问题，包括错误信息、异常行为等
+    validations:
+      required: true
+      
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: 复现步骤
+      description: 请提供复现该bug的详细步骤
+      placeholder: |
+        1. 执行命令...
+        2. 运行代码...
+        3. 出现错误...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 期望行为
+      description: 请描述您期望的正确行为
+      placeholder: 描述您期望应该发生什么
+    validations:
+      required: true
+      
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: 请提供您的运行环境信息
+      placeholder: |
+        - 操作系统：
+        - Python版本：
+        - CUDA版本：
+        - GPU型号：
+        - 其他相关依赖版本：
+    validations:
+      required: true
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 其他信息
+      description: 请提供任何其他有助于解决问题的信息
+      placeholder: 包括日志、截图、相关配置等
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认事项 / Verification
+      description: 请确认以下事项 / Please confirm the following
+      options:
+        - label: 此问题未在过往Issue中被报告过 / This issue hasn't been reported before
+          required: true
