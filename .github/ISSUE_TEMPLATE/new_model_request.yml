@@ -1,7 +1,7 @@
 name: New Model Request
 description: 请求新增模型或新增模型教程
 title: "[New Model] "
-labels: ["enhancement", "new-model"]
+labels: ["feature", "enhancement", "new-model"]
 body:
   - type: markdown
     attributes:
