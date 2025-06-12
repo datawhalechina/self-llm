@@ -931,7 +931,7 @@ Congratulations！看到了这，你已经初步实现了一个简单的RL实战
 
 # 相关链接
 
-- 完整可运行的代码：https://github.com/Twosugar666/self-llm/blob/master/models/Qwen3/10-Qwen3_8B_GRPO.ipynb
+- 完整可运行的代码：[Github](https://github.com/datawhalechina/self-llm/blob/master/models/Qwen3/10-Qwen3_8B_GRPO.ipynb)
 - 综述：https://arxiv.org/abs/2001.06921
 - deepseek-r1：https://arxiv.org/abs/2501.12948
 - 数学原理：https://blog.csdn.net/weixin\_38991876/article/details/146474767
