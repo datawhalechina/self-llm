@@ -929,10 +929,10 @@ training_args = GRPOConfig(
 
 Congratulations！看到了这，你已经初步实现了一个简单的RL实战，掌握了使用 Unsloth 对 Qwen3 这类大模型进行 GRPO 微调的具体操作步骤，更能体会到 Unsloth 在大幅提升训练速度、显著降低显存占用方面的强大优势，从而使在有限资源下进行复杂强化学习实验成为可能！如果支持我们的工作希望得到你的star！！这是我们持续更新的最大动力！！！
 
-# 参考文献
+# 相关链接
 
+- 完整可运行的代码：[Github](https://github.com/datawhalechina/self-llm/blob/master/models/Qwen3/10-Qwen3_8B_GRPO.ipynb)
 - 综述：https://arxiv.org/abs/2001.06921
 - deepseek-r1：https://arxiv.org/abs/2501.12948
 - 数学原理：https://blog.csdn.net/weixin\_38991876/article/details/146474767
 - Unsloth：https://docs.unsloth.ai/
-
