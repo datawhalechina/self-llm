@@ -381,7 +381,7 @@ client = OpenAI(
 )
 
 chat_outputs = client.chat.completions.create(
-    model="Qwen3-8B-Qwen-7B",
+    model="Qwen3-8B",
     messages=[
         {"role": "user", "content": "什么是深度学习？"},
     ]
