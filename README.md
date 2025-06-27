@@ -74,6 +74,14 @@
 
 ### 已支持模型
 
+- [Hunyuan-A13B-Instruct](https://github.com/Tencent-Hunyuan/Hunyuan-A13B)
+  - [ ] [Hunyuan-A13B-Instruct 模型架构解析 Blog]()
+  - [ ] [Hunyuan-A13B-Instruct vllm 部署调用]()
+  - [ ] [Hunyuan-A13B-Instruct SGLang 部署调用]()
+  - [ ] [Hunyuan-A13B-Instruct EvalScope 并发测试]()
+  - [ ] [Hunyuan-A13B-Instruct Lora SwanLab 可视化微调]()
+  - [ ] [Hunyuan-A13B-Instruct GRPO微调及通过 SwanLab 可视化]()
+
 - [Qwen3](https://github.com/QwenLM/Qwen3)
   - [x] [Qwen3 模型结构解析 Blog](./models/Qwen3/01-Qwen3-模型结构解析-Blog.md) @王泽宇
   - [x] [Qwen3-8B vllm 部署调用](./models/Qwen3/02-Qwen3-8B-vLLM%20部署调用.md) @李娇娇
