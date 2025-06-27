@@ -74,14 +74,6 @@
 
 ### 已支持模型
 
-- [MiniCPM 4.0](https://github.com/OpenBMB/MiniCPM?tab=readme-ov-file#minicpm-40)
-  - [ ] MiniCPM4-8B vllm 部署调用
-  - [ ] MiniCPM4-8B Evalscope 智商情商评测
-  - [ ] MiniCPM4-0.5B Evalscope 单卡4090 并发测试
-  - [ ] MiniCPM4-8B Lora 微调及 SwanLab 可视化记录
-  - [ ] MiniCPM4-0.5B GRPO 微调及通过 Swanlab 可视化
-  - [ ] MiniCPM4 Docker镜像
-
 - [Qwen3](https://github.com/QwenLM/Qwen3)
   - [x] [Qwen3 模型结构解析 Blog](./models/Qwen3/01-Qwen3-模型结构解析-Blog.md) @王泽宇
   - [x] [Qwen3-8B vllm 部署调用](./models/Qwen3/02-Qwen3-8B-vLLM%20部署调用.md) @李娇娇
