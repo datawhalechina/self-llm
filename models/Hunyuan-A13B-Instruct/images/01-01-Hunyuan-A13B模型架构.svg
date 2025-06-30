@@ -1,0 +1,232 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <ns0:defs>
+    <ns0:linearGradient id="inputGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <ns0:stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <ns0:stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="expertGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <ns0:stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <ns0:stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="routerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <ns0:stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <ns0:stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:linearGradient id="outputGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <ns0:stop offset="0%" style="stop-color:#EF4444;stop-opacity:1" />
+      <ns0:stop offset="100%" style="stop-color:#DC2626;stop-opacity:1" />
+    </ns0:linearGradient>
+    <ns0:filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <ns0:feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2" />
+    </ns0:filter>
+  </ns0:defs>
+  
+  
+  <ns0:rect width="1200" height="800" fill="#F8FAFC" />
+  
+  
+  <ns0:text x="600" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1E293B">
+    Tencent Hunyuan A13B MoE Architecture
+  </ns0:text>
+  <ns0:text x="600" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#64748B">
+    Fine-grained MoE with 80B Total Parameters, 13B Active Parameters
+  </ns0:text>
+  
+  
+  <ns0:rect x="50" y="100" width="150" height="60" rx="8" fill="url(#inputGrad)" filter="url(#shadow)" />
+  <ns0:text x="125" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Input Embeddings</ns0:text>
+  <ns0:text x="125" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">256K Context</ns0:text>
+  
+  
+  <ns0:rect x="250" y="100" width="150" height="60" rx="8" fill="#6366F1" filter="url(#shadow)" />
+  <ns0:text x="325" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Grouped Query</ns0:text>
+  <ns0:text x="325" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Attention (GQA)</ns0:text>
+  <ns0:text x="325" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">Efficient Inference</ns0:text>
+  
+  
+  <ns0:rect x="450" y="80" width="140" height="100" rx="8" fill="url(#routerGrad)" filter="url(#shadow)" />
+  <ns0:text x="520" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Fine-grained</ns0:text>
+  <ns0:text x="520" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Router</ns0:text>
+  <ns0:text x="520" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Dual Mode</ns0:text>
+  <ns0:text x="520" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Fast/Slow</ns0:text>
+  <ns0:text x="520" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Thinking</ns0:text>
+  
+  
+  <ns0:g id="experts">
+    
+    <ns0:rect x="650" y="80" width="80" height="40" rx="6" fill="url(#expertGrad)" filter="url(#shadow)" />
+    <ns0:text x="690" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">Expert 1</ns0:text>
+    <ns0:text x="690" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Active</ns0:text>
+    
+    <ns0:rect x="740" y="80" width="80" height="40" rx="6" fill="url(#expertGrad)" filter="url(#shadow)" />
+    <ns0:text x="780" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">Expert 2</ns0:text>
+    <ns0:text x="780" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Active</ns0:text>
+    
+    <ns0:rect x="830" y="80" width="80" height="40" rx="6" fill="url(#expertGrad)" filter="url(#shadow)" />
+    <ns0:text x="870" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">Expert 3</ns0:text>
+    <ns0:text x="870" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Active</ns0:text>
+    
+    <ns0:rect x="920" y="80" width="80" height="40" rx="6" fill="url(#expertGrad)" filter="url(#shadow)" />
+    <ns0:text x="960" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">Expert 4</ns0:text>
+    <ns0:text x="960" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Active</ns0:text>
+    
+    
+    <ns0:rect x="650" y="130" width="80" height="40" rx="6" fill="#9CA3AF" opacity="0.6" />
+    <ns0:text x="690" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">Expert 5</ns0:text>
+    <ns0:text x="690" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Inactive</ns0:text>
+    
+    <ns0:rect x="740" y="130" width="80" height="40" rx="6" fill="#9CA3AF" opacity="0.6" />
+    <ns0:text x="780" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">Expert 6</ns0:text>
+    <ns0:text x="780" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Inactive</ns0:text>
+    
+    <ns0:rect x="830" y="130" width="80" height="40" rx="6" fill="#9CA3AF" opacity="0.6" />
+    <ns0:text x="870" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">Expert 7</ns0:text>
+    <ns0:text x="870" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Inactive</ns0:text>
+    
+    <ns0:rect x="920" y="130" width="80" height="40" rx="6" fill="#9CA3AF" opacity="0.6" />
+    <ns0:text x="960" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">Expert 8</ns0:text>
+    <ns0:text x="960" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Inactive</ns0:text>
+    
+    
+    <ns0:text x="800" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748B">... (More Experts)</ns0:text>
+    <ns0:text x="800" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#64748B">Total: 80B Parameters</ns0:text>
+  </ns0:g>
+  
+  
+  <ns0:rect x="1050" y="70" width="120" height="110" rx="8" fill="#8B5CF6" filter="url(#shadow)" opacity="0.9" />
+  <ns0:text x="1110" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Thinking Mode</ns0:text>
+  <ns0:rect x="1060" y="100" width="45" height="25" rx="4" fill="#A855F7" />
+  <ns0:text x="1082" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Fast</ns0:text>
+  <ns0:rect x="1115" y="100" width="45" height="25" rx="4" fill="#7C3AED" />
+  <ns0:text x="1137" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white">Slow</ns0:text>
+  <ns0:text x="1110" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">&lt;think&gt;</ns0:text>
+  <ns0:text x="1110" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">reasoning</ns0:text>
+  <ns0:text x="1110" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">&lt;/think&gt;</ns0:text>
+  
+  
+  <ns0:rect x="450" y="250" width="140" height="60" rx="8" fill="#F59E0B" filter="url(#shadow)" />
+  <ns0:text x="520" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Aggregation</ns0:text>
+  <ns0:text x="520" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Layer</ns0:text>
+  <ns0:text x="520" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Load Balancing</ns0:text>
+  
+  
+  <ns0:rect x="250" y="350" width="150" height="60" rx="8" fill="url(#outputGrad)" filter="url(#shadow)" />
+  <ns0:text x="325" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Output Layer</ns0:text>
+  <ns0:text x="325" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">&lt;answer&gt;</ns0:text>
+  <ns0:text x="325" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Final Response</ns0:text>
+  
+  
+  <ns0:defs>
+    <ns0:marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <ns0:polygon points="0 0, 10 3.5, 0 7" fill="#64748B" />
+    </ns0:marker>
+  </ns0:defs>
+  
+  
+  <ns0:line x1="200" y1="130" x2="245" y2="130" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  
+  <ns0:line x1="400" y1="130" x2="445" y2="130" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  
+  <ns0:line x1="590" y1="120" x2="645" y2="100" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" />
+  <ns0:line x1="590" y1="125" x2="645" y2="105" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" />
+  <ns0:line x1="590" y1="130" x2="645" y2="110" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" />
+  <ns0:line x1="590" y1="135" x2="645" y2="115" stroke="#10B981" stroke-width="3" marker-end="url(#arrowhead)" />
+  
+  
+  <ns0:line x1="590" y1="110" x2="1045" y2="125" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)" />
+  
+  
+  <ns0:line x1="690" y1="120" x2="520" y2="245" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  <ns0:line x1="780" y1="120" x2="520" y2="245" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  <ns0:line x1="870" y1="120" x2="520" y2="245" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  <ns0:line x1="960" y1="120" x2="520" y2="245" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  
+  <ns0:line x1="450" y1="280" x2="405" y2="380" stroke="#64748B" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  
+  <ns0:rect x="50" y="500" width="300" height="200" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1" />
+  <ns0:text x="200" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">
+    Efficiency Metrics
+  </ns0:text>
+  
+  
+  <ns0:text x="70" y="550" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Total Parameters: 80B
+  </ns0:text>
+  <ns0:text x="70" y="570" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Active Parameters: 13B (16.25%)
+  </ns0:text>
+  <ns0:text x="70" y="590" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Context Window: 256K tokens
+  </ns0:text>
+  <ns0:text x="70" y="610" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Inference Modes: Fast/Slow Thinking
+  </ns0:text>
+  <ns0:text x="70" y="630" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Optimization: GQA, FP8/INT4 Quantization
+  </ns0:text>
+  <ns0:text x="70" y="650" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Specialized: Agent Tasks, Long Context
+  </ns0:text>
+  <ns0:text x="70" y="670" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    &#8226; Performance: MMLU 88.17, MATH 72.35
+  </ns0:text>
+  
+  
+  <ns0:rect x="400" y="500" width="350" height="200" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1" />
+  <ns0:text x="575" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#065F46">
+    Key Innovations
+  </ns0:text>
+  
+  <ns0:text x="420" y="550" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; Fine-grained MoE Architecture
+  </ns0:text>
+  <ns0:text x="420" y="570" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; Dual-mode Reasoning (Fast/Slow)
+  </ns0:text>
+  <ns0:text x="420" y="590" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; Ultra-high Parameter Efficiency
+  </ns0:text>
+  <ns0:text x="420" y="610" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; Agent-optimized Performance
+  </ns0:text>
+  <ns0:text x="420" y="630" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; Multi-format Quantization Support
+  </ns0:text>
+  <ns0:text x="420" y="650" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; Resource-efficient Deployment
+  </ns0:text>
+  <ns0:text x="420" y="670" font-family="Arial, sans-serif" font-size="12" fill="#047857">
+    &#10003; 256K Context Understanding
+  </ns0:text>
+  
+  
+  <ns0:rect x="800" y="500" width="350" height="200" rx="8" fill="#FEF7FF" stroke="#8B5CF6" stroke-width="1" />
+  <ns0:text x="975" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#6B21A8">
+    Architecture Legend
+  </ns0:text>
+  
+  <ns0:rect x="820" y="540" width="20" height="12" fill="url(#expertGrad)" />
+  <ns0:text x="850" y="550" font-family="Arial, sans-serif" font-size="11" fill="#374151">Active Experts (13B params)</ns0:text>
+  
+  <ns0:rect x="820" y="560" width="20" height="12" fill="#9CA3AF" opacity="0.6" />
+  <ns0:text x="850" y="570" font-family="Arial, sans-serif" font-size="11" fill="#374151">Inactive Experts (67B params)</ns0:text>
+  
+  <ns0:rect x="820" y="580" width="20" height="12" fill="url(#routerGrad)" />
+  <ns0:text x="850" y="590" font-family="Arial, sans-serif" font-size="11" fill="#374151">Fine-grained Router</ns0:text>
+  
+  <ns0:rect x="820" y="600" width="20" height="12" fill="#8B5CF6" />
+  <ns0:text x="850" y="610" font-family="Arial, sans-serif" font-size="11" fill="#374151">Thinking Mode Processing</ns0:text>
+  
+  <ns0:line x1="820" y1="625" x2="840" y2="625" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="3,3" />
+  <ns0:text x="850" y="630" font-family="Arial, sans-serif" font-size="11" fill="#374151">Optional Reasoning Path</ns0:text>
+  
+  <ns0:line x1="820" y1="645" x2="840" y2="645" stroke="#10B981" stroke-width="3" />
+  <ns0:text x="850" y="650" font-family="Arial, sans-serif" font-size="11" fill="#374151">Active Data Flow</ns0:text>
+  
+  <ns0:line x1="820" y1="665" x2="840" y2="665" stroke="#64748B" stroke-width="2" />
+  <ns0:text x="850" y="670" font-family="Arial, sans-serif" font-size="11" fill="#374151">Standard Data Flow</ns0:text>
+<ns0:text x="800" y="300" font-size="20" fill="black" font-family="Arial">Top-k Routing (e.g. k=2)</ns0:text><ns0:text x="800" y="340" font-size="20" fill="black" font-family="Arial">+ Load Balance Loss</ns0:text><ns0:text x="800" y="380" font-size="20" fill="black" font-family="Arial">Positional Encoding (RoPE)</ns0:text><ns0:text x="800" y="420" font-size="20" fill="black" font-family="Arial">* Number of Experts shown for illustration</ns0:text><ns0:text x="800" y="460" font-size="20" fill="black" font-family="Arial">Experts can be sharded across devices (Expert Parallel)</ns0:text></ns0:svg>
