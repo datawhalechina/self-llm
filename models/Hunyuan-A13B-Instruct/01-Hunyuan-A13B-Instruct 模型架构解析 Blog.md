@@ -27,7 +27,8 @@
 ---
 
 ## 🌟 **模型架构解析**
-![alt text](images/01-01-混元大模型A13B架构图.jpg)
+
+![alt text](images/01-01混元大模型A13B架构图.jpg)
 
 上图展示了一个典型的 **大规模稀疏专家模型（MoE）架构**。整体而言，它继承了标准 Transformer 的 Encoder/Decoder 堆叠设计，并在此基础上引入 MoE Layer，实现了 **“计算稀疏 + 参数容量爆炸”** 的完美结合。
 
