@@ -31,6 +31,15 @@ model_dir = snapshot_download('Tencent-Hunyuan/Hunyuan-A13B-Instruct', cache_dir
 print(f"模型下载完成，保存路径为：{model_dir}")
 ```
 
+### 注意事项！！！
+
+### 在模型下载完成后，需要修改模型文件夹下的hunyuan.py文件，在开头加入以下代码：
+
+```python
+import logging
+logger = logging.getLogger(__name__)
+```
+
 ## 数据集构建
 
 对大语言模型进行 `supervised-finetuning`（`sft`，有监督微调）的数据格式如下：
