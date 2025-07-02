@@ -74,7 +74,7 @@
 
 ### 已支持模型
 
-- [ERNIE-4.5-0.3B-PT](https://huggingface.co/baidu/ERNIE-4.5-0.3B-PT)
+- [ERNIE-4.5](https://huggingface.co/baidu/ERNIE-4.5-0.3B-PT)
   - [ ] ERNIE-4.5-0.3B-PT vllm 部署调用
   - [ ] ERNIE-4.5-0.3B-PT EvalScope 并发测试
   - [ ] ERNIE-4.5-0.3B-PT Lora 微调及 SwanLab 可视化记录
