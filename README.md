@@ -118,6 +118,7 @@
   - [x] [gemma-3-4b-it evalscope 智商情商评测](./models/Gemma3/04-Gemma3-4b%20%20evalscope智商情商评测.md) @张龙斐
   - [x] [gemma-3-4b-it Lora 微调](./models/Gemma3/05-gemma-3-4b-it%20LoRA.md) @荞麦
   - [x] [gemma-3-4b-it Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-gemma3) @姜舒凡
+  - [x] [gemma-3-4b-it GRPO微调及通过swanlab可视化](./models/Gemma3/6-gemma3-4B-itGRPO微调及通过swanlab可视化.md) @郭宣伯
 
 - [DeepSeek-R1-Distill](https://www.modelscope.cn/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B)
   - [x] [DeepSeek-R1-Distill-Qwen-7B FastApi 部署调用](./models/DeepSeek-R1-Distill-Qwen/01-DeepSeek-R1-Distill-Qwen-7B%20FastApi%20部署调用.md) @骆秀韬
