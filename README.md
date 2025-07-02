@@ -145,6 +145,7 @@
   - [x] [phi4 WebDemo 部署](./models/phi4/03-Phi-4%20WebDemo部署.md) @杜森
   - [x] [phi4 Lora 微调](./models/phi4/04-Phi-4-Lora%20微调.md) @郑远婧
   - [x] [phi4 Lora 微调 NER任务 SwanLab 可视化记录版](./models/phi4/05-Phi-4-Lora%20微调%20命名实体识别.md) @林泽毅
+  - [x] [phi4 GRPO微调及通过swanlab可视化](./models/phi4/06-Phi-4-GRPO及swanlab可视化.md) @郭宣伯
 
 - [Qwen2.5-Coder](https://github.com/QwenLM/Qwen2.5-Coder)
   - [x] [Qwen2.5-Coder-7B-Instruct FastApi部署调用](./models/Qwen2.5-Coder/01-Qwen2.5-Coder-7B-Instruct%20FastApi%20部署调用.md) @赵文恺
