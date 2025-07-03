@@ -74,6 +74,9 @@
 
 ### 已支持模型
 
+- [ERNIE-4.5](https://huggingface.co/baidu/ERNIE-4.5-0.3B-PT)
+  - [ ] ERNIE-4.5-0.3B-PT Lora 微调及 SwanLab 可视化记录
+
 - [Hunyuan-A13B-Instruct](https://github.com/Tencent-Hunyuan/Hunyuan-A13B)
   - [ ] [Hunyuan-A13B-Instruct 模型架构解析 Blog]()
   - [ ] [Hunyuan-A13B-Instruct vllm 部署调用]()
@@ -450,5 +453,5 @@
 ### Star History
 
 <div align=center style="margin-top: 30px;">
-  <img src="./images/star-history-2024129.png"/>
+  <img src="./images/star-history-202572.png"/>
 </div>
