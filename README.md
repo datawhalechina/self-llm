@@ -75,11 +75,11 @@
 ### 已支持模型
 
 - [ERNIE-4.5](https://huggingface.co/baidu/ERNIE-4.5-0.3B-PT)
-  - [ ] ERNIE-4.5-0.3B-PT Lora 微调及 SwanLab 可视化记录
+  - [x] [ERNIE-4.5-0.3B-PT Lora 微调及 SwanLab 可视化记录](./models/ERNIE-4.5/01-ERNIE-4.5-0.3B-PT%20Lora%20微调及%20SwanLab%20可视化记录.md) @不要葱姜蒜
+  - [x] [ERNIE-4.5-0.3B-PT Lora Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/ERNIE-4.5-lora) @不要葱姜蒜
 
 - [Hunyuan-A13B-Instruct](https://github.com/Tencent-Hunyuan/Hunyuan-A13B)
   - [ ] [Hunyuan-A13B-Instruct 模型架构解析 Blog]()
-  - [ ] [Hunyuan-A13B-Instruct vllm 部署调用]()
   - [ ] [Hunyuan-A13B-Instruct SGLang 部署调用]()
   - [ ] [Hunyuan-A13B-Instruct EvalScope 并发测试]()
   - [ ] [Hunyuan-A13B-Instruct Lora SwanLab 可视化微调]()
