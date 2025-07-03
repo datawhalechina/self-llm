@@ -1,7 +1,7 @@
 {
     "不要葱姜蒜": {
         "info": "[宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）",
-        "task_num": 337
+        "task_num": 341
     },
     "Logan Zou": {
         "info": "[邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）",
@@ -85,6 +85,14 @@
     },
     "骆秀韬": {
         "info": "[骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）",
+        "task_num": 4
+    },
+    "郭宣伯": {
+        "info": "[郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）",
+        "task_num": 4
+    },
+    "谢好冉": {
+        "info": "[谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）",
         "task_num": 4
     },
     "陈思州": {
@@ -203,8 +211,12 @@
         "info": "[樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）",
         "task_num": 1
     },
-    "郭宣伯": {
-        "info": "[郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）",
+    "卓堂越": {
+        "info": "[卓堂越](https://github.com/nusakom)（内容创作者-鲸英助教）",
+        "task_num": 1
+    },
+    "fancy": {
+        "info": "[fancy](https://github.com/fancyboi999)（内容创作者-鲸英助教）",
         "task_num": 1
     }
 }

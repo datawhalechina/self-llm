@@ -17,7 +17,7 @@
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Hunyuan-A13B-Instruct 的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Hunyuan-A13B-Instruct***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/Hunyuan-A13B-Instruct-lora***
 
 ## 模型下载
 

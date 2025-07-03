@@ -79,11 +79,10 @@
   - [x] [ERNIE-4.5-0.3B-PT Lora Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/ERNIE-4.5-lora) @不要葱姜蒜
 
 - [Hunyuan-A13B-Instruct](https://github.com/Tencent-Hunyuan/Hunyuan-A13B)
-  - [ ] [Hunyuan-A13B-Instruct 模型架构解析 Blog]()
-  - [ ] [Hunyuan-A13B-Instruct SGLang 部署调用]()
-  - [ ] [Hunyuan-A13B-Instruct EvalScope 并发测试]()
-  - [ ] [Hunyuan-A13B-Instruct Lora SwanLab 可视化微调]()
-  - [ ] [Hunyuan-A13B-Instruct GRPO微调及通过 SwanLab 可视化]()
+  - [x] [Hunyuan-A13B-Instruct 模型架构解析 Blog](./models/Hunyuan-A13B-Instruct/01-Hunyuan-A13B-Instruct%20模型架构解析%20Blog.md) @卓堂越
+  - [x] [Hunyuan-A13B-Instruct SGLang 部署调用](./models/Hunyuan-A13B-Instruct/03-Hunyuan-A13B-Instruct-SGLang部署调用.md) @fancy
+  - [x] [Hunyuan-A13B-Instruct Lora SwanLab 可视化微调](./models/Hunyuan-A13B-Instruct/05-Hunyuan-A13B-Instruct-LoRA及SwanLab可视化记录.md) @谢好冉
+  - [x] [Hunyuan-A13B-Instruct Lora Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/Hunyuan-A13B-Instruct-lora) @谢好冉
 
 - [Qwen3](https://github.com/QwenLM/Qwen3)
   - [x] [Qwen3 模型结构解析 Blog](./models/Qwen3/01-Qwen3-模型结构解析-Blog.md) @王泽宇
@@ -403,6 +402,8 @@
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
+- [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
+- [谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
@@ -432,7 +433,8 @@
 - [张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）
 - [孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）
 - [樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）
-- [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
+- [卓堂越](https://github.com/nusakom)（内容创作者-鲸英助教）
+- [fancy](https://github.com/fancyboi999)（内容创作者-鲸英助教）
 
 > 注：排名根据贡献程度排序
 
