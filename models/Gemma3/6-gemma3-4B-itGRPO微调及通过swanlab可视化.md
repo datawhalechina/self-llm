@@ -63,7 +63,7 @@ max_seq_length = 1024
 # 加载预训练模型和分词器
 # 这里我们加载Gemma3-4B的指令微调版本
 model, tokenizer = FastModel.from_pretrained(
-    model_name = "/opt/tiger/test0/models/gemma-3-4b-it",  # 模型路径
+    model_name = "google/gemma-3-4b-it",  # 模型路径
     max_seq_length = max_seq_length,  # 最大序列长度
     load_in_4bit = False,   # 不使用4位量化，保持精度
     load_in_8bit = False,   # 不使用8位量化，保持精度
@@ -103,7 +103,7 @@ from datasets import load_dataset
 
 # 从本地路径加载GSM8K数据集的训练集
 # GSM8K是一个包含小学数学推理问题的数据集
-dataset = load_dataset("/opt/tiger/test0/datasets/gsm8k", "main", split = "train")
+dataset = load_dataset("openai/gsm8k", "main", split = "train")
 
 # 查看数据集基本信息
 print(f"数据集大小: {len(dataset)} 条记录")
