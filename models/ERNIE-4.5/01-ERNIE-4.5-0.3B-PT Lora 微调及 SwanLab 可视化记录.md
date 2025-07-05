@@ -59,9 +59,9 @@ python -m pip install --upgrade pip
 # 更换 pypi 源加速库的安装
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install modelscope==1.25.0 # 用于模型下载和管理
-pip install transformers==4.51.3 # Hugging Face 的模型库，用于加载和训练模型
-pip install accelerate==1.6.0 # 用于分布式训练和混合精度训练
+pip install modelscope==1.27.1 # 用于模型下载和管理
+pip install transformers==4.53.0 # Hugging Face 的模型库，用于加载和训练模型
+pip install accelerate==1.8.1 # 用于分布式训练和混合精度训练
 pip install datasets==3.5.1 # 用于加载和处理数据集
 pip install peft==0.15.2 # 用于 LoRA 微调
 pip install swanlab==0.5.7 # 用于监控训练过程与评估模型效果
