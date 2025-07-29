@@ -74,6 +74,12 @@
 
 ### 已支持模型
 
+- [GLM-4.5-Air](https://github.com/zai-org/GLM-4.5)
+  - [ ] GLM-4.5-Air vLLM 部署调用
+  - [ ] GLM-4.5-Air Lora 微调
+  - [ ] GLM-4.5-Air EvalScope 并发测试
+  - [ ] GLM-4.5-Air Docker 镜像
+
 - [ERNIE-4.5](https://huggingface.co/baidu/ERNIE-4.5-0.3B-PT)
   - [x] [ERNIE-4.5-0.3B-PT Lora 微调及 SwanLab 可视化记录](./models/ERNIE-4.5/01-ERNIE-4.5-0.3B-PT%20Lora%20微调及%20SwanLab%20可视化记录.md) @不要葱姜蒜
   - [x] [ERNIE-4.5-0.3B-PT Lora Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/ERNIE-4.5-lora) @不要葱姜蒜
