@@ -2,9 +2,7 @@
 
 [GLM-4.1V-Thinking](https://github.com/THUDM/GLM-4.1V-Thinking) 是一由智谱 AI 基于 [GLM-4-9B-0414](https://github.com/THUDM/GLM-4) 基座模型推出的新版VLM开源模型，引入思考范式，通过课程采样强化学习 RLCS（Reinforcement Learning with Curriculum Sampling）全面提升模型能力， 达到 10B 参数级别的视觉语言模型的最强性能。
 
-## **环境准备**
-
----
+## 环境准备
 
 本文的试验基础环境如下：
 
@@ -44,8 +42,6 @@ pip install -r GLM-4.1V-Thinking/requirements.txt
 - 从GitHub获取的最新transformers和vLLM
 
 ## 模型下载
-
----
 
 模型可以从Hugging Face和ModelScope仓库获取。可以显式下载，也可以在首次使用时执行仓库代码自动下载。
 
@@ -205,7 +201,7 @@ GLM-4.1V-9B-Thinking支持多种类型的多模态输入，但有特定限制：
 | 视频 | 1个视频 | MP4, AVI, MKV, MOV, WMV, FLV, WEBM, MPEG, M4V |
 | 文档 | 1个PDF或1个PPT | PDF, PPT, PPTX（内部转换为图片） |
 
-## **创建兼容 OpenAI API 接口的服务器**
+## 创建兼容 OpenAI API 接口的服务器
 
 `GLM-4.1V-Thinking` 兼容 `OpenAI API` 协议，所以我们可以直接使用 `vLLM` 创建 `OpenAI API` 服务器。`vLLM` 部署实现 `OpenAI API` 协议的服务器非常方便。默认会在 [http://localhost:8000](http://localhost:8000/) 启动服务器。服务器当前一次托管一个模型，并实现列表模型、`completions` 和 `chat completions` 端口。
 
@@ -385,9 +381,10 @@ messages = [
 
 得到的结果如下所示：
 
-![demo2-1.jpg](images/demo2-1.jpg)
-
-![demo2-2.jpg](images/demo2-2.jpg)
+<div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+    <img src="images/demo2-1.jpg" alt="demo2-1" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <img src="images/demo2-2.jpg" alt="demo2-2" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+</div>
 
 执行代码结果如下：
 

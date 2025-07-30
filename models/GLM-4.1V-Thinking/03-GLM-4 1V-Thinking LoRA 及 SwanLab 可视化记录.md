@@ -1,8 +1,6 @@
 # 03-GLM-4.1V-Thinking LoRA 及 SwanLab 可视化记录
 
-## **数据集构建**
-
----
+## 数据集构建
 
 对模型进行 `supervised-finetuning`（`sft`，有监督微调）的数据格式如下：
 
@@ -32,8 +30,6 @@
 那么，让我们开始准备领养沐雪吧
 
 ## 数据准备
-
----
 
 导入对应的库并对我们的数据文件进行转换：
 
@@ -80,8 +76,6 @@ def process_func(example):
 
 ## 加载模型及tokenizer
 
----
-
 ```python
 from transformers import Glm4vForConditionalGeneration
 import torch
@@ -96,9 +90,7 @@ model = Glm4vForConditionalGeneration.from_pretrained(
 )
 ```
 
-## **Lora Config**
-
----
+## Lora Config
 
 `LoraConfig`这个类中可以设置很多参数，比较重要的如下
 
@@ -121,9 +113,7 @@ config = LoraConfig(
 )
 ```
 
-## **Training Arguments**
-
----
+## Training Arguments
 
 - `output_dir`：模型的输出路径
 - `per_device_train_batch_size`： `batch_size`
@@ -148,8 +138,6 @@ args = TrainingArguments(
 
 ## 实例化SwanLabCallback
 
----
-
 ```python
 import swanlab
 from swanlab.integration.transformers import SwanLabCallback
@@ -167,8 +155,6 @@ swanlab_callback = SwanLabCallback(
 ![af070e5a-5ff2-472a-8d17-31c3be798a60.png](images/af070e5a-5ff2-472a-8d17-31c3be798a60.png)
 
 ## 加载LoRA模型推理
-
----
 
 训练完成后挑选效果最佳的LoRA模型权重（在前面定义的输出路径下），加载权重进行推理，跟沐雪打个招呼吧～
 

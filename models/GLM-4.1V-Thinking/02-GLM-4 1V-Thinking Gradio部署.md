@@ -16,8 +16,6 @@ ssh -F /dev/null -CNg -L 7860:127.0.0.1:7860 [root@connect.nma1.seetacloud.com](
 
 ## 启动示例
 
----
-
 ![4cfaea13-f4c7-4a95-b6a3-1ab88794f204.png](images/4cfaea13-f4c7-4a95-b6a3-1ab88794f204.png)
 
 ![7146cb1a-1e79-41b8-8927-62b1ae054cff.png](images/7146cb1a-1e79-41b8-8927-62b1ae054cff.png)
