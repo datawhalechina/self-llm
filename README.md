@@ -78,7 +78,7 @@
   - [x] [GLM-4.1V-Thinking vLLM 部署调用](./models/GLM-4.1V-Thinking/01-GLM-4%201V-Thinking%20vLLM部署调用.md) @林恒宇
   - [x] [GLM-4.1V-Thinking Gradio部署](./models/GLM-4.1V-Thinking/02-GLM-4%201V-Thinking%20Gradio部署.md) @林恒宇
   - [x] [GLM-4.1V-Thinking Lora 微调及 SwanLab 可视化记录](./models/GLM-4.1V-Thinking/03-GLM-4%201V-Thinking%20LoRA%20及%20SwanLab%20可视化记录.md) @林恒宇
-  - [x] [GLM-4.1V-Thinking Docker 镜像]() @林恒宇
+  - [x] [GLM-4.1V-Thinking Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/GLM4.1V-Thinking-lora) @林恒宇
 
 - [GLM-4.5-Air](https://github.com/zai-org/GLM-4.5)
   - [x] [GLM-4.5-Air vLLM 部署调用](./models/GLM-4.5-Air/01-GLM-4.5-Air-vLLM%20部署调用.md) @不要葱姜蒜

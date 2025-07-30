@@ -126,11 +126,11 @@ print(f"Assistant: {raw}")
 
 使用的视频文件示例：
 
-[demo3.mp4](images/demo3.mp4)
+[vdieo-1.mp4](images/vdieo-1.mp4)
 
 执行代码结果如下：
 
-![54022834-6a29-417b-9e3a-a9745ed94ae9.png](images/54022834-6a29-417b-9e3a-a9745ed94ae9.png)
+![image-2.png](images/image-2.png)
 
 ```
 Assistant: <think>用户现在需要描述视频内容。首先看画面：主要是Logi品牌的键盘，有手在操作按键。要分解每个细节：键盘是黑色带银色上沿，有数字键、功能键（如ins、delete、home等），手部动作是点击不同按键（比如数字键、功能键），背景有桌面、耳机（白色耳机和黑色耳机线），还有其他物品。需要按时间顺序或场景描述，说明是手在键盘上操作，按键的交互，以及环境元素。
@@ -191,7 +191,7 @@ print(outputs[0].outputs[0].text)
 
 执行代码结果如下：
 
-![f1bbc211-9869-4f55-81fc-9f124c229bd3.png](images/f1bbc211-9869-4f55-81fc-9f124c229bd3.png)
+![image-3.png](images/image-3.png)
 
 GLM-4.1V-9B-Thinking支持多种类型的多模态输入，但有特定限制：
 
@@ -224,7 +224,7 @@ vllm serve /root/autodl-tmp/ZhipuAI/GLM-4.1V-9B-Thinking
     --allowed-local-media-path /
 ```
 
-![f2dc28ba-6eb9-42bb-a936-8eb548d13b38.png](images/f2dc28ba-6eb9-42bb-a936-8eb548d13b38.png)
+![image-4.png](images/image-4.png)
 
 - 通过 `curl` 命令查看当前的模型列表
 
@@ -282,7 +282,7 @@ curl http://localhost:8000/v1/completions \
 
  得到的返回值如下所示
 
-![f11a6076-136c-4ddc-9e9b-34b614ac56f9.png](images/f11a6076-136c-4ddc-9e9b-34b614ac56f9.png)
+![image-5.png](images/image-5.png)
 
 • 用 `Python` 脚本请求 `OpenAI Chat Completions API` 的单图像示例
 
@@ -349,11 +349,11 @@ print(response.choices[0].message.content.strip())
 
 示例使用的图像如下所示：
 
-![demo1.png](images/demo1.png)
+![image-6.png](images/image-6.png)
 
 得到的结果如下所示：
 
-![7e5358f9-3e86-4d92-b304-5b6e59ddd2b0.png](images/7e5358f9-3e86-4d92-b304-5b6e59ddd2b0.png)
+![image-7.png](images/image-7.png)
 
 • 用 `Python` 脚本请求 `OpenAI Chat Completions API` 的多图像分析
 
@@ -379,8 +379,8 @@ messages = [
 
 示例使用的图像如下所示：
 <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
-    <img src="images/demo2-1.jpg" alt="demo2-1" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <img src="images/demo2-2.jpg" alt="demo2-2" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <img src="images/image-8.jpg" alt="image-8" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <img src="images/image-9.jpg" alt="image-9" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
 </div>
 
 执行代码结果如下：
