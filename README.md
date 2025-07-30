@@ -78,7 +78,7 @@
   - [x] [GLM-4.1V-Thinking vLLM 部署调用](./models/GLM-4.1V-Thinking/01-GLM-4%201V-Thinking%20vLLM部署调用.md) @林恒宇
   - [x] [GLM-4.1V-Thinking Gradio部署](./models/GLM-4.1V-Thinking/02-GLM-4%201V-Thinking%20Gradio部署.md) @林恒宇
   - [x] [GLM-4.1V-Thinking Lora 微调及 SwanLab 可视化记录](./models/GLM-4.1V-Thinking/03-GLM-4%201V-Thinking%20LoRA%20及%20SwanLab%20可视化记录.md) @林恒宇
-  - [x] [GLM-4.1V-Thinking Ucloud Docker 镜像]() @林恒宇
+  - [x] [GLM-4.1V-Thinking Docker 镜像]() @林恒宇
 
 - [GLM-4.5-Air](https://github.com/zai-org/GLM-4.5)
   - [x] [GLM-4.5-Air vLLM 部署调用](./models/GLM-4.5-Air/01-GLM-4.5-Air-vLLM%20部署调用.md) @不要葱姜蒜
@@ -403,7 +403,7 @@
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
+- [林恒宇](https://github.com/LINHYYY)（内容创作者-清华大学-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
