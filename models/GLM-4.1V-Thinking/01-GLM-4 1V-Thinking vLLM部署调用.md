@@ -378,9 +378,6 @@ messages = [
 分别传入多张图像的路径进行解析，GLM-4.1V-Thinking 可同时分析多达 10 张图像
 
 示例使用的图像如下所示：
-
-得到的结果如下所示：
-
 <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
     <img src="images/demo2-1.jpg" alt="demo2-1" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
     <img src="images/demo2-2.jpg" alt="demo2-2" style="width: 300px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
