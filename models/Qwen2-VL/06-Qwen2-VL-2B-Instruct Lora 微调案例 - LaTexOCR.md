@@ -75,7 +75,7 @@ pip install modelscope==1.18.0
 pip install transformers==4.46.2
 pip install sentencepiece==0.2.0
 pip install accelerate==1.1.1
-pip install datasets==2.18.0
+pip install datasets==2.18.0 #务必指定datasets版本<=2.18.0，否则报错 详见https://github.com/modelscope/modelscope/issues/916
 pip install peft==0.13.2
 pip install swanlab==0.3.27
 pip install qwen-vl-utils==0.0.8
