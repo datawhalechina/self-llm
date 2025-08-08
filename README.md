@@ -74,6 +74,13 @@
 
 ### 已支持模型
 
+- [gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b)
+  - [ ] gpt-oss-20b vllm 部署调用
+  - [ ] gpt-oss-20b EvalScope 并发评测
+  - [ ] gpt-oss-20b lmstudio 本地部署调用
+  - [ ] gpt-oss-20b Lora 微调及 SwanLab 可视化记录
+  - [ ] gpt-oss-20b DPO 微调及 SwanLab 可视化记录
+
 - [GLM-4.1-Thinking](https://github.com/zai-org/GLM-4.1V-Thinking)
   - [x] [GLM-4.1V-Thinking vLLM 部署调用](./models/GLM-4.1V-Thinking/01-GLM-4%201V-Thinking%20vLLM部署调用.md) @林恒宇
   - [x] [GLM-4.1V-Thinking Gradio部署](./models/GLM-4.1V-Thinking/02-GLM-4%201V-Thinking%20Gradio部署.md) @林恒宇
