@@ -17,6 +17,15 @@ python -m pip install --upgrade pip
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 #安装项目相关依赖包
 pip install modelscope==1.9.5 transformers==4.35.2 gradio==4.4.1 SentencePiece==0.1.99 accelerate==0.24.1 bitsandbytes==0.41.2.post2
+
+# 如遇 flash_attn 安装失败，请根据环境手动安装匹配的 wheel 包
+# 例如：PyTorch 2.0.0 + Python 3.8 + CUDA 11.8（Ubuntu 20.04）
+# 可直接使用下述预编译 wheel：
+# 参考来源：https://github.com/Dao-AILab/flash-attention/releases
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.6.3/flash_attn-2.6.3+cu118torch2.0cxx11abiFALSE-cp38-cp38-linux_x86_64.whl
+
+# 其他环境请从 flash-attention Releases 页面选择与自身 CUDA / PyTorch / Python 版本匹配的 wheel
+# 若无匹配 wheel，亦可参考官方文档源码编译安装
 ```
 
 ## 模型下载
