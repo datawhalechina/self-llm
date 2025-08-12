@@ -75,11 +75,11 @@
 ### 已支持模型
 
 - [gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b)
-  - [ ] gpt-oss-20b vllm 部署调用
-  - [ ] gpt-oss-20b EvalScope 并发评测
-  - [ ] gpt-oss-20b lmstudio 本地部署调用
-  - [ ] gpt-oss-20b Lora 微调及 SwanLab 可视化记录
-  - [ ] gpt-oss-20b DPO 微调及 SwanLab 可视化记录
+  - [x] gpt-oss-20b vllm 部署调用 (./models/gpt-oss/1-gpt-oss-20b vllm 部署调用.md) @郭宣伯
+  - [x] gpt-oss-20b EvalScope 并发评测 (./models/gpt-oss/2-gpt-oss-20b Evalscope并发测试.md) @郭宣伯
+  - [x] gpt-oss-20b lmstudio 本地部署调用 (./models/gpt-oss/3-gpt-oss-20b lmstudio 本地部署调用.md) @郭宣伯
+  - [x] gpt-oss-20b Lora 微调及 SwanLab 可视化记录 (./models/gpt-oss/4-gpt-oss-20b Lora 微调及 SwanLab 可视化记录.md) @郭宣伯
+  - [x] gpt-oss-20b DPO 微调及 SwanLab 可视化记录 (./models/Qwen3/10-Qwen3-8B%20GRPO微调及通过swanlab可视化.md) @郭宣伯
 
 - [GLM-4.1-Thinking](https://github.com/zai-org/GLM-4.1V-Thinking)
   - [x] [GLM-4.1V-Thinking vLLM 部署调用](./models/GLM-4.1V-Thinking/01-GLM-4%201V-Thinking%20vLLM部署调用.md) @林恒宇
