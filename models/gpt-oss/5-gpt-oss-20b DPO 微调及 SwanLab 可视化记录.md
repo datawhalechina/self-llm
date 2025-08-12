@@ -31,8 +31,11 @@ pip install -U transformers kernels torch
 ## 数据准备
 
 > 构建数据集，示例数据如下
+> 
 > 参考[自定义数据集 — swift 3.8.0.dev0 文档](https://swift.readthedocs.io/zh-cn/latest/Customization/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86.html)获得更多定义方式
+> 
 > 这里使用最简单，与官方结构一致的方式
+> 
 > 示例数据如下【结构中应包含一个正样本一个负样本】：
 
 ```JSON
@@ -103,7 +106,7 @@ swift rlhf --rlhf_type dpo \
 
 ![](./images/5-2.png)
 
-> ++[SwanLab](https://github.com/swanhubx/swanlab)++ 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
+> [SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
 
 #### 为什么要记录训练？
 
@@ -111,7 +114,7 @@ swift rlhf --rlhf_type dpo \
 
 #### 在哪里用？
 
-建议先在 ++[SwanLab 官网](https://swanlab.cn/)++ 注册账号，然后在SFT和GRPO训练初始化阶段选择
+建议先在 [SwanLab 官网](https://swanlab.cn/) 注册账号，然后在SFT和GRPO训练初始化阶段选择
 `--report_to swanlab \ # 训练日志上报到 SwanLab`
 
 ### 合并权重
