@@ -179,7 +179,7 @@ swift infer \
     --result_path SFT/infer_output/_sft_1epoch.jsonl
 ```
 
-![](4.png)
+![](./images/4-4.png)
 
 ## Huggingface提供的基于TRL微调
 

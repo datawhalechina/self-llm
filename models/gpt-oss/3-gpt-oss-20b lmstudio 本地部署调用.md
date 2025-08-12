@@ -1,4 +1,4 @@
-# 02-gpt-oss-20b lmstudio 本地部署调用
+# 03-gpt-oss-20b lmstudio 本地部署调用
 
 ## 引言
 
@@ -37,7 +37,7 @@
 ## 模型下载
 
 在 LM Studio 中加载模型 → 打开 LM Studio，使用模型加载界面加载下载的 gpt-oss 模型。
-![](1.png)
+![](./images/3-1.png)
 或者，您可以使用命令行（苹果用户是终端）运行：
 
 ```Bash
@@ -51,7 +51,7 @@ lms get openai/gpt-oss-120b
 
 > 使用模型 →加载后，您可以直接在 LM Studio 的聊天界面或通过 API 与模型进行交互。
 
-![](2.png)
+![](./images/3-2.png)
 
 ## 在终端 or lmstudio页面与gpt-oss聊天
 
@@ -61,7 +61,7 @@ lms chat openai/gpt-oss-20b #注意第一次运行之后才能使用lmx命令
 
 ## 在python脚本中调用本地部署的gpt-oss
 
-![](3.png)
+![](./images/3-3.png)
 
 ```Python
 from openai import OpenAI

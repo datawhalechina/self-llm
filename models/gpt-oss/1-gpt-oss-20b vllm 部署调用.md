@@ -1,4 +1,4 @@
-# **01-GPT-OSS-20b** **vLLM****部署调用**
+# **01-GPT-OSS-20b** **vLLM** **部署调用**
 
 ## 引言
 
@@ -90,7 +90,7 @@ huggingface-cli download openai/gpt-oss-20b --local-dir gpt-oss-20b
 
 ps：记得修改对应的 `cache_dir` / `local_dir`为你的模型下载路径哦~
 
-## **transformers****调用方式**
+## **transformers** **调用方式**
 
 ### 通过脚本调用
 
