@@ -35,8 +35,11 @@ RLHF训练：支持纯文本大模型和多模态大模型的DPO、GRPO、RM、P
 	
 
 > PyTorch 2.6.0
+> 
 > Python 3.12(ubuntu22.04)
+> 
 > CUDA 12.4
+> 
 > GPU NVIDIA H20-96GB \* 4
 
 2. Lora环境配置
@@ -136,7 +139,7 @@ swift sft --deepspeed zero3\                    # 使用 swift 的 sft 训练命
 
 ![](./images/4-1.png)
 
-> ++[SwanLab](https://github.com/swanhubx/swanlab)++ 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
+> [SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
 
 #### 为什么要记录训练？
 
