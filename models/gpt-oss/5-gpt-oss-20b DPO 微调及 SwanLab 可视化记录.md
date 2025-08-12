@@ -14,8 +14,11 @@
 	
 
 > PyTorch 2.6.0
+> 
 > Python 3.12(ubuntu22.04)
+> 
 > CUDA 12.4
+> 
 > GPU NVIDIA H20-96GB \* 4
 
 2. Lora环境配置
