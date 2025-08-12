@@ -79,7 +79,7 @@
   - [x] [gpt-oss-20b EvalScope 并发评测](./models/gpt-oss/2-gpt-oss-20b%20Evalscope并发测试.md) @郭宣伯
   - [x] [gpt-oss-20b lmstudio 本地部署调用](./models/gpt-oss/3-gpt-oss-20b%20lmstudio%20本地部署调用.md) @郭宣伯
   - [x] [gpt-oss-20b Lora 微调及 SwanLab 可视化记录](./models/gpt-oss/4-gpt-oss-20b%20Lora%20微调及%20SwanLab%20可视化记录.md) @郭宣伯
-  - [x] [gpt-oss-20b DPO 微调及 SwanLab 可视化记录](./models/gpt-oss/%205-gpt-oss-20b%20DPO%20微调及%20SwanLab%20可视化记录.md) @郭宣伯
+  - [x] [gpt-oss-20b DPO 微调及 SwanLab 可视化记录](./models/gpt-oss/5-gpt-oss-20b%20DPO%20微调及%20SwanLab%20可视化记录.md) @郭宣伯
 
 - [GLM-4.1-Thinking](https://github.com/zai-org/GLM-4.1V-Thinking)
   - [x] [GLM-4.1V-Thinking vLLM 部署调用](./models/GLM-4.1V-Thinking/01-GLM-4%201V-Thinking%20vLLM部署调用.md) @林恒宇
