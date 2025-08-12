@@ -16,7 +16,7 @@
 - 伦理与安全性：检测模型是否会产生有害内容、是否存在偏见或歧视。
 	
 
-EvalScope 是魔搭社区官方推出的模型评测与性能基准测试框架，内置多个常用测试基准和评测指标，如 MMLU、CMMLU、C-Eval、GSM8K、ARC、HellaSwag、TruthfulQA、MATH 和 HumanEval 等；支持多种类型的模型评测，包括 LLM、多模态 LLM、embedding 模型和 reranker 模型。EvalScope 还适用于多种评测场景，如端到端 RAG 评测、竞技场模式和模型推理性能压测等。此外，通过 ms-swift 训练框架的无缝集成，可一键发起评测，实现了模型训练到评测的全链路支持。 官网地址：++[https://evalscope.readthedocs.io/zh-cn/latest/get\_started](https://evalscope.readthedocs.io/zh-cn/latest/get_started)++
+EvalScope 是魔搭社区官方推出的模型评测与性能基准测试框架，内置多个常用测试基准和评测指标，如 MMLU、CMMLU、C-Eval、GSM8K、ARC、HellaSwag、TruthfulQA、MATH 和 HumanEval 等；支持多种类型的模型评测，包括 LLM、多模态 LLM、embedding 模型和 reranker 模型。EvalScope 还适用于多种评测场景，如端到端 RAG 评测、竞技场模式和模型推理性能压测等。此外，通过 ms-swift 训练框架的无缝集成，可一键发起评测，实现了模型训练到评测的全链路支持。 官网地址：[https://evalscope.readthedocs.io/zh-cn/latest/get\_started](https://evalscope.readthedocs.io/zh-cn/latest/get_started)
 
 ## EvalScope 评测使用方法
 
