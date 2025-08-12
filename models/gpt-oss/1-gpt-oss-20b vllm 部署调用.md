@@ -12,14 +12,14 @@
 GPT-OSS 是 OpenAI 推出的开源大语言模型系列，包含两个版本：gpt-oss-120b 和 gpt-oss-20b。这两个模型均采用 MoE（Mixture-of-Experts）Transformer 架构，支持 128K 的上下文长度，并采用 Apache 2.0 许可协议，允许自由使用和商业应用。GPT-OSS-120B 模型在核心推理基准测试中与 OpenAI o4-mini 模型几乎持平，同时能在单个 80GB GPU 上高效运行。GPT-OSS-20B 模型在常见基准测试中与 OpenAI o3‑mini 模型取得类似结果，且可在仅配备 16GB 内存的边缘设备上运行，使其成为设备端应用、本地推理或无需昂贵基础设施的快速迭代的理想选择。这两个模型在工具使用、少样本函数调用、CoT推理（如在 Tau-Bench 智能体评估套件中的结果所示）以及 HealthBench 测试中表现强劲（甚至超越了 OpenAI o1 和 GPT‑4o 等专有模型）。
 vLLM 支持以下两种规模的gpt-oss:
 
-- ++`[openai/gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b)`++
+- [openai/gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b)
 	- 较小的模型
 		
 	- 仅需约 16GB 显存
 		
 	- 可在消费级显卡如A100或H20上运行
 		
-- ++`[openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b)`++
+- [openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b)
 	- 更大的全尺寸模型
 		
 	- 显存≥60GB时效果最佳
@@ -30,8 +30,8 @@ vLLM 支持以下两种规模的gpt-oss:
 ## **环境准备**
 
 配置环境比较头疼，我们为同学们准备了镜像：
-⚠️ **注意**：由于支持gpt-oss模型的vLLM 0.10.1版本还未正式发布（2025.8.6），需要从源码安装vLLM和gpt-oss的依赖。推荐启动一个新的python 3.12环境，避免对现有环境造成影响。
-⚠️**注意：** vllm-gpt-oss的很多依赖均为最新，如果不是最新配置环境会出问题！！！ 如需升级conda，升级cuda命令
+- ⚠️**注意**：由于支持gpt-oss模型的vLLM 0.10.1版本还未正式发布（2025.8.6），需要从源码安装vLLM和gpt-oss的依赖。推荐启动一个新的python 3.12环境，避免对现有环境造成影响。
+- ⚠️**注意：** vllm-gpt-oss的很多依赖均为最新，如果不是最新配置环境会出问题！！！ 如需升级conda，升级cuda命令
 
 ```Bash
 conda search cuda-toolkit --channel nvidia
@@ -143,7 +143,7 @@ messages = [
 ]
 ```
 
-## **vLLM****调用代码准备**
+## **vLLM** **调用代码准备**
 
 ### vLLM环境配置
 
@@ -160,7 +160,8 @@ pip install flashinfer-python==0.2.10
 
 ### 启动服务器并下载模型
 
-vLLM 提供了一个命令，该命令将自动从 HuggingFace 下载模型并在 上启动与 OpenAI 兼容的服务器。根据服务器上的终端会话中所需的模型大小运行以下命令。`serve``localhost:8000`
+vLLM 提供了一个命令，该命令将自动从 HuggingFace 下载模型并在 上启动与 OpenAI 兼容的服务器。
+根据服务器上的终端会话中所需的模型大小运行以下命令。
 
 ```Bash
 # For 20B 可以替换成本地下载的目录
