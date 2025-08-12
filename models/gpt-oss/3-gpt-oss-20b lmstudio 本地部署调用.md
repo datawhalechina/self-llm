@@ -28,7 +28,7 @@
 
 ## 安装Imstudio
 
-安装 LM Studio LM Studio 适用于 Windows、macOS 和 Linux。 ++[在这里获取。](https://lmstudio.ai/download)++ 
+安装 LM Studio LM Studio 适用于 Windows、macOS 和 Linux。 [在这里获取。](https://lmstudio.ai/download)
 
 > 选择适合你的系统进行下载～
 
@@ -84,7 +84,7 @@ print(result.choices[0].message.content)
 
 ## 如何应用MCP
 
-> LM Studio 是一个 ++[MCP 客户端](https://lmstudio.ai/docs/app/plugins/mcp)++ ，这意味着您可以将 MCP 服务器连接，允许我们为 gpt-oss 模型提供外部工具。
+> LM Studio 是一个 [MCP 客户端](https://lmstudio.ai/docs/app/plugins/mcp)，这意味着您可以将 MCP 服务器连接，允许我们为 gpt-oss 模型提供外部工具。
 
 1. 查看mcp路径
 	
