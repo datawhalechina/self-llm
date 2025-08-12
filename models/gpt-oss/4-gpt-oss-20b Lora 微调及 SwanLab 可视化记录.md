@@ -51,9 +51,12 @@ pip install -U transformers kernels torch
 
 ### 数据准备
 
-> 构建数据集，示例数据如下
+> 构建数据集
+> 
 > 参考[自定义数据集 — swift 3.8.0.dev0 文档](https://swift.readthedocs.io/zh-cn/latest/Customization/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86.html)获得更多定义方式
+> 
 > 这里使用最简单，与官方结构一致的方式
+> 
 > 我这里是翻译任务，所以我的示例数据如下：
 
 ```Bash
@@ -72,6 +75,7 @@ pip install -U transformers kernels torch
 ```
 
 > 或者你可以使用开源的任意数据集
+> 
 > 这里，其他同学找了一个魔搭上开源的赛博猫娘数据集来进行这次教程，试想哪一个佬不想拥有一个赛博猫娘呢？
 
 数据集传送门：[沐雪猫娘化数据集](https://modelscope.cn/datasets/himzhzx/muice-dataset-train.catgirl/files)
@@ -140,7 +144,7 @@ swift sft --deepspeed zero3\                    # 使用 swift 的 sft 训练命
 
 #### 在哪里用？
 
-建议先在 ++[SwanLab 官网](https://swanlab.cn/)++ 注册账号，然后在SFT和GRPO训练初始化阶段选择
+建议先在 [SwanLab 官网](https://swanlab.cn/) 注册账号，然后在SFT和GRPO训练初始化阶段选择
 `--report_to swanlab \ # 训练日志上报到 SwanLab`
 
 ### 测试效果
@@ -238,7 +242,8 @@ conversation = tokenizer.apply_chat_template(messages, tokenize=False)
 print(conversation)
 ```
 
-> 为了准备模型进行训练，让我们首先从 ++[Hugging Face Hub](https://huggingface.co/)++ 下载权重。
+> 为了准备模型进行训练，让我们首先从 [Hugging Face Hub](https://huggingface.co/)下载权重。
+> 
 > 我们将使用 Transformers 中的 🤗 `AutoModelForCausalLM` 类来加载模型
 
 ```Python
@@ -258,6 +263,7 @@ model = AutoModelForCausalLM.from_pretrained("openai/gpt-oss-20b", **model_kwarg
 ```
 
 这将为模型加载训练所需的配置。`attn_implementation` 设置为渴望更好的性能，`use_cache` 设置为 `False`，因为我们将使用梯度检查点微调模型。
+
 如果您熟悉 Transformers，您可能会注意到我们正在使用 `Mxfp4Config` 进行量化。这是 OpenAI 模型的特定配置，允许我们使用混合精度训练，其中包含一种称为 ++[MXFP4](https://en.wikipedia.org/wiki/Block_floating_point)++ 的特殊 4 位浮点格式，该格式针对 AI 工作负载进行了优化。
 
 > 测试一条message
