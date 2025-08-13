@@ -114,6 +114,7 @@ peft_config = LoraConfig(
     lora_alpha=16,
     target_modules="all-linear",
     target_parameters=[
+        # MoE 专家层的投影，按需增减
         "7.mlp.experts.gate_up_proj",
         "7.mlp.experts.down_proj",
         "15.mlp.experts.gate_up_proj",
@@ -126,112 +127,130 @@ peft_model = get_peft_model(model, peft_config)
 peft_model.print_trainable_parameters()
 ```
 
-注意：`openai/gpt-oss-20b` 模型是一种++[混合专家 （MoE）](https://huggingface.co/blog/moe)++ 架构。除了针对注意力层（`target_modules=“all-linear”）` 之外，在专家模块中包含投影层也很重要。PEFT 通过 `target_parameters` 参数促进了这一点，它允许您指定特定于专家的层，例如 `mlp.experts.down_proj` 和 `mlp.experts.gate_up_proj`。在此示例中，我们针对这些投影层的子集，但建议您尝试不同的配置。
+注意：`openai/gpt-oss-20b` 模型是一种++[混合专家 （MoE）](https://huggingface.co/blog/moe)++ 架构。除了针对注意力层（`target_modules=“all-linear”）` 之外，在专家模块中包含投影层也很重要。PEFT 通过 `target_parameters` 参数促进了这一点，它允许您指定特定于专家的层，例如 `mlp.experts.down_proj` 和 `mlp.experts.gate_up_proj`。
+
+```Python
+from datasets import DatasetDict
+
+max_length = 4096
+
+def format_and_tokenize(example):
+    # 期望存在 "messages" 字段（和你示例一致）
+    messages = example["messages"]
+    # 不加 generation_prompt；让模型学习到完整的对话展开
+    text = tokenizer.apply_chat_template(
+        messages, tokenize=False
+    )
+    # 直接整体 tokenization，labels=inputs（由 collator 处理）
+    tokens = tokenizer(
+        text,
+        truncation=True,
+        max_length=max_length,
+        return_attention_mask=True,
+    )
+    return tokens
+
+tokenized = ds.map(format_and_tokenize, remove_columns=ds.column_names)
+# 简单划个验证集（可选）
+splits = tokenized.train_test_split(test_size=0.01, seed=42)
+train_ds, eval_ds = splits["train"], splits["test"]
+
+```
 
 > 微调参数设置
 
 ```Python
-from trl import SFTConfig
+from dataclasses import dataclass
+import torch
+from transformers import Trainer, TrainingArguments, default_data_collator
 
-training_args = SFTConfig(
-    # ===== 训练超参数 =====
-    learning_rate=2e-4,                           # 学习率
-    gradient_checkpointing=True,                  # 启用梯度检查点
-    num_train_epochs=1.0,                          # 训练轮数
-    logging_steps=1,                               # 日志记录步数
-    per_device_train_batch_size=4,                 # 每设备训练 batch 大小
-    gradient_accumulation_steps=4,                 # 梯度累积步数
-    use_peft=True,                                 # 启用 PEFT（参数高效微调）
-    lora_r=8,                                      # LoRA 秩
-    lora_alpha=16,                                 # LoRA alpha 值
-    lora_dropout=0.0,                              # LoRA dropout
-    lora_target_modules="all-linear",              # LoRA 作用模块
-    max_length=4096,                               # 最大序列长度
-    warmup_ratio=0.03,                             # 预热比例
-    lr_scheduler_type="cosine_with_min_lr",        # 学习率调度器类型
-    lr_scheduler_kwargs={"min_lr_rate": 0.1},      # 调度器额外参数
+@dataclass
+class CausalDataCollator:
+    tokenizer: AutoTokenizer
+    mlm: bool = False
+    def __call__(self, features):
+        # default_data_collator 会把 input_ids/attention_mask 转成张量
+        batch = default_data_collator(features)
+        if "labels" not in batch:
+            batch["labels"] = batch["input_ids"].clone()
+        return batch
 
-    # ===== 输出与日志 =====
-    output_dir="gpt-oss-20b-multilingual-reasoner", # 输出目录
-    report_to=["swanlab"],                         # 日志上报目标
-    push_to_hub=False                               # 是否推送到 HuggingFace Hub
+collator = CausalDataCollator(tokenizer)
+
+training_args = TrainingArguments(
+    output_dir="gpt-oss-20b-multilingual-reasoner",
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=4,
+    num_train_epochs=1.0,
+    learning_rate=2e-4,
+    lr_scheduler_type="cosine_with_min_lr",
+    lr_scheduler_kwargs={"min_lr_rate": 0.1},
+    warmup_ratio=0.03,
+    logging_steps=1,
+    save_steps=200,
+    save_total_limit=2,
+    bf16=True,
+    gradient_checkpointing=True,
+    report_to=[],
 )
-```
 
-> 开始微调吧！
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_ds,
+    eval_dataset=eval_ds,
+    tokenizer=tokenizer,
+    data_collator=collator,
+)
 
-```Python
-from trl import SFTTrainer
-trainer = SFTTrainer(    
-    model=peft_model,    
-    args=training_args,    
-    train_dataset=dataset,    
-    processing_class=tokenizer,
-    )
 trainer.train()
+
+```
+> 训练过程上传到Swanlab
+> 设置成你自己的api_key~
+```Python
+from transformers import TrainerCallback
+
+try:
+    import swanlab
+    class SwanLabCallback(TrainerCallback):
+        def __init__(self, project="swift-robot"):
+            swanlab.init(project=project)
+
+        def on_log(self, args, state, control, logs=None, **kwargs):
+            if logs:
+                for k,v in logs.items():
+                    if isinstance(v, (int,float)):
+                        swanlab.log({k: v})
+    trainer.add_callback(SwanLabCallback(project="swift-robot"))
+except Exception as e:
+    print("SwanLab disabled:", e)
 ```
 
-### 推理
-
+> 权重合并
 ```Python
-from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
-# Load the tokenizer
-tokenizer = AutoTokenizer.from_pretrained("openai/gpt-oss-20b")
+# 先载入基座
+infer_kwargs = dict(attn_implementation="eager", torch_dtype="auto", use_cache=True, device_map="auto")
+base_model = AutoModelForCausalLM.from_pretrained(model_id, **infer_kwargs).cuda()
 
-# Load the original model first
-model_kwargs = dict(attn_implementation="eager", torch_dtype="auto", use_cache=True, device_map="auto")
-base_model = AutoModelForCausalLM.from_pretrained("openai/gpt-oss-20b", **model_kwargs).cuda()
+# 把 LoRA 适配器加载回来（用训练输出目录）
+peft_model = PeftModel.from_pretrained(base_model, "gpt-oss-20b-multilingual-reasoner")
+# 合并并卸载LoRA
+merged = peft_model.merge_and_unload()
+merged.eval()
 
-# Merge fine-tuned weights with the base model
-peft_model_id = "gpt-oss-20b-multilingual-reasoner"
-model = PeftModel.from_pretrained(base_model, peft_model_id)
-model = model.merge_and_unload()
-```
-
-```Python
-REASONING_LANGUAGE = "German"
-SYSTEM_PROMPT = f"reasoning language: {REASONING_LANGUAGE}"
-USER_PROMPT = "¿Cuál es el capital de Australia?"  # Spanish for "What is the capital of Australia?"
-
+# 生成
 messages = [
-    {"role": "system", "content": SYSTEM_PROMPT},
-    {"role": "user", "content": USER_PROMPT},
+    {"role": "system", "content": "reasoning language: German"},
+    {"role": "user", "content": "¿Cuál es el capital de Australia?"},
 ]
+inp = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt").to(merged.device)
+gen = merged.generate(inp, max_new_tokens=512, do_sample=True, temperature=0.6)
+print(tokenizer.batch_decode(gen)[0])
 
-input_ids = tokenizer.apply_chat_template(
-    messages,
-    add_generation_prompt=True,
-    return_tensors="pt",
-).to(model.device)
 
-gen_kwargs = {"max_new_tokens": 512, "do_sample": True, "temperature": 0.6, "top_p": None, "top_k": None}
-
-output_ids = model.generate(input_ids, **gen_kwargs)
-response = tokenizer.batch_decode(output_ids)[0]
-print(response)
-```
-
-```Python
-REASONING_LANGUAGE = "Chinese" 
-SYSTEM_PROMPT = f"reasoning language: {REASONING_LANGUAGE}"
-USER_PROMPT = "What is the national symbol of Canada?"
-
-messages = [
-    {"role": "system", "content": SYSTEM_PROMPT},
-    {"role": "user", "content": USER_PROMPT},
-]
-
-input_ids = tokenizer.apply_chat_template(
-    messages,
-    add_generation_prompt=True,
-    return_tensors="pt",
-).to(model.device)
-
-output_ids = model.generate(input_ids, **gen_kwargs)
-response = tokenizer.batch_decode(output_ids)[0]
-print(response)
 ```
 
 ![](./images/4-5.png)
