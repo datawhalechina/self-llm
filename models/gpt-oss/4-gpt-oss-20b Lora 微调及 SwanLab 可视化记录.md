@@ -207,6 +207,25 @@ trainer.train()
 
 ```
 > 训练过程上传到Swanlab
+> 训练过程通过swanlab可视化
+
+![](./images/4-0.png)
+
+### Swanlab
+
+![](./images/4-1.png)
+
+> [SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
+
+#### 为什么要记录训练？
+
+相较于软件开发，模型训练更像一个实验科学。一个品质优秀的模型背后，往往是成千上万次实验。研究者需要不断尝试、记录、对比，积累经验，才能找到最佳的模型结构、超参数与数据配比。在这之中，如何高效进行记录与对比，对于研究效率的提升至关重要。
+
+#### 在哪里用？
+
+建议先在 [SwanLab 官网](https://swanlab.cn/) 注册账号，然后在SFT初始化阶段选择
+
+
 > 设置成你自己的api_key~
 ```Python
 from transformers import TrainerCallback
@@ -377,25 +396,6 @@ swift sft --deepspeed zero3\                    # 使用 swift 的 sft 训练命
     --report_to swanlab \                       # 训练日志上报到 SwanLab
     --swanlab_project swift-robot               # SwanLab 项目名称
 ```
-
-> 训练过程通过swanlab可视化
-
-![](./images/4-0.png)
-
-### Swanlab
-
-![](./images/4-1.png)
-
-> [SwanLab](https://github.com/swanhubx/swanlab) 是一个开源的模型训练记录工具，面向 AI 研究者，提供了训练可视化、自动日志记录、超参数记录、实验对比、多人协同等功能。在 `SwanLab` 上，研究者能基于直观的可视化图表发现训练问题，对比多个实验找到研究灵感，并通过在线链接的分享与基于组织的多人协同训练，打破团队沟通的壁垒。
-
-#### 为什么要记录训练？
-
-相较于软件开发，模型训练更像一个实验科学。一个品质优秀的模型背后，往往是成千上万次实验。研究者需要不断尝试、记录、对比，积累经验，才能找到最佳的模型结构、超参数与数据配比。在这之中，如何高效进行记录与对比，对于研究效率的提升至关重要。
-
-#### 在哪里用？
-
-建议先在 [SwanLab 官网](https://swanlab.cn/) 注册账号，然后在SFT和GRPO训练初始化阶段选择
-`--report_to swanlab \ # 训练日志上报到 SwanLab`
 
 ### 测试效果
 
