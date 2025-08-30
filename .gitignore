@@ -160,3 +160,13 @@ cython_debug/
 #.idea/
 .DS_Store
 .obsidian
+
+
+# self-llm/models/BGE-M3-finetune-embedding-with-valid
+./models/BGE-M3-finetune-embedding-with-valid/bge-m3
+./models/BGE-M3-finetune-embedding-with-valid/models
+./models/BGE-M3-finetune-embedding-with-valid/sanitized-mbpp.json
+./models/BGE-M3-finetune-embedding-with-valid/mbpp.jsonl
+./models/BGE-M3-finetune-embedding-with-valid/mbpp_val.jsonl
+./models/BGE-M3-finetune-embedding-with-valid/mbpp_train.jsonl
+./models/BGE-M3-finetune-embedding-with-valid/c_mteb_results

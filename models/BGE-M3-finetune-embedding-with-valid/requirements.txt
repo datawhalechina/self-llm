@@ -1,0 +1,15 @@
+torch
+transformers
+sentence-transformers
+numpy
+matplotlib
+tqdm
+scipy
+scikit-learn
+pandas
+seaborn
+FlagEmbedding
+mteb
+ipykernel
+notebook
+modelscope
