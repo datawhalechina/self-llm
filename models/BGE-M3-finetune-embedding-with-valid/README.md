@@ -8,29 +8,51 @@
 
 ### 1. 基本概念
 
-Embedding模型的核心目标是将文本（如查询和文档）映射到高维向量空间，使得语义相似的文本在向量空间中的距离更近。在本次训练中，我们采用了对比学习（Contrastive Learning）的方法来微调BGE-M3模型。
+Embedding模型的核心目标是将文本，或者图片，音频内容映射到高维向量空间，比如我们本次使用的就是查询和文档embedding，通过embedding后的向量，使得文本具有语义相似性，相似的文本在向量空间中的距离更近，我们可以通过cos，或者点积进行计算。
+
+在本次训练中，我们采用了对比学习（Contrastive Learning）的方法来微调BGE-M3模型，你可以理解成把每个 query 和它对应的正样本当作一对，在同一个 batch 内，其余的 query–doc 对都当作负样本；模型学习把正样本对的相似度拉高、把负样本对的相似度压低。
 
 ### 2. 训练方法：In-batch Negatives
 
-本次训练使用了**In-batch Negatives**策略，这是对比学习中的一种高效方法：
-
-**核心思想**：
+本次训练使用了**In-batch Negatives**策略，这是对比学习中的其中一种比较流行的策略，用的会比较多，所以在开始之前我们需要介绍下批次负样本。首先是介绍他的核心思想：
 
 - 在一个batch中，每个查询（query）与其对应的正样本（positive document）构成正样本对
 - 同一个batch中的其他查询-文档对作为负样本
 - 这样可以在不增加额外计算成本的情况下，为每个查询提供batch_size-1个负样本
 
-**数学表达**：
-对于batch中的查询向量$\mathbf{Q}$和文档向量$\mathbf{P}$：
+从核心思想上面，大家可以看出，如果我们的批次开得越大，是不是意味着每个 query 能获得的负样本数量（batch_size - 1）越多，训练中的对比信号越强，模型更容易把正样本拉近、把负样本推远，从而学到更细粒度的语义表示。
+
+我在本次实验的进行中，分别使用过8,16,80的批次大小对模型进行训练，实际的训练效果也很明显，批次越大的时候loss越平滑，而批次越小的时候loss的波动会比较明显，虽然和。
+
+不过C-Pack (BGE) 论文论文的 3.4 节 Training Recipe 中我看到在介绍“通用微调 (General purpose fine-tuning)”阶段时，他们指出纯粹依赖批次内负样本 (in-batch negative samples)，并采用了一个高达 19,200 的大批次来提升嵌入的区分度。
+
+在 4.2 节 Detailed Analysis 中，论文通过实验对比了不同批次大小（256、2,048 和 19,200）带来的影响，并观察到随着批次大小的扩大，嵌入质量有一致性的提升，其中对检索性能的提升最为显著。
+
+M3-Embedding 论文的附录 B.1 节 Experimental Hyperparameters 和 表 9 中也有部分关于批次大小设计的描述。
+
+他们是有分成两个阶段，一个是无监督数据预训练阶段，在这个阶段，批次大小是动态变化的，具体取决于训练数据的序列长度。对于较短的序列（0-500 tokens），总批次大小可以达到 67,200；而对于非常长的序列（7000-8192 tokens），批次大小则为 9,984。我猜测是由于显存不够大的缘故，虽然他们没有说，但是我知道序列越长，需要的显存也是越大的，即使我们自己使用bge-m3进行embedding的时候，如果doc的长度接近8k，不仅仅是推理的时间延长了，显存的占用也会增加不少，感兴趣的小伙伴可以自己试试，然后来告诉我。
+
+另外一个阶段是微调阶段，在这个阶段，批次大小同样随序列长度变化，但总体上比上一阶段小。对于短序列，批次大小为 1,152，对于长序列则为 192。原因我不太清楚，可能是他们的机器被分给其他团队了，或者微调不需要那么多的机器，emm……
+
+表格内容如下：
+
+<table><tr><td rowspan="2">Length Range</td><td colspan="2">Batch Size</td></tr><tr><td>Unsupervised</td><td>Fine-tuning</td></tr><tr><td>0-500</td><td>67,200</td><td>1,152</td></tr><tr><td>500-1000</td><td>54,720</td><td>768</td></tr><tr><td>1000-2000</td><td>37,248</td><td>480</td></tr><tr><td>2000-3000</td><td>27,648</td><td>432</td></tr><tr><td>3000-4000</td><td>21,504</td><td>336</td></tr><tr><td>4000-5000</td><td>17,280</td><td>336</td></tr><tr><td>5000-6000</td><td>15,072</td><td>288</td></tr><tr><td>6000-7000</td><td>12,288</td><td>240</td></tr><tr><td>7000-8192</td><td>9,984</td><td>192</td></tr></table>
+Table 9: Detailed total batch size used in training for data with different sequence length ranges.
+
+感兴趣的小伙伴可以去看《C-Pack: Packed Resources For General Chinese Embeddings》这篇论文，里面提到了很多关于bge的模型是如何训练的技巧。
+bge-m3的论文在：《M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation》
+
+我们的核心部分公式主要就是下面的两个，对于batch中的查询向量$\mathbf{Q}$和文档向量$\mathbf{P}$：
 
 相似度矩阵：$\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
 
 损失函数：$\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})$
 
-其中：
+其中有两个符号需要注意：
 
 - $\tau$ 是温度参数
 - $\mathbf{y} = [0, 1, 2, ..., N-1]$ 是标签向量，$N$为batch大小
+
 
 ### 3. 关键技术组件
 
@@ -43,6 +65,8 @@ p_emb = F.normalize(p_emb, p=2, dim=-1)
 
 使用L2归一化确保所有向量都在单位球面上：
 $$\|\mathbf{q}\|_2 = 1, \|\mathbf{p}\|_2 = 1$$
+
+其中p=2：指定使用 L-p 范数，这里 p=2 即 L2（欧几里得）范数。也可以用 p=1（L1），也叫曼哈顿范数，不过归一化不用L1。
 
 #### 3.2 温度参数（Temperature）
 
