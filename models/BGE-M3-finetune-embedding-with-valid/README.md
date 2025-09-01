@@ -978,6 +978,14 @@ mbpp_val.jsonl和mbpp_train.jsonl都是从sanitized-mbpp.json分出来的，比�
 
 其中微调的任务大概是需要接近48GB显存才能完成本次任务，如果你的显卡没有这么大的显存，那么你可以将batch size调到8或者16再重新尝试，通过运行代码，检查显存占用，是否能够保证显存不溢出。
 
+在ubuntu环境下，你可以使用下面的命令进行查看显存占用：
+
+```bash
+watch -n 2 nvidia-smi
+```
+
+如果你是在Windows系统上面，建议使用wsl环境操作。
+
 当batch size设置为1的时候就是最小显存要求，经过我的测试是需要12.5GB显存，所以你如果要尝试运行本次实验，请至少准备一张至少13GB的显卡，如果使用batch size为80进行训练，大概需要5分钟左右即可完成本次微调训练，其中最后微调效果评测也需要1分钟左右，所以总的时间需要在6分钟左右。
 
 如果你已经复现了train_embedding_with_validation.ipynb文件中的模型微调任务。
