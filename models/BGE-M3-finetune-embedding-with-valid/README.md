@@ -939,10 +939,15 @@ modelscope download --model BAAI/bge-m3  --local_dir ./bge-m3
 #### 数据集准备
 
 你可以去下面的地址下载数据集，并放到当前目录下：
+
 <https://modelscope.cn/datasets/opencompass/mbpp>
+
 打开链接之后你可以看到页面大概是这样的：
+
 ![mbpp数据集](images/01-4.png)
+
 你可以切换到数据预览页面，查看我们的数据大概是什么样子的：
+
 ![数据预览页面](images/01-5.png)
 
 如果你看完了，或者想要继续进行数据准备工作，可以切换到数据文件页面，然后进行数据集下载：
@@ -950,9 +955,13 @@ modelscope download --model BAAI/bge-m3  --local_dir ./bge-m3
 ![数据文件下载页面](images/01-6.png)
 
 最终你可以获得到这样的目录结构：
+
 ![目录结构说明](images/01-7.png)
+
 你只需要从modelscope下载箭头指向的两个文件即可：
+
 ![箭头指向的两个文件](images/01-8.png)
+
 下载完成之后确保你的文件名和我的示例目录下的文件名相同，如果不一样，请你修改成一样的名字，其中的sanitized-mbpp.json是我们本次使用到的数据集。
 
 因为他是已经清洗过的文件，mbpp.jsonl是没有清洗的数据文件，数据量会大一些，大概是800多条，清洗后sanitized-mbpp.json文件大概是接近500条数据。
