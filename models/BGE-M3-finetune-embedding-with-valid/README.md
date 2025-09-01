@@ -667,11 +667,14 @@ $$\nabla_{\text{effective}} = \frac{1}{K}\sum_{k=1}^{K}\nabla_k$$
 所以我们是不是可以思考我们能不能只把它们最关键的信息，也就是计算对比损失时需要用到的“表征向量”（embeddings）存起来。
 
 答案是可以的，这就是 MoCo (Momentum Contrast) 这类算法的核心思想。
+
 很可惜，我们的代码并没有使用他的算法逻辑。
 
 不过感兴趣的同学可以看看这篇论文是怎么做的。
 
 这是20年的论文，地址在：<https://arxiv.org/pdf/1911.05722>
+论文的名字叫做：《Momentum Contrast for Unsupervised Visual Representation Learning
+》
 
 #### 4.3 学习率调度
 
