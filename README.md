@@ -74,6 +74,9 @@
 
 ### 已支持模型
 
+- [BGE-M3](https://huggingface.co/BAAI/bge-m3)
+  - [x] [代码检索场景微调实战 微调BGE-M3 embedding模型](./models/BGE-M3-finetune-embedding-with-valid/README.md) @李秀奇 
+
 - [gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b)
   - [x] [gpt-oss-20b vllm 部署调用](./models/gpt-oss/1-gpt-oss-20b%20vllm%20部署调用.md)@郭宣伯
   - [x] [gpt-oss-20b EvalScope 并发评测](./models/gpt-oss/2-gpt-oss-20b%20Evalscope并发测试.md) @郭宣伯
@@ -405,12 +408,13 @@
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
+- [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
+- [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
-- [林恒宇](https://github.com/LINHYYY)（内容创作者-清华大学-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
@@ -421,7 +425,6 @@
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
 - [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
-- [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
 - [谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
@@ -454,6 +457,7 @@
 - [樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）
 - [卓堂越](https://github.com/nusakom)（内容创作者-鲸英助教）
 - [fancy](https://github.com/fancyboi999)（内容创作者-鲸英助教）
+- [李秀奇](https://github.com/li-xiu-qi)（内容创作者-DataWhale意向成员）
 
 > 注：排名根据贡献程度排序
 
