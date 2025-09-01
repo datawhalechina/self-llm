@@ -76,7 +76,7 @@ $$
 \|q\|_2 = 1, \quad \|p\|_2 = 1
 $$
 
-其中 p=2：指定使用 L-p 范数，这里 p=2 即 L2（欧几里得）范数。也可以用 p=1（L1），也叫曼哈顿范数，不过这里的归一化不用 L1。
+其中 p=2：指定使用 L-p 范数，这里 p=2 即 L2（欧几里得）范数。也可以用 p=1（L1），他有一个中文名叫做曼哈顿范数，不过这里的归一化不用 L1。
 
 #### 3.2 温度参数（Temperature）
 
@@ -89,7 +89,11 @@ sim = q_emb @ p_emb.t() / self.temperature
 
 当我们设置温度比较低(接近0的时候), 比如0.02，那么缩放后的值就会变大，如果温度是等于1或者大于1，缩放后的值就会小于原来的值。
 
-具体我们使用例子来说明吧，使用较高的温度 $\tau = 1$。
+我们这里使用的温度和LLM的温度控制逻辑是类似的，如果你对大语言模型的token概率机制有一些了解的话，是不是能想起发起请求的时候是可以使用temperature对输出进行控制的，较低的temperature会使得模型输出更具确定性，而较高的temperature会使得模型输出更具多样性。
+
+LLM的token采样策略一般会选择随机采样方法，也就导致每次输出的文本都不一样，如果选择确定性方法，比如贪心搜索（每次只选概率最高的）就会有每次输出的结果都一样的效果。从原理上看，即使采用随机采样的方式，概率越大的token被采样到的可能性也就越大。
+
+好，我们关于LLM的部分到此为止，具体我们使用例子来说明吧，使用较高的温度 $\tau = 1$。
 
 当温度为 1 时，我们直接对原始的相似度分数应用 Softmax 函数。
 
@@ -102,11 +106,11 @@ $P(\text{正样本}) = \frac{2.46}{2.46 + 2.23 + 1.65 + 1.22} = \frac{2.46}{7.56
 
 - 负样本 1 的概率: $2.23 / 7.56 \approx 0.295$
 - 负样本 2 的概率: $1.65 / 7.56 \approx 0.218$
-- 负样本 3 的概率: $1.22 / 7.56 \approx 0.161$
+- 负样本 3 的概率: $1.22 / 7.56 \approx 0.162$
 
-在这种情况下，正样本的概率只有 32.5%。那个最难区分的负样本（负样本 1）获得了 29.5% 的概率。
+在这种情况下，正样本的概率只有 32.5%。那个最难区分的负样本（负样本 1）获得了 29.5% 的概率，从调用大模型方面进行思考，有没有发现我们其实很少使用temperature=1进行模型调用，因为temperature=1的时候其实每个token的概率相差的量也就没有那么大了，很容易导致模型在输出的时候输出乱码，或者胡言乱语。
 
-模型给出的概率分布比较平滑，它并没有很强的信心认为正样本就是唯一的正确答案。这样一来，损失函数计算出的惩罚信号就不够强，模型学习的动力也就不那么足。
+那么对于模型训练而言，模型给出的概率分布比较平滑，它并没有很强的信心认为正样本就是唯一的正确答案。这样一来，损失函数计算出的惩罚信号就不够强，模型训练的效果也会差一些。
 
 另外一种情况，使用较低的温度 $\tau = 0.1$。
 
@@ -129,42 +133,43 @@ $P(\text{正样本}) = \frac{8103.1}{8103.1 + 2981.0 + 148.4 + 7.4} = \frac{8103
 
 - 负样本 1 的概率: $2981.0 / 11239.9 \approx 0.265$
 - 负样本 2 的概率: $148.4 / 11239.9 \approx 0.013$
-- 负样本 3 的概率: $7.4 / 11239.9 \approx 0.0007$
+- 负样本 3 的概率: $7.4 / 11239.9 \approx 0.001$
   
 上面的内容是我们通过代码计算出来的结果，代码放到下面一点的部分了，通过降低温度，正样本的概率就从 32.5% 变成 72.1%，是不是将我们的正样本的置信度明显提升了吗！
 
-而那个最难的负样本的概率从 29.5% 被变成了 26.5%，其他更不相关的负样本概率更是大幅降低。
+而那个最难的负样本的概率从 29.5% 被变成了 26.5%，其他更不相关的负样本概率,基本有所降低，也就是趋近于正样本：负样本的概率比为1:0。
 
-我们可以从图片中看出来其中的变化：
+为了方便大家看出两者之间的差距，我把他们之间的概率变化可视化了，下面可以从图片中看出来其中的变化。
 
 ![不同温度下概率分布的变化](./images/不同温度下概率分布的变化.png)
 
-更直观的分布情况可以换成柱形图：
+上面的是折线图，可能不太好看出两者的变化程度，我们来换一个柱形图。
 
 ![不同温度下概率分布的变化](images/不同温度下概率分布的变化-柱形图.png)
 
-从图片这个概率分布，我们是不是能看出前后的区别就是温度低会使得概率分布变得更尖锐，或者说突出。在计算损失时，由于预测的概率（72.1%）离理想的 100% 还有差距，而我们的预期是要求模型的输出结果是正样本和负样本之间的比值是1:0。
+从图片这个概率分布，我们是不是能看出前后的区别就是温度低会使得概率分布变得更尖锐，我的意思是说会使得第一的概率会变得越来越高，其他的都会降低。
 
-所以，模型会收到一个明确的信号去进一步拉大正样本和负样本（特别是那个困难的负样本 1）之间的差距，虽然人通过直觉就能知道每次选概率最大的，但是模型的训练过程中是需要使用数值进行计算的，我们的训练目标就是为了使得正样本和负样本概率接近1:0，我们放大之后是不是相当于加速模型训练了。
+或者说突出正确的样本概率。
 
-换另外一个角度思考，放大之后的值其实会放到指数的位置上，指数的增长是爆炸性的，只需要放大一点点，数值差距是非常大的，可以看下面这张图：
+在计算损失时，由于预测的概率（72.1%）离预期的 接近100% 还有差不多28%左右的距离，而我们的预期是要求模型的输出结果是正样本和负样本之间的比值是趋近1:0，或者说0.9:0.1也可以。
+
+所以，进一步放大正样本和负样本之间的差值，也就是让两者之间的区分度更明显，就是我们的训练方向。
+
+换另外一个角度思考，放大之后的值其实会放到指数的位置上，指数的增长是爆炸性的，只需要放大一点点，数值差距就会很快被拉开的，可以看下面这张图：
 
 ![e的指数函数](images/e的指数函数.png)
 
-越到后面，数值会接近无穷大，会导致样本之间的概率有很明显的差距。
+图上显示的是$e^x$的$x$从0-10之间的函数图像，越到后面，数值会接近无穷大，几乎没法显示，只要稍微加一个次方就会导致样本之间的概率有很明显的差距。
 
-如果你想要自己尝试下，可以使用下面的代码进行测试：
+如果你想要自己尝试下，可以使用下面的代码进行测试，改变温度会有什么效果：
 
 ```python
 import numpy as np
 
-# 原始的相似度分数
 scores = np.array([0.9, 0.8, 0.5, 0.2])
 
-# 温度参数
 temperatures = [1, 0.1]
 
-# 计算不同温度下的概率分布
 probabilities = {}
 for tau in temperatures:
     # 缩放相似度分数
@@ -176,12 +181,14 @@ for tau in temperatures:
 probabilities
 ```
 
-输出：
+运行代码后输出的结果：
 
 ```text
 {1: array([0.32554809, 0.2945681 , 0.21822141, 0.1616624 ]),
 0.1: array([7.20924938e-01, 2.65213463e-01, 1.32042008e-02, 6.57398449e-04])}
 ```
+
+从输出结果来看，温度为1时的概率分布是[0.326, 0.295, 0.218, 0.162]，温度为0.1时的概率分布是 [0.721, 0.265, 0.013, 0.001]。
 
 #### 3.3 损失函数
 
@@ -192,20 +199,16 @@ labels = torch.arange(sim.size(0), device=sim.device, dtype=torch.long)
 loss = F.cross_entropy(sim, labels)
 ```
 
-交叉熵损失将 embedding 学习转换为分类问题的核心在于：
-
-在一个 batch 内，我们将每个查询与他对应的正确文档匹配看作分类任务。
+我们可以理解成交叉熵损失将 embedding 学习转换为分类问题，也就是在一个 batch 内，将每个查询与他对应的正确文档匹配看作分类任务。
 
 其中相似度矩阵的每一行代表查询对所有候选文档的分类分数，对角线元素应该是正确类别的最高分。
 
-通过创建标签 [0, 1, 2, ..., batch_size-1]，让模型学习将第 i 个查询分类到第 i 个文档。
-
-这样优化分类损失的同时，模型就间接学会了让语义相似的文本在 embedding 空间中更接近，实现了从向量相似度优化到分类问题的巧妙转换。
+通过创建标签 [0, 1, 2, ..., batch_size-1]，让模型学习将第 i 个查询分类到第 i 个文档，下面我们来通过损失函数来说明。
 
 对于第 $i$ 个查询，损失函数为：
 
 $$
-{L}_i = -\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
+L_i = -\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
 其中 $s_{i,j}$ 是第 $i$ 个查询与第 $j$ 个文档的相似度分数。
@@ -216,12 +219,12 @@ $$
 
 **1. 相似度矩阵计算**
 
- ${S} = \frac{{Q} {P}^T}{\tau}$
+$S = \frac{QP^T}{\tau}$
 
-- ${Q}$：查询向量矩阵，形状为 $N \times D$，其中 $N$ 是batch大小，$D$ 是向量维度
-- ${P}$：文档向量矩阵，形状为 $N \times D$
-- ${P}^T$：文档向量矩阵的转置，形状为 $D \times N$
-- ${Q} {P}^T$：矩阵乘法，结果为 $N \times N$ 的相似度矩阵
+- $Q$：查询向量矩阵，形状为 $N \times D$，其中 $N$ 是batch大小，$D$ 是向量维度
+- $P$：文档向量矩阵，形状为 $N \times D$
+- $P^T$：文档向量矩阵的转置，形状为 $D \times N$
+- $QP^T$：矩阵乘法，结果为 $N \times N$ 的相似度矩阵
 - $\tau$：温度参数（0.02），用于调节相似度分布
 
 这里通过矩阵计算每个查询与所有文档的余弦相似度，需要大家有一点线性代数的基础。
@@ -229,7 +232,7 @@ $$
 **2. 单个查询的损失函数**  
 
 $$
-{L}_i = -\log \left( \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)} \right )
+L_i = -\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
 - $s_{i,i}$：第 $i$ 个查询与其对应正样本的相似度（对角线元素）
@@ -248,14 +251,18 @@ $$
 损失函数中的分数部分实际上是softmax 函数（在做 log 前）的应用：
 
 $$
-{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
+\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
 $$
 
-![softmax函数曲线图](images/01-1.png)
+![softmax函数曲线图](images/softmax函数曲线图-数学函数图像.png)
 
-从上图可以看出，softmax函数的一个重要特性是：任何数值经过softmax函数之后都会变成0-1之间的数。这是因为通过指数运算，分子和分母都使用exp()函数，确保所有值都是正数，从最开始的e的指数函数图，就能看出来，e指数函数是始终为正数。还有就是归一化的效果，每个值除以所有值的总和，确保最终结果在0-1之间
+从上图可以看出，softmax函数的一个重要特性是：
 
-在我们的案例中：
+任何数值经过softmax函数之后都会变成0-1之间的数。
+
+这是因为通过指数运算，分子和分母都使用exp()函数，确保所有值都是正数，从最开始的e的指数函数图，就能看出来，e指数函数是始终为正数。还有就是归一化的效果，每个值除以所有值的总和，确保最终结果在0-1之间。
+
+在我们的代码案例中：
 
 - $x_i = s_{i,i}/\tau$（正样本对的相似度）
 - $x_j = s_{i,j}/\tau$（所有文档的相似度）
@@ -274,7 +281,7 @@ $$
 从对数函数图像上可以看出：
 
 - 当数值越接近1的时候，$\log(x)$ 就越接近0，损失就越小
-- 当数值越接近0的时候，$\log(x)$ 就越接近一个非常大的负数，$-\log(x)$ 就接近非常大的正数
+- 当数值越接近0的时候，$\log(x)$ 就越接近一个非常大的负数，$-\log(x)$ 就接近非常大的正数。
 
 从数学意义的角度考虑，概率 $p$ 越接近1，损失 $-\log(p)$ 越接近0，概率 $p$ 越接近0，损失 $-\log(p)$ 越接近无穷大， 这种特性使得模型对错误预测的惩罚更加严重。
 
@@ -344,6 +351,40 @@ $$
 ```python
 import math
 
+s_00 = 8.5
+s_01 = 2.1
+s_02 = 1.8
+tau = 0.02
+
+# 计算缩放后的相似度
+scaled_s_00 = s_00 / tau
+scaled_s_01 = s_01 / tau
+scaled_s_02 = s_02 / tau
+
+# 计算指数值
+exp_s_00 = math.exp(scaled_s_00)
+exp_s_01 = math.exp(scaled_s_01)
+exp_s_02 = math.exp(scaled_s_02)
+
+scaled_s_00, scaled_s_01, scaled_s_02, exp_s_00, exp_s_01, exp_s_02
+```
+
+计算输出结果：
+
+```python
+(425.0,
+105.0,
+90.0,
+3.759713994046786e+184,
+3.989519570547216e+45,
+1.2204032943178408e+39)
+```
+
+下面继续计算loss的值：
+
+```python
+import math
+
 # 计算分子和分母
 numerator = math.exp(425)
 denominator = math.exp(425) + math.exp(105) + math.exp(90)
@@ -359,17 +400,15 @@ loss
 -0.0
 ```
 
-输出结果和我们从上面理论推导出来的很类似，因为 $\exp(425)$ 已经远远大于 $\exp(105)$ 了。
-
-**训练目标**：
+输出结果和我们从上面e的指数函数图中得到的预期结果很接近，因为 $\exp(425)$ 已经远远大于 $\exp(105)$ 了。
 
 通过梯度下降更新模型参数，模型会：
 
-1. **增大对角线元素**（让正样本对的相似度更高）
-2. **减小非对角线元素**（让负样本对的相似度更低）
+1. 增大对角线元素（让正样本对的相似度更高）
+2. 减小非对角线元素（让负样本对的相似度更低）
 3. 最终使得对角线元素远大于非对角线元素
 
-这就是为什么在训练好的模型中，相似度矩阵的对角线数值会明显大于其他位置。
+这就是为什么在训练的模型过程中，相似度矩阵的对角线数值会明显大于其他位置。
 
 **4. 实际代码实现**
 
@@ -384,99 +423,9 @@ labels = torch.arange(sim.size(0), device=sim.device, dtype=torch.long)
 loss = F.cross_entropy(sim, labels)
 ```
 
-**PyTorch交叉熵损失函数的完整定义：**
+这里的实际代码提到了交叉熵loss，，不过实际上cross_entropy是基于CrossEntropyLoss的，我们可以查看CrossEntropyLoss的源码：
 
-```python
-def cross_entropy(
-    input: Tensor,
-    target: Tensor,
-    weight: Optional[Tensor] = None,
-    size_average: Optional[bool] = None,
-    ignore_index: int = -100,
-    reduce: Optional[bool] = None,
-    reduction: str = "mean",
-    label_smoothing: float = 0.0,
-) -> Tensor:
-    """Compute the cross entropy loss between input logits and target.
-    
-    Args:
-        input (Tensor): Predicted unnormalized logits; shape (N, C) or (C)
-        target (Tensor): Ground truth class indices or class probabilities
-        weight (Tensor, optional): Manual rescaling weight for each class
-        size_average (bool, optional): Deprecated (see reduction)
-        ignore_index (int, optional): Target value to ignore (default: -100)
-        reduce (bool, optional): Deprecated (see reduction)  
-        reduction (str, optional): 'none' | 'mean' | 'sum' (default: 'mean')
-        label_smoothing (float, optional): Smoothing factor in [0.0, 1.0] (default: 0.0)
-    """
-    
-    参数说明：
-        input (Tensor): 预测的未归一化logits，形状为 (N, C) 或 (C)
-        target (Tensor): 真实类别索引或类别概率
-        weight (Tensor, optional): 每个类别的手动重新缩放权重
-        size_average (bool, optional): 已弃用（参见reduction）。默认情况下，
-            损失在批次中每个损失元素上平均。注意对于
-            某些损失，有多个元素对应一个样本。如果字段:attr:`size_average`
-            设置为``False``，损失改为对每个minibatch求和。当:attr:`reduce`
-            为``False``时忽略。默认：``True``
-        ignore_index (int, optional): 指定一个被忽略的目标值，
-            并且不贡献给输入梯度。当:attr:`size_average`为
-            ``True``时，损失在非忽略目标上平均。注意
-            :attr:`ignore_index`仅适用于目标包含类别索引的情况。
-        reduce (bool, optional): 已弃用（参见:attr:`reduction`）。默认情况下，
-            损失根据:attr:`size_average`对每个minibatch的观测值平均或求和。
-            当:attr:`reduce`为``False``时，返回每个批次元素的损失并忽略
-            :attr:`size_average`。默认：``True``
-        reduction (str, optional): 指定应用于输出的减少方式：
-            ``'none'`` | ``'mean'`` | ``'sum'``。``'none'``：不应用减少，
-            ``'mean'``：取输出的加权平均值，
-            ``'sum'``：输出将被求和。注意：:attr:`size_average`
-            和:attr:`reduce`正在被弃用，同时，
-            指定这两个参数中的任何一个都将覆盖
-            :attr:`reduction`。默认：``'mean'``
-        label_smoothing (float, optional): A float in [0.0, 1.0]. Specifies the amount
-            of smoothing when computing the loss, where 0.0 means no smoothing. The targets
-            become a mixture of the original ground truth and a uniform distribution as described in
-            `Rethinking the Inception Architecture for Computer Vision <https://arxiv.org/abs/1512.00567>`__. Default: :math:`0.0`.
-
-    Shape:
-        - Input: Shape :math:`(C)`, :math:`(N, C)` or :math:`(N, C, d_1, d_2, ..., d_K)` with :math:`K \geq 1`
-          in the case of `K`-dimensional loss.
-        - Target: If containing class indices, shape :math:`()`, :math:`(N)` or :math:`(N, d_1, d_2, ..., d_K)` with
-          :math:`K \geq 1` in the case of K-dimensional loss where each value should be between :math:`[0, C)`. The
-          target data type is required to be long when using class indices. If containing class probabilities, the
-          target must be the same shape input, and each value should be between :math:`[0, 1]`. This means the target
-          data type is required to be float when using class probabilities.
-        - Output: If reduction is 'none', shape :math:`()`, :math:`(N)` or :math:`(N, d_1, d_2, ..., d_K)` with :math:`K \geq 1`
-          in the case of K-dimensional loss, depending on the shape of the input. Otherwise, scalar.
-
-
-        where:
-
-        .. math::
-            \begin{aligned}
-                C ={} & \text{number of classes} \\
-                N ={} & \text{batch size} \\
-            \end{aligned}
-
-    Examples:
-
-        >>> # Example of target with class indices
-        >>> loss = nn.CrossEntropyLoss()
-        >>> input = torch.randn(3, 5, requires_grad=True)
-        >>> target = torch.empty(3, dtype=torch.long).random_(5)
-        >>> output = loss(input, target)
-        >>> output.backward()
-        >>>
-        >>> # Example of target with class probabilities
-        >>> input = torch.randn(3, 5, requires_grad=True)
-        >>> target = torch.randn(3, 5).softmax(dim=1)
-        >>> output = loss(input, target)
-        >>> output.backward()
-    """
-```
-
-**CrossEntropyLoss中文版本：**
+**CrossEntropyLoss中文翻译版本：**
 
 ```python
 class CrossEntropyLoss(_WeightedLoss):
@@ -487,7 +436,7 @@ class CrossEntropyLoss(_WeightedLoss):
 
     输入应包含每个类别的未归一化logits（通常不需要为正数或总和为1）。
     对于非批次输入，输入必须是大小为:math:`(C)`的张量，
-    對於K维情况，输入必须是:math:`(minibatch, C)`或:math:`(minibatch, C, d_1, d_2, ..., d_K)`，其中:math:`K \geq 1`。
+    K维情况，输入必须是:math:`(minibatch, C)`或:math:`(minibatch, C, d_1, d_2, ..., d_K)`，其中:math:`K \geq 1`。
     后者对于高维输入很有用，例如计算2D图像的每个像素的交叉熵损失。
 
     此标准期望的目标应包含以下任一内容：
@@ -611,7 +560,7 @@ class CrossEntropyLoss(_WeightedLoss):
 
 **CrossEntropy的数学公式：**
 
-上面的内容可能不适合直接看，下面我们来换一种表达方式来看看公式长什么样，对于离散标签（类别索引）的情况，交叉熵损失函数的公式为：
+上面的内容可能不适合直接看，下面我们来换一种表达方式来看看公式长什么样，对于离散标签（类别索引）的情况，交叉熵损失函数的公式是：
 
 $$L = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
 
@@ -622,10 +571,10 @@ $$L = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\
 - $x_{i,j}$ 是第 $i$ 个样本在第 $j$ 个类别上的预测分数
 - $y_i$ 是第 $i$ 个样本的真实类别标签
 
-**在我们的 embedding 项目中的具体形式：**
+**在我们的 embedding 代码中的具体形式：**
 
 $$
-{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
+L = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
 这里的 $s_{i,j}$ 是相似度矩阵 $S$ 中的元素，$\tau$ 是温度参数。
@@ -641,19 +590,19 @@ $$
 2. **交叉熵**：衡量预测概率与真实标签的差异
 
 $$
-{L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})
+L_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})
 $$
 
 3. **简化形式**：对于 one-hot 编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$
 
 $$
-{L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
+L_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
 $$
 
 4. **批次平均**：对整个 batch 的损失求平均
 
 $$
-{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
+L = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
 $$
 
 这个损失函数的本质是 **InfoNCE Loss** （Info Noise Contrastive Estimation），通过对比学习的方式让模型学会区分正负样本对，MoCo 采用的对比学习损失函数就是 InfoNCE loss ，以此来训练模型，和我们本次介绍的公式是差不多的。
@@ -689,16 +638,21 @@ loss = out['loss'] / accumulation
 $$\nabla_{\text{effective}} = \frac{1}{K}\sum_{k=1}^{K}\nabla_k$$
 
 其中 $K$ 是累积步数。
-梯度积累主要是为了解决显存不足的问题，在训练深度学习模型时，我们通常倾向于使用更大的批量大小（Batch Size），然而，问题在于，批量大小的增加会直接导致显存占用的增加。所以，我们更多的是尽可能在自己的显存允许范围内进行调整批次大小，当然，批次大小也不是越大越好，更多的是适度的值，话不多说，快速进入正题，举个例子让大家理解。假设我们的显存大小只允许我们设置 batch_size = 8，但我们通过实验发现，使用 batch_size = 64 的效果会更好。这时候就可以使用梯度累积。
-取一小批量数据（大小为8），进行一次前向传播和反向传播，计算出梯度。但不立即更新模型参数，而是将这个梯度累加起来。
+梯度积累主要是为了解决显存不足的问题，在训练深度学习模型时，我们通常倾向于使用更大的批量大小（Batch Size），然而，问题在于，批量大小的增加会直接导致显存占用的增加。
 
-重复第一步，再取一小批量数据（大小为8），计算梯度，并继续累加到之前的梯度上。
+所以，我们更多的是尽可能在自己的显存允许范围内进行调整批次大小，当然，批次大小也不是越大越好，更多的是适度的值。
 
-这个过程重复8次（也就是我们设置的累积步数）。
+举个例子让大家理解。
 
-当累积了8次小批量的梯度后，我们就得到了一个等效于64个样本（8个样本/批 * 8步）计算出的总梯度。
+假设我们的显存大小只允许我们设置 batch_size = 8，但我们通过实验发现，使用 batch_size = 64 的效果会更好。
 
-最后，用这个累加后的总梯度，对模型参数进行一次更新。然后清空累积的梯度，开始下一轮循环。
+这时候就可以使用梯度累积。
+
+取一个批次为8的的数据，进行一次前向传播和反向传播，计算出梯度。但不立即更新模型参数，而是将这个梯度累加起来。
+
+重复第一步，再取一批数据计算梯度，并继续累加到之前的梯度上。重复这个过程，直到达到我们预期的次数。
+
+当累积了8次小批量的梯度后，我们就得到了一个等效于64个样本，然后通过这64个样本计算出总梯度，并对模型的参数进行一次更新。
 
 通过这里的流程，大家应该能理解什么是梯度积累了吧，不过我们的代码实际上没有很好与批次负样本进行结合，大家看源码应该可以发现这个问题。
 
