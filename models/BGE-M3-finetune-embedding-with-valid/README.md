@@ -42,16 +42,24 @@ Table 9: Detailed total batch size used in training for data with different sequ
 感兴趣的小伙伴可以去看《C-Pack: Packed Resources For General Chinese Embeddings》这篇论文，里面提到了很多关于bge的模型是如何训练的技巧。
 bge-m3的论文在：《M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation》
 
-我们的核心部分公式主要就是下面的两个，对于batch中的查询向量 $\mathbf{Q}$ 和文档向量 $\mathbf{P}$：
+我们的核心部分公式主要就是下面的两个，对于 batch 中的查询向量 $\mathbf{Q}$ 和文档向量 $\mathbf{P}$：
 
-相似度矩阵： $\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
+相似度矩阵：
 
-损失函数： $\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})$
+$$
+\mathbf{S} = \frac{\mathbf{Q}\,\mathbf{P}^T}{\tau}
+$$
+
+损失函数：
+
+$$
+\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})
+$$
 
 其中有两个符号需要注意：
 
 - $\tau$ 是温度参数
-- $\mathbf{y} = [0, 1, 2, ..., N-1]$ 是标签向量， $N$ 为 batch 大小
+- $\mathbf{y} = [0, 1, 2, \dots, N-1]$ 是标签向量， $N$ 为 batch 大小
 
 
 ### 3. 关键技术组件
@@ -102,7 +110,7 @@ loss = F.cross_entropy(sim, labels)
 对于第 $i$ 个查询，损失函数为：
 
 $$
-\mathcal{L}_i = -\log \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}
+\mathcal{L}_i = -\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
 其中 $s_{i,j}$ 是第 $i$ 个查询与第 $j$ 个文档的相似度分数。
@@ -145,7 +153,7 @@ $$
 损失函数中的分数部分实际上是 **softmax 函数**（在做 log 前）的应用：
 
 $$
-\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
+\operatorname{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
 $$
 
 ![softmax函数曲线图](images/01-1.png)
@@ -164,21 +172,17 @@ $$
 
 **具体示例**：
 
-假设有三个相似度值： $[8.5, 2.1, 1.8]$，温度参数 $\tau = 0.02$
-
-1. **温度缩放**： $[8.5/0.02, 2.1/0.02, 1.8/0.02] = [425, 105, 90]$
-2. **指数运算**： $[\exp(425), \exp(105), \exp(90)]$
-3. **softmax计算**：
+假设有三个相似度值：
 
 $$
-\left[
-\frac{\exp(425)}{\exp(425)+\exp(105)+\exp(90)},
-\frac{\exp(105)}{\exp(425)+\exp(105)+\exp(90)},
-\frac{\exp(90)}{\exp(425)+\exp(105)+\exp(90)}
-\right]
+[8.5,\ 2.1,\ 1.8],\quad \text{温度参数}\ \tau = 0.02
 $$
 
-4. **结果**：接近$[1, 0, 0]$的概率分布
+温度缩放后：
+
+$$
+[8.5/0.02,\ 2.1/0.02,\ 1.8/0.02] = [425,\ 105,\ 90]
+$$
 
 **为什么使用softmax？**
 
@@ -227,7 +231,8 @@ $$
 假设经过温度缩放后的相似度矩阵可能是：
 
 $$
-S = \begin{bmatrix}
+S =
+\begin{bmatrix}
 8.5 & 2.1 & 1.8 \\
 1.2 & 9.3 & 0.9 \\
 0.5 & 1.7 & 8.1
@@ -308,122 +313,26 @@ def cross_entropy(
         input (Tensor): 预测的未归一化logits，形状为 (N, C) 或 (C)
         target (Tensor): 真实类别索引或类别概率
         weight (Tensor, optional): 每个类别的手动重新缩放权重
-        size_average (bool, optional): 已弃用（参见reduction）
-        ignore_index (int, optional): 指定要忽略的目标值（默认：-100）
-        reduce (bool, optional): 已弃用（参见reduction）
-        reduction (str, optional): 'none' | 'mean' | 'sum'（默认：'mean'）
-        label_smoothing (float, optional): [0.0, 1.0]范围内的平滑因子（默认：0.0）
-    """
-```
-
-**在我们的项目中，实际使用的参数简化为：**
-
-- `input=sim`: 相似度矩阵，形状为 (batch_size, batch_size)
-- `target=labels`: 对角线索引 [0, 1, 2, ..., batch_size-1]
-- 其他参数使用默认值，其中比较重要的reduction使用的是默认值： `reduction='mean'` 对batch内的损失求平均。
-**CrossEntropyLoss**
-CrossEntropyLoss可以通过使用下面的导入方式导入：
-
-```python
-from torch.nn import CrossEntropyLoss 
-```
-
-通过查看他的源码，你可以发现：
-
-```python
-class CrossEntropyLoss(_WeightedLoss):
-    r"""This criterion computes the cross entropy loss between input logits
-    and target.
-
-    It is useful when training a classification problem with `C` classes.
-    If provided, the optional argument :attr:`weight` should be a 1D `Tensor`
-    assigning weight to each of the classes.
-    This is particularly useful when you have an unbalanced training set.
-
-    The `input` is expected to contain the unnormalized logits for each class (which do `not` need
-    to be positive or sum to 1, in general).
-    `input` has to be a Tensor of size :math:`(C)` for unbatched input,
-    :math:`(minibatch, C)` or :math:`(minibatch, C, d_1, d_2, ..., d_K)` with :math:`K \geq 1` for the
-    `K`-dimensional case. The last being useful for higher dimension inputs, such
-    as computing cross entropy loss per-pixel for 2D images.
-
-    The `target` that this criterion expects should contain either:
-
-    - Class indices in the range :math:`[0, C)` where :math:`C` is the number of classes; if
-      `ignore_index` is specified, this loss also accepts this class index (this index
-      may not necessarily be in the class range). The unreduced (i.e. with :attr:`reduction`
-      set to ``'none'``) loss for this case can be described as:
-
-      .. math::
-          \ell(x, y) = L = \{l_1,\dots,l_N\}^\top, \quad
-          l_n = - w_{y_n} \log \frac{\exp(x_{n,y_n})}{\sum_{c=1}^C \exp(x_{n,c})}
-          \cdot \mathbb{1}\{y_n \not= \text{ignore\_index}\}
-
-      where :math:`x` is the input, :math:`y` is the target, :math:`w` is the weight,
-      :math:`C` is the number of classes, and :math:`N` spans the minibatch dimension as well as
-      :math:`d_1, ..., d_k` for the `K`-dimensional case. If
-      :attr:`reduction` is not ``'none'`` (default ``'mean'``), then
-
-      .. math::
-          \ell(x, y) = \begin{cases}
-              \sum_{n=1}^N \frac{1}{\sum_{n=1}^N w_{y_n} \cdot \mathbb{1}\{y_n \not= \text{ignore\_index}\}} l_n, &
-               \text{if reduction} = \text{`mean';}\\
-                \sum_{n=1}^N l_n,  &
-                \text{if reduction} = \text{`sum'.}
-            \end{cases}
-
-      Note that this case is equivalent to applying :class:`~torch.nn.LogSoftmax`
-      on an input, followed by :class:`~torch.nn.NLLLoss`.
-
-    - Probabilities for each class; useful when labels beyond a single class per minibatch item
-      are required, such as for blended labels, label smoothing, etc. The unreduced (i.e. with
-      :attr:`reduction` set to ``'none'``) loss for this case can be described as:
-
-      .. math::
-          \ell(x, y) = L = \{l_1,\dots,l_N\}^\top, \quad
-          l_n = - \sum_{c=1}^C w_c \log \frac{\exp(x_{n,c})}{\sum_{i=1}^C \exp(x_{n,i})} y_{n,c}
-
-      where :math:`x` is the input, :math:`y` is the target, :math:`w` is the weight,
-      :math:`C` is the number of classes, and :math:`N` spans the minibatch dimension as well as
-      :math:`d_1, ..., d_k` for the `K`-dimensional case. If
-      :attr:`reduction` is not ``'none'`` (default ``'mean'``), then
-
-      .. math::
-          \ell(x, y) = \begin{cases}
-              \frac{\sum_{n=1}^N l_n}{N}, &
-               \text{if reduction} = \text{`mean';}\\
-                \sum_{n=1}^N l_n,  &
-                \text{if reduction} = \text{`sum'.}
-            \end{cases}
-
-    .. note::
-        The performance of this criterion is generally better when `target` contains class
-        indices, as this allows for optimized computation. Consider providing `target` as
-        class probabilities only when a single class label per minibatch item is too restrictive.
-
-    Args:
-        weight (Tensor, optional): a manual rescaling weight given to each class.
-            If given, has to be a Tensor of size `C`.
-        size_average (bool, optional): Deprecated (see :attr:`reduction`). By default,
-            the losses are averaged over each loss element in the batch. Note that for
-            some losses, there are multiple elements per sample. If the field :attr:`size_average`
-            is set to ``False``, the losses are instead summed for each minibatch. Ignored
-            when :attr:`reduce` is ``False``. Default: ``True``
-        ignore_index (int, optional): Specifies a target value that is ignored
-            and does not contribute to the input gradient. When :attr:`size_average` is
-            ``True``, the loss is averaged over non-ignored targets. Note that
-            :attr:`ignore_index` is only applicable when the target contains class indices.
-        reduce (bool, optional): Deprecated (see :attr:`reduction`). By default, the
-            losses are averaged or summed over observations for each minibatch depending
-            on :attr:`size_average`. When :attr:`reduce` is ``False``, returns a loss per
-            batch element instead and ignores :attr:`size_average`. Default: ``True``
-        reduction (str, optional): Specifies the reduction to apply to the output:
-            ``'none'`` | ``'mean'`` | ``'sum'``. ``'none'``: no reduction will
-            be applied, ``'mean'``: the weighted mean of the output is taken,
-            ``'sum'``: the output will be summed. Note: :attr:`size_average`
-            and :attr:`reduce` are in the process of being deprecated, and in
-            the meantime, specifying either of those two args will override
-            :attr:`reduction`. Default: ``'mean'``
+        size_average (bool, optional): 已弃用（参见reduction）。默认情况下，
+            损失在批次中每个损失元素上平均。注意对于
+            某些损失，有多个元素对应一个样本。如果字段:attr:`size_average`
+            设置为``False``，损失改为对每个minibatch求和。当:attr:`reduce`
+            为``False``时忽略。默认：``True``
+        ignore_index (int, optional): 指定一个被忽略的目标值，
+            并且不贡献给输入梯度。当:attr:`size_average`为
+            ``True``时，损失在非忽略目标上平均。注意
+            :attr:`ignore_index`仅适用于目标包含类别索引的情况。
+        reduce (bool, optional): 已弃用（参见:attr:`reduction`）。默认情况下，
+            损失根据:attr:`size_average`对每个minibatch的观测值平均或求和。
+            当:attr:`reduce`为``False``时，返回每个批次元素的损失并忽略
+            :attr:`size_average`。默认：``True``
+        reduction (str, optional): 指定应用于输出的减少方式：
+            ``'none'`` | ``'mean'`` | ``'sum'``。``'none'``：不应用减少，
+            ``'mean'``：取输出的加权平均值，
+            ``'sum'``：输出将被求和。注意：:attr:`size_average`
+            和:attr:`reduce`正在被弃用，同时，
+            指定这两个参数中的任何一个都将覆盖
+            :attr:`reduction`。默认：``'mean'``
         label_smoothing (float, optional): A float in [0.0, 1.0]. Specifies the amount
             of smoothing when computing the loss, where 0.0 means no smoothing. The targets
             become a mixture of the original ground truth and a uniform distribution as described in
@@ -477,7 +386,7 @@ class CrossEntropyLoss(_WeightedLoss):
 
     输入应包含每个类别的未归一化logits（通常不需要为正数或总和为1）。
     对于非批次输入，输入必须是大小为:math:`(C)`的张量，
-    对于K维情况，输入必须是:math:`(minibatch, C)`或:math:`(minibatch, C, d_1, d_2, ..., d_K)`，其中:math:`K \geq 1`。
+    對於K维情况，输入必须是:math:`(minibatch, C)`或:math:`(minibatch, C, d_1, d_2, ..., d_K)`，其中:math:`K \geq 1`。
     后者对于高维输入很有用，例如计算2D图像的每个像素的交叉熵损失。
 
     此标准期望的目标应包含以下任一内容：
@@ -539,8 +448,8 @@ class CrossEntropyLoss(_WeightedLoss):
             如果提供，必须是大小为`C`的张量。
         size_average (bool, optional): 已弃用（参见:attr:`reduction`）。默认情况下，
             损失在批次中每个损失元素上平均。注意对于
-            某些损失，每个样本有多个元素。如果字段:attr:`size_average`
-            设置为``False``，则损失改为对每个minibatch求和。当:attr:`reduce`
+            某些损失，有多个元素对应一个样本。如果字段:attr:`size_average`
+            设置为``False``，损失改为对每个minibatch求和。当:attr:`reduce`
             为``False``时忽略。默认：``True``
         ignore_index (int, optional): 指定一个被忽略的目标值，
             并且不贡献给输入梯度。当:attr:`size_average`为
@@ -612,31 +521,42 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_
 - $x_{i,j}$ 是第 $i$ 个样本在第 $j$ 个类别上的预测分数
 - $y_i$ 是第 $i$ 个样本的真实类别标签
 
-**在我们的embedding项目中的具体形式：**
 
-$$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)$$
+**在我们的 embedding 项目中的具体形式：**
 
-这里的 $s_{i,j}$ 是相似度矩阵 $\mathbf{S}$ 中的元素，$\tau$ 是温度参数。
+$$
+\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
+$$
+
+这里的 $s_{i,j}$ 是相似度矩阵 $\mathbf{S}$ 中的元素， $\tau$ 是温度参数。
 
 **公式推导过程：**
 
 1. **Softmax函数**：将预测分数转换为概率分布
 
-   $$p_{i,j} = \frac{\exp(x_{i,j})}{\sum_{k=1}^{C}\exp(x_{i,k})}$$
+    $$
+    p_{i,j} = \frac{\exp(x_{i,j})}{\sum_{k=1}^{C}\exp(x_{i,k})}
+    $$
 
 2. **交叉熵**：衡量预测概率与真实标签的差异
 
-   $$\mathcal{L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})$$
+    $$
+    \mathcal{L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})
+    $$
 
-3. **简化形式**：对于one-hot编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$
+3. **简化形式**：对于 one-hot 编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$ 
 
-   $$\mathcal{L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
+    $$
+    \mathcal{L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
+    $$
 
-4. **批次平均**：对整个batch的损失求平均
+4. **批次平均**：对整个 batch 的损失求平均
 
-   $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
+    $$
+    \mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
+    $$
 
-这个损失函数的本质是**InfoNCE Loss**（Info Noise Contrastive Estimation），通过对比学习的方式让模型学会区分正负样本对，MoCo采用的对比学习损失函数就是InfoNCE loss，以此来训练模型，和我们本次介绍的公式是差不多的。
+这个损失函数的本质是 **InfoNCE Loss** （Info Noise Contrastive Estimation），通过对比学习的方式让模型学会区分正负样本对，MoCo 采用的对比学习损失函数就是 InfoNCE loss ，以此来训练模型，和我们本次介绍的公式是差不多的。
 
 对InfoNCE Loss感兴趣的小伙伴可以看看下面这篇文章：
 >对比学习损失（InfoNCE loss）与交叉熵损失的联系，以及温度系数的作用 - Youngshell的文章 - 知乎
