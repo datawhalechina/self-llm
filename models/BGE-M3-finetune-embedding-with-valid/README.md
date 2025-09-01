@@ -61,7 +61,6 @@ $$
 - $\tau$ 是温度参数
 - $\mathbf{y} = [0, 1, 2, \dots, N-1]$ 是标签向量， $N$ 为 batch 大小
 
-
 ### 3. 关键技术组件
 
 #### 3.1 向量归一化
@@ -133,7 +132,11 @@ $$
 
 **2. 单个查询的损失函数**
 
-**公式**：$\mathcal{L}_i = -\log \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}$
+**公式**：
+
+$$
+\mathcal{L}_i = -\log \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}
+$$
 
 **含义**：
 
@@ -521,7 +524,6 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_
 - $x_{i,j}$ 是第 $i$ 个样本在第 $j$ 个类别上的预测分数
 - $y_i$ 是第 $i$ 个样本的真实类别标签
 
-
 **在我们的 embedding 项目中的具体形式：**
 
 $$
@@ -544,7 +546,7 @@ $$
     \mathcal{L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})
     $$
 
-3. **简化形式**：对于 one-hot 编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$ 
+3. **简化形式**：对于 one-hot 编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$
 
     $$
     \mathcal{L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
