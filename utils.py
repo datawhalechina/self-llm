@@ -39,7 +39,7 @@ def update_contributors():
         name = task.split('@')[1]
         if name not in keys:
             continue
-        if "Lora" in task:
+        if "Lora" or "微调" in task:
             contributors[name]['task_num'] += 2
         else:
             contributors[name]['task_num'] += 1
@@ -102,15 +102,25 @@ def calculate_docker_hours():
         else:
             print(f"Error: {data['message']}")
 
-    print(f"-------------------- Docker Total RunTime hours --------------------")
-    print(f"Total Docker Count: {len(docker_list)}")
-    print(f"Docker Total RunTime hours: {total_hours}")
+    print(f"\n{'='*60}")
+    print(f"{' DOCKER RUNTIME SUMMARY ':^60}")
+    print(f"{'='*60}")
+    print(f"{'Total Containers:':<20} {len(docker_list):>10}")
+    print(f"{'Total Runtime:':<20} {total_hours:>10.1f} hours")
 
-    print(f"-------------------- Docker List --------------------")
-
-    docker_list = sorted(docker_list, key=lambda x: x['runtime_hour'], reverse=True)
-    for item in docker_list:
-        print(f"UUID: {item['uuid']}, Runtime Hour: {item['runtime_hour']}")
+    if docker_list:
+        print(f"{'='*60}")
+        print(f"{' DOCKER CONTAINERS (Sorted by Runtime) ':^60}")
+        print(f"{'='*60}")
+        print(f"{'Rank':<6} {'UUID':<35} {'Runtime (hours)':>15}")
+        print(f"{'-'*6}-{'-'*35}-{'-'*15}")
+        
+        docker_list = sorted(docker_list, key=lambda x: x['runtime_hour'], reverse=True)
+        for i, item in enumerate(docker_list, 1):
+            print(f"{i:<6} {item['uuid']:<35} {item['runtime_hour']:>15.1f}")
+        print(f"{'='*60}")
+    else:
+        print("No Docker containers found.")
     
     return docker_list, total_hours
 
