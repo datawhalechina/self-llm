@@ -42,24 +42,24 @@ Table 9: Detailed total batch size used in training for data with different sequ
 感兴趣的小伙伴可以去看《C-Pack: Packed Resources For General Chinese Embeddings》这篇论文，里面提到了很多关于bge的模型是如何训练的技巧。
 bge-m3的论文在：《M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation》
 
-我们的核心部分公式主要就是下面的两个，对于 batch 中的查询向量 $\mathbf{Q}$ 和文档向量 $\mathbf{P}$：
+我们的核心部分公式主要就是下面的两个，对于 batch 中的查询向量 $Q$ 和文档向量 $P$：
 
 相似度矩阵：
 
 $$
-\mathbf{S} = \frac{\mathbf{Q}\,\mathbf{P}^T}{\tau}
+S = \frac{Q\,P^T}{\tau}
 $$
 
 损失函数：
 
 $$
-\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})
+\mathcal{L} = \text{CrossEntropy}(S, y)
 $$
 
 其中有两个符号需要注意：
 
 - $\tau$ 是温度参数
-- $\mathbf{y} = [0, 1, 2, \dots, N-1]$ 是标签向量， $N$ 为 batch 大小
+- $y = [0, 1, 2, \dots, N-1]$ 是标签向量， $N$ 为 batch 大小
 
 ### 3. 关键技术组件
 
@@ -73,7 +73,7 @@ p_emb = F.normalize(p_emb, p=2, dim=-1)
 使用 L2 归一化确保所有向量都在单位球面上：
 
 $$
-\|\mathbf{q}\|_2 = 1, \quad \|\mathbf{p}\|_2 = 1
+\|q\|_2 = 1, \quad \|p\|_2 = 1
 $$
 
 其中 p=2：指定使用 L-p 范数，这里 p=2 即 L2（欧几里得）范数。也可以用 p=1（L1），也叫曼哈顿范数，不过这里的归一化不用 L1。
@@ -205,7 +205,7 @@ loss = F.cross_entropy(sim, labels)
 对于第 $i$ 个查询，损失函数为：
 
 $$
-\mathcal{L}_i = -\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
+{L}_i = -\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
 其中 $s_{i,j}$ 是第 $i$ 个查询与第 $j$ 个文档的相似度分数。
@@ -213,14 +213,15 @@ $$
 ##### 损失函数公式介绍
 
 下面我们来看看损失函数的部分内容。
+
 **1. 相似度矩阵计算**
 
- $\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
+ ${S} = \frac{{Q} {P}^T}{\tau}$
 
-- $\mathbf{Q}$：查询向量矩阵，形状为 $N \times D$，其中 $N$ 是batch大小，$D$ 是向量维度
-- $\mathbf{P}$：文档向量矩阵，形状为 $N \times D$
-- $\mathbf{P}^T$：文档向量矩阵的转置，形状为 $D \times N$
-- $\mathbf{Q} \mathbf{P}^T$：矩阵乘法，结果为 $N \times N$ 的相似度矩阵
+- ${Q}$：查询向量矩阵，形状为 $N \times D$，其中 $N$ 是batch大小，$D$ 是向量维度
+- ${P}$：文档向量矩阵，形状为 $N \times D$
+- ${P}^T$：文档向量矩阵的转置，形状为 $D \times N$
+- ${Q} {P}^T$：矩阵乘法，结果为 $N \times N$ 的相似度矩阵
 - $\tau$：温度参数（0.02），用于调节相似度分布
 
 这里通过矩阵计算每个查询与所有文档的余弦相似度，需要大家有一点线性代数的基础。
@@ -228,7 +229,7 @@ $$
 **2. 单个查询的损失函数**  
 
 $$
-\mathcal{L}_i = -\log \left( \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)} \right )
+{L}_i = -\log \left( \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)} \right )
 $$
 
 - $s_{i,i}$：第 $i$ 个查询与其对应正样本的相似度（对角线元素）
@@ -244,10 +245,10 @@ $$
 > 具体可以参考，pytorch的文档：<https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html>
 > pytorch上的说法:将 Softmax 函数应用于 n 维输入张量。将它们重新缩放到 n 维输出张量的元素位于[0,1]范围内并求和为 1。
 
-损失函数中的分数部分实际上是 **softmax 函数**（在做 log 前）的应用：
+损失函数中的分数部分实际上是softmax 函数（在做 log 前）的应用：
 
 $$
-\operatorname{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
+{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
 $$
 
 ![softmax函数曲线图](images/01-1.png)
@@ -282,12 +283,12 @@ $$
 
 **3. 整体损失函数**
 $$
-\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})
+\mathcal{L} = \text{CrossEntropy}(S, y)
 $$
 其中的符号含义：
 
-- $\mathbf{S}$：相似度矩阵
-- $\mathbf{y} = [0, 1, 2, ..., N-1]$：标签向量，表示每个查询的正确匹配位置
+- $S$：相似度矩阵
+- $y = [0, 1, 2, ..., N-1]$：标签向量，表示每个查询的正确匹配位置
 - 交叉熵损失将相似度矩阵转换为概率分布，与真实标签计算差异
 
 **4. 相似度矩阵 S 的具体形式**
@@ -622,10 +623,10 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_
 **在我们的 embedding 项目中的具体形式：**
 
 $$
-\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
+{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
-这里的 $s_{i,j}$ 是相似度矩阵 $\mathbf{S}$ 中的元素， $\tau$ 是温度参数。
+这里的 $s_{i,j}$ 是相似度矩阵 $S$ 中的元素， $\tau$ 是温度参数。
 
 **公式推导过程：**
 
@@ -638,19 +639,19 @@ $$
 2. **交叉熵**：衡量预测概率与真实标签的差异
 
     $$
-    \mathcal{L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})
+    {L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})
     $$
 
 3. **简化形式**：对于 one-hot 编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$
 
     $$
-    \mathcal{L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
+    {L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
     $$
 
 4. **批次平均**：对整个 batch 的损失求平均
 
     $$
-    \mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
+    {L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)
     $$
 
 这个损失函数的本质是 **InfoNCE Loss** （Info Noise Contrastive Estimation），通过对比学习的方式让模型学会区分正负样本对，MoCo 采用的对比学习损失函数就是 InfoNCE loss ，以此来训练模型，和我们本次介绍的公式是差不多的。
@@ -742,7 +743,7 @@ scheduler = get_cosine_schedule_with_warmup(optimizer, num_warmup_steps=int(0.1*
 
 #### 5.1 Recall@1
 
-$$\text{Recall@1} = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}[\text{rank}_i = 0]$$
+$$\text{Recall@1} = \frac{1}{N}\sum_{i=1}^{N}1[\text{rank}_i = 0]$$
 
 衡量模型将正确答案排在第一位的比例。
 
