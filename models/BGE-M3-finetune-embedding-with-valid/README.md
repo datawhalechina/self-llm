@@ -42,16 +42,16 @@ Table 9: Detailed total batch size used in training for data with different sequ
 感兴趣的小伙伴可以去看《C-Pack: Packed Resources For General Chinese Embeddings》这篇论文，里面提到了很多关于bge的模型是如何训练的技巧。
 bge-m3的论文在：《M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation》
 
-我们的核心部分公式主要就是下面的两个，对于batch中的查询向量$\mathbf{Q}$和文档向量$\mathbf{P}$：
+我们的核心部分公式主要就是下面的两个，对于batch中的查询向量 $\mathbf{Q}$ 和文档向量 $\mathbf{P}$：
 
-相似度矩阵：$\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
+相似度矩阵： $\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
 
-损失函数：$\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})$
+损失函数： $\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})$
 
 其中有两个符号需要注意：
 
 - $\tau$ 是温度参数
-- $\mathbf{y} = [0, 1, 2, ..., N-1]$ 是标签向量，$N$为batch大小
+- $\mathbf{y} = [0, 1, 2, ..., N-1]$ 是标签向量， $N$ 为 batch 大小
 
 
 ### 3. 关键技术组件
@@ -63,10 +63,13 @@ q_emb = F.normalize(q_emb, p=2, dim=-1)
 p_emb = F.normalize(p_emb, p=2, dim=-1)
 ```
 
-使用L2归一化确保所有向量都在单位球面上：
-$$\|\mathbf{q}\|_2 = 1, \|\mathbf{p}\|_2 = 1$$
+使用 L2 归一化确保所有向量都在单位球面上：
 
-其中p=2：指定使用 L-p 范数，这里 p=2 即 L2（欧几里得）范数。也可以用 p=1（L1），也叫曼哈顿范数，不过归一化不用L1。
+$$
+\|\mathbf{q}\|_2 = 1, \quad \|\mathbf{p}\|_2 = 1
+$$
+
+其中 p=2：指定使用 L-p 范数，这里 p=2 即 L2（欧几里得）范数。也可以用 p=1（L1），也叫曼哈顿范数，不过这里的归一化不用 L1。
 
 #### 3.2 温度参数（Temperature）
 
@@ -75,7 +78,7 @@ temperature = 0.02
 sim = q_emb @ p_emb.t() / self.temperature
 ```
 
-温度参数$\tau$控制相似度分布的尖锐程度。较小的温度值使模型更容易区分相似和不相似的样本。
+温度参数 $\tau$ 控制相似度分布的尖锐程度。较小的温度值使模型更容易区分相似和不相似的样本。从公式来看，温度值就是
 
 #### 3.3 损失函数
 
@@ -86,26 +89,29 @@ labels = torch.arange(sim.size(0), device=sim.device, dtype=torch.long)
 loss = F.cross_entropy(sim, labels)
 ```
 
-交叉熵损失将embedding学习转换为分类问题的核心在于：
+交叉熵损失将 embedding 学习转换为分类问题的核心在于：
 
-在一个batch内，我们将每个查询与他对应的正确文档匹配看作分类任务。
+在一个 batch 内，我们将每个查询与他对应的正确文档匹配看作分类任务。
 
 其中相似度矩阵的每一行代表查询对所有候选文档的分类分数，对角线元素应该是正确类别的最高分。
 
-通过创建标签[0,1,2,...,batch_size-1]，让模型学习将第i个查询分类到第i个文档。
+通过创建标签 [0, 1, 2, ..., batch_size-1]，让模型学习将第 i 个查询分类到第 i 个文档。
 
-这样优化分类损失的同时，模型就间接学会了让语义相似的文本在embedding空间中更接近，实现了从向量相似度优化到分类问题的巧妙转换。
+这样优化分类损失的同时，模型就间接学会了让语义相似的文本在 embedding 空间中更接近，实现了从向量相似度优化到分类问题的巧妙转换。
 
-对于第$i$个查询，损失函数为：
-$$\mathcal{L}_i = -\log \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}$$
+对于第 $i$ 个查询，损失函数为：
 
-其中$s_{i,j}$是第$i$个查询与第$j$个文档的相似度分数。
+$$
+\mathcal{L}_i = -\log \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}
+$$
+
+其中 $s_{i,j}$ 是第 $i$ 个查询与第 $j$ 个文档的相似度分数。
 
 ##### 损失函数公式介绍
 
 **1. 相似度矩阵计算**
 
-**公式**：$\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
+**公式**： $\mathbf{S} = \frac{\mathbf{Q} \mathbf{P}^T}{\tau}$
 
 **含义**：
 
@@ -136,9 +142,11 @@ $$\mathcal{L}_i = -\log \frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\ta
 > 具体可以参考，pytorch的文档：<https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html>
 > pytorch上的说法:将 Softmax 函数应用于 n 维输入张量。将它们重新缩放到 n 维输出张量的元素位于[0,1]范围内并求和为 1。
 
-损失函数中的分数部分实际上是**softmax函数**的应用：
+损失函数中的分数部分实际上是 **softmax 函数**（在做 log 前）的应用：
 
-$$\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}$$
+$$
+\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}
+$$
 
 ![softmax函数曲线图](images/01-1.png)
 
@@ -156,12 +164,20 @@ $$\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}$$
 
 **具体示例**：
 
-假设有三个相似度值：$[8.5, 2.1, 1.8]$，温度参数$\tau = 0.02$
+假设有三个相似度值： $[8.5, 2.1, 1.8]$，温度参数 $\tau = 0.02$
 
-1. **温度缩放**：$[8.5/0.02, 2.1/0.02, 1.8/0.02] = [425, 105, 90]$
-2. **指数运算**：$[\exp(425), \exp(105), \exp(90)]$
+1. **温度缩放**： $[8.5/0.02, 2.1/0.02, 1.8/0.02] = [425, 105, 90]$
+2. **指数运算**： $[\exp(425), \exp(105), \exp(90)]$
 3. **softmax计算**：
-   $$[\frac{\exp(425)}{\exp(425)+\exp(105)+\exp(90)}, \frac{\exp(105)}{\exp(425)+\exp(105)+\exp(90)}, \frac{\exp(90)}{\exp(425)+\exp(105)+\exp(90)}]$$
+
+$$
+\left[
+\frac{\exp(425)}{\exp(425)+\exp(105)+\exp(90)},
+\frac{\exp(105)}{\exp(425)+\exp(105)+\exp(90)},
+\frac{\exp(90)}{\exp(425)+\exp(105)+\exp(90)}
+\right]
+$$
+
 4. **结果**：接近$[1, 0, 0]$的概率分布
 
 **为什么使用softmax？**
@@ -186,7 +202,7 @@ $$\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_{j=1}^{n}\exp(x_j)}$$
 
 **3. 整体损失函数**
 
-**公式**：$\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})$
+**公式**： $\mathcal{L} = \text{CrossEntropy}(\mathbf{S}, \mathbf{y})$
 
 **含义**：
 
@@ -287,22 +303,6 @@ def cross_entropy(
         reduction (str, optional): 'none' | 'mean' | 'sum' (default: 'mean')
         label_smoothing (float, optional): Smoothing factor in [0.0, 1.0] (default: 0.0)
     """
-```
-
-**中文版本：**
-
-```python
-def cross_entropy(
-    input: Tensor,                    # 输入：模型的预测值（未归一化的logits）
-    target: Tensor,                   # 目标：真实的类别索引或类别概率
-    weight: Optional[Tensor] = None,  # 权重：各类别的手动权重调整（可选）
-    size_average: Optional[bool] = None,  # 已弃用（见reduction参数）
-    ignore_index: int = -100,         # 忽略索引：指定要忽略的目标值（默认-100）
-    reduce: Optional[bool] = None,    # 已弃用（见reduction参数）
-    reduction: str = "mean",          # 归约方式：'none'不归约 | 'mean'求平均 | 'sum'求和
-    label_smoothing: float = 0.0,     # 标签平滑：[0.0, 1.0]范围内的平滑因子
-) -> Tensor:                         # 返回：计算得到的交叉熵损失值
-    """计算输入logits和目标之间的交叉熵损失
     
     参数说明：
         input (Tensor): 预测的未归一化logits，形状为 (N, C) 或 (C)
@@ -621,15 +621,19 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\s
 **公式推导过程：**
 
 1. **Softmax函数**：将预测分数转换为概率分布
+
    $$p_{i,j} = \frac{\exp(x_{i,j})}{\sum_{k=1}^{C}\exp(x_{i,k})}$$
 
 2. **交叉熵**：衡量预测概率与真实标签的差异
+
    $$\mathcal{L}_i = -\sum_{j=1}^{C}y_{i,j}\log(p_{i,j})$$
 
 3. **简化形式**：对于one-hot编码的真实标签，只有 $j=y_i$ 时 $y_{i,j}=1$
+
    $$\mathcal{L}_i = -\log(p_{i,y_i}) = -\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
 
 4. **批次平均**：对整个batch的损失求平均
+
    $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
 
 这个损失函数的本质是**InfoNCE Loss**（Info Noise Contrastive Estimation），通过对比学习的方式让模型学会区分正负样本对，MoCo采用的对比学习损失函数就是InfoNCE loss，以此来训练模型，和我们本次介绍的公式是差不多的。
