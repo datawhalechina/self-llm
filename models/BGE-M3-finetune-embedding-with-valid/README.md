@@ -53,7 +53,7 @@ $$
 损失函数：
 
 $$
-\mathcal{L} = \text{CrossEntropy}(S, y)
+L = \text{CrossEntropy}(S, y)
 $$
 
 其中有两个符号需要注意：
@@ -108,7 +108,7 @@ $P(\text{正样本}) = \frac{2.46}{2.46 + 2.23 + 1.65 + 1.22} = \frac{2.46}{7.56
 
 模型给出的概率分布比较平滑，它并没有很强的信心认为正样本就是唯一的正确答案。这样一来，损失函数计算出的惩罚信号就不够强，模型学习的动力也就不那么足。
 
-另外一种情况，使用较低的温度 $\tau = 0.1$ 。
+另外一种情况，使用较低的温度 $\tau = 0.1$。
 
 现在，我们把温度降到 0.1。用温度来缩放相似度分数：
 
@@ -284,7 +284,7 @@ $$
 **3. 整体损失函数**
 
 $$
-\mathcal{L} = \text{CrossEntropy}(S, y)
+L = \text{CrossEntropy}(S, y)
 $$
 
 其中的符号含义：
@@ -359,7 +359,7 @@ loss
 -0.0
 ```
 
-输出结果和我们从上面理论推导出来的很类似，因为$\exp(425)$已经远远大于$\exp(105)$了。
+输出结果和我们从上面理论推导出来的很类似，因为 $\exp(425)$ 已经远远大于 $\exp(105)$ 了。
 
 **训练目标**：
 
@@ -613,7 +613,7 @@ class CrossEntropyLoss(_WeightedLoss):
 
 上面的内容可能不适合直接看，下面我们来换一种表达方式来看看公式长什么样，对于离散标签（类别索引）的情况，交叉熵损失函数的公式为：
 
-$$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
+$$L = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(x_{i,y_i})}{\sum_{j=1}^{C}\exp(x_{i,j})}\right)$$
 
 其中：
 
@@ -628,7 +628,7 @@ $$
 {L} = -\frac{1}{N}\sum_{i=1}^{N}\log\left(\frac{\exp(s_{i,i}/\tau)}{\sum_{j=1}^{N}\exp(s_{i,j}/\tau)}\right)
 $$
 
-这里的 $s_{i,j}$ 是相似度矩阵 $S$ 中的元素， $\tau$ 是温度参数。
+这里的 $s_{i,j}$ 是相似度矩阵 $S$ 中的元素，$\tau$ 是温度参数。
 
 **公式推导过程：**
 
@@ -688,7 +688,7 @@ loss = out['loss'] / accumulation
 通过累积梯度来模拟更大的batch size：
 $$\nabla_{\text{effective}} = \frac{1}{K}\sum_{k=1}^{K}\nabla_k$$
 
-其中$K$是累积步数。
+其中 $K$ 是累积步数。
 梯度积累主要是为了解决显存不足的问题，在训练深度学习模型时，我们通常倾向于使用更大的批量大小（Batch Size），然而，问题在于，批量大小的增加会直接导致显存占用的增加。所以，我们更多的是尽可能在自己的显存允许范围内进行调整批次大小，当然，批次大小也不是越大越好，更多的是适度的值，话不多说，快速进入正题，举个例子让大家理解。假设我们的显存大小只允许我们设置 batch_size = 8，但我们通过实验发现，使用 batch_size = 64 的效果会更好。这时候就可以使用梯度累积。
 取一小批量数据（大小为8），进行一次前向传播和反向传播，计算出梯度。但不立即更新模型参数，而是将这个梯度累加起来。
 
@@ -826,8 +826,8 @@ BGE-M3 是一个多功能的嵌入模型，具有以下特点：
 
 **核心文件：**
 
-- `train_embedding_with_validation.ipynb` - 主要的训练和验证Jupyter notebook
-- `C-MTEB_retrieval_evaluation.ipynb` - 用于C-MTEB检索评估的notebook
+- `01-train_embedding_with_validation.ipynb` - 主要的训练和验证Jupyter notebook
+- `02-C-MTEB_retrieval_evaluation.ipynb` - 用于C-MTEB检索评估的notebook
 - `requirements.txt` - 项目依赖包列表
 
 **模型相关目录：**
