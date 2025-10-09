@@ -74,6 +74,13 @@
 
 ### 已支持模型
 
+- [Qwen3-VL-30B-A3B-Instruct](https://github.com/QwenLM/Qwen3-VL)
+  - [ ] Qwen3-VL 模型结构解析（DeepStack解析）
+  - [ ] Qwen3-VL-30B-A3B-Instruct FastApi 部署调用
+  - [ ] Qwen3-VL-30B-A3B-Instruct WebDemo 部署
+  - [ ] Qwen3-VL-30B-A3B-Instruct vLLM 部署
+  - [ ] Qwen3-VL-30B-A3B-Instruct Lora 可视化微调案例-LaTexOCR
+
 - [BGE-M3](https://huggingface.co/BAAI/bge-m3)
   - [x] [代码检索场景微调实战 微调BGE-M3 embedding模型](./models/BGE-M3-finetune-embedding-with-valid/README.md) @李秀奇 
 
