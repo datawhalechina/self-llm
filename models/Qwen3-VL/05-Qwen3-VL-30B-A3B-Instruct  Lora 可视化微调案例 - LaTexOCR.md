@@ -4,7 +4,6 @@
 
 Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长度、增强的空间和视频动态理解方面都有显著改进。具有适用于从边缘到云的 Dense 和 MoE架构，并具有 Instruct 和推理增强型 Thinking 版本，可实现灵活的按需部署。
 
-
 详情可以访问[Qwen3-VL](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct)。
 
 值得注意的一个增强功能是OCR能力，模型卡片中介绍到模型能支持 32 种语言（从 19 种增加）；在弱光、模糊和倾斜条件下表现稳健；更适合处理稀有/古代字符和行话；改进了长文档结构解析。
@@ -19,13 +18,14 @@ Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长
 环境配置分为三步：
 
 确保你的电脑上至少有一张英伟达显卡，并已安装好了CUDA环境。本次的训练的模型是比较大的，需要大概124GB的显存，建议用两张H20才能够完成本次实验。
+
 ![使用的显卡](./images/05-1.png)
 
 安装Python（版本>=3.12）以及能够调用CUDA加速的PyTorch，镜像采用 Pytorch2.8.0 Python3.12 CUDA12.8。
 
-![使用的镜像](/images/05-2.png)
+![Qwen3模型](/images/05-2.png)
 
-安装与Qwen2-VL微调相关的第三方库，可以使用以下命令：
+安装与Qwen3-VL微调相关的第三方库，可以使用以下命令：
 
 ```bash
 python -m pip install --upgrade pip
@@ -155,6 +155,8 @@ modelscope download --model Qwen/Qwen3-VL-30B-A3B-Instruct  --local_dir ./Qwen3-
 ```
 
 如果你需要使用我的代码在AutoDL上直接运行，那么你需要将模型下载到`/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct`。
+
+fs会长时间占用用户的空间，如果用户没有及时清理的话会一直扣费，所以我建议你换成 auto-tmp 比较好，注意，换成了 auto-tmp 之后你需要修改下加载模型的代码。
 
 ## 集成SwanLab
 
@@ -750,6 +752,7 @@ if __name__ == "__main__":
 ##
 
 ## 模型微调效果
+
 模型微调图表。
 ![模型微调图表](images/05-7.png)
 微调前后模型效果对比1。
