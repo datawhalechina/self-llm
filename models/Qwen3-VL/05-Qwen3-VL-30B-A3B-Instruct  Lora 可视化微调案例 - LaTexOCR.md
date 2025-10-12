@@ -39,7 +39,7 @@ Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长
 
 安装Python（版本>=3.12）以及能够调用CUDA加速的PyTorch，镜像采用 Pytorch2.8.0 Python3.12 CUDA12.8。
 
-![Qwen3模型](/images/05-2.png)
+![Qwen3模型](./images/05-2.png)
 
 安装与Qwen3-VL微调相关的第三方库，可以使用以下命令：
 
