@@ -10,8 +10,24 @@ Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长
 
 本文我们将简要介绍基于 transformers、peft 等框架，使用 Qwen/Qwen3-VL-30B-A3B-Instruct 模型在 LaTeX_OCR 上进行Lora微调训练，同时使用 SwanLab 监控训练过程与评估模型效果。
 
+- 训练使用代码：在同级目录同名目录下
+- 数据集：[LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)
+- 模型：[Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary)
+- 显存需求：124GB+，如果显存不足，可以将per_device_train_batch_size调小，笔者使用两张 H20 进行训练。
+  
 **目录**
-[toc]
+
+- [Qwen3-VL-30B-A3B-Instruct  Lora 可视化微调案例 - LaTexOCR](#qwen3-vl-30b-a3b-instruct--lora-可视化微调案例---latexocr)
+  - [环境配置](#环境配置)
+  - [准备数据集](#准备数据集)
+  - [模型下载](#模型下载)
+  - [集成SwanLab](#集成swanlab)
+  - [Lora 简介](#lora-简介)
+  - [Lora 配置](#lora-配置)
+  - [微调的完整代码](#微调的完整代码)
+  - [对比微调前后模型的输出结果](#对比微调前后模型的输出结果)
+  - [模型微调效果](#模型微调效果)
+  - [补充模型训练信息](#补充模型训练信息)
 
 ## 环境配置
 
@@ -749,18 +765,23 @@ if __name__ == "__main__":
 
 </details>
 
-##
-
 ## 模型微调效果
 
 模型微调图表。
+
 ![模型微调图表](images/05-7.png)
+
 微调前后模型效果对比1。
+
 ![微调前后模型效果对比](images/05-8.png)
+
 微调前后模型效果对比2。
+
 ![微调前后模型效果对比](images/05-9.png)
 微调前后模型效果对比3。
+
 ![微调前后模型效果对比](images/05-10.png)
+
 上面显示的是微调前后模型效果对比。
 
 虽然看似部分示例里面前后对比是有提升的，不过我也发现模型在微调之后出现了其他的问题。
