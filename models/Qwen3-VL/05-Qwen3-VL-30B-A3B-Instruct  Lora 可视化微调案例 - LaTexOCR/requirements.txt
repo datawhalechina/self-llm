@@ -1,5 +1,6 @@
 notebook==7.4.7
 numpy<2.0
+# numpy 如果报错可以尝试对numpy进行更新
 datasets==4.2.0
 peft==0.17.1
 accelerate==1.10.1

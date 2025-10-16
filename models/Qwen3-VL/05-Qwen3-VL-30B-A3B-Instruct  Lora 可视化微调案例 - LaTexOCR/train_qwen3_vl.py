@@ -165,7 +165,13 @@ def main():
     test_data = ds["test"].select(range(int(len(ds["test"]) * data_fraction)))
     print(f"测试数据大小: {len(test_data)}")
 
-    model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+    # model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+    # model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
+    # output_dir = "/root/autodl-fs/output/Qwen3-VL-30B"
+    
+    model_id = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
+    output_dir = "/root/autodl-tmp/Qwen3-VL-4B"
+    
 
     tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir=os.environ.get("HF_HOME", "./"), use_fast=False, trust_remote_code=True)
     processor = AutoProcessor.from_pretrained(model_id, cache_dir=os.environ.get("HF_HOME", "./"), use_fast=False)
@@ -228,7 +234,6 @@ def main():
         },
     )
 
-    output_dir = "/root/autodl-fs/output/Qwen3-VL-30B"
     args = TrainingArguments(
         output_dir=output_dir,
         per_device_train_batch_size=8, # 每个GPU的batch size

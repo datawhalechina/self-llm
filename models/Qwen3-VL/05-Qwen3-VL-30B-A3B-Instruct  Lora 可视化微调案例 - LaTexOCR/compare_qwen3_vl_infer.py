@@ -13,8 +13,10 @@ from qwen_vl_utils import process_vision_info
 
 PROMPT_TEXT = "Transcribe the LaTeX of this image."
 # 使用本地基础模型与LoRA目录
-BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
-PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
+# BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+# PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
+BASE_MODEL_ID = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
+PEFT_DIR = "/root/autodl-tmp/Qwen3-VL-4B"
 # 是否在内存内合并LoRA（不落盘）
 MERGE_LORA_IN_MEMORY = True
 NUM_TEST_SAMPLES = 5

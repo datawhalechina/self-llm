@@ -1,4 +1,4 @@
-# Qwen3-VL-30B-A3B-Instruct  Lora 可视化微调案例 - LaTexOCR
+# Qwen/Qwen3-VL-4B-Instruct  Lora 可视化微调案例 - LaTexOCR
 
 [Qwen3-VL](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct)是截止2025年10月以来 Qwen 系列中最强的视觉语言模型。
 
@@ -8,16 +8,19 @@ Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长
 
 值得注意的一个增强功能是OCR能力，模型卡片中介绍到模型能支持 32 种语言（从 19 种增加）；在弱光、模糊和倾斜条件下表现稳健；更适合处理稀有/古代字符和行话；改进了长文档结构解析。
 
-本文我们将简要介绍基于 transformers、peft 等框架，使用 Qwen/Qwen3-VL-30B-A3B-Instruct 模型在 LaTeX_OCR 上进行Lora微调训练，同时使用 SwanLab 监控训练过程与评估模型效果。
+本文我们将简要介绍基于 transformers、peft 等框架，使用 Qwen/Qwen3-VL-30B-A3B-Instruct 和 Qwen3-VL-4B-Instruct 模型在 LaTeX_OCR 上进行Lora微调训练，同时使用 SwanLab 监控训练过程与评估模型效果。
 
-- 训练使用代码：在同级目录同名目录下
-- 数据集：[LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)
-- 模型：[Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary)
-- 显存需求：124GB+，如果显存不足，可以将per_device_train_batch_size调小，笔者使用两张 H20 进行训练。
-  
+> 备注：本教程使用的代码同时支持 2.5 系列的模型，比如 Qwen/Qwen2.5-VL-3B-Instruct 在本脚本上可以正常运行。
+
+- **训练使用代码**：在同级目录同名目录下
+- **数据集**：[LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)
+- **模型**：[Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary) & [Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary)
+- **Qwen/Qwen3-VL-30B-A3B-Instruct 显存需求**：124+GB，如果显存不足，可以将per_device_train_batch_size调小，笔者使用两张 H20 进行训练，batch size 默认是8，基于此设置，大概需要 15 分钟，批次大小对时间有影响。
+- **Qwen/Qwen2.5-VL-3B-Instruct 显存需求**：20+GB，笔者使用 1 张 H20 进行训练，你也可以使用 24 GB显存的显卡，比如 3090，4090 等，batch size 为 1 的时候需要消耗 5 分钟。
+
 **目录**
 
-- [Qwen3-VL-30B-A3B-Instruct  Lora 可视化微调案例 - LaTexOCR](#qwen3-vl-30b-a3b-instruct--lora-可视化微调案例---latexocr)
+- [Qwen/Qwen3-VL-4B-Instruct  Lora 可视化微调案例 - LaTexOCR](#qwenqwen3-vl-4b-instruct--lora-可视化微调案例---latexocr)
   - [环境配置](#环境配置)
   - [准备数据集](#准备数据集)
   - [模型下载](#模型下载)
@@ -25,17 +28,30 @@ Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长
   - [Lora 简介](#lora-简介)
   - [Lora 配置](#lora-配置)
   - [微调的完整代码](#微调的完整代码)
+    - [代码](#代码)
+    - [训练配置](#训练配置)
+    - [模型路径设置](#模型路径设置)
   - [对比微调前后模型的输出结果](#对比微调前后模型的输出结果)
+    - [代码](#代码-1)
+    - [运行配置](#运行配置)
   - [模型微调效果](#模型微调效果)
+    - [Qwen/Qwen3-VL-30B-A3B-Instruct](#qwenqwen3-vl-30b-a3b-instruct)
+    - [Qwen/Qwen3-VL-4B-Instruct](#qwenqwen3-vl-4b-instruct)
+    - [微调后模型效果展示](#微调后模型效果展示)
+      - [Qwen/Qwen3-VL-30B-A3B-Instruct](#qwenqwen3-vl-30b-a3b-instruct-1)
+      - [Qwen/Qwen3-VL-4B-Instruct](#qwenqwen3-vl-4b-instruct-1)
+      - [总结](#总结)
   - [补充模型训练信息](#补充模型训练信息)
+  - [常见错误解决办法](#常见错误解决办法)
 
 ## 环境配置
 
-环境配置分为三步：
+确保你的电脑上至少有一张英伟达显卡，并已安装好了CUDA环境。本次的训练的模型如果你选择的是Qwen/Qwen3-VL-30B-A3B-Instruct，那么是比较大的，需要大概124GB的显存，建议用两张H20才能够完成本次实验。
 
-确保你的电脑上至少有一张英伟达显卡，并已安装好了CUDA环境。本次的训练的模型是比较大的，需要大概124GB的显存，建议用两张H20才能够完成本次实验。
+![使用的显卡](./images/05-1-1.png)
 
-![使用的显卡](./images/05-1.png)
+如果计算资源有限，建议使用 Qwen3-VL-4B-Instruct 完成本次实验，只需要一张 24 GB 的显卡即可完成本次实验。
+![使用的显卡](./images/05-1-2.png)
 
 安装Python（版本>=3.12）以及能够调用CUDA加速的PyTorch，镜像采用 Pytorch2.8.0 Python3.12 CUDA12.8。
 
@@ -95,9 +111,11 @@ linxy/LaTeX_OCR是一个开源数据集，里面有五个数据集。
 5.human_handwrite_print 是来自 human_handwrite 的印刷体数据集，公式部分和 human_handwrite 相同，图片部分由公式用 LaTeX 渲染而来。
 
 你可以去源数据集的页面查看数据集的子集，比如下图显示的就是数据集的各个子集字段名。
+每个数据集基本都是只有两个字段，比如`text`和`image`。
 ![数据集的子集](images/05-3.png)
 
 我们可以使用下面的代码进行数据集的加载。
+
 为了便于实验，你可以在 `name` 中选择 `small`、`full`、`synthetic_handwrite`、`human_handwrite` 或 `human_handwrite_print`，并通过 `split` 指定 `train`、`validation`、`test` 等划分。
 
 下面示例展示如何加载训练划分并快速检查样本：
@@ -162,13 +180,24 @@ DatasetDict({
 
 为了避免由于网络问题导致的模型下载失败，我们使用modelscope对模型进行下载。
 
-模型的地址在：[Qwen/Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary)：<https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary>
+模型的地址在：
+
+- [Qwen/Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary)：<https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary>
+- [Qwen/Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary)：<https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary>
 
 你可以使用下面的命令，将模型下载到指定的目录下面，下面是以将模型下载到 `./Qwen3-VL-30B-A3B-Instruct` 目录下为例：
 
 ```bash
 modelscope download --model Qwen/Qwen3-VL-30B-A3B-Instruct  --local_dir ./Qwen3-VL-30B-A3B-Instruct
 ```
+
+或者是使用下面的命令，下载`Qwen/Qwen3-VL-4B-Instruct`模型到指定的目录下：
+
+```bash
+modelscope download --model Qwen/Qwen3-VL-4B-Instruct  --local_dir ./Qwen3-VL-4B-Instruct
+```
+
+> 需要注意的是，Qwen/Qwen3-VL-30B-A3B-Instruct 大概需要60GB的存储空间，Qwen/Qwen3-VL-4B-Instruct 大概需要8GB的存储空间，在开始下载之前，如果需要微调的是 30 B的模型，确保磁盘空间闲置大小在 65 GB 以上，如果是 4 B 的模型，存储空间大小要在 10 GB 以上。
 
 如果你需要使用我的代码在AutoDL上直接运行，那么你需要将模型下载到`/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct`。
 
@@ -252,19 +281,28 @@ lora_config_dict = {
 
 上面是我们创建Lora配置的代码。如果你需要调整，可以调整lora_config_dict和target_modules，主要是设置了他们。
 
-target_modules：LoRA 适配器要作用于模型中的哪些模块。这里设置为 ["q_proj", "k_proj", "v_proj", "o_proj"]，这些都是 Transformer 模型自注意力机制中的 核心线性投射层，负责生成查询、键、值和输出。
+target_modules：LoRA 适配器要作用于模型中的哪些模块。这里设置为 ["q_proj", "k_proj", "v_proj", "o_proj"].
+
+这些都是 Transformer 模型自注意力机制中的 核心线性投射层，负责生成查询、键、值和输出。
 
 r=128: 这是 LoRA 的 秩 rank。
 
-lora_alpha=16: 这是 LoRA 的 缩放因子 alpha。
+lora_alpha=16: 这是 LoRA 的 缩放因子 alpha,也就是公式中的α 。
 
 lora_dropout=0: 这个参数设置了 LoRA 层的 丢弃率 dropout rate。
 论文中完整的前向传播公式是下面这样的。
+
 $$h=W_{0}x+\Delta Wx=W_{0}x+BAx$$
 
 α 是一个常量，这样做的好处是当改变秩 r 的大小时，可以减少重新调整超参数的需要 。
 
+带上 α 的前向传播公式是下面这样的。
+
+$$h = W_{0}x + \frac{α}{r}BAx$$
+
 ## 微调的完整代码
+
+### 代码
 
 <details><summary>点击展开/收起微调的完整代码</summary>
 
@@ -436,7 +474,13 @@ def main():
     test_data = ds["test"].select(range(int(len(ds["test"]) * data_fraction)))
     print(f"测试数据大小: {len(test_data)}")
 
-    model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+    # model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+    # model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
+    # output_dir = "/root/autodl-fs/output/Qwen3-VL-30B"
+    
+    model_id = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
+    output_dir = "/root/autodl-tmp/Qwen3-VL-4B"
+    
 
     tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir=os.environ.get("HF_HOME", "./"), use_fast=False, trust_remote_code=True)
     processor = AutoProcessor.from_pretrained(model_id, cache_dir=os.environ.get("HF_HOME", "./"), use_fast=False)
@@ -499,7 +543,6 @@ def main():
         },
     )
 
-    output_dir = "/root/autodl-fs/output/Qwen3-VL-30B"
     args = TrainingArguments(
         output_dir=output_dir,
         per_device_train_batch_size=8, # 每个GPU的batch size
@@ -553,12 +596,51 @@ if __name__ == "__main__":
 
 </details>
 
+### 训练配置
+
+训练配置如下：
+
+```python
+args = TrainingArguments(
+    output_dir=output_dir,
+    per_device_train_batch_size=8, # 每个GPU的batch size
+    gradient_accumulation_steps=1, # 梯度累积步数
+    logging_steps=10,
+    logging_first_step=5,
+    num_train_epochs=8, # 训练轮数
+    save_steps=50, # 每多少步保存一次模型
+    save_total_limit=3, # 最多保存模型数量
+    learning_rate=1e-4, # 学习率
+    gradient_checkpointing=True, # 梯度检查点
+    gradient_checkpointing_kwargs={"use_reentrant": False},
+    report_to="none",
+)
+```
+
+### 模型路径设置
+
+模型路径设置的部分是：
+
+```python
+# model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+# model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
+# output_dir = "/root/autodl-fs/output/Qwen3-VL-30B"
+
+model_id = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
+output_dir = "/root/autodl-tmp/Qwen3-VL-4B"
+```
+
+你可以基于我原有的代码进行修改，可以替换成你想要进行微调的模型。
+
 ## 对比微调前后模型的输出结果
+
+### 代码
 
 我们可以使用下面的代码来对比微调前后模型的输出结果。
 <details><summary>点击查看代码</summary>
 
 ```python
+
 import os
 import sys
 from typing import List, Tuple
@@ -574,8 +656,10 @@ from qwen_vl_utils import process_vision_info
 
 PROMPT_TEXT = "Transcribe the LaTeX of this image."
 # 使用本地基础模型与LoRA目录
-BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
-PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
+# BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+# PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
+BASE_MODEL_ID = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
+PEFT_DIR = "/root/autodl-tmp/Qwen3-VL-4B"
 # 是否在内存内合并LoRA（不落盘）
 MERGE_LORA_IN_MEMORY = True
 NUM_TEST_SAMPLES = 5
@@ -761,15 +845,51 @@ def main():
 if __name__ == "__main__":
     main()
 
+
 ```
 
 </details>
 
+### 运行配置
+
+模型路径设置的位置和其他的一些设置项，在文件的开始部分代码中，具体如下。
+
+```python
+PROMPT_TEXT = "Transcribe the LaTeX of this image." # 使用的提示词。
+
+# 使用本地基础模型与LoRA目录
+# BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
+# PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
+BASE_MODEL_ID = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
+PEFT_DIR = "/root/autodl-tmp/Qwen3-VL-4B"
+# 是否在内存内合并LoRA（不落盘）
+MERGE_LORA_IN_MEMORY = True
+NUM_TEST_SAMPLES = 5 # 是使用的测试样本数
+```
+
 ## 模型微调效果
 
-模型微调图表。
+### Qwen/Qwen3-VL-30B-A3B-Instruct
 
-![模型微调图表](images/05-7.png)
+下面的图是`Qwen/Qwen3-VL-30B-A3B-Instruct`模型微调图表，使用的batch size为8。
+
+![模型微调图表](images/05-7-1.png)
+
+从图的效果看，loss基本都处于一个稳定下降的状态，证明我们的训练效果是在拟合数据集的。
+
+### Qwen/Qwen3-VL-4B-Instruct
+
+下面的图是`Qwen/Qwen3-VL-4B-Instruct`模型微调图表，batch size为1。
+
+![模型微调图表](images/05-7-2.png)
+
+下面的图是`qwen/Qwen3-VL-4B-Instruct`模型微调图表，batch size为8。
+
+![模型微调图表](images/05-7-3.png)
+
+### 微调后模型效果展示
+
+#### Qwen/Qwen3-VL-30B-A3B-Instruct
 
 微调前后模型效果对比1。
 
@@ -782,17 +902,33 @@ if __name__ == "__main__":
 
 ![微调前后模型效果对比](images/05-10.png)
 
+#### Qwen/Qwen3-VL-4B-Instruct
+
+微调前后模型效果对比1，这里是使用batch size为1，训练出来的效果，可以看到这里是较差的提取效果。
+![微调前后模型效果对比](images/05-10-1.png)
+
+微调前后模型效果对比2，这里是使用batch size为8，训练出来的效果，可以看到效果比之前好很多。
+![微调前后模型效果对比](images/05-10-2.png)
+
+#### 总结
+
 上面显示的是微调前后模型效果对比。
 
-虽然看似部分示例里面前后对比是有提升的，不过我也发现模型在微调之后出现了其他的问题。
+虽然看似 Qwen/Qwen3-VL-30B-A3B-Instruct 部分示例里面前后对比是有提升的，不过我也发现模型在微调之后出现了其他的问题。
 
 比如偶尔有一些示例不如微调前的模型，我觉得是模型有点过拟合导致的。因为从微调的图表中就显示了，我们训练的轮次有些过于多了。
 
-本次模型微调里面我也不仅仅微调了一次，而是多次，刚开始我只是设置了一轮的微调，但是效果并不好，微调前后模型输出的内容几乎一模一样，两轮也是类似的。
+本次模型微调里面我也不仅仅微调了一次，而是多次。
+
+刚开始我只是设置了一轮的微调，但是效果并不好，微调前后模型输出的内容几乎一模一样，两轮也是类似的。
 
 接着我慢慢调整训练轮次，在轮次到9的时候，很明显loss不再是一直向下，反倒是有部分上升了，我觉得就先设置训练轮次为8了。
 
-本来我是想要使用手写公式识别的数据集进行训练的，不过训练的过程中，模型拟合似乎并不好，因为手写的公式数据集里面，不同的一个字符写法可能有很多种，如果我在仅仅使用少量数据集的情况下进行训练，模型微调的效果并不好，于是，换回了非手写的公式。
+本来我是想要使用手写公式识别的数据集进行训练的。
+
+不过训练的过程中，模型拟合似乎并不好，因为手写的公式数据集里面，不同的一个字符写法可能有很多种，如果我在仅仅使用少量数据集的情况下进行训练，模型微调的效果并不好，于是，换回了非手写的公式。
+
+还有一点是 batch size 的设置，这个参数对训练结果有较大的影响，从 Qwen/Qwen3-VL-4B-Instruct 能看出来， batch size 设置为1的时候，模型训练的效果会差一些，我估计是过拟合了，batch size 设置为8的时候，效果相比来说比较好。
 
 感兴趣的读者，可以试试其他的参数设置，比如rank，lora_alpha、学习率，batch_size等等,然后对比前后调整的差异。
 
@@ -807,3 +943,21 @@ if __name__ == "__main__":
 ![系统硬件](images/05-14.png)
 
 ![卡片](images/05-15.png)
+
+## 常见错误解决办法
+
+![numpy报错](images/05-16.png)
+如果遇到上图所示的错误，也就是：
+
+```bash
+pyarrow.lib.ArrowTypeError: Did not pass numpy.dtype object
+```
+
+这种情况，我觉得是由于numpy的版本导致的。
+你可以使用下面的命令进行版本修复：
+
+```bash
+pip install --upgrade numpy
+```
+
+运行这个命令，然后重新运行代码， 应该是可以修复这个错误的。
