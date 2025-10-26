@@ -1,0 +1,20 @@
+notebook==7.4.7
+numpy<2.0
+# numpy 如果报错可以尝试对numpy进行更新
+datasets==4.2.0
+peft==0.17.1
+accelerate==1.10.1
+mpmath==1.3.0
+networkx==3.4.2
+regex==2025.9.18
+sympy==1.14.0
+tokenizers==0.22.1
+torch==2.8.0
+torchvision>=0.23.0
+transformers>=4.41.2
+triton==3.4.0
+qwen-vl-utils==0.0.14
+matplotlib>=3.10.7
+modelscope==1.30.0
+python-dotenv>=1.1.1
+swanlab
