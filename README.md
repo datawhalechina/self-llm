@@ -75,11 +75,10 @@
 ### 已支持模型
 
 - [Qwen3-VL-30B-A3B-Instruct](https://github.com/QwenLM/Qwen3-VL)
-  - [ ] Qwen3-VL 模型结构解析（DeepStack解析）
-  - [ ] Qwen3-VL-30B-A3B-Instruct FastApi 部署调用
-  - [ ] Qwen3-VL-30B-A3B-Instruct WebDemo 部署
-  - [ ] Qwen3-VL-30B-A3B-Instruct vLLM 部署
-  - [ ] Qwen3-VL-30B-A3B-Instruct Lora 可视化微调案例-LaTexOCR
+  - [x] [Qwen3-VL 模型结构解析（DeepStack解析）](./models/Qwen3-VL/01-Qwen3-VL-MoE-模型结构解析-Blog.md) @王泽宇
+  - [x] [Qwen3-VL-30B-A3B-Instruct FastApi 部署调用](./models/Qwen3-VL/02-Qwen3-VL-4B-Instruct%20FastApi%20部署调用.md) @王嘉鹏 
+  - [x] [Qwen3-VL-30B-A3B-Instruct vLLM 部署](./models/Qwen3-VL/04-Qwen3-VL-4B-Instruct-vLLM.md) @姜舒凡
+  - [x] [Qwen3-VL-30B-A3B-Instruct Lora 可视化微调案例-LaTexOCR](./models/Qwen3-VL/05-Qwen3-VL-4B-Instruct%20%20Lora%20可视化微调案例%20-%20LaTexOCR.md) @李秀奇
 
 - [BGE-M3](https://huggingface.co/BAAI/bge-m3)
   - [x] [代码检索场景微调实战 微调BGE-M3 embedding模型](./models/BGE-M3-finetune-embedding-with-valid/README.md) @李秀奇 
@@ -412,45 +411,45 @@
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
-- [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
-- [郭志航](https://github.com/acwwt)（内容创作者）
-- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
+- [郭志航](https://github.com/acwwt)（内容创作者）
 - [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
-- [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
+- [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
+- [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
+- [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
 - [东东](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
-- [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
+- [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
+- [荞麦](https://github.com/yeyeyeyeeeee)（内容创作者-Datawhale成员）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
-- [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
-- [谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
-- [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
 - [杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）
+- [谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）
+- [散步](https://github.com/sanbuphy) （Datawhale成员）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
-- [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
-- [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
 - [张晋](https://github.com/Jin-Zhang-Yaoguang)（内容创作者-Datawhale成员）
 - [娄天奥](https://github.com/lta155)（内容创作者-中国科学院大学-鲸英助教）
-- [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
-- [杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）
 - [小罗](https://github.com/lyj11111111) （内容创作者-Datawhale成员）
 - [邓恺俊](https://github.com/Kedreamix)（内容创作者-Datawhale成员）
 - [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
+- [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
+- [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
+- [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
+- [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
+- [杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）
 - [付志远](https://github.com/comfzy)（内容创作者-海南大学）
 - [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
-- [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
 - [康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）

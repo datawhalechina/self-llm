@@ -9,7 +9,7 @@
     },
     "姜舒凡": {
         "info": "[姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）",
-        "task_num": 22
+        "task_num": 24
     },
     "林恒宇": {
         "info": "[林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）",
@@ -23,16 +23,16 @@
         "info": "[郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）",
         "task_num": 18
     },
+    "王泽宇": {
+        "info": "[王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）",
+        "task_num": 18
+    },
     "肖鸿儒": {
         "info": "[肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）",
         "task_num": 16
     },
     "张帆": {
         "info": "[张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）",
-        "task_num": 16
-    },
-    "王泽宇": {
-        "info": "[王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）",
         "task_num": 16
     },
     "李娇娇": {
@@ -221,6 +221,6 @@
     },
     "李秀奇": {
         "info": "[李秀奇](https://github.com/li-xiu-qi)（内容创作者-DataWhale意向成员）",
-        "task_num": 0
+        "task_num": 2
     }
 }
