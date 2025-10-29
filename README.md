@@ -74,11 +74,11 @@
 
 ### 已支持模型
 
-- [Qwen3-VL-30B-A3B-Instruct](https://github.com/QwenLM/Qwen3-VL)
+- [Qwen3-VL-4B-Instruct](https://github.com/QwenLM/Qwen3-VL)
   - [x] [Qwen3-VL 模型结构解析（DeepStack解析）](./models/Qwen3-VL/01-Qwen3-VL-MoE-模型结构解析-Blog.md) @王泽宇
-  - [x] [Qwen3-VL-30B-A3B-Instruct FastApi 部署调用](./models/Qwen3-VL/02-Qwen3-VL-4B-Instruct%20FastApi%20部署调用.md) @王嘉鹏 
-  - [x] [Qwen3-VL-30B-A3B-Instruct vLLM 部署](./models/Qwen3-VL/04-Qwen3-VL-4B-Instruct-vLLM.md) @姜舒凡
-  - [x] [Qwen3-VL-30B-A3B-Instruct Lora 可视化微调案例-LaTexOCR](./models/Qwen3-VL/05-Qwen3-VL-4B-Instruct%20%20Lora%20可视化微调案例%20-%20LaTexOCR.md) @李秀奇
+  - [x] [Qwen3-VL-4B-Instruct FastApi 部署调用](./models/Qwen3-VL/02-Qwen3-VL-4B-Instruct%20FastApi%20部署调用.md) @王嘉鹏
+  - [x] [Qwen3-VL-4B-Instruct vLLM 部署](./models/Qwen3-VL/04-Qwen3-VL-4B-Instruct-vLLM.md) @姜舒凡
+  - [x] [Qwen3-VL-4B-Instruct Lora 可视化微调案例-LaTexOCR](./models/Qwen3-VL/05-Qwen3-VL-4B-Instruct%20%20Lora%20可视化微调案例%20-%20LaTexOCR.md) @李秀奇
 
 - [BGE-M3](https://huggingface.co/BAAI/bge-m3)
   - [x] [代码检索场景微调实战 微调BGE-M3 embedding模型](./models/BGE-M3-finetune-embedding-with-valid/README.md) @李秀奇 
