@@ -74,6 +74,16 @@
 
 ### 已支持模型
 
+- [MiniMax-M2](https://github.com/MiniMax-AI/MiniMax-M2)
+  - [x] [MiniMax-M2 在线体验地址](https://agent.minimax.io/)
+  - [x] [MiniMax-M2 Hugging Face 地址](https://huggingface.co/MiniMaxAI/MiniMax-M2)
+  - [ ] MiniMax-M2 模型结构解析 Blog
+  - [ ] MiniMax-M2 vllm 部署调用
+  - [ ] MiniMax-M2 SGLang 部署调用
+  - [ ] MiniMax-M2 evalscope 智商情商评测及并发评测
+  - [ ] MiniMax-M2 Lora 微调及 SwanLab 可视化记录
+  - [ ] 教程正在快马加鞭赶来的路上，敬请期待！
+
 - [Qwen3-VL-4B-Instruct](https://github.com/QwenLM/Qwen3-VL)
   - [x] [Qwen3-VL 模型结构解析（DeepStack解析）](./models/Qwen3-VL/01-Qwen3-VL-MoE-模型结构解析-Blog.md) @王泽宇
   - [x] [Qwen3-VL-4B-Instruct FastApi 部署调用](./models/Qwen3-VL/02-Qwen3-VL-4B-Instruct%20FastApi%20部署调用.md) @王嘉鹏
