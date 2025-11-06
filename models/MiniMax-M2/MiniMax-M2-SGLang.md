@@ -349,7 +349,7 @@ for chunk in stream:
 运行：
 
 ```bash
- python test_streaming.py
+python test_streaming.py
 ```
 
 输出结果：
@@ -506,7 +506,7 @@ print(f"Result: {get_weather(**json.loads(tool_call.arguments))}")
 运行：
 
 ```bash
- python test_tool_calling.py
+python test_tool_calling.py
 ```
 
 输出结果：
