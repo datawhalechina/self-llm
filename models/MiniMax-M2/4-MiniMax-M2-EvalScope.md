@@ -12,26 +12,17 @@ EvalScope 是魔搭官方推出的模型评测与性能基准测试框架，内�
 
 > 为了更方便的使用模型，并提升推理速度，我们使用 SGLang 启动一个 OpenAI 格式兼容的服务。
 
-1. 创建并激活新的conda环境：
-	
-
-```Bash
-conda create -n eval python=3.12
-conda activate eval
-```
-
-2. 安装相关依赖：
+1. 安装相关依赖：
 	
 
 ```Bash
 pip install sglang==0.5.5
 pip install modelscope==1.31.0
-pip install openai==2.6.1
 pip install evalscope==1.1.1
 pip install bfcl-eval==2025.10.27.1 
 ```
 
-3. 启动模型服务
+2. 启动模型服务
 	
 
 ```Bash
