@@ -29,7 +29,7 @@
 
 ```bash
 pip install --upgrade pip
-pip install uv
+pip install uv==0.9.7
 uv pip install modelscope==1.31.0
 uv pip install openai==2.6.1
 uv pip install 'triton-kernels @ git+https://github.com/triton-lang/triton.git@v3.5.0#subdirectory=python/triton_kernels'  vllm --extra-index-url https://wheels.vllm.ai/nightly --prerelease=allow
