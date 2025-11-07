@@ -1,9 +1,9 @@
-# MiniMax-M2 EvalScope
+# 4-MiniMax-M2 EvalScope
 
 ## 模型评测的意义和价值
 模型评测是将模型从“可用”走向“可用且可信”的关键环节。一方面，系统化的基准测试与压力测试能量化模型在知识、推理、对齐与安全等维度的真实表现，帮助发现能力短板、数据偏差与鲁棒性问题，避免带着未知风险上线；另一方面，统一的指标与可复现实验能为模型选型、版本迭代和资源配置提供可比依据，指导工程优化（如上下文长度、并发、推理参数）以达成更优的性价比和用户体验。对业务而言，高质量的评测不仅降低决策与运维成本，还可持续监测回归与漂移，形成“训练—评测—部署—监控”的闭环，加速模型价值落地。
 ## EvalScope 简介
-![evalscope-logo](./images/evalscope-logo.png)
+![evalscope-logo](./images/fig-4-1-evalscope-logo.png)
 
 
 EvalScope 是魔搭官方推出的模型评测与性能基准测试框架，内置多个常用测试基准和评测指标，如 MMLU、CMMLU、C-Eval、GSM8K、ARC、HellaSwag、TruthfulQA、MATH 和 HumanEval 等；支持多种类型的模型评测，包括 LLM、VLM、embedding 模型和 reranker 模型。EvalScope 还适用于多种评测场景，如端到端 RAG 评测、竞技场模式和模型推理性能压测等。此外，通过 ms-swift 训练框架的无缝集成，可一键发起评测，实现了模型训练到评测的全链路支持。 
@@ -49,7 +49,7 @@ python -m sglang.launch_server \
 
 ## MiniMax-M2 表现
 
-![minimax-benchmark-results](./images/minimax-benchmark-results.png)
+![minimax-benchmark-results](./images/fig-4-2-minimax-benchmark-results.png)
 
 如上图所示，可以发现模型在使用工具和深度搜索的能力都非常接近了海外最好的模型，在编程上逊色于海外最好的模型，但是也已经到了国内最好的一档。我们不妨自己动手来测试一下模型在其他任务上的表现如何。
 

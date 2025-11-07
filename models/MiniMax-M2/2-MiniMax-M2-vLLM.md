@@ -1,8 +1,8 @@
-# MiniMax-M2 vLLM 部署调用
+# 2-MiniMax-M2 vLLM 部署调用
 
 ## vLLM 简介
 
-![vLLM-logo](./images/vLLM-logo.png)
+![vLLM-logo](./images/fig-2-1-vLLM-logo.png)
 
 `vLLM` 是一个面向大语言模型的高性能部署推理框架，提供开箱即用的推理加速与 OpenAI 兼容接口。它支持长上下文推理、流式输出、多卡并行（如张量并行与专家并行）、工具调用与“思考内容”解析等能力，便于将最新模型快速落地到生产环境。
 

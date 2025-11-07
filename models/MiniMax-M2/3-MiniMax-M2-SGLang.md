@@ -1,8 +1,8 @@
-# MiniMax-M2 SGLang 部署调用
+# 3-MiniMax-M2 SGLang 部署调用
 
 ## SGLang 简介
 
-![sglang-logo](./images/sglang-logo.png)
+![sglang-logo](./images/fig-3-1-sglang-logo.png)
 
 `SGLang` 是一个面向大语言模型的高性能部署推理框架，提供开箱即用的推理加速与 OpenAI 兼容接口。它支持长上下文推理、流式输出、多卡并行（如张量并行与专家并行）、工具调用与“思考内容”解析等能力，便于将最新模型快速落地到生产环境。
 
@@ -118,7 +118,7 @@ python start_server.py
 
 服务启动成功后将监听 `http://127.0.0.1:8000/v1`。
 
-![sglang-server-start](./images/sglang-server-start.png)
+![sglang-server-start](./images/fig-3-2-sglang-server-start.png)
 
 > 提示：多卡环境可将 `--tp-size` 设置为 GPU 数量；显存紧张可调低 `--mem-fraction-static`，或考虑更低的 `--max-model-len`（见后文“参数说明与建议”）。
 
@@ -158,7 +158,7 @@ python -m sglang.launch_server \
 
 此时的参考显存占用情况如图：
 
-![sglang-memory-cost](./images/sglang-memory-cost.png)
+![sglang-memory-cost](./images/fig-3-3-sglang-memory-cost.png)
 
 
 
