@@ -164,10 +164,17 @@ task_cfg = TaskConfig(
     api_url='http://localhost:8000/v1',
     api_key='EMPTY',
     eval_type='server',
-    datasets=['bfcl_v3'],
+    datasets=['bfcl_v4'],
     eval_batch_size=10,
+    # 评测子任务列表
+    subset_list=[ 
+        'simple',
+        'multiple',
+        'parallel',
+        'parallel_multiple'
+    ],
     dataset_args={
-        'bfcl_v3': {
+        'bfcl_v4': {
             'extra_params':{
                 # 模型在函数名称中拒绝使用点号（`.`）；设置此项，以便在评估期间自动将点号转换为下划线。
                 'underscore_to_dot': True,
@@ -178,10 +185,10 @@ task_cfg = TaskConfig(
     },
     generation_config={
         'temperature': 0,
-        'max_tokens': 32768,
+        'max_tokens': 131072,
         'parallel_tool_calls': True,  # 启用并行函数调用
     },
-    limit=10,  # 限制评测数量，便于快速测试，正式评测时建议去掉此项
+    limit=3,  # 限制评测数量，便于快速测试，正式评测时建议去掉此项
 )
 run_task(task_cfg=task_cfg)
 ```
