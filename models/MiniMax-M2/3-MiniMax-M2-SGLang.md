@@ -41,7 +41,6 @@ GPU Compute Capability ≥ 7.0
 pip install --upgrade pip
 pip install sglang==0.5.5
 pip install modelscope==1.31.0
-pip install openai==2.6.1
 ```
 
 
