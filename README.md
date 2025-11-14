@@ -81,7 +81,7 @@
   - [x] [MiniMax-M2 模型结构解析 Blog](./models/MiniMax-M2/1-MiniMax-M2-Blog.md) @王泽宇
   - [x] [MiniMax-M2 vllm 部署调用](./models/MiniMax-M2/2-MiniMax-M2-vLLM.md) @姜舒凡
   - [x] [MiniMax-M2 SGLang 部署调用](./models/MiniMax-M2/2-MiniMax-M2-vLLM.md) @姜舒凡
-  - [x] [MiniMax-M2 evalscope 智商情商评测及并发评测](./models/MiniMax-M2/4-MiniMax-M2-EvalScope.md)
+  - [x] [MiniMax-M2 evalscope 智商情商评测及并发评测](./models/MiniMax-M2/4-MiniMax-M2-EvalScope.md) @姜舒凡
   - [ ] MiniMax-M2 Lora 微调及 SwanLab 可视化记录
 
 - [Qwen3-VL-4B-Instruct](https://github.com/QwenLM/Qwen3-VL)
