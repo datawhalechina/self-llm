@@ -37,6 +37,8 @@ uv pip install openai==2.6.1
 uv pip install 'triton-kernels @ git+https://github.com/triton-lang/triton.git@v3.5.0#subdirectory=python/triton_kernels'  vllm --extra-index-url https://wheels.vllm.ai/nightly --prerelease=allow
 ```
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了MiniMax-M2的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/mimimax-m2***
 
 ## 模型下载
 

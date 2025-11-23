@@ -22,6 +22,9 @@ pip install evalscope==1.1.1
 pip install bfcl-eval==2025.10.27.1 
 ```
 
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在AutoDL平台准备了MiniMax-M2的环境镜像，点击下方链接并直接创建Autodl示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/mimimax-m2***
+
 2. 启动模型服务
 	
 
