@@ -1,41 +1,44 @@
-# 天机简介
+# Introduction to Tianji
 
-想从零学会大语言模型应用？想直接复制粘贴代码？天机满足你的一切需求；甚至，你还能学到一点意想不到的东西。
-中国文化注重人情世故，涉及到复杂的社交规则、礼仪和人际关系。Social 团队通过深入理解中文语境、文化特点和丰富的语料，提供了基于各类中国式文化的场景下的应对方法、对话案例与情景模拟。
-目前天机已经支持的应用场景包括：如何送**祝福、敬酒、请客、送礼、人际交流、化解尴尬以及应对矛盾**等等，还有更多社区小伙伴们建议的 LLM 提高情商方案正在制作中~
-除了把这个项目当成一个好玩的社交大模型外，你还可以把它当作完整的全栈大语言模型应用入门学习仓库! 你可以在里面学到**提示词工程 、智能体制作、 模型微调、RAG 数据清洗与使用，以及代码规范**...等等你所需要的大语言模型应用知识，你可以在通过学习该项目后,  快速改造出属于自己的新的大语言模型项目，我们期待你成为下一个大模型应用开发高手！
+Want to learn large language model applications from scratch? Want to copy and paste code directly? Tianji meets all your needs; even, you can learn something unexpected.
 
-> *Tianji 开源链接：*[*Link*](https://github.com/SocialAI-tianji/Tianji)
-> *Tianji 官方网站：*[*Link*](https://socialai-tianji.github.io/socialai-web/)
-> *Tianji 知识库版应用地址：*[*Link*](http://120.76.130.14:6006/knowledges/)
-> *Tianji prompt版应用地址：*[*Link*](http://120.76.130.14:6006/prompt/)
-> *Tianji 视频介绍：*[*Link*](https://www.bilibili.com/video/BV1cvbyefEfp)
+Chinese culture emphasizes human sophistication, involving complex social rules, etiquette, and interpersonal relationships. The Social team provides coping methods, dialogue cases, and scenario simulations based on various Chinese-style cultural scenarios through in-depth understanding of Chinese context, cultural characteristics, and rich corpus.
 
-由于内容众多，时间关系，本篇教程只会带你简单看看如何快速运行天机的“送祝福”微调模型，更多有趣的内容，等你来天机项目和文档亲自探索！
+Currently, the application scenarios supported by Tianji include: how to give **blessings, toasts, treat guests, give gifts, interpersonal communication, resolve embarrassment, and deal with conflicts**, etc., and more LLM EQ improvement plans suggested by community partners are in production~
 
-## 实现送祝福微调模型
+In addition to treating this project as a fun social large model, you can also treat it as a complete full-stack large language model application introductory learning repository! You can learn **prompt engineering, agent creation, model fine-tuning, RAG data cleaning and use, and code specifications**... and other large language model application knowledge you need. After learning this project, you can quickly transform it into your own new large language model project. We look forward to you becoming the next master of large model application development!
 
-接下来，让我们快速实现一个属于自己的送祝福微调模型。我们将基于 Xtuner Qlora，详细讲解如何对 internLM2 进行天机送祝福模块的微调，全流程包括数据制造、推理微调等所有环节。
+> *Tianji Open Source Link:* [*Link*](https://github.com/SocialAI-tianji/Tianji)
+> *Tianji Official Website:* [*Link*](https://socialai-tianji.github.io/socialai-web/)
+> *Tianji Knowledge Base Version Application Address:* [*Link*](http://120.76.130.14:6006/knowledges/)
+> *Tianji Prompt Version Application Address:* [*Link*](http://120.76.130.14:6006/prompt/)
+> *Tianji Video Introduction:* [*Link*](https://www.bilibili.com/video/BV1cvbyefEfp)
 
-在本次微调示范中，我们选用的是 internlm2-chat-7b 模型，你需要准备一台24G显存的机器用于微调（3090即可）。
+Due to the large amount of content and time constraints, this tutorial will only take you to briefly see how to quickly run Tianji's "Blessing" fine-tuning model. More interesting content is waiting for you to explore in the Tianji project and documentation!
 
-微调一个模型的第一步是准备高质量的训练数据。对于一个送祝福模型，你需要收集各种祝福语的数据，数据来源可以是公开的祝福语数据集、社交媒体、电子书籍或者任何包含丰富祝福语的文本。
+## Implementing the Blessing Fine-tuning Model
 
-在准备完成数据来源以及获取到对应数据后，你需要使用该数据文本进行数据制造（比如下面演示的few shot，但这只是最小的例子，真正意义的数据制造你需要用一个数据“知识”切块去生成对应的QA对，这是才是我们最后期望得到的数据。
+Next, let's quickly implement a blessing fine-tuning model of our own. Based on Xtuner Qlora, we will explain in detail how to fine-tune the Tianji blessing module for internLM2, covering the entire process including data manufacturing, inference fine-tuning, etc.
 
-所以，理论上最好的数据是利用这些现有知识，通过更聪明的大模型基于这些知识得到高精度的回复QA对数据，也有的人是通过大模型抽取小说文本对话的方式来实现格式抽取，但总之你需要的是一个最好无限火力的聪明大模型来帮助你进行文本数据清洗。
+In this fine-tuning demonstration, we use the internlm2-chat-7b model. You need to prepare a machine with 24G VRAM for fine-tuning (3090 is sufficient).
 
-当你成功打通微调后，你会发现**真正复杂的工作都是在清洗数据、处理、生成数据、归类数据**上，这些才是影响最后效果的**最大难点问题**。
+The first step in fine-tuning a model is to prepare high-quality training data. For a blessing model, you need to collect data on various blessings. The data source can be public blessing datasets, social media, e-books, or any text containing rich blessings.
 
-这里推荐你使用本地的llm去进行数据清洗（除非你财大气粗），否则api key很容易分分钟用完，你可以通过部署本地 llama3-chinese 或者 qwen 进行数据制造工作。
+After preparing the data source and obtaining the corresponding data, you need to use the data text for data manufacturing (such as the few shot demonstrated below, but this is just a minimal example. For real data manufacturing, you need to use a data "knowledge" chunk to generate corresponding QA pairs. This is the data we expect to get in the end.
 
-接下来我们来看看如何进行数据制造：
+Therefore, theoretically, the best data is to use this existing knowledge and use a smarter large model to obtain high-precision reply QA pair data based on this knowledge. Some people also achieve format extraction by extracting novel text dialogues through large models, but in short, what you need is a smart large model with unlimited firepower to help you clean text data.
 
-### 数据处理
+When you successfully get through fine-tuning, you will find that **the truly complex work is in cleaning data, processing, generating data, and classifying data**. These are the **biggest difficult problems** that affect the final effect.
 
-#### 数据制造
+Here it is recommended that you use a local llm for data cleaning (unless you are wealthy), otherwise the api key will easily be used up in minutes. You can deploy local llama3-chinese or qwen for data manufacturing work.
 
-在清洗数据前，请确保你已经安装对应SDK如zhipuai以及openai SDK，安装后直接运行即可。
+Next, let's look at how to perform data manufacturing:
+
+### Data Processing
+
+#### Data Manufacturing
+
+Before cleaning data, please ensure that you have installed the corresponding SDK such as zhipuai and openai SDK. Install and run directly.
 
 ```python
 from zhipuai import ZhipuAI
@@ -45,17 +48,17 @@ import random
 import datetime
 
 # zhipuai
-# 此处填写您自己的APIKey
+# Fill in your own APIKey here
 # zhipu_api_key = ""
 # client = ZhipuAI(api_key=zhipu_api_key)
 # def get_data_zhipu(content):
 #     response = client.chat.completions.create(
-#         model="glm-4",  # 填写需要调用的模型名称
+#         model="glm-4",  # Fill in the model name to be called
 #         messages=[
-#             {"role": "system", "content": "你现在是一个精通言语表达、热爱他人、尊重长辈、富有文采的送祝福大师，请你编辑一条文本，表示对应场景的祝福语"},
+#             {"role": "system", "content": "You are now a blessing master who is proficient in speech, loves others, respects elders, and is rich in literary talent. Please edit a text to express the blessing of the corresponding scene"},
 #             {"role": "user",
 #              "content": content,
-#              "temperature": 1} # 多样化输出
+#              "temperature": 1} # Diversified output
 #         ],
 #     )
 #     res = response.choices[0].message.content
@@ -63,80 +66,80 @@ import datetime
 
 # deepseek
 from openai import OpenAI
-deepseek_key = ""  #此处填写deepseek的key
+deepseek_key = ""  # Fill in the deepseek key here
 client = OpenAI(api_key=deepseek_key, base_url="https://api.deepseek.com/v1")
 def get_data_ds(content):
     response = client.chat.completions.create(
         model="deepseek-chat",
         messages=[
-            {"role": "system", "content": "你现在是一个精通言语表达、热爱他人、尊重长辈、富有文采的送祝福大师，请你编辑一条文本，表示对应场景的祝福语"},
+            {"role": "system", "content": "You are now a blessing master who is proficient in speech, loves others, respects elders, and is rich in literary talent. Please edit a text to express the blessing of the corresponding scene"},
             {"role": "user",
-             "content": content,
-             "temperature": 1} # 多样化输出
+            "content": content,
+            "temperature": 1} # Diversified output
         ]
     )
     res = response.choices[0].message.content
     return res
 
-# 可利用大模型补充不同对象  当前28种
-name_list = ['赵老师', '大舅', '大伯', '李总', '邻居赵大妈', '母亲', '姐姐', '妹妹', '哥哥', '弟弟', '爷爷', '奶奶', '外公',
-        '外婆', '伯母', '叔叔', '阿姨', '堂兄', '堂妹', '表哥', '表妹', '导师', '同学', '同事', '领导',
-        '邻居', '老板', '医生', ]
+# Use large models to supplement different objects. Currently 28 types
+name_list = ['Teacher Zhao', 'Uncle (Mother\'s brother)', 'Uncle (Father\'s elder brother)', 'President Li', 'Neighbor Aunt Zhao', 'Mother', 'Sister', 'Younger Sister', 'Brother', 'Younger Brother', 'Grandfather', 'Grandmother', 'Maternal Grandfather',
+        'Maternal Grandmother', 'Aunt (Father\'s elder brother\'s wife)', 'Uncle', 'Aunt', 'Cousin (Male)', 'Cousin (Female)', 'Cousin (Male)', 'Cousin (Female)', 'Mentor', 'Classmate', 'Colleague', 'Leader',
+        'Neighbor', 'Boss', 'Doctor', ]
 
-# 可利用大模型补充对应场景 当前18种
-scenes = ['生日', '春节', '元宵节', '端午节', '七夕节', '中秋节',
-            '重阳节', '除夕', '腊八节','谈判顺利','乔迁新居', '周年纪念' ,'新婚快乐' ,'家庭和睦', '比赛取得好成绩' ,'发财','工作升职 ','康复', ]
+# Use large models to supplement corresponding scenes. Currently 18 types
+scenes = ['Birthday', 'Spring Festival', 'Lantern Festival', 'Dragon Boat Festival', 'Qixi Festival', 'Mid-Autumn Festival',
+            'Double Ninth Festival', 'New Year\'s Eve', 'Laba Festival','Successful Negotiation','Housewarming', 'Anniversary' ,'Happy Wedding' ,'Family Harmony', 'Good Results in Competition' ,'Get Rich','Job Promotion ','Recovery', ]
 
-# 可利用大模型补充不同风格，加入更多 fewshot 造出更好的数据
+# Use large models to supplement different styles, add more fewshot to create better data
 styles = {
-    "小红书":
+    "Little Red Book":
     {
-        "style_temple":"小红书风格，每条加入1-2个emoji表情包来增加趣味性。\n### 注意，你要参考下列句子的艺术风格进行祝福语撰写（注意！只看造句风格），祝福语结尾都带上语气助词词，参考句子为：{} ###",
+        "style_temple":"Little Red Book style, add 1-2 emoji expressions to each strip to increase interest.\n### Note, you must refer to the artistic style of the following sentences for blessing writing (Note! Only look at the sentence making style), and the end of the blessing should bring a modal particle. Reference sentences are: {} ###",
         "if_example":True,
         "examples":
         [
-    '默念你的名,祝你前途云蒸霞蔚，灿若星河。愿你度过的叫吉时，得到的叫如愿！',
-    '希望你岁末将至，敬颂冬绥，平安喜乐，万事胜意。',
-    '希望你不用奔赴大海，也能看到春暖花开；不用颠沛流离，也能遇到一生所伴！',
-    '祝我们好在春夏秋冬,祝你阔谈，祝你烂漫，祝你和自己相约在风里，此后只剩欢愉。',
-    '希望你可以明确地爱，直接的厌恶，真诚的喜欢，站在太阳下的坦荡，大声无愧地称赞自己，学会爱自己！',
-    '前方荣光万丈，身后温暖一方，凡是过往，皆为序章。',
-    '愿所念之人 平安喜乐。愿所想之事 顺心如意！',
+    'Reciting your name silently, wishing you a bright future, brilliant as the galaxy. May what you spend be called auspicious time, and what you get be called wish fulfilled!',
+    'Hope that at the end of the year, I send you winter peace, peace and joy, and everything goes well.',
+    'Hope you don\'t have to run to the sea to see the spring flowers bloom; don\'t have to wander, and can meet the companion of a lifetime!',
+    'Wish us well in spring, summer, autumn and winter, wish you talk freely, wish you romance, wish you meet yourself in the wind, and only joy remains thereafter.',
+    'Hope you can love clearly, hate directly, like sincerely, stand in the sun openly, praise yourself loudly without shame, and learn to love yourself!',
+    'Glory ahead, warmth behind, everything in the past is a prologue.',
+    'May the people you miss be safe and happy. May the things you think of go well!',
         ]
     },
-    "正常":
+    "Normal":
     {
-        "style_temple":"正常风格，有礼貌即可",
+        "style_temple":"Normal style, just be polite",
         "if_example":False,
         "examples":[]
     },
-    "严肃":
+    "Serious":
     {
-        "style_temple":"商业严肃风格，要求用在职场或长辈祝福上，显得有礼貌、干练,句子可以长一些",
+        "style_temple":"Business serious style, required for use in workplace or elder blessings, appear polite, capable, sentences can be longer",
         "if_example":False,
         "examples":[]
     }
 }
 
 random_finalprompt_sentence = [
-    '', #默认情况
-    '回答中可以不出现对象称谓和场景信息，也不用出现“愿你”“祝你”（对自己的长辈需要出现对象称谓和祝你），',
-    '回答中可以不出现对象称谓和场景信息，',
-    '回答中不用出现“愿你”“祝你”',
+    '', # Default case
+    'The answer does not need to include the object title and scene information, nor does it need to include "May you" "Wish you" (Object title and wish you need to appear for your own elders),',
+    'The answer does not need to include the object title and scene information,',
+    'The answer does not need to include "May you" "Wish you"',
 ]
 final_prompt = """
-该祝福语字数小于 {} 字。 \n
-请根据对象称谓及场景，写出符合对象的身份和场景气氛的祝福文案。要求的风格是：{} \n，注意不要有标题混在其中，对象称谓是：{}，祝福场景是：{}。 \n
-{} 根据不同对象用不同的语气（尊敬、诙谐搞笑、亲近），请直接返回祝福文本，不要说任何其他话：
+The word count of the blessing is less than {}. \n
+Please write a blessing copy that fits the object's identity and scene atmosphere according to the object title and scene. The required style is: {} \n, note that there should be no title mixed in, the object title is: {}, the blessing scene is: {}. \n
+{} Use different tones (respectful, humorous, close) according to different objects, please return the blessing text directly, do not say any other words:
 """
 
 if __name__ == "__main__":
-    ##### 此处配置 #####
+    ##### Configure here #####
     roop_count = 2
     now_count = 0
-    stylename = "小红书" # 小红书、正常、严肃
-    output_number_limit = 50 # 限制回答输出长度，严肃的100，普通的小于20
-    ##### 此处配置 #####
+    stylename = "Little Red Book" # Little Red Book, Normal, Serious
+    output_number_limit = 50 # Limit answer output length, 100 for serious, less than 20 for normal
+    ##### Configure here #####
 
     for roop in range(roop_count):
         conversations = []
@@ -156,18 +159,18 @@ if __name__ == "__main__":
                         response = str(response).split('\n')[0]
 
                     print(name,scene,'response:',response)
-                    print("当前生成数目：", now_count)
-                    if stylename == '正常':
-                        # 默认不加风格指定
-                        _input_prompt = f"祝{name}{scene}"
+                    print("Current generated count:", now_count)
+                    if stylename == 'Normal':
+                        # Default without style specification
+                        _input_prompt = f"Wish {name} {scene}"
                     else:
-                        _input_prompt = f"祝{name}{scene},{stylename}风格"
+                        _input_prompt = f"Wish {name} {scene}, {stylename} style"
                     print("input:",_input_prompt)
 
                     conversation = {
                         "conversation": [
                             {
-                                "system": "你现在是一个送祝福大师，帮我针对不同人和事情、节日送对应的祝福",
+                                "system": "You are now a blessing master, help me send corresponding blessings for different people, things, and festivals",
                                 "src_input":input_prompt,
                                 "style_name":stylename,
                                 "input": _input_prompt,
@@ -176,7 +179,7 @@ if __name__ == "__main__":
                         ]
                     }
 
-                    # 将对话加入到列表中
+                    # Add dialogue to list
                     conversations.append(conversation)
                 except Exception as e:
                     print(e)
@@ -189,34 +192,34 @@ if __name__ == "__main__":
 
 ```
 
-**注意**，这里为什么需要把 input 替换成 `f"祝{name}{scene}"` 的格式——是因为这里的input需要尽可能模拟人的输入，而不能是制造数据时候的输入。此外，我们在此设定了三种风格：正常、小红书、严肃；期待当加上风格名触发后可以有预期的输出。
+**Note**, why do we need to replace input with the format of `f"Wish {name} {scene}"` here - because the input here needs to simulate human input as much as possible, and cannot be the input when manufacturing data. In addition, we have set three styles here: Normal, Little Red Book, Serious; expect expected output when style name trigger is added.
 
-这只是最简单的示例，如何根据祝福语的长短不同而生成后的语法风格要对应变化、如何更接近真人的风格化；这些都需要高质量的数据 + 良好的数据制造方式才可获得。
+This is just the simplest example. How to change the grammatical style after generation according to the length of the blessing, and how to be closer to the style of real people; these all require high-quality data + good data manufacturing methods to obtain.
 
-举个例子，如果在这里我们想要控制祝福语长短和语法风格，首先前者我们就要在之前的制造条件中（比如之前的对象、场景是一个条件）加入新的祝福语长短控制条件（比如我这里的小红书和正常风），而且此时few shot参考的句子也应当有所不同，这样才能保证我们造数据的llm可以返回预期长度的结果。如果是控制语法风格，我们就需要爬取大量文艺书籍、小红书等真正人类写的文案进行清洗，然后利用这些作为few shot得到严格的返回，需要用严格的提示词让模型写出类似的语句或者单独微调一个属于该文艺范畴的模型版本用于制造对应数据（有时候few shot指令跟随不那么有用）。
+For example, if we want to control the length and grammatical style of the blessing here, first we need to add new blessing length control conditions (such as Little Red Book and Normal style here) to the previous manufacturing conditions (such as the previous object and scene are a condition), and at this time the sentences referenced by few shot should also be different, so as to ensure that our data manufacturing llm can return results of expected length. If it is to control the grammatical style, we need to crawl a large number of literary books, Little Red Book and other copies written by real humans for cleaning, and then use these as few shot to get strict returns. We need to use strict prompt words to let the model write similar sentences or separately fine-tune a model version belonging to this literary category for manufacturing corresponding data (sometimes few shot instruction following is not so useful).
 
-💡代码中有 `random_xxxxxxx_sentence` 的部分表明这是一个随机性注入列表，我们可以维护一些语句用于提高随机性（比如附加条件的修改），让大模型返回的结果更具特色。
+💡The part with `random_xxxxxxx_sentence` in the code indicates that this is a randomness injection list. We can maintain some sentences to improve randomness (such as modification of additional conditions) so that the results returned by the large model are more distinctive.
 
-若成功运行，你将看到类似如下输出结果，等待片刻后将得到属于本地的json文件 `wishes_0501_5000.json` ：
+If run successfully, you will see output similar to the following. After waiting for a while, you will get the local json file `wishes_0501_5000.json`:
 
 ```
-同学 家庭和睦 response: "烟火年年，暖意洋洋，🏡❤️家是心之所向。"
-当前生成数目： 914
-同学 比赛取得好成绩 response: "灿若星河，前程似锦🌟，所得皆所愿！"
-当前生成数目： 915
-同学 发财 response: "春风得意马蹄疾，财源滚滚至君前🎉💰"
-当前生成数目： 916
-同学 工作升职 response: "升职之光，照亮星河，未来灿烂如霞。🌟🌈"
-当前生成数目： 917
-同学 康复祝福 response: "挥别病痛，如花开坚强。🌱✨愿你前程，云蒸霞蔚，身心俱灿。"
-当前生成数目： 918
+Classmate Family Harmony response: "Fireworks every year, warm and fuzzy, 🏡❤️ Home is where the heart is."
+Current generated count: 914
+Classmate Good Results in Competition response: "Brilliant as the galaxy, bright future🌟, may you get what you wish!"
+Current generated count: 915
+Classmate Get Rich response: "Proud of success, money rolls to you🎉💰"
+Current generated count: 916
+Classmate Job Promotion response: "Light of promotion, illuminating the galaxy, future is bright as rosy clouds.🌟🌈"
+Current generated count: 917
+Classmate Recovery Blessing response: "Bid farewell to pain, be strong like a flower. 🌱✨May your future be bright and your body and mind be brilliant."
+Current generated count: 918
 ```
 
-💡注意，这里只是粗暴的进行所有角色和场景的遍历，但**并非所有角色都适配所有场景**（很多是不合适的），这里为了改进应该做一个heatmap进行映射，若不合适生产该数据，将直接跳过；又或者是在得到数据后做一个匹配，如果同时满足不合适的角色+场景就去除该数据QA对。
+💡Note, this is just a rough traversal of all roles and scenes, but **not all roles are suitable for all scenes** (many are inappropriate). To improve this, a heatmap should be made for mapping. If it is not suitable to produce this data, skip it directly; or do a match after getting the data. If it meets the inappropriate role + scene at the same time, remove the data QA pair.
 
-#### 数据合并
+#### Data Merge
 
-因为我们之前的数据都是跑完一轮存一次（以防前功尽弃），所以可能你有多个json需要组合，这里提供了一个脚本合并一个文件夹中的所有json，并把json格式清洗成和训练脚本一致适配的格式：
+Because our previous data is saved once after running a round (to prevent wasted efforts), you may have multiple jsons that need to be combined. Here is a script to merge all jsons in a folder and clean the json format into a format consistent with the training script:
 
 ```bash
 import os
@@ -225,15 +228,15 @@ import json
 def extract_and_merge_conversations(folder_path, output_file):
     all_conversations = []
 
-    # 遍历指定文件夹
+    # Traverse the specified folder
     for filename in os.listdir(folder_path):
         if filename.endswith('.json'):
             file_path = os.path.join(folder_path, filename)
 
-            # 打开并读取JSON文件
+            # Open and read JSON file
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
-                # 提取需要的字段
+                # Extract required fields
                 for item in data:
                     for conversation in item['conversation']:
                         extracted = {
@@ -241,44 +244,44 @@ def extract_and_merge_conversations(folder_path, output_file):
                             'input': conversation['input'],
                             'output': conversation['output']
                         }
-                        # 将每个对话包装在一个 'conversation' 键中，并作为独立对象加入列表
+                        # Wrap each dialogue in a 'conversation' key and add to the list as an independent object
                         all_conversations.append({'conversation': [extracted]})
 
-    # 将合并后的所有对话数据写入一个新的JSON文件
+    # Write the merged dialogue data to a new JSON file
     with open(output_file, 'w', encoding='utf-8') as file:
         json.dump(all_conversations, file, ensure_ascii=False, indent=4)
 
-# 使用示例
-folder_path = 'tianji_wishes_datasets'  # 要扫描的文件夹路径
-output_file = 'tianji-wishes-chinese-v0.1.json'     # 输出文件的名称和路径
+# Usage example
+folder_path = 'tianji_wishes_datasets'  # Folder path to scan
+output_file = 'tianji-wishes-chinese-v0.1.json'     # Output file name and path
 extract_and_merge_conversations(folder_path, output_file)
 ```
 
-合并后就是我们所需要的微调数据集。
+After merging, it is the fine-tuning dataset we need.
 
-#### 二次清洗
+#### Secondary Cleaning
 
-得到最初数据后，可能还存在一些奇怪的东西，比如句子长度返回错误，不是回答而是很短的一句 `当前祝福语如下` ，加入语气助词后容易出现 `！啦~` `。哦！` 如此在前面出现标点的奇怪现象，故我们需要利用清洗脚本对数据进行一定的筛选，由于比较冗长（还没有优雅的迭代），清洗脚本放在 [https://github.com/SocialAI-tianji/Tianji](https://github.com/SocialAI-tianji/Tianji)，可以自行查看
+After getting the initial data, there may still be some strange things, such as wrong sentence length return, not an answer but a very short sentence `The current blessing is as follows`, adding modal particles easily leads to `! La~` `. Oh!` Such strange phenomena of punctuation appearing in front, so we need to use a cleaning script to filter the data to a certain extent. Since it is relatively long (and has not been elegantly iterated), the cleaning script is placed at [https://github.com/SocialAI-tianji/Tianji](https://github.com/SocialAI-tianji/Tianji), you can check it yourself.
 
-当然，如果你有时间和精力，最重要的还是可以用人工进行清洗。当然，**最重要的还是最好在数据制造的时候就记录比较完好的信息和做出比较好的output，能大大节约二次清洗的时间。**
+Of course, if you have time and energy, the most important thing is to clean it manually. Of course, **the most important thing is to record relatively good information and make good output when manufacturing data, which can greatly save the time of secondary cleaning.**
 
-#### 直接下载
+#### Direct Download
 
-为了方便大家使用，这里提供了已制造数据的下载地址，大家可以自行从huggingface上获取：
+For the convenience of everyone's use, the download address of the manufactured data is provided here. You can get it from huggingface yourself:
 
 [https://huggingface.co/datasets/sanbu/tianji-wishes-chinese/blob/main/tianji-wishes-chinese-v0.1.json](https://huggingface.co/datasets/sanbu/tianji-wishes-chinese/blob/main/tianji-wishes-chinese-v0.1.json)
 
-镜像站下载：
+Mirror site download:
 
 [https://hf-mirror.com/datasets/sanbu/tianji-wishes-chinese](https://hf-mirror.com/datasets/sanbu/tianji-wishes-chinese)
 
-### 环境准备
+### Environment Preparation
 
-接下来我们准备微调的环境，由于时间关系（标准流程是一样的），这里只做省略快速操作，详细操作请参考 xtuner的官方教程 [https://github.com/InternLM/Tutorial/tree/main/xtuner](https://github.com/InternLM/Tutorial/tree/main/xtuner)，或者是self-llm 项目中关于Xtuner Qlora的部分：[https://github.com/datawhalechina/self-llm/blob/master/InternLM2/04-InternLM2-7B-chat Xtuner Qlora 微调.md](https://github.com/datawhalechina/self-llm/blob/master/InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20%E5%BE%AE%E8%B0%83.md)
+Next, we prepare the fine-tuning environment. Due to time constraints (the standard process is the same), we will omit the detailed operations here. For detailed operations, please refer to the official xtuner tutorial [https://github.com/InternLM/Tutorial/tree/main/xtuner](https://github.com/InternLM/Tutorial/tree/main/xtuner), or the Xtuner Qlora part in the self-llm project: [https://github.com/datawhalechina/self-llm/blob/master/InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20%E5%BE%AE%E8%B0%83.md](https://github.com/datawhalechina/self-llm/blob/master/InternLM2/04-InternLM2-7B-chat%20Xtuner%20Qlora%20%E5%BE%AE%E8%B0%83.md)
 
-⚠ 以下基于 **python 3.10** 构建全过程，请注意版本
+⚠ The following process is based on **python 3.10**, please pay attention to the version.
 
-首先创建一个虚拟环境，随后安装如下依赖
+First create a virtual environment, then install the following dependencies:
 
 ```python
 python -m pip install --upgrade pip
@@ -292,19 +295,19 @@ pip install einops ujson
 pip install protobuf
 ```
 
-安装xtuner
+Install xtuner:
 
 ```
 git clone -b v0.1.18 https://github.com/InternLM/xtuner
 cd xtuner && pip install -e '.[all]'
 
-# 验证成功
+# Verify success
 xtuner version
 ```
 
-模型下载
+Model Download:
 
-找地方执行下列python文件
+Execute the following python file in a suitable location:
 
 ```python
 
@@ -313,11 +316,11 @@ from modelscope import snapshot_download
 model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm2-chat-7b', cache_dir='./model_temp', revision='master')
 ```
 
-完成上述过程后就可以正式进入微调阶段。
+After completing the above process, you can officially enter the fine-tuning stage.
 
-### 正式微调
+### Formal Fine-tuning
 
-为了微调自己的数据集配置，我们需要修改xtuner的config，首先查看有哪些配置：
+In order to fine-tune our own dataset configuration, we need to modify the config of xtuner. First, check what configurations are available:
 
 ```python
 xtuner list-cfg | grep internlm2
@@ -337,24 +340,24 @@ internlm2_7b_qlora_sql_e3
 ```
 
 ```python
-# 新建一个用于微调工作的文件夹
+# Create a folder for fine-tuning work
 mkdir /home/finetune
-# 复制配置文件
+# Copy configuration file
 cd /home/finetune && xtuner copy-cfg internlm2_chat_7b_qlora_oasst1_e3 ./
 ```
 
-接下来我们需要修改配置文件，简单来说你要做这几处修改：
+Next, we need to modify the configuration file. Simply put, you need to make these modifications:
 
 ```python
-# 修改模型为本地路径
+# Modify model to local path
 - pretrained_model_name_or_path = 'internlm2/internlm2-chat-7b'
 + pretrained_model_name_or_path = '/home/model_temp/Shanghai_AI_Laboratory/internlm2-chat-7b'
 
-# 修改训练数据集为本地路径
+# Modify training dataset to local path
 - data_path = 'timdettmers/openassistant-guanaco'
 + data_path = '/home/merged_data.json'
 
-# 修改Evaluate
+# Modify Evaluate
 -
 evaluation_freq = 500
 SYSTEM = ''
@@ -363,18 +366,18 @@ evaluation_inputs = [
 ]
 +
 evaluation_freq = 50
-SYSTEM = '你现在是一个送祝福大师，帮我针对不同人和事情、节日送对应的祝福'
+SYSTEM = 'You are now a blessing master, help me send corresponding blessings for different people, things, and festivals'
 evaluation_inputs = [
-    '祝姐姐生日快乐', '祝妹妹谈判顺利','祝大家元宵节快乐'
+    'Happy birthday to sister', 'Wish sister a smooth negotiation','Happy Lantern Festival to everyone'
 ]
 
-# 修改数据集加载
+# Modify dataset loading
 - dataset=dict(type=load_dataset, path=data_path),
 + dataset=dict(type=load_dataset, path='json', data_files=dict(train=data_path)),
 ```
 
-以下是修改后的结果，你可以直接复制（只要修改模型路径和训练集路径，以及Evaluate的input，就可以把他变为你自己的配置文件开始训练。）
-或者，你也可以在 tianji 的主仓库中获得所有使用 xtuner 的微调配置 `https://github.com/SocialAI-tianji/Tianji/tree/main/tianji/finetune/xtuner`。
+The following is the modified result, you can copy it directly (just modify the model path and training set path, as well as the input of Evaluate, you can turn it into your own configuration file to start training.)
+Or, you can also get all fine-tuning configurations using xtuner in the main repository of tianji `https://github.com/SocialAI-tianji/Tianji/tree/main/tianji/finetune/xtuner`.
 
 ```python
 # Copyright (c) OpenMMLab. All rights reserved.
@@ -429,9 +432,9 @@ save_total_limit = 10  # Maximum checkpoints to keep (-1 means unlimited)
 
 # Evaluate the generation performance during the training
 evaluation_freq = 50
-SYSTEM = '你现在是一个送祝福大师，帮我针对不同人和事情、节日送对应的祝福'
+SYSTEM = 'You are now a blessing master, help me send corresponding blessings for different people, things, and festivals'
 evaluation_inputs = [
-    '祝姐姐生日快乐','祝姐姐生日快乐，严肃风格','祝姐姐生日快乐,小红书风格', '祝妹妹谈判顺利，小红书风格','祝大家元宵节快乐','祝领导春节快乐，严肃风格'
+    'Happy birthday to sister','Happy birthday to sister, serious style','Happy birthday to sister, Little Red Book style', 'Wish sister a smooth negotiation, Little Red Book style','Happy Lantern Festival to everyone','Happy Spring Festival to the leader, serious style'
 ]
 
 #######################################################################
@@ -592,13 +595,13 @@ log_processor = dict(by_epoch=False)
 
 ```
 
-接下来对新的配置直接开始训练(如果你显存不够，可以切换成 `--deepspeed deepspeed_zero3` )
+Next, start training directly with the new configuration (if your VRAM is insufficient, you can switch to `--deepspeed deepspeed_zero3`)
 
 ```bash
 xtuner train ./internlm2_chat_7b_qlora_oasst1_e3_copy.py  --deepspeed deepspeed_zero2
 ```
 
-训练结束后，所有权重文件放置在训练目录下的work_dirs中，目录大致为：
+After training, all weight files are placed in `work_dirs` under the training directory. The directory structure is roughly as follows:
 
 ```python
 drwxr-xr-x 3 root root       4096 May  2 12:23 20240502_122337/
@@ -608,29 +611,29 @@ drwxr-xr-x 3 root root       4096 May  2 12:23 20240502_122337/
 -rw-r--r-- 1 root root         76 May  2 12:50 last_checkpoint
 ```
 
-值得注意的是，这里通常只需要微调一轮就好，原因是llm通常是过目不忘（有很多相关研究）容易过拟合。
+It is worth noting that usually only one round of fine-tuning is needed here, because LLMs usually have a photographic memory (there are many related studies) and are prone to overfitting.
 
-- 如果你想查看更多超参数对结果带来的变动，请参考：
+- If you want to see more changes brought by hyperparameters to the results, please refer to:
 
-LoRA和QLoRA微调语言大模型：数百次实验后的见解 - OneFlow的文章 - 知乎
+LoRA and QLoRA Fine-tuning Large Language Models: Insights after Hundreds of Experiments - OneFlow Article - Zhihu
 [https://zhuanlan.zhihu.com/p/664912829](https://zhuanlan.zhihu.com/p/664912829)
 
-- 如果你想使用全量微调，对于 internlm2-7B 请至少准备 2xA100 80G 的显卡使用下列命令启用微调。（建议你使用“万”级别的数据再进行全量微调，目前天机相关数据还不足以支持好的全量微调）推荐混入更多正常对话数据来确保全量微调效果正常。NPROC_PER_NODE 的值表示使用几张显卡进行微调,此时双卡每张卡显存占用接近 79G。
+- If you want to use full fine-tuning, for internlm2-7B please prepare at least 2xA100 80G graphics cards and use the following command to enable fine-tuning. (It is recommended that you use "ten thousand" level data before performing full fine-tuning. Currently, Tianji related data is not enough to support good full fine-tuning). It is recommended to mix in more normal dialogue data to ensure the effect of full fine-tuning is normal. The value of NPROC_PER_NODE indicates how many graphics cards are used for fine-tuning. At this time, the VRAM usage of each of the two cards is close to 79G.
 
 ```bash
 NPROC_PER_NODE=2 xtuner train ./全量微调配置.py  --deepspeed deepspeed_zero3
 ```
 
-### 效果验证
+### Effect Verification
 
-首先我们需要转换格式为hf，再与原模型合并，这里提供了统一脚本：
+First, we need to convert the format to HF, and then merge it with the original model. A unified script is provided here:
 
 ```bash
-HF_OUTPUT_DIR="./hf" # lora转为hf格式后的输出地址
-MERGE_OUTPUT_DIR="./merge" # 与原模型合并后的输出地址
-SCRIPT_PATH="./internlm2_chat_7b_qlora_oasst1_e3_copy.py" # 训练配置文件
-SRC_MODEL_PATH="/home/model_temp/Shanghai_AI_Laboratory/internlm2-chat-7b" # 原模型地址
-WEIGHTS_PATH="/home/finetune/work_dirs/internlm2_chat_7b_qlora_oasst1_e3_copy/iter_150.pth" # lora权重地址
+HF_OUTPUT_DIR="./hf" # Output address after lora is converted to hf format
+MERGE_OUTPUT_DIR="./merge" # Output address after merging with the original model
+SCRIPT_PATH="./internlm2_chat_7b_qlora_oasst1_e3_copy.py" # Training configuration file
+SRC_MODEL_PATH="/home/model_temp/Shanghai_AI_Laboratory/internlm2-chat-7b" # Original model address
+WEIGHTS_PATH="/home/finetune/work_dirs/internlm2_chat_7b_qlora_oasst1_e3_copy/iter_150.pth" # lora weight address
 
 rm -rf $HF_OUTPUT_DIR
 rm -rf $MERGE_OUTPUT_DIR
@@ -645,13 +648,13 @@ xtuner convert merge \
     --max-shard-size "2GB"
 ```
 
-如果这步报错，请检查 WEIGHTS_PATH 是否正确。
+If this step reports an error, please check if WEIGHTS_PATH is correct.
 
-当然，你也可以不合并（合并后就可以上传权重），而是转换后直接加载lora，对应脚本如下：
+Of course, you can also not merge (you can upload weights after merging), but directly load lora after conversion. The corresponding script is as follows:
 
 ```bash
-HF_OUTPUT_DIR="./hf" # lora转为hf格式后的输出地址
-SCRIPT_PATH="./internlm2_chat_7b_qlora_oasst1_e3_copy.py" # 训练配置文件
+HF_OUTPUT_DIR="./hf" # Output address after lora is converted to hf format
+SCRIPT_PATH="./internlm2_chat_7b_qlora_oasst1_e3_copy.py" # Training configuration file
 SRC_MODEL_PATH="/home/model_temp/Shanghai_AI_Laboratory/internlm2-chat-7b"
 WEIGHTS_PATH="/home/finetune/work_dirs/internlm2_chat_7b_qlora_oasst1_e3_copy/iter_150.pth"
 
@@ -661,65 +664,65 @@ mkdir -p $HF_OUTPUT_DIR
 
 xtuner convert pth_to_hf "${SCRIPT_PATH}" "${WEIGHTS_PATH}" "${HF_OUTPUT_DIR}"
 
-xtuner chat "${SRC_MODEL_PATH}" --adapter "${HF_OUTPUT_DIR}" --prompt-template internlm2_chat --system "你现在是一个送祝福大师，帮我针对不同人和事情、节日送对应的祝福" --temperature 0.7
+xtuner chat "${SRC_MODEL_PATH}" --adapter "${HF_OUTPUT_DIR}" --prompt-template internlm2_chat --system "You are now a blessing master, help me send corresponding blessings for different people, things, and festivals" --temperature 0.7
 ```
 
-启动对话：
+Start conversation:
 
 ```python
-# 如果想要多样性更强加上 --temperature 1
-xtuner chat ./merge --prompt-template internlm2_chat --system "你现在是一个送祝福大师，帮我针对不同人和事情、节日送对应的祝福" --temperature 0.7
+# If you want more diversity add --temperature 1
+xtuner chat ./merge --prompt-template internlm2_chat --system "You are now a blessing master, help me send corresponding blessings for different people, things, and festivals" --temperature 0.7
 ```
 
-此时你会看到如下显示，你只需要恰当的输入之前的prompt和触发风格即可验证。这里比较不方便的是为了去除上下文影响，我们需要反复输入RESET进行重置。
+At this time, you will see the following display. You only need to input the previous prompt and trigger style appropriately to verify. What is inconvenient here is that in order to remove the influence of context, we need to repeatedly input RESET to reset.
 
 ```bash
-double enter to end input (EXIT: exit chat, RESET: reset history) >>> 祝弟弟工作升职 ,小红书风格
+double enter to end input (EXIT: exit chat, RESET: reset history) >>> Wish younger brother a job promotion, Little Red Book style
 
-弟弟呀，你的才华如同春日里的花朵，绽放出绚烂的光彩。工作如鱼得水，升职之路顺顺利利，愿你继续闪耀，成为职场的明星！加油哦！🌟🌈<|im_end|>
-
-double enter to end input (EXIT: exit chat, RESET: reset history) >>> RESET
-
-Log: History responses have been removed!
-
-double enter to end input (EXIT: exit chat, RESET: reset history) >>> 我想送哥哥中秋节祝福,小红书风格
-
-🌕🎉 哥，中秋月圆人团圆，愿你事业如月圆，家庭幸福似团圆，快乐满怀，幸福满满！🌟<|im_end|>
+Brother, your talent is like flowers in spring, blooming with brilliant brilliance. Work is like a fish in water, the road to promotion is smooth, may you continue to shine and become a star in the workplace! Come on! 🌟🌈<|im_end|>
 
 double enter to end input (EXIT: exit chat, RESET: reset history) >>> RESET
 
 Log: History responses have been removed!
 
-double enter to end input (EXIT: exit chat, RESET: reset history) >>> 我想送赵老师生日祝福,严肃风格
+double enter to end input (EXIT: exit chat, RESET: reset history) >>> I want to send Mid-Autumn Festival blessings to my brother, Little Red Book style
 
-尊敬的赵老师，值此佳辰，恭祝您福寿安康，事业蒸蒸日上。愿您在未来的岁月里，如同春日之花，绽放出更加绚烂的光彩，为莘莘学子树立起崇高的榜样。愿您的生活如同诗篇般美好，每一天都充满着智慧与喜悦。愿您的工作如同乐章般动听，每一个音符都承载着对教育事业的热爱与执着。在此，衷心祝愿您生日快乐，万事胜意！<|im_end|>
+🌕🎉 Brother, the moon is round and people are reunited during the Mid-Autumn Festival. May your career be as round as the moon, your family happy and reunited, full of joy and happiness! 🌟<|im_end|>
+
+double enter to end input (EXIT: exit chat, RESET: reset history) >>> RESET
+
+Log: History responses have been removed!
+
+double enter to end input (EXIT: exit chat, RESET: reset history) >>> I want to send birthday wishes to Teacher Zhao, serious style
+
+Respected Teacher Zhao, on this auspicious occasion, I wish you longevity, health, and a prosperous career. May you be like the flowers of spring in the years to come, blooming with even more brilliant brilliance, setting a lofty example for the students. May your life be as beautiful as a poem, and every day be filled with wisdom and joy. May your work be as pleasant as a movement, and every note carries the love and persistence for the cause of education. Here, I sincerely wish you a happy birthday and all the best! <|im_end|>
 ```
 
-### 网页demo
+### Web Demo
 
-为了方便测试，我们还可以使用streamlit的demo，使用方法如下：
+For the convenience of testing, we can also use the streamlit demo. The usage method is as follows:
 
 `pip install streamlit==1.39.0`
 
 ```
-# 找地方clone仓库
+# Find a place to clone the repository
 git clone https://github.com/InternLM/InternLM.git
 ```
 
-将 `/root/code/InternLM/web_demo.py` 中 29 行和 33 行的模型路径更换为Merge后存放参数的路径 `/home/finetune/merge`
+Change the model path in lines 29 and 33 of `/root/code/InternLM/web_demo.py` to the path where the parameters are stored after Merge `/home/finetune/merge`
 
-按照如下命令运行 `/root/personal_assistant/code/InternLM` 目录下的 `web_demo.py` 文件即可。
+Run the `web_demo.py` file in the `/root/personal_assistant/code/InternLM` directory according to the following command.
 
 ```python
 streamlit run /root/personal_assistant/code/InternLM/web_demo.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-通过以上步骤，你就可以成功地微调出最初版本的天机送祝福模块并成功运行推理。
+Through the above steps, you can successfully fine-tune the initial version of the Tianji blessing module and successfully run inference.
 
-但由于制造数据的质量仍有改善空间、回答随机性注入、输入input的随机性加强仍有很多方式可以实现，送祝福完全可以变得更好、更智能、更通用，从而真正更接近中文下的使用场景，让llm对话更富有“人情味”。
+However, since there is still room for improvement in the quality of manufacturing data, answer randomness injection, and input randomness enhancement, there are still many ways to achieve it. Sending blessings can become better, more intelligent, and more universal, thereby truly getting closer to the usage scenarios in Chinese, making the llm dialogue more "human".
 
-## 感谢每一位贡献者
+## Thanks to Every Contributor
 
-由于贡献者人数众多无法一一列举，我们由衷的感谢每一位为天机项目做出贡献的小伙伴，是他们让这个项目变得更好。我们也期待你的加入。相信我，你也可以变成光！
+Due to the large number of contributors, we cannot list them all. We sincerely thank every partner who has contributed to the Tianji project. It is they who make this project better. We also look forward to your joining. Believe me, you can also become light!
 
 https://github.com/SocialAI-tianji/Tianji/blob/main/docs/contributor.md

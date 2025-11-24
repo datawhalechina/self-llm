@@ -1,61 +1,61 @@
-# AMchat 高等数学大模型
+# AMchat Advanced Mathematics Large Model
 
-## 📖 简介
+## 📖 Introduction
 
-AM (Advanced Mathematics) chat 是一个集成了数学知识和高等数学习题及其解答的大语言模型。该模型使用 Math 和高等数学习题及其解析融合的数据集，基于 InternLM2-Math-7B 模型，通过 xtuner 微调，专门设计用于解答高等数学问题。
+AM (Advanced Mathematics) chat is a large language model integrated with mathematical knowledge and advanced mathematics exercises and their solutions. This model uses a dataset fused with Math and advanced mathematics exercises and their analyses. Based on the InternLM2-Math-7B model and fine-tuned via xtuner, it is specifically designed to solve advanced mathematics problems.
 
-你在这里可以学到 **收集数据**、**制作数据集**、**模型微调**和 **部署模型** 的全流程，帮助你更好地理解和掌握大模型应用开发的核心技术。
+Here you can learn the full process of **data collection**, **dataset creation**, **model fine-tuning**, and **model deployment**, helping you better understand and master the core technologies of large model application development.
 
-> *AMchat模型: Modelscope 地址：[*Link*](https://www.modelscope.cn/models/yondong/AMchat/summary)* ， *OpenXLab 地址：[*Link*](https://openxlab.org.cn/models/detail/youngdon/AMchat)*，HuggingFace 地址：[*Link*](https://huggingface.co/axyzdong/AMchat)\
-> *AMchat 项目地址：*[*Link*](https://github.com/AXYZdong/AMchat)\
-> *AMchat 应用地址：*[*Link*](https://openxlab.org.cn/apps/detail/youngdon/AMchat)\
-> *AMchat 视频介绍：*[*Link*](https://www.bilibili.com/video/BV14v421i7So/) 
-
-
-## 🛠️ 实现微调模型
-
-接下来，我们将演示如何基于 Xtuner QLoRA 框架，快速实现一个用于高等数学的微调模型。 本教程将详细讲解针对 internLM2 进行数学微调的全流程，涵盖数据准备、微调执行以模型部署等环节。
-
-本次微调示例选用 internlm2-math-7b 模型。你需要准备一台配备 24GB 显存的机器进行微调（例如 NVIDIA GeForce RTX 3090）。
-
-微调模型的第一步是准备高质量的训练数据。对于数学大模型而言，你需要收集数学题目，数据来源可以是公开的数学数据集或自行收集的数据。
-
-在准备完成数据来源以及获取到对应数据后，你需要使用该数据制作成结构化的数据集，以便于模型进行微调训练。
+> *AMchat Model: Modelscope Address: [*Link*](https://www.modelscope.cn/models/yondong/AMchat/summary)*, *OpenXLab Address: [*Link*](https://openxlab.org.cn/models/detail/youngdon/AMchat)*, HuggingFace Address: [*Link*](https://huggingface.co/axyzdong/AMchat)\
+> *AMchat Project Address:* [*Link*](https://github.com/AXYZdong/AMchat)\
+> *AMchat Application Address:* [*Link*](https://openxlab.org.cn/apps/detail/youngdon/AMchat)\
+> *AMchat Video Introduction:* [*Link*](https://www.bilibili.com/video/BV14v421i7So/) 
 
 
-### Step 1: 数据准备
+## 🛠️ Implementing Model Fine-tuning
 
-我们可以用调用api的方式让一些大模型自动生成数学题目，然后再将生成的数学题目进行答案的标注。
+Next, we will demonstrate how to quickly implement a fine-tuned model for advanced mathematics based on the Xtuner QLoRA framework. This tutorial will explain in detail the full process of mathematical fine-tuning for internLM2, covering data preparation, fine-tuning execution, and model deployment.
 
-另外，我们也可以自己从一些考研数学题库中通过OCR的方式获取数学题目，然后再进行答案的标注。
+This fine-tuning example uses the internlm2-math-7b model. You need to prepare a machine equipped with 24GB of video memory for fine-tuning (e.g., NVIDIA GeForce RTX 3090).
 
-对与每一条数据，需要整理成如下格式：
+The first step in fine-tuning a model is to prepare high-quality training data. For a mathematical large model, you need to collect math problems. The data source can be public math datasets or self-collected data.
+
+After preparing the data source and obtaining the corresponding data, you need to make the data into a structured dataset to facilitate model fine-tuning training.
+
+
+### Step 1: Data Preparation
+
+We can use API calls to let some large models automatically generate math problems, and then annotate the answers to the generated math problems.
+
+In addition, we can also obtain math problems from some postgraduate entrance examination math question banks through OCR, and then annotate the answers.
+
+For each piece of data, it needs to be organized into the following format:
 
 ```json
 {
     "conversation": [
         {
-            "input": "设 a_{n}=\\frac{3}{2} \\int_{0}^{\\frac{n}{n+1}} x^{n-1} \\sqrt{1+x^{n}} \\mathrm{~d} x, 则 \\lim _{n \\rightarrow \\infty} n a_{n}=\\\\",
-            "output": "\\left(1+\\mathrm{e}^{-1}\\right)^{\\frac{3}{2}}-1 \\\\ 解\\\\\\\\\\begin{aligned}\\\\a_{n} & =\\frac{3}{2} \\int_{0}^{\\frac{n}{n+1}} x^{n-1} \\sqrt{1+x^{n}} \\mathrm{~d} x=\\frac{3}{2} \\cdot \\frac{1}{n} \\int_{0}^{\\frac{n}{n+1}}\\left(1+x^{n}\\right)^{\\frac{1}{2}} \\mathrm{~d}\\left(1+x^{n}\\right) \\\\\\\\& =\\left.\\frac{3}{2} \\cdot \\frac{1}{n} \\cdot \\frac{2}{3}\\left(1+x^{n}\\right)^{\\frac{3}{2}}\\right|_{0} ^{\\frac{n}{n+1}}=\\frac{1}{n}\\left\\{\\left[1+\\left(\\frac{n}{n+1}\\right)^{n}\\right]^{\\frac{3}{2}}-1\\right\\} .\\\\\\end{aligned}\\\\\\\\\\\\由 \\lim _{n \\rightarrow \\infty}\\left(\\frac{n+1}{n}\\right)^{n}=\\mathrm{e}, 知 \\lim _{n \\rightarrow \\infty}\\left(\\frac{n}{n+1}\\right)^{n}=\\frac{1}{\\mathrm{e}}, 故\\\\\\\\\\lim _{n \\rightarrow \\infty} n a_{n}=\\lim _{n \\rightarrow \\infty}\\left\\{\\left[1+\\left(\\frac{n}{n+1}\\right)^{n}\\right]^{\\frac{3}{2}}-1\\right\\}=\\left(1+\\mathrm{e}^{-1}\\right)^{\\frac{3}{2}}-1 .\\\\"
+            "input": "Let a_{n}=\\frac{3}{2} \\int_{0}^{\\frac{n}{n+1}} x^{n-1} \\sqrt{1+x^{n}} \\mathrm{~d} x, then \\lim _{n \\rightarrow \\infty} n a_{n}=\\\\",
+            "output": "\\left(1+\\mathrm{e}^{-1}\\right)^{\\frac{3}{2}}-1 \\\\ Solution\\\\\\\\\\begin{aligned}\\\\a_{n} & =\\frac{3}{2} \\int_{0}^{\\frac{n}{n+1}} x^{n-1} \\sqrt{1+x^{n}} \\mathrm{~d} x=\\frac{3}{2} \\cdot \\frac{1}{n} \\int_{0}^{\\frac{n}{n+1}}\\left(1+x^{n}\\right)^{\\frac{1}{2}} \\mathrm{~d}\\left(1+x^{n}\\right) \\\\\\\\& =\\left.\\frac{3}{2} \\cdot \\frac{1}{n} \\cdot \\frac{2}{3}\\left(1+x^{n}\\right)^{\\frac{3}{2}}\\right|_{0} ^{\\frac{n}{n+1}}=\\frac{1}{n}\\left\\{\\left[1+\\left(\\frac{n}{n+1}\\right)^{n}\\right]^{\\frac{3}{2}}-1\\right\\} .\\\\\\end{aligned}\\\\\\\\\\\\Since \\lim _{n \\rightarrow \\infty}\\left(\\frac{n+1}{n}\\right)^{n}=\\mathrm{e}, we know \\lim _{n \\rightarrow \\infty}\\left(\\frac{n}{n+1}\\right)^{n}=\\frac{1}{\\mathrm{e}}, so\\\\\\\\\\lim _{n \\rightarrow \\infty} n a_{n}=\\lim _{n \\rightarrow \\infty}\\left\\{\\left[1+\\left(\\frac{n}{n+1}\\right)^{n}\\right]^{\\frac{3}{2}}-1\\right\\}=\\left(1+\\mathrm{e}^{-1}\\right)^{\\frac{3}{2}}-1 .\\\\"
         }
     ]
 }
 ```
 
-每个 "conversation" 字段包含一个对话，对话中包含一个输入和一个输出。输入是数学题目，输出是数学题目的答案。
+Each "conversation" field contains a dialogue, which includes an input and an output. The input is the math problem, and the output is the answer to the math problem.
 
-> 小规模开源数据集：[AMchat_dataset](https://github.com/AXYZdong/AMchat/tree/main/dataset)
+> Small-scale open source dataset: [AMchat_dataset](https://github.com/AXYZdong/AMchat/tree/main/dataset)
 
-### Step 2: 环境准备
+### Step 2: Environment Preparation
 
-1. clone 项目
+1. Clone the project
 
 ```bash
 git clone https://github.com/AXYZdong/AMchat.git
 cd AMchat
 ```
 
-2. 创建虚拟环境
+2. Create a virtual environment
 
 ```bash
 conda env create -f environment.yml
@@ -63,9 +63,9 @@ conda activate AMchat
 pip install xtuner
 ```
 
-### Step 3:  模型微调
+### Step 3: Model Fine-tuning
 
-1. 基座模型下载
+1. Download Base Model
 
 ```bash
 mkdir -p /root/math/model
@@ -79,10 +79,10 @@ import os
 model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm2-math-7b', cache_dir='/root/math/model')
 ```
 
-2. 准备配置文件
+2. Prepare Configuration File
 
 ```bash
-# 列出所有内置配置
+# List all built-in configurations
 xtuner list-cfg
 
 mkdir -p /root/math/data
@@ -91,12 +91,12 @@ mkdir /root/math/config && cd /root/math/config
 xtuner copy-cfg internlm2_chat_7b_qlora_oasst1_e3 .
 ```
 
-3. 修改配置文件
+3. Modify Configuration File
 
-> 仓库中 `config` 文件夹下已经提供了一个微调的配置文件，可以参考 `internlm_chat_7b_qlora_oasst1_e3_copy.py`。
-> 可以直接使用，注意修改  `pretrained_model_name_or_path` 和 `data_path` 的路径。
+> A fine-tuning configuration file is already provided in the `config` folder of the repository, you can refer to `internlm_chat_7b_qlora_oasst1_e3_copy.py`.
+> You can use it directly, pay attention to modifying the paths of `pretrained_model_name_or_path` and `data_path`.
 
-配置文件代码如下：
+The configuration file code is as follows:
 ```python
 import torch
 from datasets import load_dataset
@@ -145,7 +145,7 @@ evaluation_freq = 500
 SYSTEM = "You're a professor of mathematics."
 
 evaluation_inputs = [
-    '2x^2+3x+1=10，求x', '求积分 $\int_{0}^{1} x dx$'
+    '2x^2+3x+1=10，find x', 'Calculate integral $\int_{0}^{1} x dx$'
 ]
 
 #######################################################################
@@ -293,7 +293,7 @@ resume = False
 randomness = dict(seed=None, deterministic=False)
 ```
 
-也可以在命令行中直接修改配置文件。
+You can also modify the configuration file directly in the command line.
 
 ```bash
 cd /root/math/config
@@ -301,22 +301,22 @@ vim internlm_chat_7b_qlora_oasst1_e3_copy.py
 ```
 
 ```python
-# 修改模型为本地路径
+# Modify model to local path
 - pretrained_model_name_or_path = 'internlm/internlm-chat-7b'
 + pretrained_model_name_or_path = './internlm2-math-7b'
 
-# 修改训练数据集为本地路径
+# Modify training dataset to local path
 - data_path = '../dataset/AMchat_dataset.json'
 + data_path = './data'
 ```
 
-4. 开始微调
+4. Start Fine-tuning
 
 ```bash
 xtuner train /root/math/config/internlm2_chat_7b_qlora_oasst1_e3_copy.py
 ```
 
-5. PTH 模型转换为 HuggingFace 模型
+5. Convert PTH Model to HuggingFace Model
 
 ```bash
 mkdir hf
@@ -327,19 +327,19 @@ xtuner convert pth_to_hf ./internlm2_chat_7b_qlora_oasst1_e3_copy.py \
                          ./hf
 ```
 
-6. HuggingFace 模型合并到大语言模型
+6. Merge HuggingFace Model into Large Language Model
 ```bash
-# 原始模型参数存放的位置
+# Location of original model parameters
 export NAME_OR_PATH_TO_LLM=/root/math/model/Shanghai_AI_Laboratory/internlm2-math-7b
 
-# Hugging Face格式参数存放的位置
+# Location of Hugging Face format parameters
 export NAME_OR_PATH_TO_ADAPTER=/root/math/config/hf
 
-# 最终Merge后的参数存放的位置
+# Location of final Merged parameters
 mkdir /root/math/config/work_dirs/hf_merge
 export SAVE_PATH=/root/math/config/work_dirs/hf_merge
 
-# 执行参数Merge
+# Execute Parameter Merge
 xtuner convert merge \
     $NAME_OR_PATH_TO_LLM \
     $NAME_OR_PATH_TO_ADAPTER \
@@ -354,14 +354,14 @@ streamlit run web_demo.py --server.address=0.0.0.0 --server.port 7860
 ```
 
 
-### 致谢每一位贡献者 
+### Acknowledgements to Every Contributor
 
-核心贡献者：
+Core Contributors:
 
-- [张友东](https://github.com/AXYZdong) （Datawhale成员-东南大学）
-- [宋志学](https://github.com/KMnO4-zx)（Datawhale成员-中国矿业大学(北京)）
-- [肖鸿儒](https://github.com/Hongru0306)（Datawhale成员-同济大学）
+- [Zhang Youdong](https://github.com/AXYZdong) (Datawhale Member - Southeast University)
+- [Song Zhixue](https://github.com/KMnO4-zx) (Datawhale Member - China University of Mining and Technology (Beijing))
+- [Xiao Hongru](https://github.com/Hongru0306) (Datawhale Member - Tongji University)
 
-贡献者目录：
+Contributors List:
 
 https://github.com/AXYZdong/AMchat/graphs/contributors

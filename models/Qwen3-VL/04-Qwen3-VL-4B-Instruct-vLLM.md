@@ -2,22 +2,22 @@
 
 
 
-## **vLLM 简介**
+## **Introduction to vLLM**
 
-`vLLM` 是一个高性能的大语言模型推理与服务框架，具备以下特点：
+`vLLM` is a high-performance large language model inference and serving framework with the following features:
 
-- 高效的 KV 缓存与内存管理：基于 `PagedAttention` 显著降低显存浪费，提升长文本与高并发场景下的吞吐。
-- 兼容 OpenAI 接口：可直接以 `OpenAI API` 形式对外提供 `completions` 与 `chat completions` 能力，便于与现有生态集成。
-- 多 GPU 并行与易扩展：支持 Tensor Parallel 等策略，参数简单、易于横向扩展吞吐与上下文长度上限。
-- 生态良好：与 `HuggingFace`/`ModelScope` 模型仓库无缝衔接，支持多种推理优化与特性（如推理/思考内容解析、工具调用）。
+- Efficient KV Cache and Memory Management: Based on `PagedAttention`, it significantly reduces video memory waste and improves throughput in long text and high concurrency scenarios.
+- Compatible with OpenAI Interface: It can directly provide `completions` and `chat completions` capabilities in the form of `OpenAI API`, facilitating integration with the existing ecosystem.
+- Multi-GPU Parallelism and Easy Expansion: Supports strategies such as Tensor Parallel, with simple parameters, making it easy to horizontally expand throughput and context length limits.
+- Good Ecosystem: Seamlessly connects with `HuggingFace`/`ModelScope` model repositories, supporting various inference optimizations and features (such as inference/thinking content parsing, tool calling).
 
 
 
-## 环境准备
+## Environment Preparation
 
-推荐基础环境如下：
+The recommended basic environment is as follows:
 
-> 显存预算建议：1 * NVIDIA RTX 5090
+> Video Memory Budget Suggestion: 1 * NVIDIA RTX 5090
 
 ```
 ----------------
@@ -28,7 +28,7 @@ pytorch 2.8.0
 ----------------
 ```
 
-虚拟环境配置
+Virtual Environment Configuration
 
 ```bash
 pip install vllm==0.11.0
@@ -37,30 +37,30 @@ pip install modelscope==1.30.0
 pip install qwen_vl_utils==0.0.14
 ```
 
-> 提示：请确保环境中 NVIDIA 驱动、CUDA 与 PyTorch CUDA 编译版本匹配，可用 `nvidia-smi` 与 `python -c "import torch; print(torch.version.cuda, torch.cuda.is_available())"` 进行快速自检。
+> Tip: Please ensure that the NVIDIA driver, CUDA, and PyTorch CUDA compilation versions in the environment match. You can use `nvidia-smi` and `python -c "import torch; print(torch.version.cuda, torch.cuda.is_available())"` for a quick self-check.
 
 
 
-## 模型下载
+## Model Download
 
 ```python
 # model_download.py
-# 注意修改cache_dir为保存的路径
+# Note: Modify cache_dir to the path where you want to save the model
 from modelscope import snapshot_download
-model_dir = snapshot_download('Qwen/Qwen3-VL-4B-Instruct', cache_dir='请修改我！！！', revision='master')
+model_dir = snapshot_download('Qwen/Qwen3-VL-4B-Instruct', cache_dir='Please modify me!!!', revision='master')
 
-print(f"模型下载完成，保存路径为：{model_dir}")
+print(f"Model download completed, saved path: {model_dir}")
 ```
 
 
 
-## **模型简介**
+## **Model Introduction**
 
 ![fig-4-2](./images/fig-4-5.jpg)
 
-`Qwen3-VL-4B-Instruct` 是[Qwen3-VL](https://www.modelscope.cn/collections/Qwen3-VL-5c7a94c8cb144b)系列中的视觉语言模型，有着优秀的文本理解和生成能力、视觉感知和推理能力以及空间和视频动态理解能力。
-评测结果表明，该模型在STEM、VQA、OCR、视频理解、智能体等多个任务中与`GPT-5-Mini`和`Cluade-4-Sonnet`相媲美。
-另外，该模型是非推理模型，如果想要体验更强且带有thinking mode的模型，可以下载同尺寸的[Qwen3-VL-30B-A3B-Thinking](https://www.modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Thinking)或者更大的旗舰模型[Qwen3-VL-235B-A22B-Thinking](https://www.modelscope.cn/models/Qwen/Qwen3-VL-235B-A22B-Thinking-FP8)。
+`Qwen3-VL-4B-Instruct` is a vision-language model in the [Qwen3-VL](https://www.modelscope.cn/collections/Qwen3-VL-5c7a94c8cb144b) series, possessing excellent text understanding and generation capabilities, visual perception and reasoning capabilities, as well as spatial and video dynamic understanding capabilities.
+Evaluation results show that this model is comparable to `GPT-5-Mini` and `Cluade-4-Sonnet` in multiple tasks such as STEM, VQA, OCR, video understanding, and agents.
+In addition, this model is a non-reasoning model. If you want to experience a stronger model with thinking mode, you can download the [Qwen3-VL-30B-A3B-Thinking](https://www.modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Thinking) of the same size or the larger flagship model [Qwen3-VL-235B-A22B-Thinking](https://www.modelscope.cn/models/Qwen/Qwen3-VL-235B-A22B-Thinking-FP8).
 
 <p align="center">   
     <img src="./images/fig-4-1.jpg" width="500" /> 
@@ -70,11 +70,11 @@ print(f"模型下载完成，保存路径为：{model_dir}")
 
 ## **vLLM Serving**
 
-### **Python命令行启动服务**
+### **Python Command Line Start Service**
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python -m vllm.entrypoints.openai.api_server \
-  --model 请修改我！！！/Qwen/Qwen3-VL-4B-Instruct \
+  --model Please modify me!!!/Qwen/Qwen3-VL-4B-Instruct \
   --served-model-name Qwen3-VL-4B-Instruct \
   --max-model-len 8192 \
   --tensor-parallel-size 1 \
@@ -83,41 +83,41 @@ CUDA_VISIBLE_DEVICES=0 python -m vllm.entrypoints.openai.api_server \
   --gpu_memory_utilization 0.9
 ```
 
-#### 参数说明
+#### Parameter Explanation
 
-- `CUDA_VISIBLE_DEVICES`: 指定可见的GPU。
+- `CUDA_VISIBLE_DEVICES`: Specify visible GPUs.
 
-- `--tensor-parallel-size`：张量并行划分数。使用多 GPU时使用；多卡可提升吞吐和可用上下文长度上限。
-- `--max-model-len`：单请求最大上下文长度（输入+输出）。越大显存占用越高，易触发 OOM。可按显存情况下调，如 8192。
-- `--gpu_memory_utilization`：vLLM 目标可用显存比例（0~1）。若 OOM 可尝试增加。
-- `--served-model-name`：对外暴露的模型名。客户端需用同名 `model` 调用。
-- `--port`/`--host`：服务监听端口/地址，默认为8080。
-- `--trust_remote_code`：允许加载仓库中的自定义代码（必需，否则部分模型无法正确初始化）。
+- `--tensor-parallel-size`: Tensor parallel division number. Used when using multiple GPUs; multi-card can improve throughput and available context length limit.
+- `--max-model-len`: Maximum context length for a single request (input + output). Larger values occupy more video memory and are prone to triggering OOM. Can be adjusted downwards according to video memory conditions, such as 8192.
+- `--gpu_memory_utilization`: vLLM target available video memory ratio (0~1). If OOM occurs, try increasing it.
+- `--served-model-name`: The model name exposed externally. The client needs to use the same name `model` to call.
+- `--port`/`--host`: Service listening port/address, default is 8080.
+- `--trust_remote_code`: Allow loading custom code from the repository (required, otherwise some models cannot be initialized correctly).
 
-成功启动后，你将看到 `Application startup complete` 的输出如图：
+After successful startup, you will see the output `Application startup complete` as shown in the figure:
 
 ![fig-4-2](./images/fig-4-2.png)
 
-我们通过上述 vLLM 启动的服务兼容 OpenAI 接口，因此可以很方便地通过 Python 的 OpenAI 库进行调用。下面我们通过日常问答，图片描述和视频推理的实际案例来测试 `Qwen3-VL-4B-Instruct` 的能力。
+The service started by vLLM above is compatible with the OpenAI interface, so it can be conveniently called through Python's OpenAI library. Below we test the capabilities of `Qwen3-VL-4B-Instruct` through practical cases of daily Q&A, image description, and video reasoning.
 
 
 
-### **日常及图像描述测试**
+### **Daily and Image Description Test**
 
 ```python
 from openai import OpenAI
 
 openai_api_key = "EMPTY"
-openai_api_base = "http://127.0.0.1:8085/v1" # 使用正确的端口
-daily_chat_message = "将“I love Qwen3-VL-4B-Instruct”这句话的所有内容反过来写"
+openai_api_base = "http://127.0.0.1:8085/v1" # Use the correct port
+daily_chat_message = "Write the sentence 'I love Qwen3-VL-4B-Instruct' in reverse."
 
-# 实例化OpenAI client
+# Instantiate OpenAI client
 client = OpenAI(
     api_key=openai_api_key,
     base_url=openai_api_base,
 )
 
-# 日常问答
+# Daily Q&A
 daily_chat_response = client.chat.completions.create(
     model="Qwen3-VL-4B-Instruct",
     messages = [
@@ -127,10 +127,10 @@ daily_chat_response = client.chat.completions.create(
         }
     ]
 )
-print(f"Qwen3-VL-4B-Instruct日常问答: {daily_chat_response.choices[0].message.content}")
+print(f"Qwen3-VL-4B-Instruct Daily Q&A: {daily_chat_response.choices[0].message.content}")
 print("-"*100)
 
-# 图片描述
+# Image Description
 image_des_response = client.chat.completions.create(
     model="Qwen3-VL-4B-Instruct",
     messages = [
@@ -148,21 +148,21 @@ image_des_response = client.chat.completions.create(
         }
     ]
 )
-print(f"Qwen3-VL-4B-Instruct图片描述: {image_des_response.choices[0].message.content}")
+print(f"Qwen3-VL-4B-Instruct Image Description: {image_des_response.choices[0].message.content}")
 
 ```
 
 
-测试结果如下：
+Test results are as follows:
 ````bash
-Qwen3-VL-4B-Instruct日常问答: 我们来一步一步地将这句话 "I love Qwen3-VL-4B-Instruct" 反过来写。
+Qwen3-VL-4B-Instruct Daily Q&A: Let's write the sentence "I love Qwen3-VL-4B-Instruct" in reverse step by step.
 
-将句子 “I love Qwen3-VL-4B-Instruct” 的所有内容反过来写，即逐字符反转，结果如下：
+Writing all the content of the sentence "I love Qwen3-VL-4B-Instruct" in reverse, i.e., character by character reversal, the result is as follows:
 
 tcurtsnI-B4-LV-3newQ evol I
 
 ----------------------------------------------------------------------------------------------------
-Qwen3-VL-4B-Instruct图片描述: Of course. Here is a detailed description of the image.
+Qwen3-VL-4B-Instruct Image Description: Of course. Here is a detailed description of the image.
 
 This is a heartwarming and serene photograph capturing a tender moment between a woman and her dog on a sandy beach during what appears to be sunrise or sunset.
 
@@ -177,7 +177,7 @@ This is a heartwarming and serene photograph capturing a tender moment between a
 - **Composition:** The subjects are positioned slightly off-center, creating a balanced and dynamic composition. The shallow depth of field keeps the woman and dog in sharp focus while softly blurring the background, which draws the viewer's attention to their interaction. The overall mood of the image is one of happiness, companionship, and the simple joy of a shared moment with a beloved pet.
 ````
 
-### **分析**
+### **Analysis**
 
 #### Q1
 
@@ -189,22 +189,22 @@ This is a heartwarming and serene photograph capturing a tender moment between a
 
 `I love Qwen3-VL-4B-Instruct` → `tcurtsnI-B4-LV-3newQ evol I`
 
-经过人工检验，这两个问题 `Qwen3-VL-4B-Instruct` 的回复都挺不错的，倒叙句子完全正确，图片描述非常详尽清晰且符合原图。同样的图片描述对比 `Qwen2-VL` 的测试结果可见 [self-llm Qwen2-VL-2B-Instruct FastApi 部署调用](https://github.com/datawhalechina/self-llm/blob/8f77c691403bc2a5be12dad994f1d60b67c15618/models/Qwen2-VL/01-Qwen2-VL-2B-Instruct%20FastApi%20%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md?plain=1#L180)。
+After manual verification, the responses of `Qwen3-VL-4B-Instruct` to these two questions are quite good. The reversed sentence is completely correct, and the image description is very detailed and clear, consistent with the original image. For comparison of the same image description with the test results of `Qwen2-VL`, please refer to [self-llm Qwen2-VL-2B-Instruct FastApi Deployment and Invocation](https://github.com/datawhalechina/self-llm/blob/8f77c691403bc2a5be12dad994f1d60b67c15618/models/Qwen2-VL/01-Qwen2-VL-2B-Instruct%20FastApi%20%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md?plain=1#L180).
 
-| 评估维度               | Qwen3-VL-4B-Instruct                                         | Qwen2-VL-2B-Instruct                                         |
+| Evaluation Dimension | Qwen3-VL-4B-Instruct | Qwen2-VL-2B-Instruct |
 | ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 细节丰富度与画面还原度 | 提供了极为详尽的视觉细节：包括狗的品种（黄色拉布拉多）、女子的发色（深棕色）、衣着（黑白格子法兰绒衬衫+深色裤子）、狗的配饰（蓝色带彩色爪印图案的胸背带）、 leash 的颜色（红色）以及沙滩上的脚印、波纹等环境细节。这些信息不仅增强了画面的真实感，也帮助读者在脑海中精准构建图像。 | 虽然也提到了基本元素（如格子衬衫、高举的狗爪、海洋背景），但描述较为笼统，缺乏具体特征（如狗的品种、颜色、配饰等），画面感较弱。 |
-| 情感与氛围营造         | 不仅描述了“微笑”，还深入刻画了人物情绪（“温暖的笑容”，“喜悦与爱意”）和整体氛围（“宁静”，“温馨”，“简单快乐的陪伴”），并通过光线（“金色晨昏光”，“柔光晕染”，“镜头光晕”）强化了情感基调。 | 虽提到“平静而喜悦”，但情感表达较为表面，缺乏细腻的情绪层次和氛围渲染。 |
-| 结构与逻辑性           | 采用清晰的分段结构（主体互动、环境、光线、服饰、构图），逻辑严谨，层次分明，便于读者系统理解图像内容。 | 则为一段式叙述，信息堆砌，缺乏组织，阅读体验不如前者流畅。   |
-| 语言表现力             | 使用了更具文学性和画面感的词汇，如“沐浴在金色阳光中”“柔焦背景突出主体”“轻柔的波浪拍岸”等，语言生动、富有感染力。 | 语言较为平实，偏向功能性描述，缺乏美感和感染力。             |
+| Detail Richness and Image Restoration | Provided extremely detailed visual details: including the dog's breed (Yellow Labrador), the woman's hair color (dark brown), clothing (black and white plaid flannel shirt + dark pants), the dog's accessories (blue harness with colorful paw prints), the color of the leash (red), and environmental details such as footprints and ripples on the beach. This information not only enhances the realism of the picture but also helps the reader accurately construct the image in their mind. | Although basic elements were mentioned (such as plaid shirt, raised dog paw, ocean background), the description was relatively general, lacking specific features (such as dog breed, color, accessories, etc.), and the visual sense was weak. |
+| Emotion and Atmosphere Creation | Not only described "smiling", but also deeply portrayed the character's emotions ("warm smile", "joy and affection") and the overall atmosphere ("peaceful", "warm", "simple happy companionship"), and reinforced the emotional tone through lighting ("golden morning/evening light", "soft glow", "lens flare"). | Although "calm and joyful" was mentioned, the emotional expression was relatively superficial, lacking delicate emotional layers and atmospheric rendering. |
+| Structure and Logic | Adopted a clear segmented structure (subject interaction, environment, lighting, attire, composition), with rigorous logic and clear hierarchy, facilitating readers to systematically understand the image content. | It was a one-paragraph narrative, with piled-up information and lack of organization, making the reading experience less smooth than the former. |
+| Language Expressiveness | Used more literary and visual vocabulary, such as "bathed in golden sunlight", "shallow depth of field highlights the subject", "gentle waves breaking on the shore", etc., making the language vivid and infectious. | The language was relatively plain, leaning towards functional description, lacking beauty and infectiousness. |
 
-`Qwen3-VL-4B-Instruct` 在**细节还原、情感表达、结构组织和语言表现力**四个方面均显著优于 `  Qwen2-VL-2B-Instruct`。不仅准确传达了图像内容，还成功唤起了读者的情感共鸣，作为图像描述显然质量更高。
+`Qwen3-VL-4B-Instruct` is significantly better than `Qwen2-VL-2B-Instruct` in four aspects: **detail restoration, emotional expression, structural organization, and language expressiveness**. It not only accurately conveyed the image content but also successfully evoked the reader's emotional resonance, and is obviously of higher quality as an image description.
 
 
 
-### 视频推理测试
+### Video Reasoning Test
 
-输入视频预览如下：
+Input video preview is as follows:
 
 ![fig-4-3](./images/fig-4-3.gif)
 
@@ -255,7 +255,7 @@ if __name__ == '__main__':
         }
     ]
 
-    checkpoint_path = "请修改我！！！/Qwen/Qwen3-VL-4B-Instruct"
+    checkpoint_path = "Please modify me!!!/Qwen/Qwen3-VL-4B-Instruct"
     processor = AutoProcessor.from_pretrained(checkpoint_path)
     inputs = [prepare_inputs_for_vllm(message, processor) for message in [messages]]
 
@@ -289,19 +289,19 @@ if __name__ == '__main__':
         print(f"Generated Response: {generated_text!r}")
 ```
 
-测试结果：
+Test Results:
 
 ```bash
 ========================================
 Inputs[0]: input_['prompt']='<|im_start|>user\n<|vision_start|><|video_pad|><|vision_end|>Describe this video. And guess what is the man going to do?<|im_end|>\n<|im_start|>assistant\n'
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Adding requests: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:03<00:00,  3.58s/it]
+Adding requests: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:03<00:00,  3.58s/it]
 Processed prompts: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.64s/it, est. speed input: 1270.83 toks/s, output: 77.94 toks/s]
 
 ========================================
-Generated Response: "Based on the provided video frames, here is a detailed description and a logical guess about the man's next action.\n\n### Video Description\n\nThe video is set inside a high-tech **Mission Control Center**, as indicated by the prominent sign above the main display. The environment is filled with advanced technology, suggesting a setting for monitoring and managing a space mission.\n\n- **The Man:** A middle-aged man with short, graying hair is the central figure. He is dressed in a dark blue polo shirt with a small NASA logo on the left chest and khaki pants. He is actively speaking and gesturing with both hands, indicating he is giving..." (备注：超出`max_tokens`后续被截断)
+Generated Response: "Based on the provided video frames, here is a detailed description and a logical guess about the man's next action.\n\n### Video Description\n\nThe video is set inside a high-tech **Mission Control Center**, as indicated by the prominent sign above the main display. The environment is filled with advanced technology, suggesting a setting for monitoring and managing a space mission.\n\n- **The Man:** A middle-aged man with short, graying hair is the central figure. He is dressed in a dark blue polo shirt with a small NASA logo on the left chest and khaki pants. He is actively speaking and gesturing with both hands, indicating he is giving..." (Note: Truncated due to exceeding `max_tokens`)
 ```
 
-> 注意视频推理需要大量显存，可能需要设置**比较极限的推理参数**，例如上述代码中的max_tokens=128，gpu_memory_utilization=0.99，这也是测试被截断的原因。但是依然能够从已生成的内容中看出模型有良好的视频理解和推理能力。
+> Note: Video reasoning requires a large amount of video memory, and may require setting **relatively extreme inference parameters**, such as max_tokens=128, gpu_memory_utilization=0.99 in the above code, which is also the reason why the test was truncated. However, it can still be seen from the generated content that the model has good video understanding and reasoning capabilities.
 

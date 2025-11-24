@@ -1,77 +1,77 @@
-# Qwen/Qwen3-VL-4B-Instruct  Lora 可视化微调案例 - LaTexOCR
+# Qwen/Qwen3-VL-4B-Instruct Lora Visual Fine-tuning Case - LaTexOCR
 
-[Qwen3-VL](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct)是截止2025年10月以来 Qwen 系列中最强的视觉语言模型。
+[Qwen3-VL](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct) is the strongest vision-language model in the Qwen series as of October 2025.
 
-Qwen3-VL在文本理解和生成、视觉感知和推理、扩展的上下文长度、增强的空间和视频动态理解方面都有显著改进。具有适用于从边缘到云的 Dense 和 MoE架构，并具有 Instruct 和推理增强型 Thinking 版本，可实现灵活的按需部署。
+Qwen3-VL has significant improvements in text understanding and generation, visual perception and reasoning, extended context length, and enhanced spatial and video dynamic understanding. It features Dense and MoE architectures suitable for edge-to-cloud deployment, and has Instruct and reasoning-enhanced Thinking versions for flexible on-demand deployment.
 
-详情可以访问[Qwen3-VL](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct)。
+For details, please visit [Qwen3-VL](https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct).
 
-值得注意的一个增强功能是OCR能力，模型卡片中介绍到模型能支持 32 种语言（从 19 种增加）；在弱光、模糊和倾斜条件下表现稳健；更适合处理稀有/古代字符和行话；改进了长文档结构解析。
+A notable enhancement is the OCR capability. The model card introduces that the model supports 32 languages (increased from 19); performs robustly under low light, blur, and tilt conditions; is more suitable for handling rare/ancient characters and jargon; and improves long document structure parsing.
 
-本文我们将简要介绍基于 transformers、peft 等框架，使用 Qwen/Qwen3-VL-30B-A3B-Instruct 和 Qwen3-VL-4B-Instruct 模型在 LaTeX_OCR 上进行Lora微调训练，同时使用 SwanLab 监控训练过程与评估模型效果。
+In this article, we will briefly introduce how to perform Lora fine-tuning training on LaTeX_OCR using Qwen/Qwen3-VL-30B-A3B-Instruct and Qwen3-VL-4B-Instruct models based on frameworks such as transformers and peft, and use SwanLab to monitor the training process and evaluate the model effect.
 
-> 备注：本教程使用的代码同时支持 2.5 系列的模型，比如 Qwen/Qwen2.5-VL-3B-Instruct 在本脚本上可以正常运行。
+> Note: The code used in this tutorial also supports 2.5 series models. For example, Qwen/Qwen2.5-VL-3B-Instruct can run normally on this script.
 
-- **训练使用代码**：在同级目录同名目录下
-- **数据集**：[LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)
-- **模型**：[Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary) & [Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary)
-- **Qwen/Qwen3-VL-30B-A3B-Instruct 显存需求**：124+GB，如果显存不足，可以将per_device_train_batch_size调小，笔者使用两张 H20 进行训练，batch size 默认是8，基于此设置，大概需要 20 分钟，批次大小对时间有影响。
-- **Qwen/Qwen2.5-VL-3B-Instruct 显存需求**：20+GB，笔者使用 1 张 H20 进行训练，你也可以使用 24 GB显存的显卡，比如 3090，4090 等，batch size 为 1 的时候需要消耗 7 分钟，batch size 为 8 的时候需要消耗 4 分钟。
+- **Training Code**: In the directory with the same name at the same level
+- **Dataset**: [LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)
+- **Model**: [Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary) & [Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary)
+- **Qwen/Qwen3-VL-30B-A3B-Instruct Video Memory Requirement**: 124+GB. If the video memory is insufficient, you can reduce the per_device_train_batch_size. The author uses two H20s for training, and the default batch size is 8. Based on this setting, it takes about 20 minutes. The batch size affects the time.
+- **Qwen/Qwen2.5-VL-3B-Instruct Video Memory Requirement**: 20+GB. The author uses 1 H20 for training. You can also use a graphics card with 24 GB video memory, such as 3090, 4090, etc. When the batch size is 1, it takes 7 minutes, and when the batch size is 8, it takes 4 minutes.
 
-**目录**
+**Table of Contents**
 
-- [Qwen/Qwen3-VL-4B-Instruct  Lora 可视化微调案例 - LaTexOCR](#qwenqwen3-vl-4b-instruct--lora-可视化微调案例---latexocr)
-  - [环境配置](#环境配置)
-  - [准备数据集](#准备数据集)
-  - [模型下载](#模型下载)
-  - [集成SwanLab](#集成swanlab)
-  - [Lora 简介](#lora-简介)
-  - [Lora 配置](#lora-配置)
-  - [微调的完整代码](#微调的完整代码)
-    - [代码](#代码)
-    - [训练配置](#训练配置)
-    - [模型路径设置](#模型路径设置)
-    - [数据集加载](#数据集加载)
-  - [对比微调前后模型的输出结果](#对比微调前后模型的输出结果)
-    - [代码](#代码-1)
-    - [运行配置](#运行配置)
-    - [测试使用的测试集加载](#测试使用的测试集加载)
-  - [模型微调效果](#模型微调效果)
+- [Qwen/Qwen3-VL-4B-Instruct Lora Visual Fine-tuning Case - LaTexOCR](#qwenqwen3-vl-4b-instruct-lora-visual-fine-tuning-case---latexocr)
+  - [Environment Configuration](#environment-configuration)
+  - [Prepare Dataset](#prepare-dataset)
+  - [Model Download](#model-download)
+  - [Integrate SwanLab](#integrate-swanlab)
+  - [Introduction to Lora](#introduction-to-lora)
+  - [Lora Configuration](#lora-configuration)
+  - [Complete Fine-tuning Code](#complete-fine-tuning-code)
+    - [Code](#code)
+    - [Training Configuration](#training-configuration)
+    - [Model Path Setting](#model-path-setting)
+    - [Dataset Loading](#dataset-loading)
+  - [Compare Model Output Before and After Fine-tuning](#compare-model-output-before-and-after-fine-tuning)
+    - [Code](#code-1)
+    - [Run Configuration](#run-configuration)
+    - [Test Set Loading for Testing](#test-set-loading-for-testing)
+  - [Model Fine-tuning Effect](#model-fine-tuning-effect)
     - [Qwen/Qwen3-VL-30B-A3B-Instruct](#qwenqwen3-vl-30b-a3b-instruct)
     - [Qwen/Qwen3-VL-4B-Instruct](#qwenqwen3-vl-4b-instruct)
-    - [微调后模型效果展示](#微调后模型效果展示)
+    - [Fine-tuned Model Effect Display](#fine-tuned-model-effect-display)
       - [Qwen/Qwen3-VL-30B-A3B-Instruct](#qwenqwen3-vl-30b-a3b-instruct-1)
       - [Qwen/Qwen3-VL-4B-Instruct](#qwenqwen3-vl-4b-instruct-1)
-      - [总结](#总结)
-  - [补充模型训练信息](#补充模型训练信息)
-  - [常见错误解决办法](#常见错误解决办法)
+      - [Summary](#summary)
+  - [Supplementary Model Training Information](#supplementary-model-training-information)
+  - [Common Error Solutions](#common-error-solutions)
 
-## 环境配置
+## Environment Configuration
 
-确保你的电脑上至少有一张英伟达显卡，并已安装好了CUDA环境。本次的训练的模型如果你选择的是Qwen/Qwen3-VL-30B-A3B-Instruct，那么是比较大的，需要大概124GB的显存，建议用两张H20才能够完成本次实验。
+Ensure that your computer has at least one NVIDIA graphics card and the CUDA environment is installed. If you choose Qwen/Qwen3-VL-30B-A3B-Instruct for this training, it is relatively large and requires about 124GB of video memory. It is recommended to use two H20s to complete this experiment.
 
-![使用的显卡](./images/05-1-1.png)
+![Used Graphics Card](./images/05-1-1.png)
 
-如果计算资源有限，建议使用 Qwen3-VL-4B-Instruct 完成本次实验，只需要一张 24 GB 的显卡即可完成本次实验。
-![使用的显卡](./images/05-1-2.png)
+If computing resources are limited, it is recommended to use Qwen3-VL-4B-Instruct to complete this experiment. Only one 24 GB graphics card is needed to complete this experiment.
+![Used Graphics Card](./images/05-1-2.png)
 
-安装Python（版本>=3.12）以及能够调用CUDA加速的PyTorch，镜像采用 Pytorch2.8.0 Python3.12 CUDA12.8。
+Install Python (version >= 3.12) and PyTorch capable of calling CUDA acceleration. The image uses Pytorch2.8.0 Python3.12 CUDA12.8.
 
-![Qwen3模型](./images/05-2.png)
+![Qwen3 Model](./images/05-2.png)
 
-安装与Qwen3-VL微调相关的第三方库，可以使用以下命令：
+Install third-party libraries related to Qwen3-VL fine-tuning using the following command:
 
 ```bash
 python -m pip install --upgrade pip
 ```
 
-更换 pypi 源，加速库的安装
+Change the pypi source to accelerate library installation
 
 ```bash
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-我们本次主要用到的一些依赖库如下：
+Some dependency libraries we mainly use this time are as follows:
 
 ```
 notebook==7.4.7
@@ -95,32 +95,32 @@ python-dotenv>=1.1.1
 swanlab
 ```
 
-你可以复制上面的内容，并写入到requirements.txt文件中，然后运行下面的命令安装所有依赖库：
+You can copy the above content and write it to the requirements.txt file, and then run the following command to install all dependency libraries:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 准备数据集
+## Prepare Dataset
 
-本次使用的数据集是[linxy/LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)。
-linxy/LaTeX_OCR是一个开源数据集，里面有五个数据集。
+The dataset used this time is [linxy/LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR).
+linxy/LaTeX_OCR is an open-source dataset containing five datasets.
 
-1. small 是小数据集，样本数 110 条，用于测试。
-2. full 是印刷体约 100k 的完整数据集。实际上样本数略小于 100k，因为他们用 LaTeX 的抽象语法树剔除了很多不能渲染的 LaTeX。
-3. synthetic_handwrite 是手写体 100k 的完整数据集，基于 full 的公式，使用手写字体合成而来，可以视为人类在纸上的手写体。样本数实际上略小于 100k，理由同上。
-4. human_handwrite 是手写体较小数据集，更符合人类在电子屏上的手写体。主要来源于 CROHME。他们用 LaTeX 的抽象语法树校验过了。
-5.human_handwrite_print 是来自 human_handwrite 的印刷体数据集，公式部分和 human_handwrite 相同，图片部分由公式用 LaTeX 渲染而来。
+1. small is a small dataset with 110 samples, used for testing.
+2. full is a complete dataset of about 100k printed characters. In fact, the number of samples is slightly less than 100k because they used LaTeX's abstract syntax tree to remove many LaTeX that cannot be rendered.
+3. synthetic_handwrite is a complete dataset of 100k handwritten characters, synthesized using handwritten fonts based on full formulas, which can be regarded as human handwriting on paper. The number of samples is actually slightly less than 100k, for the same reason as above.
+4. human_handwrite is a smaller dataset of handwritten characters, more consistent with human handwriting on electronic screens. Mainly derived from CROHME. They have verified it with LaTeX's abstract syntax tree.
+5. human_handwrite_print is a printed dataset from human_handwrite. The formula part is the same as human_handwrite, and the image part is rendered from the formula using LaTeX.
 
-你可以去源数据集的页面查看数据集的子集，比如下图显示的就是数据集的各个子集字段名。
-每个数据集基本都是只有两个字段，比如`text`和`image`。
-![数据集的子集](images/05-3.png)
+You can go to the source dataset page to view the subsets of the dataset. For example, the figure below shows the field names of each subset of the dataset.
+Each dataset basically has only two fields, such as `text` and `image`.
+![Dataset Subsets](images/05-3.png)
 
-我们可以使用下面的代码进行数据集的加载。
+We can use the following code to load the dataset.
 
-为了便于实验，你可以在 `name` 中选择 `small`、`full`、`synthetic_handwrite`、`human_handwrite` 或 `human_handwrite_print`，并通过 `split` 指定 `train`、`validation`、`test` 等划分。
+For the convenience of the experiment, you can select `small`, `full`, `synthetic_handwrite`, `human_handwrite`, or `human_handwrite_print` in `name`, and specify `train`, `validation`, `test`, etc. through `split`.
 
-下面示例展示如何加载训练划分并快速检查样本：
+The following example shows how to load the training split and quickly check samples:
 
 ```python
 from datasets import load_dataset
@@ -131,7 +131,7 @@ print(train_dataset[2])
 print(len(train_dataset))
 ```
 
-输出：
+Output:
 
 ```text
 
@@ -147,7 +147,7 @@ print(len(train_dataset))
 
 ```
 
-若需同时获取训练、验证、测试三个划分，可直接加载整个 `DatasetDict`：
+If you need to obtain training, validation, and test splits at the same time, you can directly load the entire `DatasetDict`:
 
 ```python
 
@@ -157,7 +157,7 @@ dataset = load_dataset("linxy/LaTeX_OCR", name="small")
 print(dataset)
 ```
 
-输出：
+Output:
 
 ```text
 DatasetDict({
@@ -176,38 +176,38 @@ DatasetDict({
 })
 ```
 
-## 模型下载
+## Model Download
 
-在开始模型训练之前，我们需要下载对应的模型。
+Before starting model training, we need to download the corresponding model.
 
-为了避免由于网络问题导致的模型下载失败，我们使用modelscope对模型进行下载。
+To avoid model download failure due to network problems, we use modelscope to download the model.
 
-模型的地址在：
+The model addresses are at:
 
 - [Qwen/Qwen3-VL-30B-A3B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary)：<https://modelscope.cn/models/Qwen/Qwen3-VL-30B-A3B-Instruct/summary>
 - [Qwen/Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary)：<https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct/summary>
 
-你可以使用下面的命令，将模型下载到指定的目录下面，下面是以将模型下载到 `./Qwen3-VL-30B-A3B-Instruct` 目录下为例：
+You can use the following command to download the model to the specified directory. The following takes downloading the model to the `./Qwen3-VL-30B-A3B-Instruct` directory as an example:
 
 ```bash
 modelscope download --model Qwen/Qwen3-VL-30B-A3B-Instruct  --local_dir ./Qwen3-VL-30B-A3B-Instruct
 ```
 
-或者是使用下面的命令，下载`Qwen/Qwen3-VL-4B-Instruct`模型到指定的目录下：
+Or use the following command to download the `Qwen/Qwen3-VL-4B-Instruct` model to the specified directory:
 
 ```bash
 modelscope download --model Qwen/Qwen3-VL-4B-Instruct  --local_dir ./Qwen3-VL-4B-Instruct
 ```
 
-> 需要注意的是，Qwen/Qwen3-VL-30B-A3B-Instruct 大概需要60GB的存储空间，Qwen/Qwen3-VL-4B-Instruct 大概需要8GB的存储空间，在开始下载之前，如果需要微调的是 30 B的模型，确保磁盘空间闲置大小在 65 GB 以上，如果是 4 B 的模型，存储空间大小要在 10 GB 以上。
+> Note that Qwen/Qwen3-VL-30B-A3B-Instruct requires about 60GB of storage space, and Qwen/Qwen3-VL-4B-Instruct requires about 8GB of storage space. Before starting the download, if you need to fine-tune the 30 B model, ensure that the free disk space is more than 65 GB. If it is a 4 B model, the storage space size should be more than 10 GB.
 
-如果你需要使用我的代码在AutoDL上直接运行，那么你需要将模型下载到`/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct`。
+If you need to use my code to run directly on AutoDL, you need to download the model to `/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct`.
 
-fs会长时间占用用户的空间，如果用户没有及时清理的话会一直扣费，所以我建议你换成 auto-tmp 比较好，注意，换成了 auto-tmp 之后你需要修改下加载模型的代码。
+fs will occupy user space for a long time. If the user does not clean it up in time, fees will be deducted continuously, so I suggest you switch to auto-tmp. Note that after switching to auto-tmp, you need to modify the code for loading the model.
 
-## 集成SwanLab
+## Integrate SwanLab
 
-SwanLab与Transformers已经做好了集成，用法是在Trainer的callbacks参数中添加SwanLabCallback实例，就可以自动记录超参数和训练指标，简化代码如下：
+SwanLab has been integrated with Transformers. The usage is to add a SwanLabCallback instance to the callbacks parameter of Trainer, which can automatically record hyperparameters and training indicators. The simplified code is as follows:
 
 ```python
 from swanlab.integration.transformers import SwanLabCallback
@@ -221,46 +221,45 @@ trainer = Trainer(
 )
 ```
 
-首次使用SwanLab，需要先在[官网](https://swanlab.cn/space/~)注册一个账号，然后在用户设置页面复制你的API Key，然后在训练开始提示登录时粘贴即可，后续无需再次登录。
+To use SwanLab for the first time, you need to register an account on the [official website](https://swanlab.cn/space/~), then copy your API Key on the user settings page, and paste it when prompted to log in at the start of training. No need to log in again subsequently.
 
-注意：SwanLab的使用是免费的，个人使用的情况下。
+Note: The use of SwanLab is free for personal use.
 
-登录完成之后的页面是下图所示的样子。
+The page after login is shown in the figure below.
 
 ![SwanLab](images/05-4.png)
 
-点击其中一个，你可以看到具体的实验训练详情。
+Click on one of them, you can see the specific experimental training details.
 
-![实验](images/05-5.png)
+![Experiment](images/05-5.png)
 
-点击其中一个就会显示具体的loss变化，还有其他的一些指标。当然，SwanLab还有其他的指标可以进行监控，你可以去官网的文档中查看。
+Clicking on one of them will display the specific loss changes and other indicators. Of course, SwanLab has other indicators that can be monitored. You can check the documentation on the official website.
 
-SwanLab地址：<https://swanlab.cn/>
+SwanLab Address: <https://swanlab.cn/>
 
-在我的代码里面，api_key我设置成了从环境变量中加载，所以你需要创建一个名为.env的文件，并添加SWAN_LAB=你的API Key。
+In my code, I set the api_key to load from environment variables, so you need to create a file named .env and add SWAN_LAB=Your API Key.
 
 ```text
-SWAN_LAB=你的API Key
+SWAN_LAB=Your API Key
 ```
 
-其中api_key可以在下面这个图中显示的位置上获取。
-![api key获取](images/05-6.png)
+The api_key can be obtained at the position shown in the figure below.
+![Get API Key](images/05-6.png)
 
-## Lora 简介
+## Introduction to Lora
 
-Lora 的全称是 Low-Rank Adaptation，也就是低秩适配。
-传统的模型微调方法，也就是全参数微调，需要更新模型中所有的参数。
+The full name of Lora is Low-Rank Adaptation.
+Traditional model fine-tuning methods, i.e., full parameter fine-tuning, require updating all parameters in the model.
 
-Lora的核心思想是权重变化矩阵 $\Delta W$ 可以被近似地分解为两个更小的矩阵的乘积，然后仅更新两个较小的矩阵。
+The core idea of Lora is that the weight change matrix $\Delta W$ can be approximately decomposed into the product of two smaller matrices, and then only the two smaller matrices are updated.
 
-它在推理时不会增加额外的计算延迟。这是因为它旁路的结构可以在推理前被合并回原始的权重矩阵中。
+It does not add extra computational latency during inference. This is because its bypass structure can be merged back into the original weight matrix before inference.
 
-也就是说，我们可以通过简单的矩阵加法 $W' = W_0 + BA$，将适配器的权重融合进主干网络，从而得到一个新的权重矩阵。
+That is to say, we can merge the adapter weights into the backbone network through simple matrix addition $W' = W_0 + BA$, thereby obtaining a new weight matrix.
 
->《LoRA: Low-Rank Adaptation of Large Language Models
-》论文地址：<https://arxiv.org/abs/2106.09685>
+> "LoRA: Low-Rank Adaptation of Large Language Models" paper address: <https://arxiv.org/abs/2106.09685>
 
-## Lora 配置
+## Lora Configuration
 
 ```python
 lora_config_dict = {
@@ -281,32 +280,32 @@ lora_config_dict = {
     )
 ```
 
-上面是我们创建Lora配置的代码。如果你需要调整，可以调整lora_config_dict和target_modules，主要是设置了他们。
+The above is the code for creating Lora configuration. If you need to adjust, you can adjust lora_config_dict and target_modules, mainly setting them.
 
-target_modules：LoRA 适配器要作用于模型中的哪些模块。这里设置为 ["q_proj", "k_proj", "v_proj", "o_proj"].
+target_modules: Which modules in the model the LoRA adapter should act on. Here it is set to ["q_proj", "k_proj", "v_proj", "o_proj"].
 
-这些都是 Transformer 模型自注意力机制中的 核心线性投射层，负责生成查询、键、值和输出。
+These are the core linear projection layers in the Transformer model's self-attention mechanism, responsible for generating queries, keys, values, and outputs.
 
-r=128: 这是 LoRA 的 秩 rank。
+r=128: This is the rank of LoRA.
 
-lora_alpha=16: 这是 LoRA 的 缩放因子 alpha,也就是公式中的α 。
+lora_alpha=16: This is the scaling factor alpha of LoRA, which is α in the formula.
 
-lora_dropout=0: 这个参数设置了 LoRA 层的 丢弃率 dropout rate。
-论文中完整的前向传播公式是下面这样的。
+lora_dropout=0: This parameter sets the dropout rate of the LoRA layer.
+The complete forward propagation formula in the paper is as follows.
 
 $$h=W_{0}x+\Delta Wx=W_{0}x+BAx$$
 
-α 是一个常量，这样做的好处是当改变秩 r 的大小时，可以减少重新调整超参数的需要 。
+α is a constant. The benefit of doing this is that when changing the size of rank r, the need to readjust hyperparameters can be reduced.
 
-带上 α 的前向传播公式是下面这样的。
+The forward propagation formula with α is as follows.
 
 $$h = W_{0}x + \frac{α}{r}BAx$$
 
-## 微调的完整代码
+## Complete Fine-tuning Code
 
-### 代码
+### Code
 
-<details><summary>点击展开/收起微调的完整代码</summary>
+<details><summary>Click to expand/collapse the complete fine-tuning code</summary>
 
 ```python
 import os
@@ -353,7 +352,7 @@ class Qwen3VLDataCollator:
             else self.tokenizer.eos_token_id
         )
         if pad_id is None:
-            raise ValueError("pad_token_id 与 eos_token_id 均为 None，无法进行padding。")
+            raise ValueError("Both pad_token_id and eos_token_id are None, cannot perform padding.")
 
         input_ids = torch.full((len(features), max_length), pad_id, dtype=torch.long)
         attention_mask = torch.zeros((len(features), max_length), dtype=torch.long)
@@ -438,7 +437,7 @@ def process_func(example, tokenizer, processor):
     else:
         pad_token_id = tokenizer.pad_token_id
         if pad_token_id is None:
-            raise ValueError("需要定义 eos_token_id 或 pad_token_id 才能结束响应序列。")
+            raise ValueError("Need to define eos_token_id or pad_token_id to end the response sequence.")
         response_input_ids = response_input_ids + [pad_token_id]
         response_attention_mask = response_attention_mask + [1]
 
@@ -472,9 +471,9 @@ def main():
     ds = ds.shuffle(seed=222)
 
     train_data = ds["train"].select(range(int(len(ds["train"]) * data_fraction)))
-    print(f"训练数据大小: {len(train_data)}")
+    print(f"Training data size: {len(train_data)}")
     test_data = ds["test"].select(range(int(len(ds["test"]) * data_fraction)))
-    print(f"测试数据大小: {len(test_data)}")
+    print(f"Test data size: {len(test_data)}")
 
     # model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
     # model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
@@ -547,15 +546,15 @@ def main():
 
     args = TrainingArguments(
         output_dir=output_dir,
-        per_device_train_batch_size=8, # 每个GPU的batch size
-        gradient_accumulation_steps=1, # 梯度累积步数
+        per_device_train_batch_size=8, # Batch size per GPU
+        gradient_accumulation_steps=1, # Gradient accumulation steps
         logging_steps=10, 
         logging_first_step=5, 
-        num_train_epochs=8, # 训练轮数
-        save_steps=50, # 每多少步保存一次模型 
-        save_total_limit=3, # 最多保存模型数量 
-        learning_rate=1e-4, # 学习率
-        gradient_checkpointing=True, # 梯度检查点
+        num_train_epochs=8, # Number of training epochs
+        save_steps=50, # Save model every X steps
+        save_total_limit=3, # Maximum number of models to save
+        learning_rate=1e-4, # Learning rate
+        gradient_checkpointing=True, # Gradient checkpointing
         gradient_checkpointing_kwargs={"use_reentrant": False}, 
         report_to="none",
     )
@@ -598,30 +597,30 @@ if __name__ == "__main__":
 
 </details>
 
-### 训练配置
+### Training Configuration
 
-训练配置如下：
+The training configuration is as follows:
 
 ```python
 args = TrainingArguments(
     output_dir=output_dir,
-    per_device_train_batch_size=8, # 每个GPU的batch size
-    gradient_accumulation_steps=1, # 梯度累积步数
+    per_device_train_batch_size=8, # Batch size per GPU
+    gradient_accumulation_steps=1, # Gradient accumulation steps
     logging_steps=10,
     logging_first_step=5,
-    num_train_epochs=8, # 训练轮数
-    save_steps=50, # 每多少步保存一次模型
-    save_total_limit=3, # 最多保存模型数量
-    learning_rate=1e-4, # 学习率
-    gradient_checkpointing=True, # 梯度检查点
+    num_train_epochs=8, # Number of training epochs
+    save_steps=50, # Save model every X steps
+    save_total_limit=3, # Maximum number of models to save
+    learning_rate=1e-4, # Learning rate
+    gradient_checkpointing=True, # Gradient checkpointing
     gradient_checkpointing_kwargs={"use_reentrant": False},
     report_to="none",
 )
 ```
 
-### 模型路径设置
+### Model Path Setting
 
-模型路径设置的部分是：
+The model path setting part is:
 
 ```python
 # model_id = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
@@ -632,9 +631,9 @@ model_id = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
 output_dir = "/root/autodl-tmp/Qwen3-VL-4B"
 ```
 
-你可以基于我原有的代码进行修改，可以替换成你想要进行微调的模型。
+You can modify based on my original code and replace it with the model you want to fine-tune.
 
-### 数据集加载
+### Dataset Loading
 
 ```python
 data_fraction = 0.002
@@ -644,19 +643,19 @@ ds = load_dataset("linxy/LaTeX_OCR", "synthetic_handwrite")
 ds = ds.shuffle(seed=222)
 
 train_data = ds["train"].select(range(int(len(ds["train"]) * data_fraction)))
-print(f"训练数据大小: {len(train_data)}")
+print(f"Training data size: {len(train_data)}")
 test_data = ds["test"].select(range(int(len(ds["test"]) * data_fraction)))
-print(f"测试数据大小: {len(test_data)}")
+print(f"Test data size: {len(test_data)}")
 ```
 
-模型训练部分的数据集加载主要是通过data_fraction参数进行数据集的比例采样，因为一次性全量加载出来的话需要微调很长的时间，所以你可以使用这个参数对数据进行比例采样，也能够快速进行训练，及时通过训练效果进行参数优化。
+The dataset loading in the model training part is mainly proportionally sampled through the data_fraction parameter. Because loading all at once requires a long time for fine-tuning, you can use this parameter to proportionally sample the data, which also allows for quick training and timely parameter optimization through training effects.
 
-## 对比微调前后模型的输出结果
+## Compare Model Output Before and After Fine-tuning
 
-### 代码
+### Code
 
-我们可以使用下面的代码来对比微调前后模型的输出结果。
-<details><summary>点击查看代码</summary>
+We can use the following code to compare the model output before and after fine-tuning.
+<details><summary>Click to view code</summary>
 
 ```python
 
@@ -674,12 +673,12 @@ from qwen_vl_utils import process_vision_info
 
 
 PROMPT_TEXT = "Transcribe the LaTeX of this image."
-# 使用本地基础模型与LoRA目录
+# Use local base model and LoRA directory
 # BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
 # PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
 BASE_MODEL_ID = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
 PEFT_DIR = "/root/autodl-tmp/Qwen3-VL-4B"
-# 是否在内存内合并LoRA（不落盘）
+# Whether to merge LoRA in memory (not saving to disk)
 MERGE_LORA_IN_MEMORY = True
 NUM_TEST_SAMPLES = 5
 
@@ -710,27 +709,27 @@ def load_backbone(model_id: str):
 
 def load_lora_model(peft_dir: str, base_model_id: str = BASE_MODEL_ID):
     if not os.path.isdir(peft_dir):
-        raise FileNotFoundError(f"未找到微调模型目录: {peft_dir}")
+        raise FileNotFoundError(f"Fine-tuned model directory not found: {peft_dir}")
 
-    # 基座
+    # Base
     base_model, _base_tok, _base_proc = load_backbone(base_model_id)
 
-    # 先加载LoRA
+    # Load LoRA first
     peft_model = PeftModel.from_pretrained(base_model, peft_dir)
     model = peft_model
     if MERGE_LORA_IN_MEMORY:
         try:
             model = peft_model.merge_and_unload()
-            print("LoRA内存合并成功。")
+            print("LoRA memory merge successful.")
         except Exception:
-            print("警告: LoRA内存合并失败，继续使用未合并模型。")
-            # 合并失败则退回未合并模型
+            print("Warning: LoRA memory merge failed, continuing with unmerged model.")
+            # If merge fails, revert to unmerged model
             model = peft_model
     model.to(dtype=DTYPE)
     model.eval()
 
 
-    # tokenizer/processor 优先从LoRA目录读取，保证chat_template与词表一致
+    # tokenizer/processor prioritize reading from LoRA directory to ensure chat_template and vocabulary consistency
     tokenizer = AutoTokenizer.from_pretrained(peft_dir, cache_dir=os.environ.get("HF_HOME", "./"), use_fast=False, trust_remote_code=True)
     processor = AutoProcessor.from_pretrained(peft_dir, cache_dir=os.environ.get("HF_HOME", "./"), use_fast=False, trust_remote_code=True)
     return model, tokenizer, processor
@@ -836,8 +835,8 @@ def main():
         except Exception:
             pass
     except Exception as e:
-        print(f"加载微调模型失败: {e}")
-        print("仅对基础模型进行推理对比。")
+        print(f"Failed to load fine-tuned model: {e}")
+        print("Comparing with base model only.")
         lora_model = None
         lora_tokenizer = base_tokenizer
         lora_processor = base_processor
@@ -869,24 +868,24 @@ if __name__ == "__main__":
 
 </details>
 
-### 运行配置
+### Run Configuration
 
-模型路径设置的位置和其他的一些设置项，在文件的开始部分代码中，具体如下。
+The model path setting and other settings are in the beginning of the file, as follows.
 
 ```python
-PROMPT_TEXT = "Transcribe the LaTeX of this image." # 使用的提示词。
+PROMPT_TEXT = "Transcribe the LaTeX of this image." # Prompt used.
 
-# 使用本地基础模型与LoRA目录
+# Use local base model and LoRA directory
 # BASE_MODEL_ID = "/root/autodl-fs/Qwen3-VL-30B-A3B-Instruct"
 # PEFT_DIR = "/root/autodl-fs/output/Qwen3-VL-30B"
 BASE_MODEL_ID = "/root/autodl-tmp/Qwen3-VL-4B-Instruct"
 PEFT_DIR = "/root/autodl-tmp/Qwen3-VL-4B"
-# 是否在内存内合并LoRA（不落盘）
+# Whether to merge LoRA in memory (not saving to disk)
 MERGE_LORA_IN_MEMORY = True
-NUM_TEST_SAMPLES = 5 # 是使用的测试样本数
+NUM_TEST_SAMPLES = 5 # Number of test samples used
 ```
 
-### 测试使用的测试集加载
+### Test Set Loading for Testing
 
 ```python
 ds = load_dataset("linxy/LaTeX_OCR", "synthetic_handwrite")
@@ -895,106 +894,106 @@ ds = ds.shuffle(seed=222)
 test_split = ds["test"].select(range(NUM_TEST_SAMPLES))
 ```
 
-这里是用来加载测试使用的数据集的代码，其中 NUM_TEST_SAMPLES 是用来控制样本数的。
+This is the code used to load the dataset for testing, where NUM_TEST_SAMPLES is used to control the number of samples.
 
-## 模型微调效果
+## Model Fine-tuning Effect
 
 ### Qwen/Qwen3-VL-30B-A3B-Instruct
 
-下面的图是`Qwen/Qwen3-VL-30B-A3B-Instruct`模型微调图表，使用的batch size为8。
+The figure below is the fine-tuning chart of the `Qwen/Qwen3-VL-30B-A3B-Instruct` model, using a batch size of 8.
 
-![模型微调图表](images/05-7-1.png)
+![Model Fine-tuning Chart](images/05-7-1.png)
 
-从图的效果看，loss基本都处于一个稳定下降的状态，证明我们的训练效果是在拟合数据集的。
+From the effect of the chart, the loss is basically in a stable decreasing state, proving that our training effect is fitting the dataset.
 
 ### Qwen/Qwen3-VL-4B-Instruct
 
-下面的图是`Qwen/Qwen3-VL-4B-Instruct`模型微调图表，batch size为1。
+The figure below is the fine-tuning chart of the `Qwen/Qwen3-VL-4B-Instruct` model, with a batch size of 1.
 
-![模型微调图表](images/05-7-2.png)
+![Model Fine-tuning Chart](images/05-7-2.png)
 
-下面的图是`qwen/Qwen3-VL-4B-Instruct`模型微调图表，batch size为8。
+The figure below is the fine-tuning chart of the `qwen/Qwen3-VL-4B-Instruct` model, with a batch size of 8.
 
-![模型微调图表](images/05-7-3.png)
+![Model Fine-tuning Chart](images/05-7-3.png)
 
-### 微调后模型效果展示
+### Fine-tuned Model Effect Display
 
 #### Qwen/Qwen3-VL-30B-A3B-Instruct
 
-微调前后模型效果对比1，GT为真值，Base为基础模型，LoRA为微调后的模型。
+Comparison of model effects before and after fine-tuning 1, GT is the ground truth, Base is the base model, and LoRA is the fine-tuned model.
 
-![微调前后模型效果对比](images/05-8.png)
+![Comparison of Model Effects Before and After Fine-tuning](images/05-8.png)
 
-微调前后模型效果对比2。
+Comparison of model effects before and after fine-tuning 2.
 
-![微调前后模型效果对比](images/05-9.png)
-微调前后模型效果对比3。
+![Comparison of Model Effects Before and After Fine-tuning](images/05-9.png)
+Comparison of model effects before and after fine-tuning 3.
 
-![微调前后模型效果对比](images/05-10.png)
+![Comparison of Model Effects Before and After Fine-tuning](images/05-10.png)
 
 #### Qwen/Qwen3-VL-4B-Instruct
 
-微调前后模型效果对比1，这里是使用batch size为1，训练出来的效果，可以看到这里是较差的提取效果。
-![微调前后模型效果对比](images/05-10-1.png)
+Comparison of model effects before and after fine-tuning 1. Here is the effect trained using a batch size of 1. It can be seen that the extraction effect is relatively poor.
+![Comparison of Model Effects Before and After Fine-tuning](images/05-10-1.png)
 
-微调前后模型效果对比2，这里是使用batch size为8，训练出来的效果，可以看到效果比之前好很多。
+Comparison of model effects before and after fine-tuning 2. Here is the effect trained using a batch size of 8. It can be seen that the effect is much better than before.
 
-![微调前后模型效果对比](images/05-10-2.png)
+![Comparison of Model Effects Before and After Fine-tuning](images/05-10-2.png)
 
-#### 总结
+#### Summary
 
-上面显示的是微调前后模型效果对比。
+The above shows the comparison of model effects before and after fine-tuning.
 
-虽然看似 Qwen/Qwen3-VL-30B-A3B-Instruct 部分示例里面前后对比是有提升的，不过我也发现模型在微调之后出现了其他的问题。
+Although it seems that there is an improvement in the before and after comparison in some examples of Qwen/Qwen3-VL-30B-A3B-Instruct, I also found other problems with the model after fine-tuning.
 
-比如偶尔有一些示例不如微调前的模型，我觉得是模型有点过拟合导致的。因为从微调的图表中就显示了，我们训练的轮次有些过于多了。
+For example, occasionally some examples are not as good as the model before fine-tuning. I think it is caused by the model being a bit overfitted. Because the fine-tuning chart shows that our training epochs are a bit too many.
 
-本次模型微调里面我也不仅仅微调了一次，而是多次，我在这次的训练里面也尝试了多种参数，以及不同的子数据集进行训练，所以在训练的过程中也发现了一些有用的观察。
+In this model fine-tuning, I not only fine-tuned once, but multiple times. I also tried various parameters and different sub-datasets for training in this training, so I also found some useful observations during the training process.
 
-本来我是想要使用手写公式识别的数据集进行训练的。
+Originally, I wanted to use the handwritten formula recognition dataset for training.
 
-不过第一次使用手写公式数据集训练的过程中，模型拟合似乎并不好，因为手写的公式数据集里面，不同的一个字符写法可能有很多种，如果我在仅仅使用少量数据集的情况下进行训练，模型微调的效果并不好，于是，换回了非手写的公式。
+However, during the first training using the handwritten formula dataset, the model fitting did not seem to be good, because there may be many ways to write a character in the handwritten formula dataset. If I train with only a small amount of dataset, the model fine-tuning effect is not good, so I switched back to non-handwritten formulas.
 
-后面我就使用的是small 子训练集进行微调，刚开始我只是设置了一轮的微调，但是效果并不好，微调前后模型输出的内容几乎一模一样，两轮也是类似的。
+Later, I used the small sub-training set for fine-tuning. At first, I only set one epoch of fine-tuning, but the effect was not good. The content output by the model before and after fine-tuning was almost exactly the same, and the same for two epochs.
 
-接着我慢慢调整训练轮次，在轮次到 9 的时候，很明显的显示 loss 不再是一直向下，反倒是有部分上升了，我觉得就先设置训练轮次为 8 了。
+Then I slowly adjusted the training epochs. When the epoch reached 9, it was obvious that the loss was no longer going down all the time, but instead rose in some parts. I thought I would set the training epoch to 8 first.
 
-还有一点是 batch size 的设置，这个参数对训练结果有较大的影响，从 Qwen/Qwen3-VL-4B-Instruct 能看出来， batch size 设置为1的时候，模型训练的效果会差一些，我估计是过拟合了，batch size 设置为8的时候，效果相比来说比较好。
+Another point is the setting of batch size. This parameter has a great impact on the training results. From Qwen/Qwen3-VL-4B-Instruct, it can be seen that when the batch size is set to 1, the model training effect is worse. I estimate it is overfitted. When the batch size is set to 8, the effect is relatively better.
 
-在此之后，我觉得是由于批次大小的因素导致的，所以我又把数据集换回了手写的数据集，然后进行微调，结果如我所料，模型在微调后效果有明显的提升。
+After that, I thought it was caused by the batch size factor, so I switched the dataset back to the handwritten dataset and then fine-tuned it. The result was as I expected, and the model effect improved significantly after fine-tuning.
 
-总结来说，微调前的模型即使是 Qwen/Qwen3-VL-30B-A3B-Instruct 的表现也是 微调之后的模型在测试集上的表现是有不少提升的，在微调前五个测试用例里面只有一个识别的结果是正确的，也就是20%的准确率，微调后的模型在测试集上的表现有 60% 左右的准确率。
+In summary, even the performance of Qwen/Qwen3-VL-30B-A3B-Instruct before fine-tuning is significantly improved on the test set after fine-tuning. In the first five test cases before fine-tuning, only one recognition result was correct, which is 20% accuracy. The fine-tuned model has about 60% accuracy on the test set.
 
-如果在数据集上进行全量的微调，我觉得模型效果能够达到一个更优秀的准确率，有条件的小伙伴可以尝试下。
+If full fine-tuning is performed on the dataset, I think the model effect can reach a better accuracy. Interested partners can try it.
 
-感兴趣的读者，可以试试其他的参数设置，比如rank，lora_alpha、学习率，batch_size等等,然后对比前后调整的差异。
+Interested readers can try other parameter settings, such as rank, lora_alpha, learning rate, batch_size, etc., and then compare the differences before and after adjustment.
 
-## 补充模型训练信息
+## Supplementary Model Training Information
 
-![GPU使用情况](images/05-11.png)
+![GPU Usage](images/05-11.png)
 
-![GPU使用情况](images/05-12.png)
+![GPU Usage](images/05-12.png)
 
-![环境信息](images/05-13.png)
+![Environment Information](images/05-13.png)
 
-![系统硬件](images/05-14.png)
+![System Hardware](images/05-14.png)
 
-![卡片](images/05-15.png)
+![Card](images/05-15.png)
 
-## 常见错误解决办法
+## Common Error Solutions
 
-![numpy报错](images/05-16.png)
-如果遇到上图所示的错误，也就是：
+![numpy error](images/05-16.png)
+If you encounter the error shown in the figure above, that is:
 
 ```bash
 pyarrow.lib.ArrowTypeError: Did not pass numpy.dtype object
 ```
 
-这种情况，我觉得是由于numpy的版本导致的。
-你可以使用下面的命令进行版本修复：
+In this case, I think it is caused by the numpy version.
+You can use the following command to fix the version:
 
 ```bash
 pip install --upgrade numpy
 ```
 
-运行这个命令，然后重新运行代码， 应该是可以修复这个错误的。
+Run this command, and then re-run the code, it should be able to fix this error.

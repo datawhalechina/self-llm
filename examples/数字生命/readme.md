@@ -1,251 +1,253 @@
-# 如何练就一个我
-本项目将以我为原型，利用特制的数据集对大语言模型进行微调，致力于创造一个能够真正反映我的个性特征的AI数字人——包括但不限于我的语气、表达方式和思维模式等等，因此无论是日常聊天还是分享心情，它都以一种既熟悉又舒适的方式交流，仿佛我在他们身边一样。整个流程是可迁移复制的，亮点是数据集的制作。
+# How to Train a "Me"
 
-> 项目背景详情
+This project will use "me" as a prototype and use a special dataset to fine-tune the large language model, dedicated to creating an AI digital human that can truly reflect my personality traits - including but not limited to my tone, expression, and thinking patterns, etc. Therefore, whether it is daily chatting or sharing feelings, it communicates in a familiar and comfortable way, as if I were by their side. The entire process is transferable and replicable, and the highlight is the production of the dataset.
+
+> Project Background Details
 >
-> 由于现下生活节奏加快，许多人因工作繁忙或地理距离而难以时常陪伴家人与朋友，导致情感上的疏离感加剧。在这个数字化快速发展的时代，人们越来越渴望通过技术手段弥补时间和空间上的隔阂。因而AI情感陪伴类产品应运而生，然而，尽管市场需求巨大，现有的AI情感陪伴服务仍存在诸多不足。一个是定制化服务成本高昂，难以普及，一个是信息安全难以保障，还有一个是人格化缺失，容易让人出戏。综合考量下，我们认为在角色扮演上微调不失为一个可行的路子。因为微调是在预训练模型基础上再学习，模型本身已经有较强的文本理解能力、逻辑能力、泛化能力等，只需要一些特定人物个性风格的数据加成就能很好的扮演我们想要的角色了。
+> Due to the accelerated pace of life nowadays, many people find it difficult to accompany their families and friends often due to busy work or geographical distance, leading to an intensified sense of emotional alienation. In this era of rapid digital development, people are increasingly eager to bridge the gap in time and space through technical means. Therefore, AI emotional companionship products have emerged. However, despite the huge market demand, existing AI emotional companionship services still have many shortcomings. One is the high cost of customized services, which is difficult to popularize; another is that information security is difficult to guarantee; and another is the lack of personification, which makes it easy for people to feel out of place. After comprehensive consideration, we believe that fine-tuning on role-playing is a feasible path. Because fine-tuning is re-learning based on a pre-trained model, the model itself already has strong text understanding ability, logical ability, generalization ability, etc., and only needs some data additions of specific character personality styles to play the role we want well.
 
-*好的~接下来就让我们开始沉浸式体验一下一个暖心AI的完整训练流程吧~*
+*Okay~ Next, let's start an immersive experience of the complete training process of a warm-hearted AI~*
 
 ---
 
-注意，本次演示，是基于github开源项目“留痕”（[https://github.com/LC044/WeChatMsg]）、讯飞星辰MaaS平台([https://training.xfyun.cn/modelSquare])
+Note that this demonstration is based on the github open source project "MemoTrace" ([https://github.com/LC044/WeChatMsg]), iFLYTEK Spark MaaS platform ([https://training.xfyun.cn/modelSquare])
 
-## 数据集的制作
-首先我们需要获取原始数据，即微信聊天记录的JSON格式。先在电脑端登录微信，同步聊天信息，接着我们进github项目页把“留痕”相关的文件下载到电脑本地，然后运行MemoTrace.exe文件，把应用激活。选择和某个朋友的聊天记录，将聊天内容导出为JSON格式保存至电脑（由于时间考虑，我就不赘述了，大家可以按照项目自述文档操作），结束可以在VSCode中打开查看，内容包括conversations、role和content三个字段，为了便于模型更好地学习，我们需要再“精修”一下，可参考以下数据处理的大致思路:
+## Dataset Production
 
-```
+First, we need to obtain the raw data, which is the JSON format of WeChat chat records. First log in to WeChat on the computer, synchronize chat information, then we enter the github project page to download the "MemoTrace" related files to the local computer, and then run the MemoTrace.exe file to activate the application. Select the chat record with a friend, export the chat content to JSON format and save it to the computer (due to time considerations, I will not go into details, everyone can follow the project readme document), and then you can open it in VSCode to view. The content includes three fields: conversations, role, and content. In order to facilitate the model to learn better, we need to "refine" it. You can refer to the following general idea of data processing:
+
+```python
 # -*- coding: utf-8 -*-
 
 import json
 from copy import deepcopy
-#标准化角色命名    
+# Standardize role naming
 def convert_to_sharegpt_format(original_data,new_system_value=None):
-    sharegpt_data = []
-    for conversation in original_data:
-        new_conversation = {
-            "conversations": [],
-            "system":  new_system_value,
-            "tools": "[]"  # 如果没有工具调用，可以留空或设置为空列表
-        }      
-        system_message = None
-        for msg in conversation["conversations"]:
-            # if msg["role"] == "system":
-            #     system_message = msg["content"]
-            if msg["role"] == "user":
-                new_conversation["conversations"].append({
-                    "from": "human",
-                    "value": clean_content(msg["content"])
-                })
-            elif msg["role"] == "assistant":
-                new_conversation["conversations"].append({
-                    "from": "gpt",
-                    "value": clean_content(msg["content"])
-                })
-                
-#如果原始数据中已经存在"role": "system"的消息，那么这个消息的内容会被优先用于设置新对话的"system"字段。因此，即使你在调用convert_to_sharegpt_format时传递了new_system_value参数，一旦遇到原始数据中定义的系统消息，它就会覆盖你传入的新值。      
+    sharegpt_data = []
+    for conversation in original_data:
+        new_conversation = {
+            "conversations": [],
+            "system":  new_system_value,
+            "tools": "[]"  # If there is no tool call, it can be left empty or set to an empty list
+        }
+        system_message = None
+        for msg in conversation["conversations"]:
+            # if msg["role"] == "system":
+            #     system_message = msg["content"]
+            if msg["role"] == "user":
+                new_conversation["conversations"].append({
+                    "from": "human",
+                    "value": clean_content(msg["content"])
+                })
+            elif msg["role"] == "assistant":
+                new_conversation["conversations"].append({
+                    "from": "gpt",
+                    "value": clean_content(msg["content"])
+                })
+                
+# If a message with "role": "system" already exists in the original data, the content of this message will be prioritized for setting the "system" field of the new conversation. Therefore, even if you pass the new_system_value parameter when calling convert_to_sharegpt_format, once a system message defined in the original data is encountered, it will overwrite the new value you passed in.
 
-        # # 将系统消息设置为system字段
-        # if system_message:
-        #     new_conversation["system"] = system_message
-        sharegpt_data.append(new_conversation)
-    return sharegpt_data
+        # # Set system message to system field
+        # if system_message:
+        #     new_conversation["system"] = system_message
+        sharegpt_data.append(new_conversation)
+    return sharegpt_data
  
-# 读取原始JSON数据
+# Read original JSON data
 with open('z.json', 'r', encoding='utf-8') as f:
-    original_data = json.load(f)
+    original_data = json.load(f)
 
-# 转换为ShareGPT格式
+# Convert to ShareGPT format
 
-# 批量修改"system"的值为"New System Value"
-#添加优化系统提示词，可以理解为人设前提
-new_system_value = "你是（替换为主角名字，人设），对你来说，他人的需求感受在自己之前。此外，你很喜欢倾听......"
+# Batch modify the value of "system" to "New System Value"
+# Add optimized system prompt words, which can be understood as persona prerequisites
+new_system_value = "You are (replace with protagonist name, persona), for you, the needs and feelings of others come before yourself. In addition, you like to listen very much..."
 
 sharegpt_formatted_data = convert_to_sharegpt_format(original_data, new_system_value)
 
-# 写入新的JSON文件
+# Write to new JSON file
 
 with open('sharegpt_formatted_data.json', 'w', encoding='utf-8') as f:
-    json.dump(sharegpt_formatted_data, f, ensure_ascii=False, indent=2)
+    json.dump(sharegpt_formatted_data, f, ensure_ascii=False, indent=2)
 
-print("数据转换完成并保存为 sharegpt_formatted_data.json")
+print("Data conversion completed and saved as sharegpt_formatted_data.json")
 ```
 
-这里我们用ShareGPT的格式主要是它适用于多轮对话的模型训练，相较于别的格式更适用于角色扮演的场景，其次就是规范了角色命名，便于模型的理解，一定程度避免混淆幻觉，还有一个就是人设的完善补充，还有最重要的一点，一定一定要记得对数据集进行敏感信息脱敏（包括电话，密码，地址等）！！！！！~~
+Here we use the ShareGPT format mainly because it is suitable for multi-turn dialogue model training, and is more suitable for role-playing scenarios than other formats. Secondly, it standardizes role naming, which facilitates model understanding and avoids confusion and hallucinations to a certain extent. Another one is the perfection and supplementation of the persona. And the most important point, be sure to remember to desensitize sensitive information in the dataset (including phone numbers, passwords, addresses, etc.)!!!!!~~
 
-记得改系统提示词的值（system），文件保存位置等！！！
+Remember to change the value of the system prompt word (system), file save location, etc.!!!
 
-*对于这个数据集，有两个特别的点，大家可参考保留优化，一个就是我保留所有的颜文字、表情包转的文字（如[委屈]等），因为经过实验证明，这有助于大模型理解话语的情感色彩特征，并能模仿到个性化的表达方式，我们发现微调后它能根据语境适时也配上颜文字和表情包返回给用户。一个就是我改写了MBTI的数据集，将我自己对应的那个人格的思维数据集按照聊天信息的形式格式改编，把一些比较有代表性的问题场景改成对话加到数据集里，这将更便于模型捕捉角色思维模式的特征。*
-MBTI数据集github地址（[[https://huggingface.co/datasets/pandalla/Machine_Mindset_MBTI_dataset`]]）
+*For this dataset, there are two special points that everyone can refer to for retention and optimization. One is that I kept all the text converted from kaomoji and emoji packages (such as [grievance], etc.), because experiments have proven that this helps the large model understand the emotional color characteristics of the discourse and can imitate personalized expressions. We found that after fine-tuning, it can also return kaomoji and emoji packages to the user in a timely manner according to the context. The other is that I rewrote the MBTI dataset, adapting the thinking dataset of the personality corresponding to myself into the format of chat information, and changing some representative problem scenarios into dialogues and adding them to the dataset, which will make it easier for the model to capture the characteristics of the character's thinking mode.*
+MBTI dataset github address ([https://huggingface.co/datasets/pandalla/Machine_Mindset_MBTI_dataset])
 
-再有就是要注意对对话片段内容不完整的进行筛选处理，包括但不限于补充对话、删除一些话题跳跃的片段等。我们大概有3000条数据，考虑到我很多时候话题都比较跳跃，没连着回答问题，所以我是人为再清洗处理。有些话题跳跃严重的片段给模型带来较大的理解难度，一些人为去除，对于某些存在跳跃但有价值的对话，我们尝试添加适当的背景信息，帮助模型建立正确的语境。
+Another thing is to pay attention to filtering and processing incomplete dialogue fragments, including but not limited to supplementing dialogues, deleting some fragments with topic jumps, etc. We have about 3000 pieces of data. Considering that my topics are often quite jumpy and I don't answer questions consecutively, I manually cleaned and processed them again. Some fragments with serious topic jumps bring great difficulty to the model's understanding, so some were manually removed. For some dialogues with jumps but value, we tried to add appropriate background information to help the model establish the correct context.
 
-当然对于精修，大家可以继续探索，比如接入对话情绪色彩判断的API，添加情感标签、描述角色的性格特点、职业背景、兴趣爱好等的特征标签，都有利于AI数字人的人性化、个性化，示例如下。
+Of course, for refinement, everyone can continue to explore, such as accessing the API for dialogue emotional color judgment, adding emotional labels, feature labels describing the character's personality traits, professional background, hobbies, etc., which are all conducive to the humanization and personalization of AI digital humans. Examples are as follows.
+
+```json
+{ "from": "gpt", "value": "Learned it?[Laugh]?", "character_traits": { "personality": "Smart, enthusiastic, kind", "occupation": "Programmer", "interests": ["Programming", "Reading", "Travel"] } }
 
 ```
-{ "from": "gpt", "value": "学会了吗[笑]？", "character_traits": { "personality": "聪明、热情、善良", "occupation": "程序员", "interests": ["编程", "阅读", "旅行"] } }
 
-```
-
-> [!NOTE] 数据集说明
-> 为什么我们选择聊天记录来做数据集，原因无他，我们日常的交流就能在脑海中渐渐描摹出一个人的模样，慈眉善目的，或是天真可爱的，都通过我们和朋友家人的日常交流中的很多细节不断在显现，那让模型学一个人模仿一个人，不就是在这些细节里磨炼吗，这无疑是造就一个灵魂分身最好的模版，所以我们选择在聊天场景、内容中下功夫~~
+> [!NOTE] Dataset Description
+> Why do we choose chat records as the dataset? The reason is simple. Our daily communication can gradually depict a person's appearance in our minds, whether kind or innocent and cute, all of which are constantly revealed through many details in our daily communication with friends and family. So asking the model to learn a person and imitate a person, isn't it honing in these details? This is undoubtedly the best template for creating a soul clone, so we choose to work hard on chat scenarios and content~~
 
 
-好了，那数据集就先告一段落，接下来就到讯飞星辰MaaS平台进行微调.
+Okay, that's it for the dataset for now. Next, go to the iFLYTEK Spark MaaS platform for fine-tuning.
 
-## 模型微调训练
-这一步，我们使用的是讯飞星辰MaaS平台([https://training.xfyun.cn/modelSquare])，大家可以根据自己的需要自行选择,其实主要就是需要开源的通用大模型，然后把数据集给它进行训练学习（微调），这里使用教程可以看看Datawhale的官方教程【零基础定制你的专属大模型（[https://www.datawhale.cn/activity/110?subactivity=21]）】作为参考，这里就不赘述了~
-不过要注意一点，按照我们上面的步骤，我们的数据集属于ShareGPT格式，别选错了~
+## Model Fine-tuning Training
+In this step, we use the iFLYTEK Spark MaaS platform ([https://training.xfyun.cn/modelSquare]). Everyone can choose according to their own needs. In fact, the main thing is to need an open source general large model, and then give it the dataset for training and learning (fine-tuning). Here you can refer to the Datawhale official tutorial [Customize your exclusive large model from scratch ([https://www.datawhale.cn/activity/110?subactivity=21])] for the usage tutorial, so I won't go into details here~
+But note one point, according to our steps above, our dataset belongs to the ShareGPT format, don't choose the wrong one~
 
-> 
-> 首先是对一些参数的设置提一些建议以供参考：学习率（Learning Rate）和训练次数（Epochs）是两个关键的超参数，它们对最终模型性能有着重要影响。选择合适的学习率和训练次数需要结合具体任务、数据集特征以及计算资源来综合考虑。一个过大的学习率可能会导致模型无法收敛，而太小的学习率则可能导致训练过程缓慢甚至陷入局部最优解。因此，在微调阶段通常使用较小的学习率，以避免破坏已经学到的有用信息 。可以将这个参数理解为它依据学习内容去改变它自己认知的幅度的大小，建议是从小开始，这样会较大程度保证损失函数曲线的平缓，不太震荡。训练次数即整个训练集被遍历的次数。微调通常不需要太多的训练周期，因为预训练的模型已经具备了一定的知识基础。还有，如果数据集本身不大（少于500条），过多的训练周期可能会导致过拟合，即模型在训练集上表现很好，但在未见过的数据上表现不佳。对于这两个参数，可以结合训练的Loss曲线进行不断地调整，目的就是让曲线不要过于震荡，也不能太平，太平可能过拟合~然后就是温度系数，我的实验结果显示0.9为佳，大家也可以根据回应的效果多调试。
-> 其次就是微调方式的选择，主要考虑Lora和全量精调，那为什么我最终选择Lora,而不是全量精调，我们综合考虑时间和资源成本，我们采用LoRa微调，当数据集规模较小时，实际上没有必要对所有参数进行全面调整，因为大部分预训练模型已经具备了良好的初始化和特征提取能力。在这种情况下，采用全量精调不仅增加了不必要的计算负担，还可能导致训练过程变得冗长且低效。当然数据集很大的话另说（几万条）。
+>
+> First of all, some suggestions on the setting of some parameters are provided for reference: Learning Rate and Epochs are two key hyperparameters that have a significant impact on the final model performance. Choosing the appropriate learning rate and number of training times requires comprehensive consideration of specific tasks, dataset characteristics, and computing resources. A learning rate that is too large may cause the model to fail to converge, while a learning rate that is too small may cause the training process to be slow or even fall into a local optimal solution. Therefore, a smaller learning rate is usually used in the fine-tuning stage to avoid destroying the useful information already learned. You can understand this parameter as the magnitude of its change in its own cognition based on the learning content. It is recommended to start small, which will largely ensure that the loss function curve is gentle and not too oscillating. The number of training times is the number of times the entire training set is traversed. Fine-tuning usually does not require too many training cycles because the pre-trained model already has a certain knowledge base. Also, if the dataset itself is not large (less than 500 items), too many training cycles may lead to overfitting, that is, the model performs well on the training set but poorly on unseen data. For these two parameters, you can continuously adjust them in combination with the training Loss curve. The purpose is to prevent the curve from oscillating too much, nor can it be too flat. Too flat may mean overfitting~ Then there is the temperature coefficient. My experimental results show that 0.9 is better. Everyone can also debug more according to the response effect.
+> Secondly, the choice of fine-tuning method mainly considers Lora and full fine-tuning. Why did I finally choose Lora instead of full fine-tuning? We comprehensively considered time and resource costs. We adopted LoRa fine-tuning. When the dataset scale is small, there is actually no need to comprehensively adjust all parameters, because most pre-trained models already have good initialization and feature extraction capabilities. In this case, adopting full fine-tuning not only increases unnecessary computational burden, but may also lead to a lengthy and inefficient training process. Of course, if the dataset is very large (tens of thousands), that's another story.
 
-比较好的微调效果大概会像下面这样：
+A relatively good fine-tuning effect will look something like this:
 ![](/images/图片1.png)
 
 ![](/images/图片2.png)
 
-（里面的原型就是我，我回答喜欢颜文字和各种表情包，会让对方感觉很温馨，我也比较在意一些标点符号的情感表达，可以看到我是对感叹号波浪号等非常情有独钟的哈哈哈哈，整体来说，效果是比较不错的~）
+(The prototype inside is me. I answer that I like kaomoji and various emoji packages, which will make the other party feel very warm. I also care more about the emotional expression of some punctuation marks. You can see that I have a special liking for exclamation marks and tildes hahaha. Overall, the effect is quite good~)
 
-## 前端页面展示
-这一步主要是需要调用你微调好的模型的API，我们做了一个比较美观的聊天界面展示，大家可以模仿探索一下，还是比较有意思的，考验你的审美了。这里主要展示一下API调用的相关代码，我们的API调用是通过*WebSocket连接*到训练好的模型的API：
+## Frontend Page Display
+This step mainly requires calling the API of your fine-tuned model. We made a relatively beautiful chat interface display. Everyone can imitate and explore it. It is quite interesting and tests your aesthetics. Here mainly shows the relevant code for API calling. Our API call connects to the fine-tuned model's API via *WebSocket*:
+
+```javascript
+            async function handleSendMessage() {
+
+                const message = userInput.value.trim();
+
+                if (!message) return;
+
+  
+
+                addMessage('User', message, 'user-message');
+
+                userInput.value = '';
+
+  
+# Here is the address of the model fine-tuned and published in the iFLYTEK platform, change it to your own!!
+                const ws = new WebSocket('wss://maas-api.cn-huabei-XX');
+
+  
+# The following lines are API calls, in the "Information Call" at the bottom right of the "Service Control" page
+                ws.onopen = () => {
+
+                    const requestData = {
+# This needs to be changed to your own relevant API!!
+                        header: {
+
+                            app_id: "XXXXXXXX",
+
+                            uid: "XXXXX",
+
+                            patch_id: ["XXXXXXXXXXXXXXXXXXX"]
+
+                        },
+
+                        parameter: {
+
+                            chat: {
+# Here we chose the spark13b model for fine-tuning. If you are not using this one, remember to check the API call documentation of the iFLYTEK platform and change it accordingly!!
+                                domain: "xspark13b6k",
+# This is the temperature coefficient
+                                temperature: 0.9
+
+                            },
+
+                        },
+
+                        payload: {
+
+                            message: {
+
+                                text: [
+
+                                    { "role": "user", "content": message }
+
+                                ]
+
+                            }
+
+                        }
+
+                    };
+
+                    console.log(message)
+
+                    ws.send(JSON.stringify(requestData));
+
+                };
+
+  
+
+                let fullResponse = ''; // Used to store the complete AI response
+
+  
+
+                ws.onmessage = (event) => {
+
+                    const response = JSON.parse(event.data);
+
+                    if (response.header.code === 0) {
+
+                        // Concatenate the content received each time
+
+                        const aiResponsePart = response.payload.choices.text.map(choice => choice.content).join('');
+
+                        fullResponse += aiResponsePart;
+
+  
+
+                        // Check if it is the last response
+
+                        if (response.payload.choices.status === 2) {
+
+                            addMessage('AI', fullResponse, 'ai-message');
+
+                        }
+
+                    } else {
+
+                        console.error('Error:', response.header.message);
+
+                        addMessage('AI', 'Sorry, a server error occurred, please try again later.', 'ai-message');
+
+                    }
+
+                };
+
+  
+
+                ws.onerror = (error) => {
+
+                    console.error('WebSocket Error:', error);
+
+                    addMessage('AI', 'Sorry, a connection error occurred, please try again later.', 'ai-message');
+
+                };
+
+  
+
+                ws.onclose = () => {
+
+                    console.log('WebSocket connection closed');
+
+                };
+
+            }
 
 ```
-            async function handleSendMessage() {
 
-                const message = userInput.value.trim();
-
-                if (!message) return;
-
-  
-
-                addMessage('用户', message, 'user-message');
-
-                userInput.value = '';
-
-  
-#这里是在讯飞平台里微调好并发布的模型的地址，改成你自己的！！
-                const ws = new WebSocket('wss://maas-api.cn-huabei-XX');
-
-  
-#以下几行为API调用，在“服务管控”页的右下角“信息调用”处
-                ws.onopen = () => {
-
-                    const requestData = {
-#这要改成你自己的相关API！！
-                        header: {
-
-                            app_id: "XXXXXXXX",
-
-                            uid: "XXXXX",
-
-                            patch_id: ["XXXXXXXXXXXXXXXXXXX"]
-
-                        },
-
-                        parameter: {
-
-                            chat: {
-#这里我们选用的事星火13b的模型进行微调，如果不是用的这个，记得看讯飞平台的API调用文档说明，对应的改！！
-                                domain: "xspark13b6k",
-#这是温度系数
-                                temperature: 0.9
-
-                            }
-
-                        },
-
-                        payload: {
-
-                            message: {
-
-                                text: [
-
-                                    { "role": "user", "content": message }
-
-                                ]
-
-                            }
-
-                        }
-
-                    };
-
-                    console.log(message)
-
-                    ws.send(JSON.stringify(requestData));
-
-                };
-
-  
-
-                let fullResponse = ''; // 用于存储完整的AI响应
-
-  
-
-                ws.onmessage = (event) => {
-
-                    const response = JSON.parse(event.data);
-
-                    if (response.header.code === 0) {
-
-                        // 拼接每次接收到的内容
-
-                        const aiResponsePart = response.payload.choices.text.map(choice => choice.content).join('');
-
-                        fullResponse += aiResponsePart;
-
-  
-
-                        // 检查是否是最后一次响应
-
-                        if (response.payload.choices.status === 2) {
-
-                            addMessage('AI', fullResponse, 'ai-message');
-
-                        }
-
-                    } else {
-
-                        console.error('Error:', response.header.message);
-
-                        addMessage('AI', '抱歉，服务器出现错误，请稍后再试。', 'ai-message');
-
-                    }
-
-                };
-
-  
-
-                ws.onerror = (error) => {
-
-                    console.error('WebSocket Error:', error);
-
-                    addMessage('AI', '抱歉，连接出现错误，请稍后再试。', 'ai-message');
-
-                };
-
-  
-
-                ws.onclose = () => {
-
-                    console.log('WebSocket connection closed');
-
-                };
-
-            }
-
-```
-
-这段代码定义了一个名为`handleSendMessage`的异步函数，它在用户点击发送按钮时被调用。函数首先获取用户输入的消息，然后通过 ___WebSocket连接___ 到指定的API端点。在连接成功后，它发送一个包含用户消息的JSON请求数据。接着，它监听WebSocket的`onmessage`事件，接收并处理API返回的响应，将响应内容拼接起来，并在接收到完整响应后将其显示在聊天界面中。如果发生错误或连接关闭，它会相应地处理这些情况并在聊天界面中显示错误信息~~
+This code defines an asynchronous function named `handleSendMessage`, which is called when the user clicks the send button. The function first gets the message entered by the user, and then connects to the specified API endpoint via ___WebSocket___. After the connection is successful, it sends a JSON request data containing the user's message. Then, it listens to the `onmessage` event of the WebSocket, receives and processes the response returned by the API, concatenates the response content, and displays it in the chat interface after receiving the complete response. If an error occurs or the connection is closed, it handles these situations accordingly and displays an error message in the chat interface~~
 
 
-成功后，效果大概会是下面这样：
+After success, the effect will be roughly like this:
 ![](屏幕截图 2025-01-23 010103.png)
-那现在你就可以日常没事逗逗他/她啦~
+Now you can tease him/her everyday when you have nothing to do~
 
-好啦，如果你到这一步结束了，恭喜你！！！！已经拥有了你梦寐以求的那个人的灵魂分身了，它应该可以让你或者别的用户沉浸式体验有温度的陪伴啦！！！当然，这个还可以拓展，主要是这个思路，还能继续迁移到别的应用场景，比如你喜欢的世界上可能不存在的动漫角色，比如早已离你而去的亲人，都可以，只要是情感陪伴相关的，其实都可以尝试一下，*我们的终极目标就是降低成本，让更多的人可以享受到这种形式的暖心陪伴，然后探索怎么在这个过程中不让人出戏，想想，要是在你向它倾诉时，出于一些敏感词的规避设置，它回你一句对不起，我只是一个语言大模型，那真是让人心都凉了呢~*
+Okay, if you finished this step, congratulations!!!! You already have the soul clone of the person you dream of. It should allow you or other users to experience warm companionship immersively!!! Of course, this can also be expanded. Mainly this idea can be migrated to other application scenarios, such as anime characters that may not exist in the world you like, or relatives who have long left you. All are fine. As long as it is related to emotional companionship, you can actually try it. *Our ultimate goal is to reduce costs so that more people can enjoy this form of warm companionship, and then explore how not to let people feel out of place in this process. Think about it, if you pour your heart out to it, and due to some sensitive word avoidance settings, it replies "Sorry, I am just a large language model", that really makes people's hearts cold~*
 
-后续，我还会探索语音功能的加成，有兴趣的朋友欢迎交流鸭~~
+Subsequently, I will also explore the addition of voice functions. Friends who are interested are welcome to communicate~~
 

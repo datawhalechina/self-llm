@@ -1,20 +1,20 @@
-# Chat-嬛嬛 是如何炼成的
+# How Chat-Huanhuan Was Made
 
-**Chat-甄嬛**是利用《甄嬛传》剧本中所有关于甄嬛的台词和语句，基于大模型进行**LoRA微调**得到的模仿甄嬛语气的聊天语言模型。
+**Chat-Zhenhuan** is a chat language model that mimics the tone of Zhenhuan, obtained by **LoRA fine-tuning** based on a large model using all the lines and sentences about Zhenhuan in the script of "Empresses in the Palace" (Zhenhuan Zhuan).
 
-> 甄嬛，小说《后宫·甄嬛传》和电视剧《甄嬛传》中的女一号，核心女主角。原名甄玉嬛，嫌玉字俗气而改名甄嬛，为汉人甄远道之女，后被雍正赐姓钮祜禄氏，抬旗为满洲上三旗，获名“钮祜禄·甄嬛”。同沈眉庄、安陵容参加选秀，因容貌酷似纯元皇后而被选中。入宫后面对华妃的步步紧逼，沈眉庄被冤、安陵容变心，从偏安一隅的青涩少女变成了能引起血雨腥风的宫斗老手。雍正发现年氏一族的野心后令其父甄远道剪除，甄嬛也于后宫中用她的连环巧计帮皇帝解决政敌，故而深得雍正爱待。几经周折，终于斗垮了嚣张跋扈的华妃。甄嬛封妃时遭皇后宜修暗算，被皇上嫌弃，生下女儿胧月后心灰意冷，自请出宫为尼。然得果郡王爱慕，二人相爱，得知果郡王死讯后立刻设计与雍正再遇，风光回宫。此后甄父冤案平反、甄氏复起，她也生下双生子，在滴血验亲等各种阴谋中躲过宜修的暗害，最后以牺牲自己亲生胎儿的方式扳倒了幕后黑手的皇后。但雍正又逼甄嬛毒杀允礼，以测试甄嬛真心，并让已经生产过孩子的甄嬛去准格尔和亲。甄嬛遂视皇帝为最该毁灭的对象，大结局道尽“人类的一切争斗，皆因统治者的不公不义而起”，并毒杀雍正。四阿哥弘历登基为乾隆，甄嬛被尊为圣母皇太后，权倾朝野，在如懿传中安度晚年。
+> Zhenhuan is the female lead and core heroine in the novel "Empresses in the Palace" and the TV series "Empresses in the Palace". Originally named Zhen Yuhuan, she changed her name to Zhenhuan because she disliked the vulgarity of the character "Yu". She was the daughter of Zhen Yuandao, a Han Chinese. Later, she was given the surname Niohuru by Yongzheng, raised to the Manchu Bordered Yellow Banner, and named "Niohuru Zhenhuan". She participated in the draft with Shen Meizhuang and An Lingrong and was selected because she looked like the Pure Yuan Empress. After entering the palace, facing the step-by-step persecution of Consort Hua, the injustice of Shen Meizhuang, and the betrayal of An Lingrong, she changed from a green girl who was content with a corner to a master of palace fighting who could cause a bloody storm. After Yongzheng discovered the ambition of the Nian family, he ordered his father Zhen Yuandao to eliminate it. Zhenhuan also used her serial tricks in the harem to help the emperor solve his political enemies, so she was deeply loved by Yongzheng. After several twists and turns, she finally defeated the arrogant and domineering Consort Hua. When Zhenhuan was titled Consort, she was plotted against by Empress Yixiu and was disliked by the emperor. After giving birth to her daughter Longyue, she was disheartened and asked to leave the palace to become a nun. However, she was loved by Prince Guo, and the two fell in love. After learning of Prince Guo's death, she immediately designed to meet Yongzheng again and returned to the palace in glory. Since then, the unjust case of Zhen's father was rehabilitated, the Zhen clan rose again, and she also gave birth to twins. She escaped Yixiu's assassination in various conspiracies such as the blood test to verify relatives, and finally overthrew the Empress behind the scenes by sacrificing her own biological fetus. But Yongzheng forced Zhenhuan to poison Yunli to test Zhenhuan's sincerity, and asked Zhenhuan, who had already given birth to a child, to go to the Dzungar for a marriage alliance. Zhenhuan then regarded the emperor as the object that should be destroyed the most. In the grand finale, she said that "all human struggles are caused by the injustice of the rulers" and poisoned Yongzheng. The fourth prince Hongli ascended the throne as Qianlong, and Zhenhuan was honored as the Holy Mother Empress Dowager, with power over the court and the wild, and spent her old age in peace in Ruyi's Royal Love in the Palace.
 
-Chat-甄嬛，实现了以《甄嬛传》为切入点，打造一套基于小说、剧本的**个性化 AI** 微调大模型完整流程，通过提供任一小说、剧本，指定人物角色，运行本项目完整流程，让每一位用户都基于心仪的小说、剧本打造一个属于自己的、契合角色人设、具备高度智能的个性化 AI。
+Chat-Zhenhuan realizes a complete process of creating a **personalized AI** fine-tuned large model based on novels and scripts, taking "Empresses in the Palace" as the entry point. By providing any novel or script and specifying a character, running the complete process of this project allows every user to create a personalized AI that belongs to them, fits the character persona, and possesses high intelligence based on their favorite novels and scripts.
 
-> *Chat-嬛嬛模型累计下载量 15.6k，Modelscope 地址：*[*Link*](https://www.modelscope.cn/models/kmno4zx/huanhuan-chat-internlm2)   
-> *Chat-嬛嬛累计获得 500 star，huahuan-chat 项目地址：*[*Link*](https://github.com/KMnO4-zx/huanhuan-chat.git)，xlab-huanhuan-chat 项目地址：[*Link*](https://github.com/KMnO4-zx/xlab-huanhuan.git)  
+> *Chat-Huanhuan model cumulative downloads 15.6k, Modelscope Address:* [*Link*](https://www.modelscope.cn/models/kmno4zx/huanhuan-chat-internlm2)   
+> *Chat-Huanhuan has accumulated 500 stars, huahuan-chat Project Address:* [*Link*](https://github.com/KMnO4-zx/huanhuan-chat.git), xlab-huanhuan-chat Project Address: [*Link*](https://github.com/KMnO4-zx/xlab-huanhuan.git)  
 
 
-***OK，那接下来我将会带领大家亲自动手，一步步实现 Chat-甄嬛 的训练过程，让我们一起来体验一下吧~***
+***OK, next I will lead you to do it yourself, step by step to realize the training process of Chat-Zhenhuan, let's experience it together~***
 
-## Step 1: 环境准备
+## Step 1: Environment Preparation
 
-本文基础环境如下：
+The basic environment of this article is as follows:
 
 ```
 ----------------
@@ -24,14 +24,14 @@ cuda 12.1
 pytorch 2.3.0
 ----------------
 ```
-> 本文默认学习者已安装好以上 Pytorch(cuda) 环境，如未安装请自行安装。
+> This article assumes that the learner has installed the above Pytorch (cuda) environment. If not, please install it yourself.
 
-首先 `pip` 换源加速下载并安装依赖包
+First, change the `pip` source to accelerate the download and install the dependency packages.
 
 ```shell
-# 升级pip
+# Upgrade pip
 python -m pip install --upgrade pip
-# 更换 pypi 源加速库的安装
+# Change pypi source to accelerate library installation
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install modelscope==1.16.1
@@ -41,97 +41,97 @@ pip install peft==0.11.1
 pip install datasets==2.20.0
 ```
 
-## Step 2: 数据准备
+## Step 2: Data Preparation
 
-首先，我们需要准备《甄嬛传》剧本数据，这里我们使用了《甄嬛传》剧本数据，我们可以查看一下原始数据的格式。
+First, we need to prepare the script data of "Empresses in the Palace". Here we used the script data of "Empresses in the Palace". We can check the format of the raw data.
 
 ```text
-第2幕
-（退朝，百官散去）
-官员甲：咱们皇上可真是器重年将军和隆科多大人。
-官员乙：隆科多大人，恭喜恭喜啊！您可是国家的大功臣啊！
-官员丙：年大将军，皇上对你可是垂青有加呀！
-官员丁：年大人，您可是皇上的股肱之臣哪！
-苏培盛（追上年羹尧）：年大将军请留步。大将军——
-年羹尧：苏公公，有何指教？
-苏培盛：不敢。皇上惦记大将军您的臂伤，特让奴才将这秘制的金创药膏交给大人，叫您使用。
-年羹尧（遥向金銮殿拱手）：臣年羹尧恭谢皇上圣恩！敢问苏公公，小妹今日在宫中可好啊？
-苏培盛：华妃娘娘凤仪万千、宠冠六宫啊，大将军您放心好了。
-年羹尧：那就有劳苏公公了。（转身离去）
-苏培盛：应该的。
+Act 2
+(Court is adjourned, officials disperse)
+Official A: Our Emperor really values General Nian and Lord Longkeduo.
+Official B: Lord Longkeduo, congratulations! You are a great contributor to the country!
+Official C: General Nian, the Emperor favors you very much!
+Official D: Lord Nian, you are the Emperor's right-hand man!
+Su Peisheng (catching up with Nian Gengyao): General Nian, please stay. General——
+Nian Gengyao: Eunuch Su, what advice do you have?
+Su Peisheng: I dare not. The Emperor is worried about your arm injury, General, and specifically asked this slave to give this secret golden wound ointment to you, my lord, and asked you to use it.
+Nian Gengyao (cupping his hands towards the Golden Hall from afar): I, Nian Gengyao, thank the Emperor for his grace! Dare I ask Eunuch Su, how is my little sister in the palace today?
+Su Peisheng: Consort Hua is graceful and favored above the six palaces, General, you can rest assured.
+Nian Gengyao: Then I will trouble Eunuch Su. (Turns and leaves)
+Su Peisheng: It is my duty.
 ```
 
-每一句都有人物及对应的台词，所以就可以很简单的将这些数据处理成对话的形式，如下：
+Each sentence has a character and the corresponding line, so it is very simple to process these data into a dialogue format, as follows:
 
 ```
 [
-    {"rloe":"官员甲", "content":"咱们皇上可真是器重年将军和隆科多大人。"},
-    {"rloe":"官员乙", "content":"隆科多大人，恭喜恭喜啊！您可是国家的大功臣啊！"},
-    {"rloe":"官员丙", "content":"年大将军，皇上对你可是垂青有加呀！"},
-    {"rloe":"官员丁", "content":"年大人，您可是皇上的股肱之臣哪！"},
-    {"rloe":"苏培盛", "content":"年大将军请留步。大将军——"},
+    {"rloe":"Official A", "content":"Our Emperor really values General Nian and Lord Longkeduo."},
+    {"rloe":"Official B", "content":"Lord Longkeduo, congratulations! You are a great contributor to the country!"},
+    {"rloe":"Official C", "content":"General Nian, the Emperor favors you very much!"},
+    {"rloe":"Official D", "content":"Lord Nian, you are the Emperor's right-hand man!"},
+    {"rloe":"Su Peisheng", "content":"General Nian, please stay. General——"},
     ...
 ]
 ```
 
-然后再将我们关注的角色的对话提取出来，形成 QA 问答对。对于这样的数据，我们可以使用正则表达式或者其他方法进行快速的提取，并抽取出我们关注的角色的对话。
+Then extract the dialogue of the character we are interested in to form QA pairs. For such data, we can use regular expressions or other methods for quick extraction and extract the dialogue of the character we are interested in.
 
-然后很多情况下，我们并没有这样优秀的台词格式数据。所以我们可能就需要从一大段文本中抽取角色的对话数据，然后将其转换成我们需要的格式。
+Then in many cases, we don't have such excellent script format data. So we may need to extract character dialogue data from a large piece of text, and then convert it into the format we need.
 
-比如《西游记白话文》，我们可以看到他的文本是这样的。对于这样的文本，那我们就需要借助大模型的能力，从文本中提取出角色和角色对应的对话。然后再筛选出我们需要的角色对话。
+For example, "Journey to the West Vernacular", we can see that its text is like this. For such text, we need to leverage the ability of large models to extract characters and corresponding dialogues from the text. Then filter out the character dialogues we need.
 
-> 可以借助一个小工具：[*extract-dialogue*](https://github.com/KMnO4-zx/extract-dialogue.git) 从文本中提取对话。
+> You can use a small tool: [*extract-dialogue*](https://github.com/KMnO4-zx/extract-dialogue.git) to extract dialogue from text.
     
 ```
 ......
-原来孙悟空走了以后，有一个混世魔王独占了水帘洞，并且抢走了许多猴子猴孙。孙悟空听到这些以后，气得咬牙跺脚。他问清了混世魔王的住处，决定找混世魔王报仇，便驾着筋斗云，朝北方飞去。
+Originally, after Sun Wukong left, a Demon King of Confusion monopolized the Water Curtain Cave and snatched away many monkeys. When Sun Wukong heard this, he gritted his teeth and stamped his feet in anger. He asked clearly about the residence of the Demon King of Confusion, decided to seek revenge on the Demon King of Confusion, and flew towards the north on the somersault cloud.
 
-不一会儿，孙悟空就来到混世魔王的水脏洞前，对门前的小妖喊到∶“你家那个狗屁魔王，多次欺负我们猴子。我今天来，要和那魔王比比高低！
+In a short while, Sun Wukong arrived in front of the Water Dirty Cave of the Demon King of Confusion and shouted to the little demons in front of the door: "That dog-fart Demon King of your family has bullied our monkeys many times. I am here today to compete with that Demon King!"
 
-”小妖跑进洞里，报告魔王。魔王急忙穿上铁甲，提着大刀，在小妖们的簇拥下走出洞门。
+The little demon ran into the cave and reported to the Demon King. The Demon King hurriedly put on iron armor, carried a big knife, and walked out of the cave door surrounded by little demons.
 
-孙悟空赤手空拳，夺过了混世魔王的大刀，把他劈成了两半。然后，拔下一把毫毛咬碎喷了出去，毫毛变成许多小猴子，直杀进洞里，把所有的妖精全杀死，然后救出被抢走的小猴子，放了一把火烧了水脏洞。
+Sun Wukong, unarmed, snatched the big knife of the Demon King of Confusion and split him in half. Then, he pulled out a handful of hair, chewed it up and sprayed it out. The hair turned into many little monkeys, who killed their way into the cave, killed all the demons, then rescued the snatched little monkeys, and set a fire to burn the Water Dirty Cave.
 ......
 ```
 
-> chat-甄嬛 的原始数据：[*甄嬛传*](https://github.com/KMnO4-zx/huanhuan-chat/tree/master/dataset/input/huanhuan)  
-> 西游记白话文原始数据：[*西游记*](https://github.com/KMnO4-zx/huanhuan-chat/blob/master/dataset/input/wukong/%E8%A5%BF%E6%B8%B8%E8%AE%B0%E7%99%BD%E8%AF%9D%E6%96%87.txt)
+> Chat-Zhenhuan raw data: [*Empresses in the Palace*](https://github.com/KMnO4-zx/huanhuan-chat/tree/master/dataset/input/huanhuan)  
+> Journey to the West Vernacular raw data: [*Journey to the West*](https://github.com/KMnO4-zx/huanhuan-chat/blob/master/dataset/input/wukong/%E8%A5%BF%E6%B8%B8%E8%AE%B0%E7%99%BD%E8%AF%9D%E6%96%87.txt)
 
-最后再将其整理成 `json` 格式的数据，如下：
+Finally, organize it into `json` format data, as follows:
 
 ```
 [
     {
-        "instruction": "小姐，别的秀女都在求中选，唯有咱们小姐想被撂牌子，菩萨一定记得真真儿的——",
+        "instruction": "Miss, other show girls are begging to be selected, only our Miss wants to be dropped. The Bodhisattva must remember it clearly——",
         "input": "",
-        "output": "嘘——都说许愿说破是不灵的。"
+        "output": "Shh——It is said that if you say a wish out loud, it won't work."
     },
     {
-        "instruction": "这个温太医啊，也是古怪，谁不知太医不得皇命不能为皇族以外的人请脉诊病，他倒好，十天半月便往咱们府里跑。",
+        "instruction": "This Imperial Physician Wen is also strange. Who doesn't know that imperial physicians cannot treat people outside the royal family without the Emperor's order. He is good, running to our mansion every ten days or half a month.",
         "input": "",
-        "output": "你们俩话太多了，我该和温太医要一剂药，好好治治你们。"
+        "output": "You two talk too much. I should ask Imperial Physician Wen for a dose of medicine to treat you well."
     },
     {
-        "instruction": "嬛妹妹，刚刚我去府上请脉，听甄伯母说你来这里进香了。",
+        "instruction": "Sister Huan, I just went to the mansion to feel the pulse, and heard Aunt Zhen say that you came here to offer incense.",
         "input": "",
-        "output": "出来走走，也是散心。"
+        "output": "Coming out for a walk is also a distraction."
     }
 ]
 ```
 
-> Chat-嬛嬛 的数据：[*chat-甄嬛*](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)
+> Chat-Huanhuan Data: [*chat-Zhenhuan*](https://github.com/datawhalechina/self-llm/blob/master/dataset/huanhuan.json)
 
-所以，在这一步处理数据的大致思路就是：
+So, the general idea of processing data in this step is:
 
-***1. 从原始数据中提取出角色和对话 &emsp;2. 筛选出我们关注的角色的对话 &emsp;3. 将对话转换成我们需要的格式***
+***1. Extract characters and dialogues from raw data &emsp;2. Filter out the dialogues of the characters we are interested in &emsp;3. Convert dialogues into the format we need***
 
-> *这一步也可以增加数据增强的环节，比如利用两到三条数据作为 example 丢给LLM，让其生成风格类似的数据。再或者也可以找一部分日常对话的数据集，使用 RAG 生成一些固定角色风格的对话数据。这里大家可以完全放开的大胆去尝试！*
+> *This step can also add a data augmentation link, such as using two or three pieces of data as examples to throw to the LLM, letting it generate data with a similar style. Or you can also find some daily dialogue datasets and use RAG to generate some fixed character style dialogue data. Everyone can boldly try this out completely!*
 
-## Step 3: 模型训练
+## Step 3: Model Training
 
-那这一步，大家可能再熟悉不过了。在`self-llm`的每一个模型中，都会有一个 `Lora` 微调模块，我们只需要将数据处理成我们需要的格式，然后再调用我们的训练脚本即可。
+Everyone may be familiar with this step. In every model of `self-llm`, there will be a `Lora` fine-tuning module. We only need to process the data into the format we need, and then call our training script.
 
-此处选择我们选择 `LLaMA3_1-8B-Instruct` 模型进行微调，首先还是要下载模型，创建一个`model_download.py`文件，输入以下内容：
+Here we choose the `LLaMA3_1-8B-Instruct` model for fine-tuning. First, we still need to download the model. Create a `model_download.py` file and enter the following content:
 
 ```python
 import torch
@@ -141,21 +141,21 @@ import os
 model_dir = snapshot_download('LLM-Research/Meta-Llama-3.1-8B-Instruct', cache_dir='/root/autodl-tmp', revision='master')
 ```
 
-> 注意：记得修改 `cache_dir` 为你的模型下载路径哦~
+> Note: Remember to modify `cache_dir` to your model download path~
 
-其次，准备训练代码。对于熟悉 `self-llm` 的同学来说，这一步可能再简单不过了，在此处我会在当前目录下放置`train.py`，大家修改其中的数据集路径和模型路径即可。
+Secondly, prepare the training code. For students familiar with `self-llm`, this step may be simple. Here I will place `train.py` in the current directory. Everyone can modify the dataset path and model path in it.
 
-> *当然也可以使用 `self-llm` 中的 `lora` 微调教程。教程地址：[Link](https://github.com/datawhalechina/self-llm/blob/master/models/LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20%E5%BE%AE%E8%B0%83.md)*
+> *Of course, you can also use the `lora` fine-tuning tutorial in `self-llm`. Tutorial address: [Link](https://github.com/datawhalechina/self-llm/blob/master/models/LLaMA3/04-LLaMA3-8B-Instruct%20Lora%20%E5%BE%AE%E8%B0%83.md)*
 
-在命令行运行以下指令：
+Run the following command in the command line:
     
 ```shell
 python train.py
 ```
 
-> *注意：记得修改 `train.py` 中的数据集路径和模型路径哦~*
+> *Note: Remember to modify the dataset path and model path in `train.py`~*
 
-训练大概会需要 *20 ~ 30* 分钟的时间，训练完成之后会在`output`目录下生成`lora`模型。可以使用以下代码进行测试：
+Training will take about *20 ~ 30* minutes. After training is completed, a `lora` model will be generated in the `output` directory. You can use the following code to test:
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -163,21 +163,21 @@ import torch
 from peft import PeftModel
 
 mode_path = './LLM-Research/Meta-Llama-3___1-8B-Instruct'
-lora_path = './output/llama3_1_instruct_lora/checkpoint-699' # 这里改称你的 lora 输出对应 checkpoint 地址
+lora_path = './output/llama3_1_instruct_lora/checkpoint-699' # Change this to your lora output corresponding checkpoint address
 
-# 加载tokenizer
+# Load tokenizer
 tokenizer = AutoTokenizer.from_pretrained(mode_path, trust_remote_code=True)
 
-# 加载模型
+# Load model
 model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True).eval()
 
-# 加载lora权重
+# Load lora weights
 model = PeftModel.from_pretrained(model, model_id=lora_path)
 
-prompt = "嬛嬛你怎么了，朕替你打抱不平！"
+prompt = "Huanhuan, what's wrong with you? I will fight for you!"
 
 messages = [
-        {"role": "system", "content": "假设你是皇帝身边的女人--甄嬛。"},
+        {"role": "system", "content": "Assume you are the woman beside the Emperor -- Zhenhuan."},
         {"role": "user", "content": prompt}
 ]
 
@@ -192,30 +192,30 @@ generated_ids = [
     output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
 ]
 response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
-print('皇上：', prompt)
-print('嬛嬛：',response)
+print('Emperor:', prompt)
+print('Huanhuan:', response)
 ```
 
 ```
-皇上： 嬛嬛你怎么了，朕替你打抱不平！
-嬛嬛： 皇上，臣妾不是故意的。
+Emperor: Huanhuan, what's wrong with you? I will fight for you!
+Huanhuan: Emperor, this concubine didn't mean it.
 ```
 
-接下来，我们就可以使用这个嬛嬛模型进行对话了~   
-有兴趣的同学可以尝试使用 `self-llm` 中的其他模型进行微调，检验你的学习成果！
+Next, we can use this Huanhuan model to have a conversation~   
+Interested students can try to use other models in `self-llm` for fine-tuning to verify your learning results!
 
-## 写在最后
+## Final Words
 
-*Chat-嬛嬛是在去年LLM刚火起来的时候，我们觉得如果不做点什么的话，可能会错过很多有趣的事情。于是就和几个小伙伴一起，花了很多时间，做了这个项目。在这个项目中，我们学到了很多，也遇到了很多问题，但是我们都一一解决了。并且Chat-嬛嬛也获得了奖项，让项目得到了很多人的关注。所以，我觉得这个项目是非常有意义的，也是非常有趣的。*
+*Chat-Huanhuan was created when LLMs just became popular last year. We felt that if we didn't do something, we might miss a lot of interesting things. So I worked with a few friends and spent a lot of time making this project. In this project, we learned a lot and encountered many problems, but we solved them one by one. And Chat-Huanhuan also won awards, allowing the project to gain a lot of attention. So, I think this project is very meaningful and very interesting.*
 
-- *2023 讯飞星火杯人认知大模型场景创新赛 Top50*
-- *2024 书生·浦语大模型挑战赛（春季赛）创意应用奖 Top12*
+- *2023 iFlytek Spark Cup Cognitive Large Model Scene Innovation Competition Top 50*
+- *2024 InternLM Large Model Challenge (Spring Competition) Creative Application Award Top 12*
 
-### Chat-嬛嬛贡献者
+### Chat-Huanhuan Contributors
 
-- [宋志学](https://github.com/KMnO4-zx)（Datawhale成员-中国矿业大学(北京)）
-- [邹雨衡](https://github.com/logan-zou)（Datawhale成员-对外经济贸易大学）
-- [王熠明](https://github.com/Bald0Wang)（Datawhale成员-宁夏大学）
-- [邓宇文](https://github.com/GKDGKD)（Datawhale成员-广州大学）
-- [杜森](https://github.com/coderdeepstudy)（Datawhale成员-南阳理工学院）
-- [肖鸿儒](https://github.com/Hongru0306)（Datawhale成员-同济大学）
+- [Song Zhixue](https://github.com/KMnO4-zx) (Datawhale Member - China University of Mining and Technology (Beijing))
+- [Zou Yuheng](https://github.com/logan-zou) (Datawhale Member - University of International Business and Economics)
+- [Wang Yiming](https://github.com/Bald0Wang) (Datawhale Member - Ningxia University)
+- [Deng Yuwen](https://github.com/GKDGKD) (Datawhale Member - Guangzhou University)
+- [Du Sen](https://github.com/coderdeepstudy) (Datawhale Member - Nanyang Institute of Technology)
+- [Xiao Hongru](https://github.com/Hongru0306) (Datawhale Member - Tongji University)

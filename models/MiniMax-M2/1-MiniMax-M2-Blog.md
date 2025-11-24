@@ -1,21 +1,21 @@
-# 2-MiniMax-M2 模型架构解析 Blog
+# 2-MiniMax-M2 Model Architecture Analysis Blog
 
-MiniMax-M2 在2025年10月27日发布，模型参数为 230B，激活参数仅为 10B。
-该模型已经为 transfomers 仓库提交了 PR，但尚未合并。可以通过阅读该 PR 学习 MiniMax-M2 的模型架构。  
-链接为：[https://github.com/huggingface/transformers/pull/42028](https://github.com/huggingface/transformers/pull/42028)
+MiniMax-M2 was released on October 27, 2025. The model has 230B parameters, with only 10B active parameters.
+A PR has been submitted to the transformers repository for this model, but it has not yet been merged. You can learn about the MiniMax-M2 model architecture by reading this PR.
+Link: [https://github.com/huggingface/transformers/pull/42028](https://github.com/huggingface/transformers/pull/42028)
 
-模型架构图如下：
+The model architecture diagram is as follows:
 ![MiniMax-M2-Architecture](images/01-01.png)
   
-MiniMax-M2 的模型架构和 Qwen3 MoE 比较类似。其主要区别是：
-1. 专家路由权重从直接 Softmax 变成了 Sigmoid 再除总和。
-2. 训练时在专家路由门控前增加了抖动噪声。
-3. 使用了专家权重得分修正：e_score_correction_bias
+The model architecture of MiniMax-M2 is quite similar to Qwen3 MoE. The main differences are:
+1. The expert routing weights are changed from direct Softmax to Sigmoid followed by division by the sum.
+2. Jitter noise is added before the expert routing gate during training.
+3. Expert weight score correction is used: `e_score_correction_bias`.
 
 
 
 ## MLP
-MLP 模块主要用于专家路由后的专家计算，代码如下：
+The MLP module is mainly used for expert calculation after expert routing. The code is as follows:
 ```python
 class MiniMaxM2MLP(nn.Module):
     def __init__(self, config: MiniMaxM2Config):
@@ -34,13 +34,13 @@ class MiniMaxM2MLP(nn.Module):
         current_hidden_states = self.w2(current_hidden_states)
         return current_hidden_states
 ```
-可视化如图所示：
+Visualization is shown below:
 ![MiniMax-M2-MLP](images/01-02.png)
-hidden states 同时通过两个线性层，一个作为投影、一个作为门控，然后两者按元素相乘，得到新的 hidden states。
+The hidden states pass through two linear layers simultaneously, one as projection and one as gate, then they are multiplied element-wise to get the new hidden states.
 
-## 专家路由
+## Expert Routing
 
-专家模块，输入为 hidden_states、选中的专家索引与权重，输出的 hidden states 使用选中的专家计算后进行加权求和。代码如下：
+The expert module takes hidden_states, selected expert indices, and weights as input, and outputs the hidden states which are the weighted sum of the calculations from the selected experts. The code is as follows:
 ```python
 class MiniMaxM2Experts(nn.ModuleList):
     ...
@@ -59,20 +59,20 @@ class MiniMaxM2Experts(nn.ModuleList):
 ```
 
 
-专家路由模块，先使用门控层计算专家路由权重，然后使用上述的专家模块进行计算。如果是训练模式，会增加抖动噪声，防止专家的激活过于集中。代码如下：
+The expert routing module first uses a gating layer to calculate expert routing weights, and then uses the above expert module for calculation. If it is in training mode, jitter noise is added to prevent expert activations from being too concentrated. The code is as follows:
 ```python
 class MiniMaxM2SparseMoeBlock(nn.Module):
     ...
     
     def __init__(self, config):
         ...
-        # 定义专家路由门控层（线性层）
+        # Define expert routing gate layer (Linear layer)
         self.gate = nn.Linear(config.hidden_size, config.num_local_experts, bias=False)
         
-        # 定义上述的专家模块
+        # Define the expert module mentioned above
         self.experts = MiniMaxM2Experts(config)
         
-        # 定义专家路由权重修正 bias
+        # Define expert routing weight correction bias
         self.register_buffer("e_score_correction_bias", torch.zeros(config.num_local_experts))
 
     def route_tokens_to_experts(self, router_logits):
@@ -80,17 +80,18 @@ class MiniMaxM2SparseMoeBlock(nn.Module):
     
     def forward(...):
         ...
-        # 训练时增加噪声
+        # Add noise during training
         if self.training and self.jitter_noise > 0:
             hidden_states *= torch.empty_like(hidden_states).uniform_(1.0 - self.jitter_noise, 1.0 + self.jitter_noise)
         ...
-        # 计算专家路由权重
+        # Calculate expert routing weights
         router_logits = self.gate(hidden_states)
         top_k_index, top_k_weights = self.route_tokens_to_experts(router_logits)
         
-        # 计算专家输出
+        # Calculate expert output
         hidden_states = self.experts(hidden_states, top_k_index, top_k_weights.to(hidden_states.dtype))
         ...
         return hidden_states
 ```
 ![MiniMax-M2-Expert-Routing](./images/01-03.png)
+
