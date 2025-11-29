@@ -94,7 +94,7 @@ MBTI数据集github地址（[[https://huggingface.co/datasets/pandalla/Machine_M
 好了，那数据集就先告一段落，接下来就到讯飞星辰MaaS平台进行微调.
 
 ## 模型微调训练
-这一步，我们使用的是讯飞星辰MaaS平台([https://training.xfyun.cn/modelSquare])，大家可以根据自己的需要自行选择,其实主要就是需要开源的通用大模型，然后把数据集给它进行训练学习（微调），这里使用教程可以看看Datawhale的官方教程【零基础定制你的专属大模型（[https://www.datawhale.cn/activity/110?subactivity=21]）】作为参考，这里就不赘述了~
+这一步，我们使用的是[讯飞星辰MaaS平台](https://training.xfyun.cn/modelSquare)，大家可以根据自己的需要自行选择,其实主要就是需要开源的通用大模型，然后把数据集给它进行训练学习（微调），这里使用教程可以看看Datawhale的官方教程[零基础定制你的专属大模型](https://www.datawhale.cn/activity/110?subactivity=21)作为参考，这里就不赘述了~
 不过要注意一点，按照我们上面的步骤，我们的数据集属于ShareGPT格式，别选错了~
 
 > 
