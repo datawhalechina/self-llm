@@ -9,7 +9,7 @@
 
 ---
 
-注意，本次演示，是基于github开源项目“留痕”（[https://github.com/LC044/WeChatMsg]）、 讯飞星辰MaaS平台([https://training.xfyun.cn/modelSquare])
+注意，本次演示，是基于github开源项目“留痕”([https://github.com/LC044/WeChatMsg])、 讯飞星辰MaaS平台([https://training.xfyun.cn/modelSquare])
 
 ## 数据集的制作
 首先我们需要获取原始数据，即微信聊天记录的JSON格式。先在电脑端登录微信，同步聊天信息，接着我们进github项目页把“留痕”相关的文件下载到电脑本地，然后运行MemoTrace.exe文件，把应用激活。选择和某个朋友的聊天记录，将聊天内容导出为JSON格式保存至电脑（由于时间考虑，我就不赘述了，大家可以按照项目自述文档操作），结束可以在VSCode中打开查看，内容包括conversations、role和content三个字段，为了便于模型更好地学习，我们需要再“精修”一下，可参考以下数据处理的大致思路:
