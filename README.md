@@ -418,13 +418,13 @@
 
 ### 核心贡献者
 
-- [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员-中国矿业大学(北京)）
+- [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [林恒宇](https://github.com/LINHYYY)（内容创作者-广东东软学院-鲸英助教）
+- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [郭志航](https://github.com/acwwt)（内容创作者）
 - [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
-- [王泽宇](https://github.com/moyitech)（内容创作者-太原理工大学-鲸英助教）
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
