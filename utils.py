@@ -6,21 +6,24 @@ import requests
 def update_contributors():
     """
     Update contributors' task numbers and sort them based on contribution.
-    
+
     This function:
-    - Reads the README.md to extract tasks
+    - Reads the support_model.md and support_model_amd.md to extract tasks
     - Counts contribution points (2 for LoRA tasks, 1 for regular tasks)
     - Adds special contributor points
     - Sorts contributors by their contribution points
     - Saves the updated data to JSON file
     - Prints contributor information
-    
+
     Returns:
         dict: Updated contributors information
     """
     # Read files
-    with open('./README.md', 'r') as f:
+    with open('./support_model.md', 'r') as f:
         readme = f.read()
+
+    with open('./support_model_amd.md', 'r') as f:
+        readme_amd = f.read()
 
     with open('./contributors.json', 'r') as f:
         contributors = json.load(f)
@@ -30,23 +33,33 @@ def update_contributors():
     for key in keys:
         contributors[key]['task_num'] = 0
 
-    # Extract tasks
+    # Extract tasks from main support_model.md
     tasks = readme.split('\n')
     tasks = [task for task in tasks if '@' in task][:-1]
 
+    # Extract tasks from AMD support_model_amd.md
+    tasks_amd = readme_amd.split('\n')
+    tasks_amd = [task for task in tasks_amd if '@' in task]
+
+    # Combine all tasks
+    all_tasks = tasks + tasks_amd
+
     # Count points: LoRA tasks +2, regular tasks +1
-    for task in tasks:
+    for task in all_tasks:
+        if '@' not in task:
+            continue
         name = task.split('@')[1]
         if name not in keys:
             continue
-        if "Lora" or "微调" in task:
+        # Check if the task contains "Lora" or "微调" (case-insensitive)
+        if "Lora" in task or "微调" in task:
             contributors[name]['task_num'] += 2
         else:
             contributors[name]['task_num'] += 1
 
     # Add special contributor points
     special_contributors = {
-        '不要葱姜蒜': 300, 
+        '不要葱姜蒜': 300,
         'Logan Zou': 300
     }
     for name, points in special_contributors.items():
@@ -63,7 +76,7 @@ def update_contributors():
     # Print results
     for key, value in contributors.items():
         print(f'- {value["info"]}')
-            
+
     return contributors
 
 
