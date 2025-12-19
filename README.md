@@ -78,7 +78,7 @@
   <strong>✨ 已支持 50+ 主流大语言模型 ✨</strong><br>
   <em>每个模型都提供完整的部署、微调和使用教程</em><br>
   📖 <strong><a href="./support_model.md">查看完整模型列表和教程</a></strong> | 
-  🎯 <strong><a href="#通用环境配置">快速开始</a></strong>
+  🎯 <strong><a href="./support_model.md#通用环境配置">快速开始</a></strong>
 </p>
 
 
