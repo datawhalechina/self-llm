@@ -74,6 +74,14 @@
 
 ### 已支持模型
 
+- [谷歌-Gemma3](https://huggingface.co/google/gemma-7b-it)
+  - [x] [gemma-2b-it FastApi 部署调用 ](./models/Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md) @陈榆
+  - [x] [gemma-2b-it langchain 接入 ](./models/Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md) @陈榆
+  - [x] [gemma-2b-it WebDemo 部署 ](./models/Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md) @陈榆
+  - [x] [gemma-2b-it Peft Lora 微调 ](./models/Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @陈榆
+  - [X] [gemma3-4b-it AMD 环境准备](./models/Gemma3/7-gemma3-4b-it%20AMD环境准备.md) @陈榆
+  - [X] [gemma3-4b-it AMD 模型服务部署](./models/Gemma3/8-gemma3-4b-it%20模型服务部署.md) @陈榆
+
 - [MiniMax-M2](https://github.com/MiniMax-AI/MiniMax-M2)
   - [x] [MiniMax-M2 在线体验地址](https://agent.minimax.io/)
   - [x] [MiniMax-M2 Hugging Face 地址](https://huggingface.co/MiniMaxAI/MiniMax-M2)
@@ -134,6 +142,7 @@
   - [x] [Qwen3-0.6B 的小模型有什么用](./models//Qwen3/08-Qwen3_0_6B的小模型有什么用.md) @不要葱姜蒜
   - [x] [Qwen3-1.7B 医学推理式对话微调 及 SwanLab 可视化记录](./models/Qwen3/09-Qwen3-1.7B-医学推理式对话微调%20及%20SwanLab%20可视化记录.md) @林泽毅
   - [x] [Qwen3-8B GRPO微调及通过swanlab可视化](./models/Qwen3/10-Qwen3-8B%20GRPO微调及通过swanlab可视化.md) @郭宣伯
+  - [X] [Qwen3-8B-AMD部署调用](./models/Qwen3/11-Qwen3-8B-AMD部署调用.md) @陈榆
 
 - [Kimi](https://github.com/MoonshotAI/Kimi-VL)
   - [x] [Kimi-VL-A3B 技术报告解读](./models/Kimi-VL/02-Kimi-VL-技术报告解读.md) @王泽宇
@@ -280,12 +289,6 @@
   - [x] [Qwen1.5-7B-chat vLLM推理部署](./models/Qwen1.5/07-Qwen1.5-7B-Chat%20vLLM%20推理部署调用.md) @高立业
   - [x] [Qwen1.5-7B-chat Lora 微调 接入SwanLab实验管理平台](./models/Qwen1.5/08-Qwen1.5-7B-chat%20LoRA微调接入实验管理.md) @黄柏特
 
-- [谷歌-Gemma](https://huggingface.co/google/gemma-7b-it)
-  - [x] [gemma-2b-it FastApi 部署调用 ](./models/Gemma/01-Gemma-2B-Instruct%20FastApi%20部署调用.md) @陈榆
-  - [x] [gemma-2b-it langchain 接入 ](./models/Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md) @陈榆
-  - [x] [gemma-2b-it WebDemo 部署 ](./models/Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md) @陈榆
-  - [x] [gemma-2b-it Peft Lora 微调 ](./models/Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @陈榆
-
 - [phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
   - [x] [Phi-3-mini-4k-instruct FastApi 部署调用](./models/phi-3/01-Phi-3-mini-4k-instruct%20FastApi%20部署调用.md) @郑皓桦
   - [x] [Phi-3-mini-4k-instruct langchain 接入](./models/phi-3/02-Phi-3-mini-4k-instruct%20langchain%20接入.md) @郑皓桦
@@ -428,13 +431,13 @@
 - [肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）
 - [张帆](https://github.com/zhangfanTJU)（内容创作者-Datawhale成员）
 - [李娇娇](https://github.com/Aphasia0515) （Datawhale成员）
+- [陈榆](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
-- [陈榆](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [郑皓桦](https://github.com/BaiYu96) （内容创作者）
 - [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
