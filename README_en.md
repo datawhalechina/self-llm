@@ -167,6 +167,26 @@
   </tr>
 </table>
 
+### Ascend NPU Section 
+ 
+ 
+ <p align="center"> 
+   <strong>🚀 Ascend NPU Platform Supported Models</strong><br> 
+   <em>Each model provides complete Ascend NPU environment configuration and deployment tutorials</em><br> 
+   📖 <strong><a href="./support_model_Ascend.md">View Complete Ascend NPU Platform Model List and Tutorials</a></strong><br> 
+ </p> 
+ 
+ 
+ <table align="center"> 
+   <tr> 
+     <td valign="top" width="50%"> 
+       • <a href="./support_model_Ascend.md###qwen3">Qwen3</a><br> 
+       • Ascend NPU Environment Configuration General Guidelines<br> 
+       • Ascend NPU LLM Inference Performance Optimization Suggestions 
+     </td> 
+   </tr> 
+ </table>
+
 ### Other Platforms ...
 
 - 🚀 Coming soon: Support for more platforms (such as Apple M-series chips, etc.) environment configuration and model deployment tutorials, stay tuned!
