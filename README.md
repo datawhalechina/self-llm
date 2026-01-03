@@ -167,6 +167,24 @@
   </tr>
 </table>
 
+### 昇腾Ascend NPU 专区
+
+<p align="center">
+  <strong>🚀 昇腾Ascend NPU 平台已支持模型</strong><br>
+  <em>每个模型都提供完整的昇腾Ascend NPU 环境配置和部署教程</em><br>
+  📖 <strong><a href="./support_model_Ascend.md">查看完整昇腾 NPU 平台模型列表和教程</a></strong><br>
+</p>
+
+<table align="center">
+  <tr>
+    <td valign="top" width="50%">
+      • <a href="./support_model_Ascend.md###qwen3">Qwen3</a><br>
+      • Ascend NPU 环境配置通用指南<br>
+      • Ascend NPU 大模型推理性能优化建议
+    </td>
+  </tr>
+</table>
+
 ### 沐曦专区
 
 <p align="center">
