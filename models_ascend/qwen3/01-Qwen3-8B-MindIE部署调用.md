@@ -9,12 +9,12 @@
 
 ```
 ----------------
-ubuntu 22.04
+openEuler 24.03
 NPU驱动 25.2.0
-python 3.10
-cann 8.3.RC2
-torch 2.8.0
-torch-npu 2.8.0
+python 3.11
+cann 8.2.RC2
+torch 2.1.0
+torch-npu 2.1.0
 ----------------
 ```
 
@@ -59,271 +59,153 @@ model_dir = snapshot_download('Qwen/Qwen3-8B', cache_dir='/root/autodl-tmp', rev
 
 
 
-## 启动服务
-> 在菜单栏里输入 Lemonade Server 启动，点击菜单里中对应的图标
+## 模型服务部署
+### 启动镜像（使用AutoDL平台此步骤跳过）
+昇腾设备镜像启动方式有别于普通的docker镜像启动，需要额外配置一些参数，以下启动命令可供参考：
+```shell
+docker run -it -d --net=host --shm-size=512g \
+    --privileged \
+    --name Qwen3-8B \
+    --device=/dev/davinci_manager \
+    --device=/dev/hisi_hdc \
+    --device=/dev/devmm_svm \
+    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \
+    -v /usr/local/sbin:/usr/local/sbin:ro \
+    -v /data:/data \
+   swr.cn-south-1.myhuaweicloud.com/ascendhub/mindie:2.1.RC2-800I-A2-py311-openeuler24.03-lts /bin/bash
 
-![](./images/11-02.png)
+docker exec -it Qwen3-8B bash
+```
 
-然后选中对应的模型即可启动，可以对外输出兼容OpenAI的服务接口
+### 修改配置文件
+```bash
+# 进入MindIE默认安装路径
+cd /usr/local/Ascend/mindie/latest/mindie-service
+# 修改配置文件，按照截图中的指引配置模型服务参数
+vim conf/config.json
+```
+![01-03](./images/01-03.png)
+![01-04](./images/01-04.png)
+![01-05](./images/01-05.png)
+> 更详细的配置参数说明请参考[MindIE 配置参数说明（服务化）](https://www.hiascend.com/document/detail/zh/mindie/21RC2/mindiellm/llmdev/mindie_llm0004.html)
+
+修改完成以后，按:wq保存配置文件。
+
+### 启动模型服务
+```bash
+# 进入MindIE默认安装路径
+cd /usr/local/Ascend/mindie/latest/mindie-service
+# 配置环境变量
+source /usr/local/Ascend/ascend-toolkit/set_env.sh
+source /usr/local/Ascend/nnal/atb/set_env.sh
+source /usr/local/Ascend/atb-models/set_env.sh
+source /usr/local/Ascend/mindie/set_env.sh
+# 启动模型服务
+./bin/mindieservice_daemon
+```
+等待3-5分钟，终端显示`Daemon start success!`字样表明服务启动成功。
+![01-06](./images/01-06.png)
 
 
 ![](./images/11-03.png)
 
-## 服务测试
+## 模型服务测试
+通过昇腾 MindIE 大模型推理引擎启动的模型服务兼容 OpenAI、TGI、vLLM等格式的接口，用户可以直接使用例如 OpenAI 等各兼容格式的请求方式调用模型服务，实现大模型推理业务场景在昇腾硬件上的无缝迁移部署。
+> 更详细的接口兼容情况请参考[MindIE 接口兼容说明](https://www.hiascend.com/document/detail/zh/mindie/21RC2/mindieservice/servicedev/mindie_service0062.html)
 
-新建 `test.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。以下代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue 。
+- 通过 `curl` 命令查看当前的模型列表
+
+```bash
+curl http://127.0.0.1:1025/v1/models
+```
+
+​ 得到的返回值如下所示
+
+```json
+{
+    "object":"list",
+    "data":[
+        {
+            "id":"Qwen3-8B",
+            "object":"model",
+            "created":1767448547,
+            "owned_by":"MindIE Server"
+        }
+    ]
+}
+```
+- 用 `curl` 命令测试 `OpenAI Chat Completions API`
+
+```bash
+curl http://127.0.0.1:1025/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "Qwen3-8B",
+        "messages": [
+            {"role": "user", "content": "我想问你，5的阶乘是多少？<think>\n"}
+        ]
+    }'
+```
+
+得到的返回值如下所示
+
+```json
+{
+    "id":"endpoint_common_0",
+    "object":"chat.completion",
+    "created":1767449274,
+    "model":"Qwen3-8B",
+    "choices":[
+        {
+            "index":0,
+            "message":{
+                "role":"assistant",
+                "content":"<think>\n嗯，用户问的是5的阶乘是多少。首先，我需要确认阶乘的定义。阶乘是指一个正整数n乘以所有小于它的正整数的乘积，也就是n! = n × (n-1) × ... × 1。所以，5的阶乘就是5×4×3×2×1。\n\n接下来，我应该一步步计算。先算5乘以4，得到20。然后20乘以3，得到60。接着60乘以2，是120。最后，120乘以1，结果还是120。所以5!应该是120。\n\n不过，可能用户对阶乘不太熟悉，或者想确认一下计算过程是否正确。我需要确保每一步都正确，避免计算错误。比如，有时候可能会在乘法过程中出错，比如把5×4算成25而不是20，或者中间步骤有误。但这里每一步都是正确的，所以结果应该是120。\n\n另外，用户可能是在学习数学，或者需要这个结果用于某个项目、考试题目等。也有可能用户只是好奇，或者想测试我的知识。不管怎样，给出准确的答案并解释清楚过程会更好。所以，我应该明确写出计算步骤，让用户能够理解并验证结果。\n</think>\n\n5的阶乘（5!）是5×4×3×2×1，计算过程如下：\n\n1. **5 × 4 = 20**  \n2. **20 × 3 = 60**  \n3. **60 × 2 = 120**  \n4. **120 × 1 = 120**  \n\n因此，**5! = 120**。",
+                "tool_calls":null
+            },
+            "logprobs":null,
+            "finish_reason":"stop"
+        }
+    ],
+    "usage":{
+        "prompt_tokens":20,
+        "completion_tokens":373,
+        "total_tokens":393,
+        "batch_size":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        "queue_wait_time":[5245,60,34,24,22,20,19,19,19,18,18,354,34,26,28,24,23,39,33,37,32,26,22,22,21,20,20,20,69,20,19,20,84,26,24,23,21,21,35,22,21,22,21,21,36,25,23,22,23,23,23,21,25,23,40,27,24,23,23,22,21,22,23,24,22,22,32,25,24,23,22,21,23,21,52,29,30,23,23,20,18,19,19,21,18,20,18,19,25,23,21,28,20,19,20,18,20,17,18,17,17,21,117,29,24,23,23,22,22,26,22,22,21,22,23,22,22,22,24,24,22,25,24,23,23,24,22,22,54,31,25,22,22,23,22,22,24,66,35,41,29,24,22,22,21,20,29,23,21,21,20,20,20,20,22,22,22,41,22,20,19,19,19,18,19,20,18,19,19,17,18,29,24,22,20,18,20,19,18,44,18,25,23,20,20,19,18,19,18,17,19,32,28,25,26,27,25,23,21,19,20,19,20,21,43,28,29,27,30,28,34,30,28,28,29,38,41,23,23,29,26,26,32,29,26,27,26,44,41,23,21,22,21,21,22,22,22,40,31,30,27,27,25,26,24,24,24,22,26,30,35,29,29,29,27,31,33,30,93,40,36,30,31,34,36,33,35,128,35,24,22,22,20,19,20,21,20,19,19,30,22,22,21,21,19,23,22,27,23,25,23,23,31,24,23,24,22,23,20,19,19,19,18,18,50,24,20,21,19,21,20,19,21,20,19,46,26,23,25,24,24,21,22,20,24,23,22,43,29,28,28,28,25,24,23,25,23,23,23,35,27,23,25,23,23,25,22,23,23,33,25,24,24,24,23,22,23,23,23,23,23,59,38,25,23,25,23,24,27,24,25,23,36]},
+        "prefill_time":47,
+        "decode_time_arr":[30,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,27,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,22,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,19,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17]
+}
+```
+
+- 用 `Python` 脚本请求 `OpenAI Chat Completions API`
+
 ```python
-#!/usr/bin/env python
-"""
-简洁版本的 API 测试脚本
-完全模仿 curl 请求
-"""
-import requests
+# mindie_openai_chat_completions.py
+from openai import OpenAI
+openai_api_key = "sk-xxx" # 随便填写，只是为了通过接口参数校验
+openai_api_base = "http://127.0.0.1:1025/v1"
 
-# 发送 POST 请求（完全对应 curl 命令）
-response = requests.post(
-    "http://localhost:8000/api/v1/chat/completions",
-    headers={"Content-Type": "application/json"},
-    json={
-        "model": "Qwen3-8B-Hybrid",
-        "messages": [{"role": "user", "content": "Hello!"}]
-    }
+client = OpenAI(
+    api_key=openai_api_key,
+    base_url=openai_api_base,
 )
 
-# 打印响应
-print(f"Status: {response.status_code}")
-print(f"Response: {response.json()}")
-
-
-```
-返回结果如下
-![](./images/11-04.png)
-
-
-## 代码准备
-
-我们可也可以使用Lemonade API 构建API服务给其他应用调用服务，新建 `api.py` 文件并在其中输入以下内容，粘贴代码后请及时保存文件。以下代码有很详细的注释，大家如有不理解的地方，欢迎提出 issue 。
-```python
-from fastapi import FastAPI, Request
-from contextlib import asynccontextmanager
-from threading import Thread, Event
-from transformers import StoppingCriteriaList
-from lemonade.tools.server.serve import StopOnEvent
-from lemonade.api import from_pretrained
-from lemonade.tools.oga.utils import OrtGenaiStreamer
-import uvicorn
-import json
-import datetime
-import logging
-import queue
-import uuid
-import asyncio
-
-# 配置日志
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# 全局模型变量
-model = None
-tokenizer = None
-
-# 任务队列和结果字典
-task_queue = queue.Queue()
-result_dict = {}
-worker_thread = None
-worker_running = False
-
-# --- 模型加载逻辑 ---
-def load_models():
-    global model, tokenizer
-    try:
-        logger.info("正在加载模型...")
-        model, tokenizer = from_pretrained(
-            "amd/Qwen3-8B-awq-quant-onnx-hybrid",
-            recipe="oga-hybrid",
-        )
-        logger.info("模型加载完成")
-    except Exception as e:
-        logger.error(f"模型加载失败: {str(e)}")
-        raise
-
-# --- 工作线程函数 ---
-def worker_thread_func():
-    """长期运行的工作线程，从队列中获取任务并处理"""
-    global model, tokenizer, task_queue, result_dict, worker_running
-    
-    logger.info("工作线程已启动")
-    worker_running = True
-    
-    while worker_running:
-        try:
-            # 从队列中获取任务（阻塞等待）
-            task = task_queue.get(timeout=1.0)
-            
-            if task is None:  # 收到停止信号
-                break
-            
-            task_id, prompt_text, max_new_tokens = task
-            
-            try:
-                # 使用 chat.py 中的推理方式
-                input_ids = tokenizer(prompt_text, return_tensors="pt").input_ids
-                
-                # 使用流式生成器收集完整响应
-                streamer = OrtGenaiStreamer(tokenizer)
-                stop_event = Event()
-                stopping_criteria = StoppingCriteriaList([StopOnEvent(stop_event)])
-                
-                generation_kwargs = {
-                    "input_ids": input_ids,
-                    "streamer": streamer,
-                    "max_new_tokens": max_new_tokens,
-                    "stopping_criteria": stopping_criteria,
-                }
-                
-                # 在工作线程中创建子线程来运行 generate
-                # streamer 需要在另一个线程中读取，而 generate 在子线程中运行
-                generate_thread = Thread(target=model.generate, kwargs=generation_kwargs)
-                generate_thread.start()
-                
-                # 在工作线程中收集完整响应（从 streamer 读取）
-                response = ""
-                for new_text in streamer:
-                    response += new_text
-                
-                # 等待生成线程完成
-                generate_thread.join()
-                
-                # 将结果存入结果字典
-                result_dict[task_id] = {
-                    "success": True,
-                    "response": response
-                }
-                
-            except Exception as e:
-                logger.error(f"处理任务 {task_id} 时出错: {str(e)}")
-                result_dict[task_id] = {
-                    "success": False,
-                    "error": str(e)
-                }
-            
-            # 标记任务完成
-            task_queue.task_done()
-            
-        except queue.Empty:
-            # 队列为空，继续循环
-            continue
-        except Exception as e:
-            logger.error(f"工作线程错误: {str(e)}")
-            continue
-    
-    logger.info("工作线程已停止")
-
-# --- FastAPI应用 ---
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    global worker_thread, worker_running
-    
-    try:
-        load_models()
-        
-        # 启动工作线程
-        worker_thread = Thread(target=worker_thread_func, daemon=True)
-        worker_thread.start()
-        logger.info("工作线程已启动")
-        
-        yield
-        
-    except Exception as e:
-        logger.error(f"服务初始化失败: {str(e)}")
-        raise
-    finally:
-        # 停止工作线程
-        worker_running = False
-        if worker_thread and worker_thread.is_alive():
-            task_queue.put(None)  # 发送停止信号
-            worker_thread.join(timeout=5)
-            logger.info("工作线程已停止")
-
-app = FastAPI(lifespan=lifespan)
-
-# 处理POST请求的端点
-@app.post("/")
-async def create_item(request: Request):
-    global task_queue, result_dict  # 声明全局变量
-    
-    json_post_raw = await request.json()  # 获取POST请求的JSON数据
-    json_post = json.dumps(json_post_raw)  # 将JSON数据转换为字符串
-    json_post_list = json.loads(json_post)  # 将字符串转换为Python对象
-    prompt = json_post_list.get('prompt')  # 获取请求中的提示
-    history = json_post_list.get('history', [])  # 获取请求中的历史记录
-    max_new_tokens = json_post_list.get('max_new_tokens', 1024)  # 获取最大token数，默认1024
-
-    # 构建提示文本（处理历史记录）
-    if history:
-        conversation_text = ""
-        for item in history:
-            if isinstance(item, list) and len(item) == 2:
-                user_msg, assistant_msg = item
-                conversation_text += f"User: {user_msg}\nAssistant: {assistant_msg}\n"
-        prompt_text = f"{conversation_text}User: {prompt}\nAssistant:"
-    else:
-        prompt_text = prompt
-
-    try:
-        # 生成唯一任务ID
-        task_id = str(uuid.uuid4())
-        
-        # 将任务放入队列
-        task_queue.put((task_id, prompt_text, max_new_tokens))
-        logger.info(f"任务 {task_id} 已加入队列")
-        
-        # 等待结果（轮询检查结果字典）
-        max_wait_time = 300  # 最大等待时间（秒）
-        wait_interval = 0.1  # 轮询间隔（秒）
-        elapsed_time = 0
-        
-        while task_id not in result_dict:
-            if elapsed_time >= max_wait_time:
-                raise TimeoutError(f"任务 {task_id} 超时")
-            await asyncio.sleep(wait_interval)
-            elapsed_time += wait_interval
-        
-        # 获取结果
-        result = result_dict.pop(task_id)
-        
-        if result["success"]:
-            response = result["response"]
-            now = datetime.datetime.now()  # 获取当前时间
-            time = now.strftime("%Y-%m-%d %H:%M:%S")  # 格式化时间为字符串
-            # 构建响应JSON
-            answer = {
-                "response": response,
-                "status": 200,
-                "time": time
-            }
-            # 构建日志信息
-            log = "[" + time + "] " + '", prompt:"' + prompt_text + '", response:"' + repr(response) + '"'
-            logger.info(log)  # 打印日志
-            return answer  # 返回响应
-        else:
-            raise Exception(result.get("error", "未知错误"))
-        
-    except Exception as e:
-        logger.error(f"处理请求时出错: {str(e)}")
-        now = datetime.datetime.now()
-        time = now.strftime("%Y-%m-%d %H:%M:%S")
-        return {
-            "response": f"错误: {str(e)}",
-            "status": 500,
-            "time": time
-        }
-
-# 主函数入口
-if __name__ == '__main__':
-    # 模型加载在 lifespan 中自动完成
-    # 启动FastAPI应用
-    # 用6006端口可以将autodl的端口映射到本地，从而在本地使用api
-    uvicorn.run(app, host='0.0.0.0', port=6006, workers=1)  # 在指定端口和主机上启动应用
+chat_outputs = client.chat.completions.create(
+    model="Qwen3-8B",
+    messages=[
+        {"role": "user", "content": "什么是深度学习？"},
+    ]
+)
+print(chat_outputs)
 ```
 
+```shell
+python vllm_openai_chat_completions.py
+```
+
+得到的返回值如下所示
+
+```
+ChatCompletion(id='endpoint_common_1', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\n嗯，用户问的是“什么是深度学习？”，我需要先理解这个问题。首先，深度学习是机器学习的一个分支，但可能用户不太清楚具体的定义和应用场景。我应该从基本概念开始，比如神经网络、层次结构，然后解释它和传统机器学习的区别。\n\n用户可能对技术术语不太熟悉，所以需要用简单的语言。比如，提到神经网络时，可以类比人脑的神经元，但不要太过复杂。还要说明深度学习的应用领域，比如图像识别、语音识别，这样用户能联想到实际例子。\n\n另外，用户可能想知道深度学习为什么重要，或者它的优势在哪里。需要提到它处理复杂模式的能力，以及需要大量数据。可能还要提到深度学习的挑战，比如数据需求大、计算资源高，这样回答更全面。\n\n还要考虑用户可能的背景。如果他们不是技术背景，可能需要避免过多专业术语，或者简单解释术语。比如，解释什么是神经网络层，为什么叫“深度”，可能需要说明层数多，层次多，所以叫深度学习。\n\n有没有可能用户想了解深度学习和机器学习的关系？应该提到深度学习是机器学习的一个子领域，强调其使用多层神经网络的特点。同时，可能用户对深度学习的实际应用感兴趣，可以举一些例子，如推荐系统、自动驾驶，这样更具体。\n\n还要注意结构清晰，分点说明，比如定义、核心概念、与传统机器学习的区别、应用、挑战等。这样用户容易理解。另外，可能需要提到一些知名的框架或模型，比如TensorFlow、PyTorch，或者CNN、RNN，但不要深入技术细节，保持概述。\n\n最后，检查是否有遗漏的重要点，比如深度学习的训练过程，比如反向传播，但可能用户不需要太详细。保持回答简洁，同时覆盖关键点。确保语言口语化，避免学术化的表达，让用户容易理解。\n</think>\n\n深度学习（Deep Learning）是**机器学习**的一个分支，其核心思想是通过模拟人脑神经网络的结构和工作机制，从数据中自动学习复杂的模式和特征。它通过多层的非线性变换，逐步提取数据的抽象特征，最终实现对数据的高效建模和预测。\n\n---\n\n### **核心概念**\n1. **神经网络（Neural Networks）**  \n   深度学习的基础是**人工神经网络**（Artificial Neural Networks, ANNs）。它由大量相互连接的“神经元', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1767449436, model='Qwen3-8B', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=512, prompt_tokens=12, total_tokens=524, completion_tokens_details=None, prompt_tokens_details=None, batch_size=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], queue_wait_time=[5190, 57, 31, 31, 28, 25, 30, 22, 40, 25, 20, 19, 19, 19, 20, 23, 19, 18, 20, 21, 33, 23, 20, 20, 20, 22, 20, 21, 22, 19, 21, 21, 112, 44, 25, 23, 22, 22, 21, 22, 21, 22, 23, 36, 26, 22, 21, 21, 22, 23, 23, 21, 21, 21, 21, 22, 35, 23, 22, 22, 23, 21, 21, 21, 33, 27, 39, 33, 30, 28, 28, 27, 28, 37, 27, 26, 26, 26, 26, 25, 27, 28, 28, 30, 38, 24, 23, 25, 22, 20, 19, 23, 19, 92, 42, 28, 27, 26, 30, 29, 32, 31, 32, 50, 28, 21, 20, 22, 19, 20, 19, 42, 31, 27, 25, 26, 25, 28, 27, 27, 27, 27, 26, 27, 26, 27, 34, 27, 28, 26, 27, 28, 27, 25, 27, 27, 26, 26, 35, 30, 28, 26, 26, 26, 24, 23, 24, 23, 22, 32, 27, 23, 30, 24, 25, 22, 22, 23, 22, 39, 27, 24, 22, 23, 19, 19, 22, 25, 23, 24, 23, 30, 24, 24, 24, 23, 21, 21, 23, 22, 22, 24, 33, 22, 22, 19, 21, 24, 24, 25, 23, 94, 32, 27, 23, 22, 22, 21, 23, 24, 22, 21, 20, 21, 26, 21, 22, 23, 21, 22, 23, 22, 25, 29, 26, 31, 26, 25, 26, 23, 24, 22, 23, 23, 27, 23, 36, 21, 19, 20, 41, 23, 18, 18, 16, 17, 18, 29, 24, 25, 27, 27, 29, 29, 27, 29, 27, 28, 40, 19, 19, 16, 18, 17, 20, 17, 19, 18, 17, 24, 18, 17, 17, 17, 16, 20, 20, 18, 19, 18, 16, 27, 19, 17, 18, 17, 18, 18, 17, 18, 17, 16, 31, 18, 18, 17, 18, 17, 19, 19, 18, 17, 17, 20, 17, 19, 20, 17, 17, 17, 17, 18, 18, 17, 17, 27, 41, 25, 21, 26, 22, 21, 20, 23, 30, 23, 22, 20, 19, 20, 18, 19, 19, 19, 19, 113, 37, 22, 18, 20, 19, 19, 19, 20, 26, 26, 48, 21, 17, 17, 19, 17, 16, 17, 16, 16, 46, 29, 20, 17, 16, 16, 15, 16, 48, 25, 21, 107, 33, 26, 24, 23, 22, 24, 23, 23, 23, 23, 21, 22, 22, 22, 30, 29, 26, 27, 28, 31, 34, 34, 29, 27, 26, 88, 43, 23, 23, 21, 21, 20, 20, 20, 21, 19, 18, 20, 20, 89, 35, 23, 20, 21, 18, 19, 20, 19, 19, 38, 22, 21, 20, 19, 20, 18, 19, 19, 18, 19, 191, 28, 24, 23, 24, 22, 22, 21, 22, 32, 26, 24, 23, 22, 23, 22, 21, 22, 38, 26, 24, 23, 22, 21, 21, 22, 22, 24, 22, 42, 25, 22, 23, 22, 22, 21, 23, 88, 34, 31, 31, 30, 30, 31, 29, 27, 28, 26, 78, 43, 26, 21, 20, 19, 20, 19, 22, 19, 21, 19, 33, 63, 39, 27, 28, 27, 31, 24, 29, 28, 29, 29, 28, 44, 29, 28, 26, 22, 26, 25, 25, 23, 41, 25, 21, 21, 22, 22, 22, 20, 21, 20, 19, 19]), prefill_time=42, decode_time_arr=[24, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 19, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17])
+```

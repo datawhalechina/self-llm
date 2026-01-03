@@ -19,8 +19,8 @@
 ### Qwen3
 
 [Qwen3](https://github.com/QwenLM/Qwen3)
-
-- [x] [Qwen3-8B AMD部署调用](./models_amd/qwen3/1-Qwen3-8B-AMD部署调用.md) @陈榆
+- [x] [Qwen3-8B MindIE 部署调用](./models_ascend/qwen3/01-Qwen3-8B-MindIE部署调用.md) @刘志文
+- [x] [Qwen3-8B vLLM-ascend 部署调用](./models_ascend/qwen3/02-Qwen3-8B-vLLM-ascend部署调用.md) @刘志文
 
 ## Ascend NPU 环境配置通用指南
 
@@ -38,8 +38,13 @@
 ### 2. 驱动固件安装和Docker环境准备
 
 **Ascend NPU 驱动：**
-- 下载并安装最新的 Ascend NPU 驱动和固件包
+- 下载并安装最新的 [Ascend NPU 驱动和固件包](https://www.hiascend.com/hardware/firmware-drivers/community?product=4&model=32&cann=8.5.0.alpha002&driver=Ascend+HDK+25.3.RC1)
 - 确保 NPU 驱动正确安装和识别
+    ```bash
+    # 检查 NPU 设备状态
+    npu-smi info
+    ```
+    ![0-1](./models_ascend/images/01-01.png)
 
 **Docker 环境：**
 - 安装 Docker 并配置镜像源
@@ -62,6 +67,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 - torch-npu
 - transformers
 - huggingface_hub
+- modelscope
 
 
 ## 性能优化建议
@@ -88,6 +94,7 @@ A: 可以使用以下命令检查硬件支持情况：
 # 检查 NPU 设备状态
 npu-smi info
 ```
+![0-1](./models_ascend/images/01-01.png)
 
 ### Q: 如何贡献新的 Ascend NPU 模型教程？
 A: 欢迎提交 PR 到本仓库，我们特别期待：
