@@ -180,10 +180,16 @@
  <table align="center"> 
    <tr> 
      <td valign="top" width="50%"> 
-       • <a href="./support_model_Ascend.md###qwen3">Qwen3</a><br> 
+       • <a href="./support_model_Ascend.md#qwen3">Qwen3</a><br> 
        • Ascend NPU Environment Configuration General Guidelines<br> 
        • Ascend NPU LLM Inference Performance Optimization Suggestions 
-     </td> 
+     </td>
+     <td valign="top" width="50%">
+       • <a href="./support_model_Ascend.md#大模型服务化性能和精度测试">LLM Service Performance and Accuracy Testing</a><br>
+       • AISBench Testing Tool Environment Configuration<br>
+       • Ascend LLM Service Performance and Accuracy Testing
+     </td>
+     </td>
    </tr> 
  </table>
 

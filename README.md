@@ -182,6 +182,11 @@
       • Ascend NPU 环境配置通用指南<br>
       • Ascend NPU 大模型推理性能优化建议
     </td>
+    <td valign="top" width="50%">
+      • <a href="./support_model_Ascend.md#大模型服务化性能和精度测试">大模型服务化性能和精度测试</a><br>
+      • AISBench 测试工具环境配置<br>
+      • Ascend 大模型服务化性能和精度测试
+    </td>
   </tr>
 </table>
 
