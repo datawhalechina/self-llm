@@ -177,7 +177,7 @@
 
 <table align="center">
   <tr>
-    <td valign="top" width="50%">
+    <td valign="top" width="40%">
       • <a href="./support_model_Ascend.md#qwen3">Qwen3</a><br>
       • Ascend NPU 环境配置通用指南<br>
       • Ascend NPU 推理性能优化建议
