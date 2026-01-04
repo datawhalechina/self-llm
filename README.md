@@ -184,7 +184,7 @@
     </td>
     <td valign="top" width="50%">
       • <a href="./support_model_Ascend.md#大模型服务化性能和精度测试">大模型服务化性能和精度测试</a><br>
-      • AISBench 测试工具环境配置<br>
+      • AISBench 大模型测试工具环境配置<br>
       • 昇腾大模型服务化性能和精度测试
     </td>
   </tr>
