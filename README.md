@@ -175,7 +175,7 @@
   📖 <strong><a href="./support_model_Ascend.md">查看完整昇腾 NPU 平台模型列表和教程</a></strong><br>
 </p>
 
-<table align="center" style="width: 90%; table-layout: fixed;">
+<table align="center" style="width: 800px; table-layout: fixed;">
   <tr>
     <td valign="top" width="50%">
       • <a href="./support_model_Ascend.md#qwen3">Qwen3</a><br>
