@@ -8,7 +8,7 @@ def update_contributors():
     Update contributors' task numbers and sort them based on contribution.
 
     This function:
-    - Reads the support_model.md and support_model_amd.md to extract tasks
+    - Reads the support_model.md, support_model_amd.md, and support_model_Ascend.md to extract tasks
     - Counts contribution points (2 for LoRA tasks, 1 for regular tasks)
     - Adds special contributor points
     - Sorts contributors by their contribution points
@@ -24,6 +24,9 @@ def update_contributors():
 
     with open('./support_model_amd.md', 'r') as f:
         readme_amd = f.read()
+
+    with open('./support_model_Ascend.md', 'r') as f:
+        readme_ascend = f.read()
 
     with open('./contributors.json', 'r') as f:
         contributors = json.load(f)
@@ -41,8 +44,12 @@ def update_contributors():
     tasks_amd = readme_amd.split('\n')
     tasks_amd = [task for task in tasks_amd if '@' in task]
 
+    # Extract tasks from Ascend support_model_Ascend.md
+    tasks_ascend = readme_ascend.split('\n')
+    tasks_ascend = [task for task in tasks_ascend if '@' in task]
+
     # Combine all tasks
-    all_tasks = tasks + tasks_amd
+    all_tasks = tasks + tasks_amd + tasks_ascend
 
     # Count points: LoRA tasks +2, regular tasks +1
     for task in all_tasks:
@@ -60,7 +67,8 @@ def update_contributors():
     # Add special contributor points
     special_contributors = {
         '不要葱姜蒜': 300,
-        'Logan Zou': 300
+        'Logan Zou': 300,
+        '刘十一': 150,
     }
     for name, points in special_contributors.items():
         if name in contributors:

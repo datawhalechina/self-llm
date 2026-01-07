@@ -208,6 +208,7 @@
 
 - [宋志学(不要葱姜蒜)-项目负责人](https://github.com/KMnO4-zx) （Datawhale成员）
 - [邹雨衡-项目负责人](https://github.com/logan-zou) （Datawhale成员-对外经济贸易大学）
+- [刘十一-Ascend专区负责人](https://github.com/Zhiwen-Liu)（Datawhale成员-鲸英助教）
 - [姜舒凡](https://github.com/Tsumugii24)（内容创作者-Datawhale成员）
 - [郭宣伯](https://github.com/Twosugar666)（内容创作者-北京航空航天大学）
 - [林泽毅](https://github.com/Zeyi-Lin)（内容创作者-SwanLab产品负责人）
