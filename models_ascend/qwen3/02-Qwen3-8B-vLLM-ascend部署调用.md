@@ -46,7 +46,7 @@ pip install vllm-ascend==0.13.0rc1
 ```
 
 > 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen3 在昇腾设备运行的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
-> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/vllm-ascend***
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-vllm-ascend***
 
 ## 模型下载
 
