@@ -193,6 +193,12 @@
    </tr> 
  </table>
 
+### Apple M Section
+
+<p align="center">
+  📖 <strong><a href="./models_mlx/README_en.md">Click to go to Apple M Section</a></strong><br>
+</p>
+
 ### Other Platforms ...
 
 - 🚀 Coming soon: Support for more platforms (such as Apple M-series chips, etc.) environment configuration and model deployment tutorials, stay tuned!

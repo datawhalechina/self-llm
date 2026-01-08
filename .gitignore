@@ -170,3 +170,6 @@ cython_debug/
 ./models/BGE-M3-finetune-embedding-with-valid/mbpp_val.jsonl
 ./models/BGE-M3-finetune-embedding-with-valid/mbpp_train.jsonl
 ./models/BGE-M3-finetune-embedding-with-valid/c_mteb_results
+
+# model_mlx
+models_mlx/models

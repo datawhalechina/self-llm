@@ -196,6 +196,12 @@
   <strong><em>Coming Soon!</em></strong>
 </p>
 
+### Apple M 专区  
+
+<p align="center">
+  📖 <strong><a href="./models_mlx/README.md">点击跳转 Apple M 专区</a></strong><br>
+</p>
+
 ### Welcome More Platforms!
 
 - 🚀 即将支持更多平台（Apple M 系列已有设备测试），敬请期待！
