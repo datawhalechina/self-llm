@@ -94,7 +94,7 @@ model_dir = snapshot_download('Qwen/Qwen3-8B', cache_dir='/root/autodl-tmp', rev
 
 ## 创建兼容 OpenAI API 接口的服务器
 
-`Qwen3-8B` 兼容 `OpenAI API` 协议，所以我们可以直接使用  `vllm-ascend`在昇腾服务器上创建`OpenAI API` 服务器接口。默认会在 http://localhost:8000 启动服务器。服务器当前一次托管一个模型，并实现列表模型、`completions`和`chat completions` 端口。
+`Qwen3-8B` 兼容 `OpenAI API` 协议，所以我们可以直接使用  `sglang-ascend`在昇腾服务器上创建`OpenAI API` 服务器接口。
 
 在创建服务器时，我们可以指定模型名称、模型路径、聊天模板等参数。
 
@@ -108,7 +108,7 @@ python3 -m sglang.launch_server --model-path autodl-tmp/Qwen/Qwen3-8B --attentio
 
 这样就算启动成功！！！
 
-![image.png](https://codewithgpu-image-1310972338.cos.ap-beijing.myqcloud.com/414734-688570151-4lonUclUcYSJCnY69GLJ.png)
+![03-01](./images/03-01.png)
 
 
 - 通过 `curl` 命令查看当前的模型列表
@@ -207,7 +207,7 @@ print(completion.choices[0].message)
 python sglang_openai_completions.py
 ```
 
-![image.png](https://codewithgpu-image-1310972338.cos.ap-beijing.myqcloud.com/414734-325069687-qCxo0Ax0ZgE627anDAOA.png)
+![03-02](./images/03-02.png)
 
 
 
