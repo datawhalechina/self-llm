@@ -76,6 +76,10 @@ cd sglang
 pip install -e python[srt_npu]
 ```
 
+
+> 考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了 Qwen3 在昇腾设备运行的环境镜像，点击下方链接并直接创建 Autodl 示例即可。
+> ***https://www.codewithgpu.com/i/datawhalechina/self-llm/self-llm-sglang-ascend***
+
 ## 模型下载
 
 使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
