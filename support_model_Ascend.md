@@ -21,6 +21,8 @@
 [Qwen3](https://github.com/QwenLM/Qwen3)
 - [x] [Qwen3-8B MindIE 部署调用](./models_ascend/qwen3/01-Qwen3-8B-MindIE部署调用.md) @刘十一 
 - [x] [Qwen3-8B vLLM-ascend 部署调用](./models_ascend/qwen3/02-Qwen3-8B-vLLM-ascend部署调用.md) @刘十一 
+- [x] [Qwen3-8B sglang-ascend 部署调用](./models_ascend/qwen3/03-Qwen3-8B-sglang-ascend部署调用.md) @陈辅元
+
 
 ### 大模型服务化性能和精度测试
 - [x] [AISBench 测试工具环境配置](https://github.com/Zhiwen-Liu/LLM-Testing/blob/main/%E6%B5%8B%E8%AF%84%E5%89%8D%E5%87%86%E5%A4%87/AISBench%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD.md) @刘十一 
