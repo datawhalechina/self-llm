@@ -4,6 +4,7 @@
 
 ## 目录
 
+- [GLM-4.7-Flash](#glm-47-flash)
 - [谷歌-Gemma3](#谷歌-gemma3)
 - [MiniMax-M2](#minimax-m2)
 - [Qwen3-VL-4B-Instruct](#qwen3-vl-4b-instruct)
@@ -56,6 +57,13 @@
 
 
 ## 已支持模型列表
+
+### GLM-4.7-Flash
+
+[GLM-4.7-Flash](https://huggingface.co/zai-org/GLM-4.7-Flash)
+- [ ] GLM-4.7-Flash vLLM 部署调用及 Docker 镜像
+- [ ] GLM-4.7-Flash SGLang 部署调用及 Docker 镜像
+- [ ] GLM-4.7-Flash Lora 微调及 Docker 镜像
 
 ### 谷歌-Gemma3
 

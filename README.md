@@ -85,6 +85,7 @@
 <table align="center">
   <tr>
     <td valign="top" width="25%">
+      • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash(Pending)</a><br>
       • <a href="./support_model.md#gemma3">Gemma3</a><br>
       • <a href="./support_model.md#minimax-m2">MiniMax-M2</a><br>
       • <a href="./support_model.md#qwen3">Qwen3</a><br>
