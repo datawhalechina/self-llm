@@ -58,6 +58,18 @@
 
 ## 已支持模型列表
 
+### Kimi-2.5
+
+[Kimi-2.5](https://huggingface.co/moonshotai/Kimi-K2.5)
+- [ ] Kimi-2.5 论文解读
+
+### Step-3.5-Flash
+
+[Step-3.5-Flash](https://huggingface.co/stepfun-ai/Step-3.5-Flash)
+- [ ] Step-3.5-Flash vLLM 部署调用及 Docker 镜像
+- [ ] Step-3.5-Flash SGLang 部署调用及 Docker 镜像
+- [ ] Step-3.5-Flash Lora 微调及 Docker 镜像
+
 ### GLM-4.7-Flash
 
 [GLM-4.7-Flash](https://huggingface.co/zai-org/GLM-4.7-Flash)
