@@ -63,7 +63,7 @@ Agent Swarm 可谓是 Kimi-K2.5 引入的最有趣的内容。正如技术报告
 
 为了实现“何时并行，如何并行”，Kimi-K2.5 采用了 RL 的方法来进行探索学习。具体地，强化学习过程中的 reward 设计为：
 
-$$r_{\text{PARL}}(x, y) = \lambda_1 r_{\text{parallel}} + \lambda_2 r_{\text{finish}} + r_{\text{perf}}(x, y)$$
+$r_{\text{PARL}}(x, y) = \lambda_1 r_{\text{parallel}} + \lambda_2 r_{\text{finish}} + r_{\text{perf}}(x, y)$
 
 其中，$x$ 是任务，$y$ 是解法。奖励函数的三部分分别评估了：并行度、子任务完成率，任务 $x$ 的完成表现。
 
@@ -87,7 +87,7 @@ graph LR
 
 </details>
 
-$$\text{CriricalSteps} = \sum_{t=1}^T (S_{\text{main}}^{(t)} + \max_i S_{\text{sub}}^{(t)})$$
+$\text{CriricalSteps} = \sum_{t=1}^T (S_{\text{main}}^{(t)} + \max_i S_{\text{sub}}^{(t)})$
 
 对于每一个时刻，关键步骤的组成为：主 agent 的行动步骤数 + 最长耗时的子 agent 的行动步骤数。在该指标下，**不减少最大执行时间的过多子任务创建没有益处，均衡的任务分解才有用。**
 
@@ -162,7 +162,7 @@ SFT 训练阶段主要通过一系列模型（K2、K2 Thinking、内部模型）
 
 在 RL 阶段，优化目标为：
 
-$$L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} \left[ \frac{1}{N} \sum_{j=1}^{K} \sum_{i=1}^{|y_j|} \mathrm{Clip} \left( \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})}, \alpha, \beta \right) (r(x, y_j) - \bar{r}(x)) - \tau \left( \log \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})} \right)^2 \right]$$
+$L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} \left[ \frac{1}{N} \sum_{j=1}^{K} \sum_{i=1}^{|y_j|} \mathrm{Clip} \left( \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})}, \alpha, \beta \right) (r(x, y_j) - \bar{r}(x)) - \tau \left( \log \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})} \right)^2 \right]$
 
 具体地，引入了一个 token 级的剪裁机制来**缓解训练与推理不一致的问题**，只计算策略比例落在 $[\alpha, \beta]$ 范围的 token 的梯度。不同于 PPO，该方案只考虑比例范围，而不考虑优势的符号。
 
@@ -170,13 +170,13 @@ $$L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} \left[ \frac{1}{N} \su
 
 此外，Kimi-K2.5 还应用了 Token Efficient RL，以激励模型生成更简洁的推理过程。具体地，对于 iteration $t$，奖励函数为
 
-$$
+$
 \tilde{r}(x, y) = 
 \begin{cases}
 r(x, y) \cdot \mathbb{I} \left\{ \frac{1}{K} \sum_{i=1}^{K} r(x, y_i) < \lambda \text{ or } |y_i| \leq \text{budget}(x) \right\}, & \text{if } \left\lfloor t/m \right\rfloor \mod 2 = 0 \text{ (Phase0)} \\
 r(x, y), & \text{if } \left\lfloor t/m \right\rfloor \mod 2 = 1 \text{ (Phase1)}
 \end{cases}
-$$
+$
 
 其中，$\lambda$ 和 $m$ 是超参数，$K$ 是采样次数，算法每隔 $m$ 个 iteration 交替阶段。
 
