@@ -164,19 +164,21 @@ SFT 训练阶段主要通过一系列模型（K2、K2 Thinking、内部模型）
 
 在 RL 阶段，优化目标为：
 
-$L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} [ \frac{1}{N} \sum_{j=1}^{K} \sum_{i=1}^{|y_j|} \mathrm{Clip} ( \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})}, \alpha, \beta ) (r(x, y_j) - \bar{r}(x)) - \tau ( \log \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})} )^2 ]$
+![RL objective](./images/01-07.png)
 
 具体地，引入了一个 token 级的剪裁机制来**缓解训练与推理不一致的问题**，只计算策略比例落在 $[\alpha, \beta]$ 范围的 token 的梯度。不同于 PPO，该方案只考虑比例范围，而不考虑优势的符号。
 
 在奖励函数方面，通用任务使用生成式奖励模型（Generative Reward Model）；视觉定位和点定位任务，使用 F1-score 和软匹配；分割任务，使用 IoU；OCR 任务使用归一化编辑距离；计数任务使用预测值与真实值的绝对差值。此外，还合成了复杂的视觉 puzzle，并使用 Kimi-K2 作为验证。
 
-此外，Kimi-K2.5 还应用了 Token Efficient RL，以激励模型生成更简洁的推理过程。具体地，对于 iteration $t$，奖励函数为
+此外，Kimi-K2.5 还应用了 Token Efficient RL，以激励模型生成更简洁的推理过程。具体地，对于 iteration $t$ ，奖励函数为
 
-$\tilde{r}(x, y) = \begin{cases} r(x, y) \cdot \mathbb{I} \{ \frac{1}{K} \sum_{i=1}^{K} r(x, y_i) < \lambda \text{ or } |y_i| \leq \text{budget}(x) \}, & \text{if } \lfloor t/m \rfloor \mod 2 = 0 \text{ (Phase0)} \\ r(x, y), & \text{if } \lfloor t/m \rfloor \mod 2 = 1 \text{ (Phase1)} \end{cases}$
+![token efficient RL reward](./images/01-08.png)
 
 其中， $\lambda$ 和 $m$ 是超参数， $K$ 是采样次数，算法每隔 $m$ 个 iteration 交替阶段。
 
-在阶段0，当模型的准确率超过阈值时，**鼓励模型在 token budget 内完成**。在阶段1，鼓励模型使用更多的计算资源提升表现。Token budget 具体为**正确的响应的长度集合的第 $\rho$ 百分位**， $\text{budget}(x) = \text{Percentile}(\{|y_j| | r(x, y_i) = 1, i=1, \ldots, K\}, \rho)$ 。
+在阶段0，当模型的准确率超过阈值时，**鼓励模型在 token budget 内完成**。在阶段1，鼓励模型使用更多的计算资源提升表现。Token budget 具体为**正确的响应的长度集合的第 $\rho$ 百分位**。
+
+![token budget](./images/01-09.png)
 
 如下图所示，经过 token efficient RL 后，模型表现几乎没有变化，而模型的 token 使用量有明显下降。
 
