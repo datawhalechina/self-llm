@@ -174,9 +174,9 @@ $L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} [ \frac{1}{N} \sum_{j=1
 
 $\tilde{r}(x, y) = \begin{cases} r(x, y) \cdot \mathbb{I} \{ \frac{1}{K} \sum_{i=1}^{K} r(x, y_i) < \lambda \text{ or } |y_i| \leq \text{budget}(x) \}, & \text{if } \lfloor t/m \rfloor \mod 2 = 0 \text{ (Phase0)} \\ r(x, y), & \text{if } \lfloor t/m \rfloor \mod 2 = 1 \text{ (Phase1)} \end{cases}$
 
-其中，$\lambda$ 和 $m$ 是超参数，$K$ 是采样次数，算法每隔 $m$ 个 iteration 交替阶段。
+其中， $\lambda$ 和 $m$ 是超参数， $K$ 是采样次数，算法每隔 $m$ 个 iteration 交替阶段。
 
-在阶段0，当模型的准确率超过阈值时，**鼓励模型在 token budget 内完成**。在阶段1，鼓励模型使用更多的计算资源提升表现。Token budget 具体为**正确的响应的长度集合的第 $\rho$ 百分位**，$\text{budget}(x) = \text{Percentile}(\{|y_j| | r(x, y_i) = 1, i=1, \ldots, K\}, \rho)$。
+在阶段0，当模型的准确率超过阈值时，**鼓励模型在 token budget 内完成**。在阶段1，鼓励模型使用更多的计算资源提升表现。Token budget 具体为**正确的响应的长度集合的第 $\rho$ 百分位**， $\text{budget}(x) = \text{Percentile}(\{|y_j| | r(x, y_i) = 1, i=1, \ldots, K\}, \rho)$ 。
 
 如下图所示，经过 token efficient RL 后，模型表现几乎没有变化，而模型的 token 使用量有明显下降。
 
