@@ -15,6 +15,7 @@ Kimi-K2.5 是一个**开源的**，**原生多模态**的 **agentic model**。�
 ## 图文联合优化（Joint Optimization of Text and Vision）
 
 > K2.5 emphasizes the joint optimization of text and vision so that two modalities enhance each other. 
+>
 > K2.5 强调文本模态与视觉模态的联合优化，使两种模态互相增强。
 
 在预训练方面，不同于之前的方法（在靠后的训练阶段，才给文本模型加入视觉 token），Kimi-K2.5 **在训练早期就以较低比例混入了视觉数据**。
@@ -53,6 +54,7 @@ Kimi-K2.5 是一个**开源的**，**原生多模态**的 **agentic model**。�
 
 > The limited capacity of a single agent working through each step one by one can lead to the exhaustion of practical
 reasoning depth and tool-call budgets, ultimately hindering the system’s ability to handle more complex scenarios.
+> 
 > 单个智能体依次逐步执行任务的有限能力，可能导致实际推理深度和工具调用配额的耗尽，最终阻碍系统处理更复杂场景的能力。
 
 Agent Swarm 可谓是 Kimi-K2.5 引入的最有趣的内容。正如技术报告中所说，K2.5 不是将任务执行视为推理链，也不是预定义的并行化启发式方法，而是通过**动态任务分解，子 agent 实例化和并行任务调度来启动智能体的集群**。如下图所示，智能体集群由一个超级智能体 Orchestrator 通过调用 `create_subagent` 实现子 agent 的创建以及任务的拆分与分发。
@@ -65,7 +67,7 @@ Agent Swarm 可谓是 Kimi-K2.5 引入的最有趣的内容。正如技术报告
 
 $r_{\text{PARL}}(x, y) = \lambda_1 r_{\text{parallel}} + \lambda_2 r_{\text{finish}} + r_{\text{perf}}(x, y)$
 
-其中，$x$ 是任务，$y$ 是解法。奖励函数的三部分分别评估了：并行度、子任务完成率，任务 $x$ 的完成表现。
+其中， $x$ 是任务， $y$ 是解法。奖励函数的三部分分别评估了：并行度、子任务完成率，任务 $x$ 的完成表现。
 
 并行度奖励虽然鼓励模型生成更加并行化的任务拆分，但也引入了**生成无效子 agent 来骗取并行度**的 reward hacking 嫌疑。但是子任务完成率一项通过关注子 agent 有没有把事情做完来避免虚假并行。
 
@@ -162,7 +164,7 @@ SFT 训练阶段主要通过一系列模型（K2、K2 Thinking、内部模型）
 
 在 RL 阶段，优化目标为：
 
-$L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} \left[ \frac{1}{N} \sum_{j=1}^{K} \sum_{i=1}^{|y_j|} \mathrm{Clip} \left( \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})}, \alpha, \beta \right) (r(x, y_j) - \bar{r}(x)) - \tau \left( \log \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})} \right)^2 \right]$
+$L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} [ \frac{1}{N} \sum_{j=1}^{K} \sum_{i=1}^{|y_j|} \mathrm{Clip} ( \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})}, \alpha, \beta ) (r(x, y_j) - \bar{r}(x)) - \tau ( \log \frac{\pi_\theta(y_j^i | x, y_j^{0:i})}{\pi_{\text{old}}(y_j^i | x, y_j^{0:i})} )^2 ]$
 
 具体地，引入了一个 token 级的剪裁机制来**缓解训练与推理不一致的问题**，只计算策略比例落在 $[\alpha, \beta]$ 范围的 token 的梯度。不同于 PPO，该方案只考虑比例范围，而不考虑优势的符号。
 
@@ -170,13 +172,7 @@ $L_{\text{RL}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}} \left[ \frac{1}{N} \sum
 
 此外，Kimi-K2.5 还应用了 Token Efficient RL，以激励模型生成更简洁的推理过程。具体地，对于 iteration $t$，奖励函数为
 
-$
-\tilde{r}(x, y) = 
-\begin{cases}
-r(x, y) \cdot \mathbb{I} \left\{ \frac{1}{K} \sum_{i=1}^{K} r(x, y_i) < \lambda \text{ or } |y_i| \leq \text{budget}(x) \right\}, & \text{if } \left\lfloor t/m \right\rfloor \mod 2 = 0 \text{ (Phase0)} \\
-r(x, y), & \text{if } \left\lfloor t/m \right\rfloor \mod 2 = 1 \text{ (Phase1)}
-\end{cases}
-$
+$\tilde{r}(x, y) = \begin{cases} r(x, y) \cdot \mathbb{I} \{ \frac{1}{K} \sum_{i=1}^{K} r(x, y_i) < \lambda \text{ or } |y_i| \leq \text{budget}(x) \}, & \text{if } \lfloor t/m \rfloor \mod 2 = 0 \text{ (Phase0)} \\ r(x, y), & \text{if } \lfloor t/m \rfloor \mod 2 = 1 \text{ (Phase1)} \end{cases}$
 
 其中，$\lambda$ 和 $m$ 是超参数，$K$ 是采样次数，算法每隔 $m$ 个 iteration 交替阶段。
 
