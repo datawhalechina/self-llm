@@ -58,12 +58,12 @@
 
 ## 已支持模型列表
 
-### Kimi-2.5
+### Kimi-K2.5
 
-[Kimi-2.5](https://huggingface.co/moonshotai/Kimi-K2.5)
-- [ ] Kimi-2.5 论文解读
-- [ ] Kimi-2.5 vLLM 部署调用及 Docker 镜像
-- [ ] Kimi-2.5 SGLang 部署调用及 Docker 镜像
+[Kimi-K2.5](https://huggingface.co/moonshotai/Kimi-K2.5)
+- [x] [Kimi-K2.5 论文解读](./models/Kimi-K2.5/01-Kimi-K2.5-论文解读.md) @樊奇
+- [ ] Kimi-K2.5 vLLM 部署调用及 Docker 镜像
+- [ ] Kimi-K2.5 SGLang 部署调用及 Docker 镜像
 
 ### Step-3.5-Flash
 
