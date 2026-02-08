@@ -77,6 +77,8 @@ pip install "sglang @ git+https://github.com/sgl-project/sglang.git#subdirectory
 pip install nvidia-cudnn-cu12==9.16.0.29
 ```
 
+本教程也为大家准备了运行的环境镜像，点击[链接](https://codewithgpu.com/i/datawhalechina/self-llm/Kimi2.5-SGLang)进行创建AutoDL示例即可。
+
 ### 启动命令
 ```bash
 # 请将 $MODEL_PATH 替换为您实际的文件夹路径
@@ -257,8 +259,135 @@ RadixAttention 将 KV 缓存组织成一棵基数树（压缩前缀树）：
 
 总结来说，RadixAttention 通过基数树实现了 KV 缓存的**结构化复用**，在保持完全自动化的同时，显著提升了 LLM 服务在处理交互式、长上下文和批量任务时的效率和响应速度。
 ```
+### 3.工具调用（use_tool.py）
+Kimi 2.5 的工具调用机制（Function Calling）是主要是指其调用其它API的机制。一般情况下，要进行两次API调用：第一次是获取信息，但是并非自然语言查询，而是结构化的工具调用；第二次是将 API 的结果进行总结，给出最终的自然语言的回答。
+
+以下以一个获取实时天气的[API](https://openweathermap.org/api)为例,看看Kimi2.5如何进行工具调用，其中API_key可以从链接中获取，注意API不要传到公开场合。
+
+```py
+import openai
+import json
+import requests 
+
+# --- !!! 请在这里替换你的真实 API KEY !!! ---
+OPENWEATHERMAP_API_KEY = ""
+
+## 调用API 获取实时天气信息的函数
+def get_weather_realtime(location: str, unit: str) -> str:
+    units_map = {"celsius": "metric", "fahrenheit": "imperial"}
+    url = "http://api.openweathermap.org/data/2.5/weather"
+    params = {
+        "q": location,
+        "appid": OPENWEATHERMAP_API_KEY,
+        "units": units_map.get(unit, "metric") # 默认使用摄氏度
+    }
+
+    try:
+        # 发起请求
+        response = requests.get(url, params=params, timeout=5)
+        response.raise_for_status() 
+        data = response.json()
+
+        # 提取关键信息 (API 返回格式)
+        if data.get("cod") == 200:
+            temp = data["main"]["temp"]
+            description = data["weather"][0]["description"]
+            city_name = data["name"]
+            
+            result = {
+                "location": city_name,
+                "temperature": f"{temp}",
+                "unit": unit,
+                "condition": description,
+                "source": "OpenWeatherMap"
+            }
+            # 返回 JSON 字符串给 LLM
+            return json.dumps(result, ensure_ascii=False)
+        else:
+            return json.dumps({"error": f"城市 '{location}' 未找到", "code": data.get("cod")})
+
+    except requests.exceptions.HTTPError as e:
+        return json.dumps({"error": f"HTTP错误: {e.response.status_code}. 城市名称可能不正确。", "location": location})
+    except requests.exceptions.RequestException as e:
+        return json.dumps({"error": "网络连接或超时失败。", "details": str(e), "location": location})
+    except Exception as e:
+        return json.dumps({"error": "数据解析失败。", "details": str(e), "location": location})
 
 
+## 初始化 OpenAI 客户端和工具
+
+client = openai.Client(
+    base_url="http://127.0.0.1:30000/v1", 
+    api_key="empty"
+)
+tool_functions = {"get_weather": get_weather_realtime}
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "获取一个给定地点的当前实时天气情况，如查询不到则返回错误信息。",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {"type": "string", "description": "城市名，例如：北京, Tokyo, London"},
+                "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+            },
+            "required": ["location", "unit"]
+        }
+    }
+}]
+
+## 第一次 API 调用：Kimi 规划——获得天气信息，但是并非自然语言查询，而是结构化的工具调用
+user_query = "What's the weather like in Baoji? use celsius."
+response = client.chat.completions.create(
+    model="default",
+    messages=[{"role": "user", "content": user_query}],
+    tools=tools,
+    tool_choice="auto"
+)
+
+response_message = response.choices[0].message
+
+tool_call = response_message.tool_calls[0].function
+function_name = tool_call.name
+arguments_str = tool_call.arguments
+print(f"Kimi 规划: 函数 {function_name}, 参数 {arguments_str}")
+
+args_dict = json.loads(arguments_str)
+real_result_str = tool_functions[function_name](**args_dict)
+print(f"API 真实返回结果: {real_result_str}")
+
+## 第二次 API 调用：Kimi 总结——将 API 的结果进行总结，给出最终的自然语言的回答
+messages = [
+    {"role": "user", "content": user_query},
+    response_message,
+    {
+        "tool_call_id": response_message.tool_calls[0].id,
+        "role": "tool",
+        "name": function_name,
+        "content": real_result_str,
+    }
+]
+
+final_response = client.chat.completions.create(
+    model="default",
+    messages=messages
+)
+
+final_answer = final_response.choices[0].message.content
+print("\n✅ Kimi 的最终回答:\n", final_answer)
+```
+
+```
+Kimi 规划: 函数 get_weather, 参数 {"location": "Baoji", "unit": "celsius"}
+API 真实返回结果: {"location": "Baoji", "temperature": "-0.67", "unit": "celsius", "condition": "overcast clouds", "source": "OpenWeatherMap"}
+
+✅ Kimi 的最终回答:
+ In Baoji (宝鸡), it's currently **-0.7°C** with **overcast clouds**.
+
+That's right around freezing, so it's quite chilly! Make sure to bundle up if you're heading out.
+```
 
 ## 附录（加载与资源占用说明）
 
