@@ -4,6 +4,8 @@
 
 ## 目录
 
+- [Kimi-K2.5](#kimi-k25)
+- [Step-3.5-Flash](#step-35-flash)
 - [GLM-4.7-Flash](#glm-47-flash)
 - [谷歌-Gemma3](#谷歌-gemma3)
 - [MiniMax-M2](#minimax-m2)
@@ -62,22 +64,22 @@
 
 [Kimi-K2.5](https://huggingface.co/moonshotai/Kimi-K2.5)
 - [x] [Kimi-K2.5 论文解读](./models/Kimi-K2.5/01-Kimi-K2.5-论文解读.md) @樊奇
-- [ ] Kimi-K2.5 vLLM 部署调用及 Docker 镜像
-- [ ] Kimi-K2.5 SGLang 部署调用及 Docker 镜像
+- [x] [Kimi-K2.5 vLLM 部署调用及 Docker 镜像](./models/Kimi-K2.5/02-Kimi-2.5-vLLM%20部署调用.md) @谢好冉
+- [x] [Kimi-K2.5 SGLang 部署调用及 Docker 镜像](./models/Kimi-K2.5/03-Kimi-2.5-SGLang部署应用.md) @谭斐然
 
 ### Step-3.5-Flash
 
 [Step-3.5-Flash](https://huggingface.co/stepfun-ai/Step-3.5-Flash)
-- [ ] Step-3.5-Flash vLLM 部署调用及 Docker 镜像
-- [ ] Step-3.5-Flash SGLang 部署调用及 Docker 镜像
-- [ ] Step-3.5-Flash Lora 微调及 Docker 镜像
+- [x] [Step-3.5-Flash vLLM 部署调用及 Docker 镜像](./models/Step-3.5-Flash/01-Step-3.5-Flash-vLLM部署教程.md) @郑远婧
+- [x] [Step-3.5-Flash SGLang 部署调用及 Docker 镜像](./models/Step-3.5-Flash/02-Step-3.5-Flash-SGLang.md) @陈辅元
+- [x] Step-3.5-Flash Lora 微调及 Docker 镜像
 
 ### GLM-4.7-Flash
 
 [GLM-4.7-Flash](https://huggingface.co/zai-org/GLM-4.7-Flash)
-- [ ] GLM-4.7-Flash vLLM 部署调用及 Docker 镜像
-- [ ] GLM-4.7-Flash SGLang 部署调用及 Docker 镜像
-- [ ] GLM-4.7-Flash Lora 微调及 Docker 镜像
+- [x] [GLM-4.7-Flash vLLM 部署调用及 Docker 镜像](./models/GLM-4.7-Flash/01-GLM-4.7-Flash-vLLM%20部署调用.md) @谢好冉
+- [x] [GLM-4.7-Flash SGLang 部署调用及 Docker 镜像](./models/GLM-4.7-Flash/02-GLM-4.7-Flash%20SGLang%20部署调用.md) @三水
+- [x] [GLM-4.7-Flash Lora 微调及 Docker 镜像](./models/GLM-4.7-Flash/03-GLM-4.7-Flash-Lora微调及Docker镜像.md) @余洋
 
 ### 谷歌-Gemma3
 

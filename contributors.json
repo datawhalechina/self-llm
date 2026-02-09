@@ -63,6 +63,10 @@
         "info": "[丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）",
         "task_num": 6
     },
+    "谢好冉": {
+        "info": "[谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）",
+        "task_num": 6
+    },
     "惠佳豪": {
         "info": "[惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）",
         "task_num": 5
@@ -95,12 +99,12 @@
         "info": "[程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）",
         "task_num": 4
     },
-    "谢好冉": {
-        "info": "[谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）",
-        "task_num": 4
-    },
     "李秀奇": {
         "info": "[李秀奇](https://github.com/li-xiu-qi)（内容创作者-DataWhale意向成员）",
+        "task_num": 4
+    },
+    "余洋": {
+        "info": "[余洋](https://github.com/YangYu-NUAA)（内容创作者-安徽理工大学副教授-Datawhale成员）",
         "task_num": 4
     },
     "陈思州": {
@@ -117,6 +121,10 @@
     },
     "散步": {
         "info": "[散步](https://github.com/sanbuphy) （Datawhale成员）",
+        "task_num": 3
+    },
+    "郑远婧": {
+        "info": "[郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）",
         "task_num": 3
     },
     "Swiftie": {
@@ -155,10 +163,6 @@
         "info": "[黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）",
         "task_num": 2
     },
-    "余洋": {
-        "info": "[余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）",
-        "task_num": 2
-    },
     "左春生": {
         "info": "[左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）",
         "task_num": 2
@@ -171,8 +175,16 @@
         "info": "[付志远](https://github.com/comfzy)（内容创作者-海南大学）",
         "task_num": 2
     },
-    "郑远婧": {
-        "info": "[郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）",
+    "三水": {
+        "info": "[三水](https://github.com/sssanssss)（内容创作者-鲸英助教）",
+        "task_num": 2
+    },
+    "樊奇": {
+        "info": "[樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）",
+        "task_num": 2
+    },
+    "陈辅元": {
+        "info": "[陈辅元](https://github.com/Fyuan0206)（内容创作者-Datawhale成员）",
         "task_num": 2
     },
     "谭逸珂": {
@@ -185,10 +197,6 @@
     },
     "康婧淇": {
         "info": "[康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）",
-        "task_num": 1
-    },
-    "三水": {
-        "info": "[三水](https://github.com/sssanssss)（内容创作者-鲸英助教）",
         "task_num": 1
     },
     "杨晨旭": {
@@ -215,16 +223,16 @@
         "info": "[孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）",
         "task_num": 1
     },
-    "樊奇": {
-        "info": "[樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）",
-        "task_num": 1
-    },
     "卓堂越": {
         "info": "[卓堂越](https://github.com/nusakom)（内容创作者-鲸英助教）",
         "task_num": 1
     },
     "fancy": {
         "info": "[fancy](https://github.com/fancyboi999)（内容创作者-鲸英助教）",
+        "task_num": 1
+    },
+    "谭斐然": {
+        "info": "[谭斐然](https://github.com/frtanxidian)（西安电子科技大学-鲸英助教）",
         "task_num": 1
     }
 }

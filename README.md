@@ -85,7 +85,9 @@
 <table align="center">
   <tr>
     <td valign="top" width="25%">
-      • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash(Pending)</a><br>
+      • <a href="./support_model.md#kimi-k25">Kimi-K2.5</a><br>
+      • <a href="./support_model.md#step-35-flash">Step-3.5-Flash</a><br>
+      • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash</a><br>
       • <a href="./support_model.md#gemma3">Gemma3</a><br>
       • <a href="./support_model.md#minimax-m2">MiniMax-M2</a><br>
       • <a href="./support_model.md#qwen3">Qwen3</a><br>
@@ -232,6 +234,7 @@
 - [高立业](https://github.com/0-yy-0)（内容创作者-DataWhale成员）
 - [Kailigithub](https://github.com/Kailigithub) （Datawhale成员）
 - [丁悦](https://github.com/dingyue772) （Datawhale-鲸英助教）
+- [谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）
 - [惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）
 - [王茂霖](https://github.com/mlw67)（内容创作者-Datawhale成员）
 - [孙健壮](https://github.com/Caleb-Sun-jz)（内容创作者-对外经济贸易大学）
@@ -240,12 +243,13 @@
 - [骆秀韬](https://github.com/anine09)（内容创作者-Datawhale成员-似然实验室）
 - [李柯辰](https://github.com/Joe-2002) （Datawhale成员）
 - [程宏](https://github.com/chg0901)（内容创作者-Datawhale意向成员）
-- [谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）
 - [李秀奇](https://github.com/li-xiu-qi)（内容创作者-DataWhale意向成员）
+- [余洋](https://github.com/YangYu-NUAA)（内容创作者-安徽理工大学副教授-Datawhale成员）
 - [陈思州](https://github.com/jjyaoao) （Datawhale成员）
 - [颜鑫](https://github.com/thomas-yanxin) （Datawhale成员）
 - [杜森](https://github.com/study520ai520)（内容创作者-Datawhale成员-南阳理工学院）
 - [散步](https://github.com/sanbuphy) （Datawhale成员）
+- [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
 - [Swiftie](https://github.com/cswangxiaowei) （小米NLP算法工程师）
 - [张友东](https://github.com/AXYZdong)（内容创作者-Datawhale成员）
 - [张晋](https://github.com/Jin-Zhang-Yaoguang)（内容创作者-Datawhale成员）
@@ -255,24 +259,24 @@
 - [赵文恺](https://github.com/XiLinky)（内容创作者-太原理工大学-鲸英助教）
 - [王熠明](https://github.com/Bald0Wang)（内容创作者-Datawhale成员）
 - [黄柏特](https://github.com/KashiwaByte)（内容创作者-西安电子科技大学）
-- [余洋](https://github.com/YangYu-NUAA)（内容创作者-Datawhale成员）
 - [左春生](https://github.com/LinChentang)（内容创作者-Datawhale成员）
 - [杨卓](https://github.com/little1d)（内容创作者-西安电子科技大学-鲸英助教）
 - [付志远](https://github.com/comfzy)（内容创作者-海南大学）
-- [郑远婧](https://github.com/isaacahahah)（内容创作者-鲸英助教-福州大学）
+- [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
+- [樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）
+- [陈辅元](https://github.com/Fyuan0206)（内容创作者-Datawhale成员）
 - [谭逸珂](https://github.com/LikeGiver)（内容创作者-对外经济贸易大学）
 - [何至轩](https://github.com/pod2c)（内容创作者-鲸英助教）
 - [康婧淇](https://github.com/jodie-kang)（内容创作者-Datawhale成员）
-- [三水](https://github.com/sssanssss)（内容创作者-鲸英助教）
 - [杨晨旭](https://github.com/langlibai66)（内容创作者-太原理工大学-鲸英助教）
 - [赵伟](https://github.com/2710932616)（内容创作者-鲸英助教）
 - [苏向标](https://github.com/gzhuuser)（内容创作者-广州大学-鲸英助教）
 - [陈睿](https://github.com/riannyway)（内容创作者-西交利物浦大学-鲸英助教）
 - [张龙斐](https://github.com/Feimike09)（内容创作者-鲸英助教）
 - [孙超](https://github.com/anarchysaiko)（内容创作者-Datawhale成员）
-- [樊奇](https://github.com/fanqiNO1)（内容创作者-上海交通大学）
 - [卓堂越](https://github.com/nusakom)（内容创作者-鲸英助教）
 - [fancy](https://github.com/fancyboi999)（内容创作者-鲸英助教）
+- [谭斐然](https://github.com/frtanxidian)（西安电子科技大学-鲸英助教）
 
 > 注：排名根据贡献程度排序
 
