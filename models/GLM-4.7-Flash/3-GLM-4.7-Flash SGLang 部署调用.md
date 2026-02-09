@@ -1,0 +1,432 @@
+SGLang 简介
+SGLang 是一款专为大语言模型（LLM）设计的高性能、自动化编程与推理加速框架。它在提升大模型在复杂任务编排、长上下文处理及高并发请求下的执行效率，是连接底层硬件算力与上层 AI 应用的高效桥梁。 对于开发者而言，SGLang 极大地简化了部署流程，后端一键启动：无需复杂的配置文件，一条命令即可完成环境适配与服务发布。前端无缝对接：直接沿用现有的 OpenAI SDK 或标准 HTTP 调用，无需额外的学习与适配成本。
+环境准备
+本文基础环境如下：
+----------------
+ubuntu 22.04
+python 3.12
+cuda 12.8
+pytorch 2.9.1
+----------------
+本文默认学习者已配置好以上 Pytorch (cuda) 环境，如未配置请先自行安装。
+首先 pip 换源加速下载并安装依赖包
+python -m pip install --upgrade pip
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip install --upgrade pip
+pip install modelscope
+pip install openai
+pip install transformers
+安装最新版本的 sglang
+git clone https://github.com/sgl-project/sglang
+
+cd sglang/python
+
+pip install -e ".[all]"
+考虑到部分同学配置环境可能会遇到一些问题，我们在 AutoDL 平台准备了运行的环境镜像，点击下方链接并直接创建 Autodl 示例即可。 https://www.autodl.art/i/datawhalechina/self-llm/ZhipuAI/GLM-4.7-Flash
+模型下载
+使用 modelscope 中的 snapshot_download 函数下载模型，第一个参数为模型名称，参数 cache_dir 为模型的下载路径。
+新建 model_download.py 文件并在其中输入以下内容，粘贴代码后记得保存文件。
+from modelscope import snapshot_download
+
+model_dir = snapshot_download('ZhipuAI/GLM-4.7-Flash', cache_dir='/root/autodl-fs', revision='master')
+然后在终端中输入 python model_download.py 执行下载，这里需要耐心等待一段时间直到模型下载完成。
+注意：记得修改 cache_dir 为你的模型下载路径哦~
+
+启动 SGLang 服务
+SGLang 可通过脚本或命令行启动。下方示例使用脚本方式，便于固定参数与日志。
+Python 启动脚本
+新建 start_server.py：
+#start_server.py
+import torch
+from sglang.utils import launch_server_cmd, wait_for_server
+from sglang.launch_server import launch_server_cmd, wait_for_server
+
+gpu_count = torch.cuda.device_count() if torch.cuda.is_available() else 0
+if gpu_count == 4:
+    cmd = (
+        "python -m sglang.launch_server "
+        "--model-path /root/autodl-fs/ZhipuAI/GLM-4.7-Flash "
+        "--host 0.0.0.0 "
+        "--port 8000 "
+        "--tp-size 4 "
+        "--tool-call-parser glm47 "
+        "--reasoning-parser glm45 "
+        "--speculative-algorithm EAGLE "
+        "--speculative-num-steps 3 "
+        "--speculative-eagle-topk 1 "
+        "--speculative-num-draft-tokens 4 "
+        "--mem-fraction-static 0.8 "
+        "--served-model-name glm-4.7-flash "
+        "--trust-remote-code"
+    )
+    
+elif gpu_count == 8:
+    cmd = (
+        "python -m sglang.launch_server "
+        "--model-path /root/autodl-fs/ZhipuAI/GLM-4.7-Flash "
+        "--host 0.0.0.0 "
+        "--port 8000 "
+        "--tp-size 8 "
+        "--ep-size 8 "
+        "--tool-call-parser glm47 "
+        "--reasoning-parser glm45 "
+        "--speculative-algorithm EAGLE "
+        "--speculative-num-steps 3 "
+        "--speculative-eagle-topk 1 "
+        "--speculative-num-draft-tokens 4 "
+        "--mem-fraction-static 0.8 "
+        "--served-model-name glm-4.7-flash "
+        "--trust-remote-code"
+    )
+else:
+    raise RuntimeError(f"建议使用 4 或 8 张 GPU，当前检测到: {gpu_count}")
+
+server_process, port = launch_server_cmd(cmd, port=8000)
+wait_for_server(f"http://127.0.0.1:{port}")
+print(f"SGLang Server started: http://127.0.0.1:{port}")
+启动：
+python start_server.py
+服务启动成功后将监听 http://127.0.0.1:8000/v1。
+[图片]
+提示：多卡环境可将 --tp-size 设置为 GPU 数量；显存紧张可调低 --mem-fraction-static，或考虑更低的 --max-model-len（见后文“参数说明与建议”）。
+
+
+命令行直接启动
+4 卡部署：
+python3 -m sglang.launch_server \
+  --model-path /root/autodl-fs/ZhipuAI/GLM-4.7-Flash \
+  --tp-size 4 \
+  --tool-call-parser glm47  \
+  --reasoning-parser glm45 \
+  --speculative-algorithm EAGLE \
+  --speculative-num-steps 3 \
+  --speculative-eagle-topk 1 \
+  --speculative-num-draft-tokens 4 \
+  --mem-fraction-static 0.8 \
+  --served-model-name glm-4.7-flash \
+  --host 0.0.0.0 \
+  --port 8000
+[图片]
+8 卡部署：
+python3 -m sglang.launch_server \
+  --model-path /root/autodl-fs/ZhipuAI/GLM-4.7-Flash \
+  --tp-size 4 \
+  --tool-call-parser glm47  \
+  --reasoning-parser glm45 \
+  --speculative-algorithm EAGLE \
+  --speculative-num-steps 3 \
+  --speculative-eagle-topk 1 \
+  --speculative-num-draft-tokens 4 \
+  --mem-fraction-static 0.8 \
+  --served-model-name glm-4.7-flash \
+  --host 0.0.0.0 \
+  --port 8000
+[图片]
+[图片]
+
+
+调用示例
+以下示例均使用 OpenAI 官方 Python SDK 调用 SGLang 的 OpenAI 兼容接口。
+文本补全（Completions）
+# test_completion.py
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="EMPTY",
+    base_url="http://127.0.0.1:8000/v1",
+)
+
+response = client.completions.create(
+    model="ZhipuAI/GLM-4.7-Flash",
+    prompt="简要介绍一下 GLM-4.7-Flash 模型的特点。",
+    max_tokens=8192,
+    top_p=0.95,
+    temperature=1.0,
+)
+print(response)
+运行：
+python test_completion.py
+输出结果：
+INFO:     127.0.0.1:54362 - "POST /v1/completions HTTP/1.1" 200 OK
+Completion(id='26bdb952ffb846b09cd2611b6a8b1d8d', choices=[CompletionChoice(finish_reason='stop', index=0, logprobs=None, text='请问它与之前的模型相比有哪些突破？\n\n Assistant\n\n<think>\n嗯，用户让我比较MiniMax M2模型的特点和突破。首先，我需要确认用户可能对AI技术有基础了解，但希望更深入了解最新模型的具体改进。用户可能是开发者、研究者或技术爱好者，需要这些信息用于决策或项目参考。\n\n接下来，我得回忆一下M2模型的关键点。记得它应该是多模态能力提升显著，比如整合了视觉、语音和文本。但用户可能更关注实际应用场景，比如客服或内容生成，所以得强调实用性和交互体验。\n\n然后，得对比之前的模型。之前的版本可能功能单一，比如仅文本或图像处理，M2的升级点在于统一处理不同输入类型。这里要突出效率提升，因为整合输入能减少用户操作步骤。\n\n用户可能还关心技术细节，比如MoE架构的优化。之前的模型可能参数冗余，而M2通过稀疏激活提高效率，这点需要解释清楚，避免技术术语过深。\n\n另外，量化策略也很重要。之前的模型可能需要大量计算资源，而M2通过更低比特量化实现性能与效率的平衡，这对资源有限的用户很关键。\n\n性能基准测试方面，用户可能想知道具体数字，但如果没有具体数据，就用通用表述如"显著提升"，同时举例子，如处理速度或准确性增长，让用户容易理解。\n\n还要注意用户可能没明说的需求。比如，应用场景是否足够广泛？或者成本问题？M2的API调用可能更便宜，适合商业化部署，这方面要提到。\n\n最后，得总结整体突破，呼应开头的多模态、效率和成本优化，确保回答结构清晰，同时保持专业但易懂的语言风格。\n</think>\n\n好的，MiniMax **ABAB 6.5s M2** 确实是一个重要的迭代升级，相比其前任 **ABAB 6.5s** 带来了几项显著的突破和增强：\n\n1.  **统一多模态交互能力：**\n    *   **突破：** **M2 是 MiniMax 首个真正意义上的统一多模态模型。** 这是一个巨大的突破。\n    *   **特点：** 用户可以在一次对话中自然地**混合使用文本、语音、图像等多种输入形式**。例如：\n        *   **文本 + 图片：** 上传一张图表，询问相关问题或要求总结。\n        *   **语音 + 文本：** 发送语音指令并附加文本说明。\n        *   **纯语音：** 直接进行语音对话。\n        *   **图片 + 语音：** 上传图片并用语音描述需求。\n    *   **相比之前：** 之前的模型主要针对**单一模态**（如ABAB 6.5s侧重文本处理），缺乏这种**无缝整合的多模态交互**能力。M2在架构和训练上专门优化了这种统一性。\n\n2.  **极致的“Vein”（理解）能力：**\n    *   **突破：** **强化了对输入上下文“细微差别”和“隐含意图”的深层理解能力。** 这意味着模型能更精准地捕捉用户话语或图片中的**“言外之意”、“微妙语气”、“上下文暗示”**等。\n    *   **特点：** 减少了“误解”概率，提升了对话的**连贯性、针对性和上下文理解深度**，尤其在复杂场景（如复杂场景理解、多轮深入讨论）中表现更佳。\n    *   **相比之前：** 在理解力上有了显著提升，特别是在处理模糊、隐晦或需要深度语义分析的内容时表现更优。\n\n3.  **成本效率大幅提升：**\n    *   **突破：** **在性能提升的同时，大幅降低了模型部署和使用的成本。**\n    *   **特点：** 实现了**更高吞吐量**（更低延迟）和**更低API调用成本**（尤其是针对音频处理）。MiniMax声称**音频处理成本降低了60%**（在同等质量标准下），这是通过在模型推理链路中**深度集成语音端优化技术**实现的。\n    *   **相比之前：** 相比之前的ABAB 6.5s，处理多模态内容（尤其音频）的成本要**显著更低**，这使得大规模商业化应用更具可行性。\n\n4.  **性能基准提升：**\n    *   **突破：** 在多个核心性能基准测试中取得了**显著进步**。\n    *   **表现：**\n        *   **通用对话：** 推理能力提升**6%**。\n        *   **代码生成与理解：** 能力提升**8%**。\n        *   **长文本理解：** 能力提升**10%**。\n        *   **逻辑推理：** 能力提升**15%**。\n    *   **相比之前：** 在所有关键任务上都展现了可观的改进，使其在复杂逻辑处理、长文处理等专业场景中更具竞争力。\n\n5.  **MoE 架构优化与量化策略革新：**\n    *   **突破：** M2 在其 **混合专家模型（MoE）架构** 上进行了**深度优化**，同时采用了**更先进的量化策略**。\n    *   **特点：**\n        *   **MoE 优化：** 确保了大规模参数（如 1.9T）模型在**实际使用中“活跃专家”比例很小**（约 90B 激活参数），极大降低了计算复杂度，保持了推理效率。\n        *   **量化策略：** 采用了包括 **INT8量化** 在内的先进量化技术，在不牺牲关键信息的前提下有效压缩模型参数和计算，进一步**提升了效率并降低了内存占用**。这是实现高成本效益的关键技术基础。\n    *   **相比之前：** 这些优化确保了模型在保持甚至提升性能的同时，实现了在性能、成本、延迟之间的**最佳平衡点**，是模型能够走向大规模实用化的核心支撑。\n\n**总结来说，MiniMax ABAB 6.5s M2 的核心突破在于：**\n\n1.  **统一多模态：** 实现了文本、语音、图像的无缝整合交互，是一次质的飞跃。\n2.  **极深理解力：** “Vein”能力显著增强，对细微差别和隐含意图理解更深入。\n3.  **高成本效率：** **成本大幅降低（尤其音频60%降低）**，吞吐量更高，更适合规模化部署。\n4.  **性能全面提升：** 在通用对话、代码、长文本理解、逻辑推理等基准上显著进步。\n5.  **架构优化与量化创新：** 通过MoE优化和先进量化策略实现了高效能与低成本的平衡。\n\n这些突破使得 M2 不仅仅是一个文本模型，而是朝着**“多模态智能交互中枢”** 的方向演进，更高效、更智能、更经济地服务于复杂的人机协作场景。 与之前的 ABAB 6.5s 相比，它在应用范围、交互自然度、理解深度和商业可用性（成本）上都是一个巨大的升级。', matched_stop=200020)], created=1762464031, model='MiniMaxAI/MiniMax-M2', object='text_completion', system_fingerprint=None, usage=CompletionUsage(completion_tokens=1386, prompt_tokens=9, total_tokens=1395, completion_tokens_details=None, prompt_tokens_details=None, reasoning_tokens=0), metadata={'weight_version': 'default'})
+
+
+
+聊天对话（Chat Completions）
+GLM-4.7-Flash: 这是一个非常有深度的问题。智谱AI（Zhipu AI）作为中国大模型领域的“第一梯队”玩家，其发展路径和成败不仅关乎一家公司的命运，也映射了中国科技产业在AI领域的自主探索现状。
+
+以下是对智谱AI愿景的梳理，以及我对其未来前景的详细分析和预测。
+
+### 第一部分：智谱AI的愿景是什么？
+
+智谱AI的愿景并非单一的一句话，而是通过其公司定位、核心战略和文化来体现的。概括起来，主要体现在以下三个层面：
+
+1.  **技术层面：迈向通用人工智能（AGI）**
+    这是智谱AI最根本的科研目标。正如其联合创始人张鹏（唐杰教授团队背景）所言，智谱致力于开发“像人一样思考”的机器。他们不只是做一个聊天机器人，而是希望在语言、逻辑、推理和跨模态能力上无限接近甚至超越人类的通用智能水平。
+
+2.  **产业层面：做AI的“水”和“电”**
+    智谱AI不仅看重模型的训练，更看重“模型工业化”。他们的愿景是成为产业智能化的底座。通过开源模型和私有化部署方案，他们希望降低AI的使用门槛，赋能各行各业（如医疗、金融、教育等）进行数字化转型。
+
+3.  **社会层面：人工智能向善（AI For Good）**
+    结合其高校科研背景，智谱强调技术的社会责任感，致力于用AI解决实际问题，推动科技普惠。
+
+---
+
+### 第二部分：我觉得他们会成功吗？
+
+**结论先行：我的判断是——智谱AI极大概率会成功，它会成为中国大模型赛场上最长久的“常青树”之一，但在商业变现和江湖地位上面临巨大挑战。**
+
+要理解这个判断，我们需要从**优势（护城河）**和**劣势（危机）**两个维度进行详细分析。
+
+#### 1. 核心优势：为什么我认为他们会成功？
+
+**A. 极其纯正的“技术+开源”基因（这是他们最大的杀手锏）**
+*   **技术底蕴：** 智谱AI脱胎于清华大学与卡内基梅隆大学联合实验室，创始团队是GLM（General Language Model）架构的设计者。与其他大公司（百度、阿里、字节）的部门孵化不同，智谱是从论文到代码一条龙自研的。
+*   **开源战略的成功：** 在微软开源LLaMA、Meta开源Llama的背景下，智谱的**ChatGLM系列（特别是ChatGLM2/3）和CodeGeeX4**在中国拥有极高的人气。它们让个人开发者和中小企业能够低成本、高效率地本地部署大模型。
+    *   *分析：* 这种策略在初期帮他们建立了最大的开发者社区壁垒。在中国，很多为了“情怀”或“私有化部署”需求的客户，往往首选智谱而非闭源的通用模型。
+
+**B. 顶级的资本与政府背书（国家队属性）**
+*   智谱AI获得了**哈勃投资（华为旗下）**、腾讯、高瓴、中航信托等一线投资机构的资金支持。
+*   *分析：* 资金对于训练大模型是无限消耗的，除了资金，华为的入股带来了底层算力生态的支持，而国资背景的引入则意味着在国家“科技自立自强”的大战略下，智谱不会轻易倒下。
+
+**C. 产品力的持续进化**
+*   从ChatGLM-6B（当时惊艳开源界）到ChatGLM3，再到现在的**GLM-4**，智谱的模型迭代速度非常快，甚至比很多商业闭源模型迭代得更快。GLM-4o（多模态）等版本的发布，证明了其技术追赶并追赶上了OpenAI等国际前沿的速度。
+
+#### 2. 核心挑战：为什么说成功之路并不平坦？
+
+**A. “神仙打架”，竞争极度内卷**
+*   智谱面临的是中国最激烈的战场。除了百度（文心一言）、阿里（通义千问）、字节（豆包）、腾讯（混元）等巨头，还有MiniMax、月之暗面等新锐力量。
+*   *分析：* 巨头拥有的是现成的流量（用户）、云端算力资源和数据。智谱在“C端用户心智”上很难与阿里/字节抢夺；在“B端通用能力”上，也面临百度的强力压制。
+
+**B. 商业化变现的阵痛**
+*   目前大模型行业普遍面临“幻觉”虽改进但仍存在的难题，以及高企的算力成本。
+*   智谱虽然营收增长快，但距离实现盈利（尤其是像OpenAI那样的高利润率）还有很长的路要走。开源虽然有了用户，但如果不通过API、企业定制等高门槛服务盈利，很难维持几十亿级的研发投入。
+
+**C. 人才流失与红海厮杀**
+*   AI领域目前是全球范围内的人才战争。拥有顶流模型的智谱，手里握着清华系最优秀的博士、海归专家。但这同时也是全行业都在挖人的，如何留住人才是一大难题。
+
+---
+
+### 第三部分：总结与预测
+
+**如果我们将“成功”定义为：**
+1.  **生存：** 绝对是。背靠国家队和资本，它活下来的概率是99%。
+2.  **技术地位：** 很有机会。在开源社区和中国市场，智谱算力排进前三。在GLM-4之后，技术力上已与国际顶尖（GPT-4级）差距显著缩小。
+3.  **商业体量：** 存在不确定性。如果不转型为平台型企业，很难单靠模型Token费超越阿里云或百度智能云的整体体量。
+
+**战略建议：**
+智谱AI最聪明的做法就是**“以攻为守”**——继续通过开源保持技术曝光度和工程师社区的凝聚力，同时在垂直行业（如医疗、法律、科研计算）做深做透，建立难以复制的行业know-how。
+
+**最终评价：**
+智谱AI是一支**“优等生”**。在大家都还在跑马圈地的时候，它稳步扎实地建立了自己的地基。虽然跑在最前面的可能不是它，但跑得远、跑得稳的，极大概率是它。**我相信它会成功，但成功的形式可能不是成为中国的OpenAI，而是成为中国最强大的垂直行业AI基础设施提供商。**
+运行：
+python test_chat.py
+输出结果：
+GLM-4.7-Flash: 智谱AI（Zhipu AI）是中国大模型赛道上的领军企业之一，由清华大学计算机系知识工程实验室（KEG）衍生成立。关于你的问题，我将从**愿景**和**成功概率分析**两个维度进行详细解读。
+
+### 一、 智谱AI的愿景是什么？
+
+智谱AI的愿景可以被概括为**“打造普惠且强大的通用人工智能”**。具体体现在以下几个核心层面：
+
+1.  **技术层面的愿景：构建AGI（通用人工智能）**
+    *   智谱AI致力于开发能够像人类一样理解、思考、推理和交流的AI模型。他们追求的是超越特定任务、具备跨领域通用能力的“下一代人工智能”。其GLM（General Language Model）架构的设计初衷就是为了打破传统BERT与GPT架构的局限，向真正的AGI迈进。
+
+2.  **应用层面的愿景：让AI赋能千行百业**
+    *   “AI for Social Good”（人工智能向善）是他们的核心理念。他们希望大模型不仅仅是聊天机器人，而是能成为企业级、科研级、教育级的生产力工具，解决复杂的产业问题，提升社会生产力。
+
+3.  **价值观层面的愿景：开放、可信、以人为本**
+    *   **开放：** 智谱通过开源社区（如ChatGLM系列）推动技术普及，降低AI使用门槛。
+    *   **可信：** 强调AI的安全可控、数据隐私和价值观对齐，致力于将有害的偏见和错误降至最低。
+    *   **以人为本：** 始终将技术发展的最终落脚点放在服务于人类福祉上。
+
+---
+
+### 二、 智谱AI会成功吗？（详细分析）
+
+这是一个非常宏大的命题。如果定义“成功”为**“长期存活、技术领先、并实现商业闭环”**，那么答案是**高度乐观**的。但如果定义“成功”为**“取代OpenAI成为全球最强”**，则存在不确定性。
+
+以下是对其成败的详细SWOT（优势、劣势、机会、威胁）分析：
+
+#### 1. 支持其成功的核心优势
+
+*   **清华系基因（护城河）：**
+    *   智谱AI拥有全球顶级的学术背景（清华大学KEG实验室）。这意味着他们拥有行业最顶尖的算法架构师（如张鹏等）、最丰富的人才储备以及最强的科研转化能力。在AI领域，技术路线的选择和微调能力决定了最终产品的性能，这一优势极难被复刻。
+
+*   **技术性能强劲：**
+    *   **GLM系列的表现：** 智谱的GLM-4在CodeGeeX和零一万物（创始人Alex Wang）的联合测试中，曾在多轮评测中击败GPT-4。其原生支持中文的能力在中文NLP任务上具有天然优势。
+    *   **全栈布局：** 除了文本模型（ChatGLM），他们在多模态（CogView）、代码生成（CodeGeeX）和视频生成（CogVideo）上均有布局，形成了较为完整的产品生态。
+
+*   **独特的ToG与ToB商业策略：**
+    *   在面对美国制裁和算力受限的背景下，国内大模型企业普遍面临算力短缺。智谱AI采取了**“国内做私有化部署 + 海外做开源”**的策略。
+    *   他们非常重视政府和企业端市场。通过提供私有化部署、安全可控的本地化大模型，智谱成功抓住了中国数据安全敏感行业的订单（如政务、金融）。这是许多纯互联网巨头难以完全切入的领域。
+
+*   **资本的强力背书：**
+    *   智谱AI是少有的完成了顶级融资的大模型独角兽。除了清华背景的基金，其获得了联想（作为战略投资者）、腾讯、阿里巴巴、美团等中国互联网巨头的注资。这种“巨头盟友”关系为其提供了生存资源。
+
+#### 2. 面临的挑战与风险
+
+*   **算力资源的“卡脖子”问题：**
+    *   这是所有中国AI公司面临的最大现实挑战。随着美国对高端GPU（如H100/A100）出口管制升级，智谱AI获取顶尖算力的难度极大。虽然国产芯片（如华为昇腾）在崛起，但其软件生态成熟度和大规模集群训练效率仍有差距，这直接影响模型迭代的速度上限。
+
+*   **红海竞争与同质化：**
+    *   国内大模型赛道极度拥挤。百度（文心一言）、阿里（通义千问）、字节跳动（豆包）、科大讯飞等巨头，以及智谱AI自己，都在争夺用户时间。
+    *   目前，商用大模型的能力差异在逐渐缩小，单纯的“对话能力”很难形成绝对的壁垒。如何从“能用”进化到“更好用”，并找到差异化的杀手级应用，是智谱必须解决的问题。
+
+*   **商业化盈利的挑战：**
+    *   大模型训练和推理成本极其高昂。虽然智谱有ToG和ToB收入，但如何平衡研发投入与营收，实现可持续的利润增长，是目前所有AI公司的通病。如果在2-3年内无法实现规模化盈利，资本耐心的耗尽将构成巨大威胁。
+
+#### 3. 总结与预测
+
+**结论：智谱AI有很大的概率能“成功”，尤其是在中国市场。**
+
+*   **生存层面的成功：** 它已经走过了生死存亡的早期阶段，证明了技术实力和商业模式。凭借“清华系”的技术壁垒和“联想系”的产业合作，它在这个赛道上具备“活下来”的极强韧性。
+*   **领先层面的成功：** 它完全有机会成为**“中国版的OpenAI”**或至少是**中国第一梯队（BAT智谱讯飞）**的格局维护者。
+
+**最终胜负手在于：**
+未来3年，智谱AI能否在**国产算力生态**中构建出极致效率的模型，以及能否孵化出**杀手级应用**（类似Copilot之于微软）来锚定海量用户。
+
+如果算力限制能通过国产替代解决，并且他们能持续保持技术输出的领先性，智谱AI极大概率会成为全球AI版图中的东方重要支柱。
+
+流式输出（Streaming）
+# test_streaming.py
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="EMPTY",
+    base_url="http://127.0.0.1:8000/v1",
+)
+
+stream = client.chat.completions.create(
+    model="zai-org/GLM-4.7-Flash",
+    messages=[{"role": "user", "content": "请写一篇题为Agent时代大模型应用落地要点的调研报告。"}],
+    stream=True,
+    max_tokens=32768,
+    top_p=0.95,
+    temperature=1.0,
+)
+
+for chunk in stream:
+    delta = chunk.choices[0].delta
+    if delta and delta.content:
+        print(delta.content, end="", flush=True)
+运行：
+python test_streaming.py
+输出结果：
+智谱华章（Zhipu AI）作为清华大学KEG实验室孵化、中国大模型领域的“第一梯队”企业，其发展路径一直备受关注。未来 1-3 年是人工智能技术从“感知智能”向“认知智能”迈进，以及从“研发领先”向“商业落地”全面转型的关键期。
+
+基于智谱华章目前的公开战略、GLM 系列模型的演进逻辑以及行业竞争格局，以下是对其未来 1-3 年发展目标的深度分析：
+
+### 1. 技术演进目标：从“通用大模型”向“深度智能体”与“推理模型”进阶
+
+在技术层面，智谱华章的目标不仅仅是追平或领先国内的百度、阿里或腾讯，而是要缩小与国际顶尖水平（如 OpenAI）的差距，甚至在某些细分领域实现超越。
+
+*   **强化逻辑推理与深度思考（对标 OpenAI o1）：** 未来的 1-3 年是**“推理模型”**的爆发期。智谱需要通过训练和强化学习，大幅提升 GLM 系列在数学、逻辑、代码等高认知领域的能力。目标不仅是回答问题，而是能够进行复杂的链式思考和自主规划。
+*   **从 CoE 架构到 Agent（智能体）生态：** 智谱提出了专家混合架构。未来 1 年的目标是让模型具备更强的**规划、记忆和工具调用能力**。它们将不再是简单的对话机器人，而是能够代表用户在多种软件（如 Office、CRM、代码编辑器）中执行复杂任务的“数字员工”。
+*   **多模态的深度融合：** 从图文生成向 3D 生成、视频理解/生成以及科学计算（分子结构预测、材料研发）拓展。未来的模型将是“多模态感知中心”。
+
+### 2. 商业化目标：从“B 端普及”向“C 端突围”与“产业链赋能”
+
+智谱目前面临两方面的商业化压力：一是持续的算力投入与融资回报的压力，二是 AIGC 爆发期带来的用户习惯培养需求。
+
+*   **B 端：深化行业解决方案与私有化部署：**
+    *   **核心目标：** 成为政企客户的首选模型底座。未来 2-3 年，B 端收入将成为主要现金流来源。
+    *   **策略：** 利用 GLM-4 的能力，深耕**金融、医疗、科研、教育**等对安全性和专业性要求极高的行业。特别是在**私有化部署**（On-Premise）市场上，智谱华章拥有技术与合规优势，目标是占据更多政府和企业市场。
+*   **C 端：打造现象级 AI 应用（对标 ChatGPT/Kimi）：**
+    *   **核心目标：** 打造 1-2 个国民级 AI 办公/创作应用（如完善“智谱清言”，拓展角色扮演或编码助手功能），提升用户活跃度和付费转化率。
+    *   **策略：** 联合头部互联网大厂（如WPS、京东、美团等），将 GLM 能力封装进其 C 端产品中，通过超级 App 获取海量用户。
+*   **SaaS 化转型：** 从单纯卖 API 接口或软件授权，转向提供订阅制的 SaaS 服务，提供即开即用的行业大模型应用（如自动写代码助手、智能法律分析工具）。
+
+### 3. 生态建设目标：构建“软硬一体”的 AI 基础设施
+
+为了降低大模型的使用门槛并对抗华为昇腾、寒武纪等本土硬件厂商，智谱华章在生态上的目标是更深度的软硬件协同。
+
+*   **端侧 AI（Edge AI）部署：** 推动大模型在个人电脑（PC）、手机等端侧设备的运行。目标是让消费者在不依赖云服务器的情况下，也能体验低延迟、高隐私的 AI 功能。
+*   **模型服务标准化：** 支持更多第三方开发者基于 GLM 模型构建应用。目标是将智谱打造为像 Google 的 PaLM 或 OpenAI 一样的模型提供商，占据开发者生态的中心位置。
+*   **开源与闭源的双轨策略：** 持续开源高性能基座模型（如 ChatGLM3 系列），吸引社区贡献与算力支持；同时强力主推闭源的旗舰版本，通过企业提供高额订阅费来实现盈利。
+
+### 4. 具体的阶段性里程碑（预测）
+
+*   **未来 1 年（2024-2025）：**
+    *   **落地：** GLM-4 全面落地，Agent 功能（如自动执行任务）上线并商用。
+    *   **变现：** B 端行业模型收入显著增长，C 端通过超级 App（合作或自建）积累百万级付费用户。
+    *   **技术：** 在代码生成和数学推理能力上达到国际主流水平。
+*   **未来 2-3 年（2025-2026）：**
+    *   **生态：** 形成基于 GLM 的开发者联盟，第三方生态规模庞大。
+    *   **科研：** 推出针对科学发现（如生物医药、新材料）的专业大模型，取得实际科研产出成果。
+    *   **出海：** 尝试在海外华人圈或特定监管允许的亚洲市场进行产品输出。
+
+### 5. 核心挑战与隐忧
+
+在分析其目标的同时，必须指出智谱面临的挑战，这直接决定了其目标的成败：
+
+*   **算力卡脖子与成本控制：** 大模型训练和推理极其耗能，算力成本高昂。如何在不依赖昂贵进口芯片的情况下，以低成本实现高性能，是智谱必须攻克的难题。
+*   **巨头的围剿：** 国内 BAT、字节跳动等均拥有海量数据和资本。智谱需要在这些巨头构建的护城河中找到差异化生存空间（如科研领域的深度、教育领域的垂直度）。
+*   **大模型幻觉与安全：** 商业落地对稳定性和准确性的要求极高，如何彻底解决“一本正经胡说八道”的安全问题，是 C 端普及的绊脚石。
+
+### 总结
+
+智谱华章未来 1-3 年的核心战略可以概括为：**“技术深钻 Agent（智能体），商业死磕 B 端，生态软硬结合”**。
+
+如果它能成功在**推理能力**上逼近顶尖水平，并在**教育与行业落地**上形成稳固的壁垒，它将成为中国通往 AGI（通用人工智能）之路上的核心推动者。反之，如果商业化受阻，作为纯科技创业公司，其高研发投入将面临巨大的生存压力。
+
+工具调用 (Tool Calling)
+MiniMax-M2是专为 Agent 和代码而生的，拥有强大的Agentic表现——能够出色规划并稳定执行复杂长链条工具调用任务，协同调用Shell、Browser、Python代码执行器和各种MCP工具。MiniMax-M2在SGLang部署时默认启用工具调用功能，使模型能够识别何时需要调用外部工具，并以结构化格式输出工具调用参数。
+以下脚本实现了一个天气查询工具调用示例：
+# test_tool_calling.py
+from openai import OpenAI
+import json
+
+client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
+
+def get_weather(location: str, unit: str):
+    return f"Getting the weather for {location} in {unit}..."
+
+tool_functions = {"get_weather": get_weather}
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get the current weather in a given location",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {"type": "string", "description": "City and state, e.g., 'San Francisco, CA'"},
+                "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+            },
+            "required": ["location", "unit"]
+        }
+    }
+}]
+
+response = client.chat.completions.create(
+    model=client.models.list().data[0].id,
+    messages=[{"role": "user", "content": "What's the weather like in San Francisco? use celsius."}],
+    tools=tools,
+    tool_choice="auto"
+)
+
+print(response)
+
+tool_call = response.choices[0].message.tool_calls[0].function
+print(f"Function called: {tool_call.name}")
+print(f"Arguments: {tool_call.arguments}")
+print(f"Result: {get_weather(**json.loads(tool_call.arguments))}")
+运行：
+python test_tool_calling.py
+输出结果：
+ChatCompletion(id='daec7867a7ce4601bfa265027e3b21a5', choices=[Choice(finish_reason='tool_calls', index=0, logprobs=None, message=ChatCompletionMessage(content="I'll get the current weather in San Francisco for you in Celsius.", refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_17571cbf9fde423cbae5e73d', function=Function(arguments='{"location": "San Francisco", "unit": "celsius"}', name='get_weather'), type='function', index=0)], reasoning_content='The user is asking for weather information for San Francisco and specifically wants it in Celsius. I have the get_weather function available which can provide this information. Let me check the parameters:\n\n1. location: "San Francisco" - the user provided this\n2. unit: "celsius" - the user specifically requested this\n\nBoth required parameters are provided, so I can proceed with the function call.'), matched_stop=None)], created=1770609040, model='glm-4.7-flash', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=114, prompt_tokens=209, total_tokens=323, completion_tokens_details=None, prompt_tokens_details=None, reasoning_tokens=0), metadata={'weight_version': 'default'})
+Function called: get_weather
+Arguments: {"location": "San Francisco", "unit": "celsius"}
+Result: Getting the weather for San Francisco in celsius...
+参数说明与建议
+- --model-path：模型本地路径（或兼容路径）；OpenAI 请求中的 model 字段需与之对应。
+- --tp-size：张量并行大小。多卡时可等于 GPU 数以提升吞吐/上下文上限。
+- --ep-size：专家并行大小（按官方 8 卡示例配置）。
+- --mem-fraction-static：静态显存占比。显存吃紧可下调（例如 0.7/0.6）。
+- --tool-call-parser minimax-m2：开启 M2 的工具调用解析。
+- --reasoning-parser minimax-append-think：启用思考内容解析（将 reasoning 追加处理）。
+- max_tokens：控制生成长度；过大将增加显存和时延。
+- temperature/top_p：控制多样性。追求稳定确定性可使用较低的 temperature 与 top_p。
+  
