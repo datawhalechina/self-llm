@@ -11,6 +11,15 @@ conda activate mlx-lm
 pip install -r requirements.txt
 ```
 
+## 📖 Tutorial List
+
+<table align="center">
+  <tr>
+    <td valign="top" width="25%">
+      • <a href="./docs/MLX-LM_Intro.md">MLX Framework Introduction</a><br>
+    </td>
+  </tr>
+
 ## 🚀 Supported Models
 
 <table align="center">

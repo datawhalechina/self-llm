@@ -12,7 +12,14 @@ import time
 LOCAL_DIR = "./models/" # 本地模型存放路径
 # Qwen3-0.6B-4bit
 # Qwen3-8B-4bit
-MODEL_NAME = "Qwen3-0.6B-4bit" # 模型名称
+MODEL_NAME = "Qwen3-8B-4bit" # 模型名称
+
+# models_mlx
+# https://huggingface.co/mlx-community/collections
+
+REPO_ID = f"mlx-community/{MODEL_NAME}"
+
+# REPO_ID = f"Qwen/Qwen3-8B" # 非mlx社区模型示例
 
 from functools import wraps
 
@@ -32,7 +39,7 @@ def time_logger(task_name=None):
 
 def download_model(model_name, local_dir):
     snapshot_download(
-        repo_id=f"mlx-community/{model_name}",
+        repo_id=REPO_ID,
         local_dir=f"{local_dir}/{model_name}",
     )
 

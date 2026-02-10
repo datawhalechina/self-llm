@@ -13,6 +13,17 @@ pip install -r requirements.txt
 
 [开源模型下载教程](./download_model.md)
 
+## 📖 教程列表
+
+<table align="center">
+  <tr>
+    <td valign="top" width="25%">
+      • <a href="./docs/MLX-LM_Intro.md">MLX框架简介</a><br>
+    </td>
+  </tr>
+</table>
+
+
 ## 🚀 支持模型
 
 <table align="center">
