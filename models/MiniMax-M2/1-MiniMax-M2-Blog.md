@@ -1,7 +1,7 @@
 # 2-MiniMax-M2 模型架构解析 Blog
 
 MiniMax-M2 在2025年10月27日发布，模型参数为 230B，激活参数仅为 10B。
-该模型已经为 transfomers 仓库提交了 PR，但尚未合并。可以通过阅读该 PR 学习 MiniMax-M2 的模型架构。  
+该模型为 transfomers 仓库提交了 PR 并合并。可以通过阅读该 PR 学习 MiniMax-M2 的模型架构。  
 链接为：[https://github.com/huggingface/transformers/pull/42028](https://github.com/huggingface/transformers/pull/42028)
 
 模型架构图如下：
