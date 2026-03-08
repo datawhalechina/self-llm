@@ -1,2 +1,4 @@
 mlx-lm==0.30.2
-vllm==0.13.0
+transformers==4.57.5
+gradio==6.9.0
+socksio==1.0.0
