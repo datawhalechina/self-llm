@@ -8,6 +8,7 @@
 - [Step-3.5-Flash](#step-35-flash)
 - [GLM-4.7-Flash](#glm-47-flash)
 - [谷歌-Gemma3](#谷歌-gemma3)
+- [MiniMax-M2.5](#minimax-m25)
 - [MiniMax-M2](#minimax-m2)
 - [Qwen3-VL-4B-Instruct](#qwen3-vl-4b-instruct)
 - [BGE-M3](#bge-m3)
@@ -90,6 +91,16 @@
 - [x] [gemma-2b-it Peft Lora 微调 ](./models/Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @陈榆
 - [X] [gemma3-4b-it AMD 环境准备](./models/Gemma3/7-gemma3-4b-it%20AMD环境准备.md) @陈榆
 - [X] [gemma3-4b-it AMD 模型服务部署](./models/Gemma3/8-gemma3-4b-it%20模型服务部署.md) @陈榆
+
+### MiniMax-M2.5
+
+[MiniMax-M2.5](https://github.com/MiniMax-AI/MiniMax-M2.5)
+- [x] [MiniMax-M2.5 在线体验地址](https://agent.minimax.io/)
+- [x] [MiniMax-M2.5 Hugging Face 地址](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)
+- [x] [MiniMax-M2.5 Text Generation Guide](https://platform.minimax.io/docs/guides/text-generation)
+- [x] [MiniMax-M2.5 vLLM 部署调用](./models/MiniMax-M2.5/1-MiniMax-M2.5-vLLM.md)
+- [x] [MiniMax-M2.5 SGLang 部署调用](./models/MiniMax-M2.5/2-MiniMax-M2.5-SGLang.md)
+- [x] [MiniMax-M2.5 Transformers 部署调用](./models/MiniMax-M2.5/3-MiniMax-M2.5-Transformers.md)
 
 ### MiniMax-M2
 
