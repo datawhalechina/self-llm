@@ -89,6 +89,7 @@
       • <a href="./support_model.md#step-35-flash">Step-3.5-Flash</a><br>
       • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash</a><br>
       • <a href="./support_model.md#gemma3">Gemma3</a><br>
+      • <a href="./support_model.md#minimax-m25">MiniMax-M2.5</a><br>
       • <a href="./support_model.md#minimax-m2">MiniMax-M2</a><br>
       • <a href="./support_model.md#qwen3">Qwen3</a><br>
       • <a href="./support_model.md#qwen3-vl-4b-instruct">Qwen3-VL</a><br>
