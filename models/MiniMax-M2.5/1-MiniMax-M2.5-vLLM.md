@@ -50,7 +50,7 @@ pip install modelscope
 python model_download.py
 ```
 
-> 注意：模型权重很大，若网络受限，可设置 HuggingFace 镜像：`export HF_ENDPOINT=https://hf-mirror.com`
+> 注意：使用 `modelscope` 下载模型时无需设置 HF 镜像。若不使用 modelscope，而是让 vLLM 自动从 Hugging Face 拉取，网络受限时可设置镜像：`export HF_ENDPOINT=https://hf-mirror.com`
 
 ## 启动 vLLM 服务
 
@@ -280,7 +280,11 @@ export HF_ENDPOINT=https://hf-mirror.com
 
 ### MiniMax-M2 model is not currently supported
 
-该 vLLM 版本过旧，请升级到最新版本。
+该 vLLM 版本过旧，请升级到最新版本：
+
+```bash
+pip install -U vllm
+```
 
 ### torch.AcceleratorError: CUDA error
 

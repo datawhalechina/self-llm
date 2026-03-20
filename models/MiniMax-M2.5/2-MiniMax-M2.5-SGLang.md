@@ -33,7 +33,7 @@ source .venv/bin/activate
 uv pip install sglang
 ```
 
-> 请确保 SGLang 版本 >= v0.5.4.post1，以获得对 MiniMax 模型的完整支持。
+> 请确保 SGLang 版本 >= v0.5.4.post1，以获得对 MiniMax 模型的完整支持。可使用 `pip show sglang` 查看当前安装的版本。
 
 ## 模型下载
 
@@ -52,7 +52,7 @@ pip install modelscope
 python model_download.py
 ```
 
-> 注意：模型权重很大，若网络受限，可设置 HuggingFace 镜像：`export HF_ENDPOINT=https://hf-mirror.com`
+> 注意：使用 `modelscope` 下载模型时无需设置 HF 镜像。若不使用 modelscope，而是让 SGLang 自动从 Hugging Face 拉取，网络受限时可设置镜像：`export HF_ENDPOINT=https://hf-mirror.com`
 
 ## 启动 SGLang 服务
 
@@ -296,7 +296,11 @@ export HF_ENDPOINT=https://hf-mirror.com
 
 ### MiniMax-M2 model is not currently supported
 
-请升级到最新的稳定版本，需 >= v0.5.4.post1。
+请升级到最新的稳定版本，需 >= v0.5.4.post1：
+
+```bash
+pip install -U sglang
+```
 
 ## 参考链接
 

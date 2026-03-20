@@ -40,7 +40,7 @@ pip install modelscope
 python model_download.py
 ```
 
-> 网络受限时可设置镜像：`export HF_ENDPOINT=https://hf-mirror.com`
+> 注意：使用 `modelscope` 下载模型时无需设置 HF 镜像。若不使用 modelscope，而是直接通过 Transformers 从 Hugging Face 下载，网络受限时可设置镜像：`export HF_ENDPOINT=https://hf-mirror.com`
 
 ## 推理示例
 
@@ -129,13 +129,21 @@ python test_multi_turn.py
 
 ### Hugging Face 网络问题
 
+若未使用 `modelscope` 下载模型，而是直接通过 Transformers 从 Hugging Face 下载，可设置镜像：
+
 ```bash
 export HF_ENDPOINT=https://hf-mirror.com
 ```
 
+> 若已通过 `modelscope` 下载模型并指定了本地路径，则无需此设置。
+
 ### MiniMax-M2 model is not currently supported
 
-请确认已开启 `trust_remote_code=True`，并升级 Transformers 至 >= 4.57.1。
+请确认已开启 `trust_remote_code=True`，并升级 Transformers 至 >= 4.57.1：
+
+```bash
+pip install -U transformers
+```
 
 ## 参考链接
 
