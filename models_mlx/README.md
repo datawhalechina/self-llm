@@ -18,8 +18,9 @@ models_mlx/
 ├── run_app_gradio.py          # Gradio 交互式应用（模型下载 + 对话）
 ├── requirements.txt           # Python 依赖
 ├── configs/                   # 模型配置（JSON 格式，支持热加载）
-│   ├── models_info_mlx.json   #   MLX 量化模型列表
-│   └── models_info.json       #   原始 HuggingFace 模型列表
+│   └── model_info/
+│       ├── mlx.json           #   MLX 量化模型列表
+│       └── original.json      #   原始 HuggingFace 模型列表
 ├── modules/                   # 功能模块
 │   └── download_model.py      #   模型下载模块（可独立运行）
 ├── models/                    # 下载的模型存放目录
@@ -72,15 +73,29 @@ python -m modules.download_model
 
 ## 🚀 支持模型
 
-模型列表通过 `configs/` 目录下的 JSON 文件配置，当前支持：
+模型列表通过 `configs/` 目录下的 JSON 文件配置。
 
-| 公司 | 系列 |
-|------|------|
-| Alibaba | Qwen3、Qwen2.5、Qwen2.5-Coder |
-| DeepSeek | DeepSeek-R1、DeepSeek-V3 |
-| Meta | Llama-3.1、Llama-3.2、Llama-4 |
-| Google | Gemma-2、Gemma-3 |
-| Mistral | Mistral |
-| Microsoft | Phi-4 |
+| 公司 | 系列 | 模型列表 |
+|------|------|-------------------|
+| Alibaba | QwQ | `QwQ-0.5B-4bit` |
+| Alibaba | Qwen1.5 | `Qwen1.5-0.5B-Chat-4bit`<br>`Qwen1.5-1.8B-Chat-4bit`<br>`Qwen1.5-MoE-A2.7B-4bit`<br>`Qwen1.5-MoE-A2.7B-Chat-4bit` |
+| Alibaba | Qwen2 | `Qwen2-0.5B-Instruct-4bit`<br>`Qwen2-1.5B-4bit`<br>`Qwen2-1.5B-Instruct-4bit` |
+| Alibaba | Qwen2-Math | `Qwen2-Math-1.5B-Instruct-4bit` |
+| Alibaba | Qwen2.5 | `Qwen2.5-0.5B-4bit`<br>`Qwen2.5-0.5B-Instruct-4bit`<br>`Qwen2.5-1.5B-4bit`<br>`Qwen2.5-1.5B-Instruct-4bit`<br>`Qwen2.5-3B-4bit`<br>`Qwen2.5-3B-Instruct-4bit` |
+| Alibaba | Qwen2.5-Coder | `Qwen2.5-Coder-0.5B-4bit`<br>`Qwen2.5-Coder-0.5B-Instruct-4bit`<br>`Qwen2.5-Coder-1.5B-4bit`<br>`Qwen2.5-Coder-1.5B-Instruct-4bit`<br>`Qwen2.5-Coder-3B-4bit`<br>`Qwen2.5-Coder-3B-Instruct-4bit` |
+| Alibaba | Qwen2.5-Math | `Qwen2.5-Math-1.5B-4bit`<br>`Qwen2.5-Math-1.5B-Instruct-4bit` |
+| Alibaba | Qwen3 | `Qwen3-0.6B-4bit`<br>`Qwen3-0.6B-Base-4bit`<br>`Qwen3-1.7B-4bit` |
+| Alibaba | Qwen3.5 | `Qwen3.5-0.8B-4bit`<br>`Qwen3.5-2B-4bit` |
+| DeepSeek | DeepSeek-R1 | `DeepSeek-R1-Distill-Qwen-1.5B-4bit` |
+| DeepSeek | DeepSeek-V3 | - |
+| Google | Gemma-2 | `gemma-2-2b-4bit`<br>`gemma-2-2b-it-4bit`<br>`gemma-2-2b-jpn-it-4bit`<br>`gemma-2-baku-2b-it-4bit` |
+| Google | Gemma-3 | `gemma-3-1b-it-4bit`<br>`gemma-3-1b-pt-4bit`<br>`gemma-3-270m-4bit`<br>`gemma-3-270m-it-4bit` |
+| Meta | Llama-3.1 | - |
+| Meta | Llama-3.2 | `Llama-3.2-1B-Instruct-4bit`<br>`Llama-3.2-3B-Instruct-4bit` |
+| Meta | Llama-4 | - |
+| Microsoft | Phi-2 | `phi-2-super-4bit` |
+| Microsoft | Phi-4 | - |
+| Mistral | Mistral | `Ministral-3-3B-Instruct-2512-4bit`<br>`Ministral-3-3B-Reasoning-2512-4bit` |
+| Moonshot | Kimi | - |
 
-如需添加新模型，编辑 `configs/models_info_mlx.json` 或 `configs/models_info.json` 即可。
+如需添加新模型，编辑 `configs/model_info/mlx.json` 或 `configs/model_info/original.json` 即可。
