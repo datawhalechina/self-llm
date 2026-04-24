@@ -179,14 +179,18 @@
  
 <table align="center">
   <tr>
-    <td valign="top" width="50%">
+    <td valign="top" width="30%">
+      • <a href="./support_model_Ascend.md#qwen3536">Qwen3.6</a><br>
+      • vLLM-ascend Deployment and Invocation<br>
+    </td>
+    <td valign="top" width="30%">
       • <a href="./support_model_Ascend.md#qwen3">Qwen3</a><br>
       • Ascend NPU Environment Configuration General Guide<br>
       • MindIE Service Deployment and Invocation<br>
       • vLLM-ascend Deployment and Invocation<br>
       • sglang-ascend Deployment and Invocation
     </td>
-    <td valign="top" width="50%">
+    <td valign="top" width="40%">
       • <a href="./support_model_Ascend.md#大模型服务化性能和精度测试">LLM Service Performance and Accuracy Testing</a><br>
       • AISBench Testing Tool Environment Configuration<br>
       • Ascend LLM Service Performance Testing<br>

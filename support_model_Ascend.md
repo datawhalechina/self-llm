@@ -13,6 +13,7 @@
 ## 目录
 
 - [Qwen3](#qwen3)
+- [Qwen3.5/3.6](#qwen3536)
 
 ## 已支持模型列表
 
@@ -22,6 +23,12 @@
 - [x] [Qwen3-8B MindIE 部署调用](./models_ascend/qwen3/01-Qwen3-8B-MindIE部署调用.md) @刘十一 
 - [x] [Qwen3-8B vLLM-ascend 部署调用](./models_ascend/qwen3/02-Qwen3-8B-vLLM-ascend部署调用.md) @刘十一 
 - [x] [Qwen3-8B sglang-ascend 部署调用](./models_ascend/qwen3/03-Qwen3-8B-sglang-ascend部署调用.md) @陈辅元
+
+
+### Qwen3.5/3.6
+
+[Qwen3.6](https://github.com/QwenLM/Qwen3.6)
+- [x] [Qwen3.6-35B-A3B vLLM-ascend 部署调用](./models_ascend/qwen3.5\3.6/01-Qwen3.6-35B-A3B-vLLM-ascend部署调用.md) @刘志文
 
 
 ### 大模型服务化性能和精度测试
