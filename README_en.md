@@ -86,6 +86,7 @@
   <tr>
     <td valign="top" width="25%">
       • <a href="./support_model.md#gemma3">Gemma3</a><br>
+      • <a href="./support_model.md#minimax-m3">MiniMax-M3</a><br>
       • <a href="./support_model.md#minimax-m2">MiniMax-M2</a><br>
       • <a href="./support_model.md#qwen3">Qwen3</a><br>
       • <a href="./support_model.md#qwen3-vl-4b-instruct">Qwen3-VL</a><br>
