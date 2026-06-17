@@ -4,6 +4,7 @@
 
 ## 目录
 
+- [MiniCPM5](#minicpm5)
 - [Kimi-K2.5](#kimi-k25)
 - [Step-3.5-Flash](#step-35-flash)
 - [GLM-4.7-Flash](#glm-47-flash)
@@ -61,6 +62,14 @@
 
 
 ## 已支持模型列表
+
+### MiniCPM5
+
+[MiniCPM5-1B](https://www.modelscope.cn/models/OpenBMB/MiniCPM5-1B)
+  - [x] [MiniCPM5-1B vLLM 部署调用](./models/minicpm5/01-MiniCPM5-1B-vLLM%20部署调用.md)
+  - [x] [MiniCPM5-1B SGLang 部署调用](./models/minicpm5/02-MiniCPM5-1B-SGLang%20部署调用.md)
+  - [x] [MiniCPM5-1B LoRA 及 SwanLab 可视化记录](./models/minicpm5/03-MiniCPM5-1B-LoRA及SwanLab可视化记录.md)
+  - [x] [MiniCPM5-1B LoRA Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/MiniCPM5)
 
 ### Kimi-K2.5
 

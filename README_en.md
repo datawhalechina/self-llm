@@ -85,21 +85,26 @@
 <table align="center">
   <tr>
     <td valign="top" width="25%">
+      • <a href="./support_model.md#minicpm5">MiniCPM5</a><br>
+      • <a href="./support_model.md#kimi-k25">Kimi-K2.5</a><br>
+      • <a href="./support_model.md#step-35-flash">Step-3.5-Flash</a><br>
+      • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash</a><br>
       • <a href="./support_model.md#gemma3">Gemma3</a><br>
       • <a href="./support_model.md#minimax-m3">MiniMax-M3</a><br>
+      • <a href="./support_model.md#minimax-m25">MiniMax-M2.5</a><br>
       • <a href="./support_model.md#minimax-m2">MiniMax-M2</a><br>
       • <a href="./support_model.md#qwen3">Qwen3</a><br>
       • <a href="./support_model.md#qwen3-vl-4b-instruct">Qwen3-VL</a><br>
       • <a href="./support_model.md#spatiallm">SpatialLM</a><br>
       • <a href="./support_model.md#hunyuan3d-2">Hunyuan3D-2</a><br>
-      • <a href="./support_model.md#qwen2-vl">Qwen2-VL</a><br>
+      • <a href="./support_model.md#qwen2-vl">Qwen2-VL</a>
+    </td>
+    <td valign="top" width="25%">
       • <a href="./support_model.md#minicpm-o-2_6">MiniCPM-o</a><br>
       • <a href="./support_model.md#qwen25-coder">Qwen2.5-Coder</a><br>
       • <a href="./support_model.md#deepseek-coder-v2">DeepSeek-Coder-V2</a><br>
       • <a href="./support_model.md#gpt-oss-20b">gpt-oss-20b</a><br>
-      • <a href="./support_model.md#glm-41-thinking">GLM-4.1-Thinking</a>
-    </td>
-    <td valign="top" width="25%">
+      • <a href="./support_model.md#glm-41-thinking">GLM-4.1-Thinking</a><br>
       • <a href="./support_model.md#deepseek-r1-distill">DeepSeek-R1</a><br>
       • <a href="./support_model.md#internlm3">InternLM3</a><br>
       • <a href="./support_model.md#phi4">phi4</a><br>
@@ -108,12 +113,12 @@
       • <a href="./support_model.md#deepseek-深度求索">DeepSeek</a><br>
       • <a href="./support_model.md#baichuan-百川智能">Baichuan</a><br>
       • <a href="./support_model.md#internlm">InternLM</a><br>
-      • <a href="./support_model.md#kimi">Kimi</a><br>
-      • <a href="./support_model.md#ernie-45">ERNIE-4.5</a><br>
-      • <a href="./support_model.md#llama4">Llama4</a><br>
-      • <a href="./support_model.md#apple-openelm">Apple OpenELM</a>
+      • <a href="./support_model.md#kimi">Kimi</a>
     </td>
     <td valign="top" width="25%">
+      • <a href="./support_model.md#ernie-45">ERNIE-4.5</a><br>
+      • <a href="./support_model.md#llama4">Llama4</a><br>
+      • <a href="./support_model.md#apple-openelm">Apple OpenELM</a><br>
       • <a href="./support_model.md#llama31-8b-instruct">Llama3.1</a><br>
       • <a href="./support_model.md#gemma-2-9b-it">Gemma-2</a><br>
       • <a href="./support_model.md#qwen25">Qwen2.5</a><br>
@@ -124,10 +129,10 @@
       • <a href="./support_model.md#minicpm">MiniCPM</a><br>
       • <a href="./support_model.md#yi-零一万物">Yi 零一万物</a><br>
       • <a href="./support_model.md#yuan20">Yuan2.0</a><br>
-      • <a href="./support_model.md#yuan20-m32">Yuan2.0-M32</a><br>
-      • <a href="./support_model.md#哔哩哔哩-index-19b">Bilibili Index</a>
+      • <a href="./support_model.md#yuan20-m32">Yuan2.0-M32</a>
     </td>
     <td valign="top" width="25%">
+      • <a href="./support_model.md#哔哩哔哩-index-19b">Bilibili Index</a><br>
       • <a href="./support_model.md#characterglm-6b">CharacterGLM</a><br>
       • <a href="./support_model.md#bluelm-vivo-蓝心大模型">BlueLM</a><br>
       • <a href="./support_model.md#qwen-audio">Qwen-Audio</a><br>
