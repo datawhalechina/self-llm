@@ -86,6 +86,7 @@
   <tr>
     <td valign="top" width="25%">
       • <a href="./support_model.md#minicpm5">MiniCPM5</a><br>
+      • <a href="./support_model.md#qwen35">Qwen3.5</a><br>
       • <a href="./support_model.md#kimi-k25">Kimi-K2.5</a><br>
       • <a href="./support_model.md#step-35-flash">Step-3.5-Flash</a><br>
       • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash</a><br>

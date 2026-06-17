@@ -5,6 +5,7 @@
 ## 目录
 
 - [MiniCPM5](#minicpm5)
+- [Qwen3.5](#qwen35)
 - [Kimi-K2.5](#kimi-k25)
 - [Step-3.5-Flash](#step-35-flash)
 - [GLM-4.7-Flash](#glm-47-flash)
@@ -70,6 +71,13 @@
   - [x] [MiniCPM5-1B SGLang 部署调用](./models/minicpm5/02-MiniCPM5-1B-SGLang%20部署调用.md)
   - [x] [MiniCPM5-1B LoRA 及 SwanLab 可视化记录](./models/minicpm5/03-MiniCPM5-1B-LoRA及SwanLab可视化记录.md)
   - [x] [MiniCPM5-1B LoRA Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/MiniCPM5)
+
+### Qwen3.5
+
+[Qwen3.5-4B](https://www.modelscope.cn/models/Qwen/Qwen3.5-4B)
+  - [x] [Qwen3.5-4B vLLM 部署调用](./models/Qwen3.5/01-Qwen3.5-4B-vLLM%20部署调用.md)
+  - [x] [Qwen3.5-4B SGLang 部署调用](./models/Qwen3.5/02-Qwen3.5-4B-SGLang%20部署调用.md)
+  - [x] [Qwen3.5-4B LoRA 及 SwanLab 可视化记录](./models/Qwen3.5/03-Qwen3.5-4B-LoRA及SwanLab可视化记录.md)
 
 ### Kimi-K2.5
 
