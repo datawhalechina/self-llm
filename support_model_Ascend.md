@@ -28,7 +28,7 @@
 ### Qwen3.5/3.6
 
 [Qwen3.6](https://github.com/QwenLM/Qwen3.6)
-- [x] [Qwen3.6-35B-A3B vLLM-ascend 部署调用](./models_ascend/qwen3.5\3.6/01-Qwen3.6-35B-A3B-vLLM-ascend部署调用.md) @刘志文
+- [x] [Qwen3.6-35B-A3B vLLM-ascend 部署调用](./models_ascend/qwen3.5/3.6/01-Qwen3.6-35B-A3B-vLLM-ascend部署调用.md) @刘志文
 
 
 ### 大模型服务化性能和精度测试
