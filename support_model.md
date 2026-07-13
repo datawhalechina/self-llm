@@ -4,6 +4,7 @@
 
 ## 目录
 
+- [DeepSeek-V4-Flash](#deepseek-v4-flash)
 - [MiniCPM5](#minicpm5)
 - [Qwen3.5](#qwen35)
 - [Kimi-K2.5](#kimi-k25)
@@ -63,6 +64,11 @@
 
 
 ## 已支持模型列表
+
+### DeepSeek-V4-Flash
+
+[DeepSeek-V4-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash)
+  - [x] [DeepSeek-V4-Flash LoRA 及 SwanLab 可视化记录](./models/DeepSeek-V4-Flash/01-DeepSeek-V4-Flash-LoRA及SwanLab可视化记录.md)
 
 ### MiniCPM5
 
