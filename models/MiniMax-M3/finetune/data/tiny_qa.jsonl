@@ -1,0 +1,4 @@
+{"instruction":"把下面这句话改写得更正式：这个模型跑得挺快。","response":"该模型具有较高的推理效率。"}
+{"instruction":"用一句话解释为什么实验需要记录随机种子。","response":"记录随机种子可以帮助复现实验结果并定位结果波动的来源。"}
+{"instruction":"给出一个适合在训练日志中记录的指标。","response":"训练日志中可以记录 loss、learning_rate、grad_norm 和 epoch 等指标。"}
+{"instruction":"将“减少 GPU 挂载时间”改写为更正式的工程目标。","response":"在保证实验可复现的前提下，尽量缩短昂贵 GPU 资源的占用时长。"}

@@ -1,0 +1,15 @@
+{
+  "bf16": {"enabled": "auto"},
+  "train_micro_batch_size_per_gpu": "auto",
+  "gradient_accumulation_steps": "auto",
+  "train_batch_size": "auto",
+  "zero_optimization": {
+    "stage": 3,
+    "offload_param": {"device": "cpu", "pin_memory": false},
+    "stage3_param_persistence_threshold": 100000,
+    "stage3_max_live_parameters": 200000000,
+    "stage3_max_reuse_distance": 200000000,
+    "stage3_prefetch_bucket_size": 50000000,
+    "stage3_gather_16bit_weights_on_model_save": false
+  }
+}
