@@ -13,8 +13,6 @@ DATA_PATH="${DATA_PATH:-$LAB_ROOT/data/tiny_qa.jsonl}"
 OUTPUT_DIR="${OUTPUT_DIR:-$LAB_ROOT/output/minimax-m3-bf16-zero3-lora-${RUN_ID}}"
 LOG="$LAB_ROOT/logs/minimax-m3-bf16-zero3-lora-${RUN_ID}.log"
 TERMINAL_STATUS="$OUTPUT_DIR/.terminal_status"
-NOTIFY_ENV="$LAB_ROOT/secrets/serverchan.env"
-NOTIFY_SCRIPT="$LAB_ROOT/bin/send_serverchan.py"
 
 if [ "${TMUX_LAUNCHED:-0}" != "1" ]; then
   if tmux has-session -t "$SESSION" 2>/dev/null; then
@@ -54,21 +52,4 @@ torchrun --standalone --nproc_per_node=8 \
 status=${PIPESTATUS[0]}
 set -e
 printf '%s\n' "$status" > "$TERMINAL_STATUS"
-
-if [ -f "$NOTIFY_ENV" ] && [ -f "$NOTIFY_SCRIPT" ]; then
-  set -a
-  # shellcheck disable=SC1090
-  . "$NOTIFY_ENV"
-  set +a
-  if [ -n "${SERVERCHAN_SENDKEY:-}" ]; then
-    if [ "$status" -eq 0 ]; then
-      title="MiniMax M3 ZeRO-3 微调成功"
-      desp="run=${RUN_ID}\noutput=${OUTPUT_DIR}\nlog=${LOG}"
-    else
-      title="MiniMax M3 ZeRO-3 微调失败"
-      desp="run=${RUN_ID}\nexit_code=${status}\nlog=${LOG}\n\n最后日志：\n\n$(tail -n 30 "$LOG")"
-    fi
-    python "$NOTIFY_SCRIPT" --title "$title" --desp "$desp" --noip || true
-  fi
-fi
 exit "$status"

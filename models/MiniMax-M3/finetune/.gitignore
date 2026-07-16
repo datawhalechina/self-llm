@@ -4,4 +4,3 @@ logs/
 output/
 swanlog/
 secrets/.env.local
-secrets/serverchan.env

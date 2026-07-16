@@ -1,6 +1,6 @@
 # MiniMax-M3 BF16 8 卡 LoRA 微调及 SwanLab 可视化
 
-本教程介绍如何在 8 张 NVIDIA RTX PRO 6000 Blackwell Server Edition 上，使用 Transformers、PEFT 和 DeepSpeed ZeRO-3 CPU Offload 对 MiniMax-M3 BF16 进行 LoRA 微调，并使用 SwanLab 记录训练过程、tmux 保持任务运行、ServerChan 推送最终成功或失败状态。
+本教程介绍如何在 8 张 NVIDIA RTX PRO 6000 Blackwell Server Edition 上，使用 Transformers、PEFT 和 DeepSpeed ZeRO-3 CPU Offload 对 MiniMax-M3 BF16 进行 LoRA 微调，并使用 SwanLab 记录训练过程、tmux 保持任务运行。
 
 本文延续 [datawhalechina/self-llm](https://github.com/datawhalechina/self-llm) 的教程组织方式，但不是只给出理论配置：文中的硬件占用、失败原因和训练指标均来自一次真实单步 smoke test。
 
@@ -16,7 +16,7 @@
 - [6. 安装 ZeRO-3 流式加载补丁](#6-安装-zero-3-流式加载补丁)
 - [7. 构建指令数据](#7-构建指令数据)
 - [8. LoRA 与 ZeRO-3 配置](#8-lora-与-zero-3-配置)
-- [9. SwanLab 与 ServerChan](#9-swanlab-与-serverchan)
+- [9. SwanLab](#9-swanlab)
 - [10. 使用 tmux 启动训练](#10-使用-tmux-启动训练)
 - [11. 训练结果](#11-训练结果)
 - [12. 扩展为正式训练](#12-扩展为正式训练)
@@ -93,7 +93,6 @@ models/MiniMax-M3/
     ├── bin/
     │   ├── apply_transformers_patch.sh
     │   ├── download_model.py
-    │   ├── send_serverchan.py
     │   └── source_env.sh
     ├── data/
     │   └── tiny_qa.jsonl
@@ -287,9 +286,7 @@ model.gradient_checkpointing_enable(
 
 关闭 gradient checkpointing 会让 forward 阶段每卡使用约 92.35 GiB，随后因还需申请 4.50 GiB 而 CUDA OOM。使用 `use_reentrant=False` 则会在 backward 重算时与 ZeRO-3 参数释放冲突，出现 checkpoint tensor 从正常 shape 变成 `[0]` 的错误。
 
-## 9. SwanLab 与 ServerChan
-
-### 9.1 SwanLab
+## 9. SwanLab
 
 将 SwanLab API Key 写入本地 secret 文件：
 
@@ -306,19 +303,6 @@ chmod 600 secrets/.env.local
 3 epoch 实验的 SwanLab 指标曲线如下：
 
 ![MiniMax-M3 BF16 LoRA 3 epoch SwanLab 指标曲线](images/minimax-m3-bf16-lora-3epoch-swanlab.png)
-
-### 9.2 ServerChan
-
-ServerChan 只推送最终成功或失败，不推送模型加载中的中间状态：
-
-```bash
-cat > secrets/serverchan.env <<'EOF'
-SERVERCHAN_SENDKEY=替换为自己的_SendKey
-EOF
-chmod 600 secrets/serverchan.env
-```
-
-SendKey 不应写入教程、日志或 Git。
 
 ## 10. 使用 tmux 启动训练
 
