@@ -4,6 +4,7 @@
 
 ## 目录
 
+- [Hy3](#hy3)
 - [DeepSeek-V4-Flash](#deepseek-v4-flash)
 - [MiniCPM5](#minicpm5)
 - [Qwen3.5](#qwen35)
@@ -64,6 +65,12 @@
 
 
 ## 已支持模型列表
+
+### Hy3
+
+[Hy3](https://huggingface.co/tencent/Hy3)
+  - [x] [Hy3 vLLM docker部署调用](./models/Hy3/01-Hy3-vLLM%20docker部署调用.md)
+
 
 ### DeepSeek-V4-Flash
 
