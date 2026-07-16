@@ -1,0 +1,10 @@
+# Install a CUDA 13.0 build of torch 2.11.0 before this file.
+accelerate==1.14.0
+datasets==5.0.0
+deepspeed==0.18.9
+modelscope==1.38.0
+peft==0.19.1
+safetensors==0.8.0
+swanlab==0.8.4
+tokenizers==0.22.2
+transformers==5.12.1

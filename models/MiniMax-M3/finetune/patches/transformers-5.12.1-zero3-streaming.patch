@@ -1,0 +1,106 @@
+--- a/src/transformers/modeling_utils.py
++++ b/src/transformers/modeling_utils.py
+@@ -25,7 +25,7 @@
+ from collections import defaultdict
+ from collections.abc import Callable, Iterator
+ from contextlib import contextmanager
+-from dataclasses import dataclass, field
++from dataclasses import dataclass, field, replace
+ from functools import partial, wraps
+ from itertools import cycle
+ from threading import Thread
+@@ -64,7 +64,7 @@
+     get_device,
+     load_offloaded_parameter,
+ )
+-from .integrations.deepspeed import _load_state_dict_into_zero3_model
++from .integrations.deepspeed import _apply_weight_conversions_to_state_dict, _load_state_dict_into_zero3_model
+ from .integrations.eager_paged import eager_paged_attention_forward
+ from .integrations.finegrained_fp8 import ALL_FP8_EXPERTS_FUNCTIONS
+ from .integrations.flash_attention import flash_attention_forward
+@@ -4411,18 +4411,73 @@
+ 
+         if is_deepspeed_zero3_enabled() and not is_quantized:
+             if state_dict is None:
+-                merged_state_dict = {}
+-                for ckpt_file in checkpoint_files:
+-                    merged_state_dict.update(
+-                        load_state_dict(
+-                            ckpt_file,
+-                            map_location="cpu",
+-                            weights_only=load_config.weights_only,
+-                            disable_mmap=load_config.disable_mmap,
+-                        )
+-                    )
+-                state_dict = merged_state_dict
+-            error_msgs, missing_keys = _load_state_dict_into_zero3_model(model, state_dict, load_config)
++                # Loading every checkpoint shard into a merged dict makes each ZeRO
++                # rank materialize the full checkpoint. Stream one shard at a time;
++                # nonzero ranks only need its safetensor keys for collective loading.
++                rank = torch.distributed.get_rank()
++                weight_mapping = getattr(load_config, "weight_mapping", None)
++                buffer_names = set(dict(model.named_buffers()).keys())
++                loaded_checkpoint_keys = set()
++
++                if rank == 0:
++                    direct_groups = []
++                    expert_groups = {}
++                    for ckpt_file in checkpoint_files:
++                        direct_keys = []
++                        with safe_open(ckpt_file, framework="pt", device="cpu") as file_pointer:
++                            for key in file_pointer.keys():
++                                match = re.match(
++                                    r"language_model\.model\.layers\.(\d+)\.block_sparse_moe\.experts\.", key
++                                )
++                                if match:
++                                    expert_groups.setdefault(int(match.group(1)), {}).setdefault(ckpt_file, []).append(key)
++                                else:
++                                    direct_keys.append(key)
++                        if direct_keys:
++                            direct_groups.append([(ckpt_file, direct_keys)])
++                    checkpoint_groups = direct_groups + [
++                        list(expert_groups[layer].items()) for layer in sorted(expert_groups)
++                    ]
++                    group_payload = [checkpoint_groups]
++                else:
++                    group_payload = [None]
++                torch.distributed.broadcast_object_list(group_payload, src=0)
++
++                for tensor_group in group_payload[0]:
++                    if rank == 0:
++                        shard_state_dict = {}
++                        for ckpt_file, keys in tensor_group:
++                            with safe_open(ckpt_file, framework="pt", device="cpu") as file_pointer:
++                                for key in keys:
++                                    shard_state_dict[key] = file_pointer.get_tensor(key)
++                    else:
++                        shard_state_dict = None
++                    if weight_mapping:
++                        if rank == 0:
++                            shard_state_dict = _apply_weight_conversions_to_state_dict(
++                                model, shard_state_dict, weight_mapping
++                            )
++                        shard_load_config = replace(load_config, weight_mapping=None)
++                    else:
++                        shard_load_config = load_config
++                    if rank == 0:
++                        key_payload = [
++                            list(shard_state_dict),
++                            {key: value for key, value in shard_state_dict.items() if key in buffer_names},
++                        ]
++                    else:
++                        key_payload = [None, None]
++                    torch.distributed.broadcast_object_list(key_payload, src=0)
++                    if rank != 0:
++                        shard_state_dict = dict.fromkeys(key_payload[0])
++                        shard_state_dict.update(key_payload[1])
++                    shard_errors, _ = _load_state_dict_into_zero3_model(model, shard_state_dict, shard_load_config)
++                    error_msgs.extend(shard_errors)
++                    loaded_checkpoint_keys.update(shard_state_dict)
++                    del shard_state_dict
++                missing_keys = set(expected_keys) - loaded_checkpoint_keys
++            else:
++                error_msgs, missing_keys = _load_state_dict_into_zero3_model(model, state_dict, load_config)
+             # This is not true but for now we assume only best-case scenario with deepspeed, i.e. perfectly matching checkpoints
+             loading_info = LoadStateDictInfo(
+                 missing_keys=missing_keys,

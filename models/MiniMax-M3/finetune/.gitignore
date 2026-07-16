@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+logs/
+output/
+swanlog/
+secrets/.env.local
