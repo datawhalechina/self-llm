@@ -10,6 +10,7 @@
 - [Kimi-K2.5](#kimi-k25)
 - [Step-3.5-Flash](#step-35-flash)
 - [GLM-4.7-Flash](#glm-47-flash)
+- [GLM-5.2](#glm-52)
 - [谷歌-Gemma3](#谷歌-gemma3)
 - [MiniMax-M3](#minimax-m3)
 - [MiniMax-M2.5](#minimax-m25)
@@ -105,6 +106,13 @@
 - [x] [GLM-4.7-Flash vLLM 部署调用及 Docker 镜像](./models/GLM-4.7-Flash/01-GLM-4.7-Flash-vLLM%20部署调用.md) @谢好冉
 - [x] [GLM-4.7-Flash SGLang 部署调用及 Docker 镜像](./models/GLM-4.7-Flash/02-GLM-4.7-Flash%20SGLang%20部署调用.md) @三水
 - [x] [GLM-4.7-Flash Lora 微调及 Docker 镜像](./models/GLM-4.7-Flash/03-GLM-4.7-Flash-Lora微调及Docker镜像.md) @余洋
+
+### GLM-5.2
+
+[GLM-5.2](https://huggingface.co/zai-org/GLM-5.2)
+- [x] [GLM-5.2 技术报告解读](./models/GLM-5.2/1-GLM-5.2-技术报告解读.md)
+- [x] [GLM-5.2 vLLM 部署调用](./models/GLM-5.2/2-GLM-5.2-vLLM.md)
+- [x] [GLM-5.2 SGLang 部署调用](./models/GLM-5.2/3-GLM-5.2-SGLang.md)
 
 ### 谷歌-Gemma3
 

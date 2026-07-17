@@ -90,6 +90,7 @@
       • <a href="./support_model.md#kimi-k25">Kimi-K2.5</a><br>
       • <a href="./support_model.md#step-35-flash">Step-3.5-Flash</a><br>
       • <a href="./support_model.md#glm-47-flash">GLM-4.7-Flash</a><br>
+      • <a href="./support_model.md#glm-52">GLM-5.2</a><br>
       • <a href="./support_model.md#gemma3">Gemma3</a><br>
       • <a href="./support_model.md#minimax-m3">MiniMax-M3</a><br>
       • <a href="./support_model.md#minimax-m25">MiniMax-M2.5</a><br>
