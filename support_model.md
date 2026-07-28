@@ -4,10 +4,14 @@
 
 ## 目录
 
+- [DeepSeek-V4-Flash](#deepseek-v4-flash)
+- [MiniCPM5](#minicpm5)
+- [Qwen3.5](#qwen35)
 - [Kimi-K2.5](#kimi-k25)
 - [Step-3.5-Flash](#step-35-flash)
 - [GLM-4.7-Flash](#glm-47-flash)
 - [谷歌-Gemma3](#谷歌-gemma3)
+- [MiniMax-M3](#minimax-m3)
 - [MiniMax-M2.5](#minimax-m25)
 - [MiniMax-M2](#minimax-m2)
 - [Qwen3-VL-4B-Instruct](#qwen3-vl-4b-instruct)
@@ -61,6 +65,26 @@
 
 ## 已支持模型列表
 
+### DeepSeek-V4-Flash
+
+[DeepSeek-V4-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash)
+  - [x] [DeepSeek-V4-Flash LoRA 及 SwanLab 可视化记录](./models/DeepSeek-V4-Flash/01-DeepSeek-V4-Flash-LoRA及SwanLab可视化记录.md)
+
+### MiniCPM5
+
+[MiniCPM5-1B](https://www.modelscope.cn/models/OpenBMB/MiniCPM5-1B)
+  - [x] [MiniCPM5-1B vLLM 部署调用](./models/minicpm5/01-MiniCPM5-1B-vLLM%20部署调用.md)
+  - [x] [MiniCPM5-1B SGLang 部署调用](./models/minicpm5/02-MiniCPM5-1B-SGLang%20部署调用.md)
+  - [x] [MiniCPM5-1B LoRA 及 SwanLab 可视化记录](./models/minicpm5/03-MiniCPM5-1B-LoRA及SwanLab可视化记录.md)
+  - [x] [MiniCPM5-1B LoRA Docker 镜像](https://www.codewithgpu.com/i/datawhalechina/self-llm/MiniCPM5)
+
+### Qwen3.5
+
+[Qwen3.5-4B](https://www.modelscope.cn/models/Qwen/Qwen3.5-4B)
+  - [x] [Qwen3.5-4B vLLM 部署调用](./models/Qwen3.5/01-Qwen3.5-4B-vLLM%20部署调用.md)
+  - [x] [Qwen3.5-4B SGLang 部署调用](./models/Qwen3.5/02-Qwen3.5-4B-SGLang%20部署调用.md)
+  - [x] [Qwen3.5-4B LoRA 及 SwanLab 可视化记录](./models/Qwen3.5/03-Qwen3.5-4B-LoRA及SwanLab可视化记录.md)
+
 ### Kimi-K2.5
 
 [Kimi-K2.5](https://huggingface.co/moonshotai/Kimi-K2.5)
@@ -91,6 +115,16 @@
 - [x] [gemma-2b-it Peft Lora 微调 ](./models/Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @陈榆
 - [X] [gemma3-4b-it AMD 环境准备](./models/Gemma3/7-gemma3-4b-it%20AMD环境准备.md) @陈榆
 - [X] [gemma3-4b-it AMD 模型服务部署](./models/Gemma3/8-gemma3-4b-it%20模型服务部署.md) @陈榆
+
+### MiniMax-M3
+
+[MiniMax-M3](https://github.com/MiniMax-AI/MiniMax-M3)
+- [x] [MiniMax-M3 在线体验地址](https://agent.minimax.io/)
+- [x] [MiniMax-M3 Hugging Face 地址](https://huggingface.co/MiniMaxAI/MiniMax-M3)
+- [x] [MiniMax-M3 Text Generation Guide](https://platform.minimax.io/docs/guides/text-generation)
+- [x] [MiniMax-M3 vLLM 部署调用](./models/MiniMax-M3/1-MiniMax-M3-vLLM.md)
+- [x] [MiniMax-M3 SGLang 部署调用](./models/MiniMax-M3/2-MiniMax-M3-SGLang.md)
+- [x] [MiniMax-M3 Transformers 部署调用](./models/MiniMax-M3/3-MiniMax-M3-Transformers.md)
 
 ### MiniMax-M2.5
 
