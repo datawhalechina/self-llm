@@ -1,5 +1,15 @@
 # AMD GPU 平台支持模型列表
 
+<p align="center">
+  <img src="./images/rocm_logo.png" height="56" alt="ROCm"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="./images/aup_logo.png" height="56" alt="AMD University Program"/>
+</p>
+
+<p align="center">
+  <em>感谢 AMD University Program（AMD 大学合作部）对本项目的支持</em>
+</p>
+
 > 本页面收录在 AMD GPU（ROCm）平台上验证的大语言模型部署教程。教程基于 Ubuntu 24.04 + ROCm 7 实践整理，覆盖环境准备、LM Studio、vLLM、Ollama、llama.cpp 等常见部署路径。所有内容参考 Datawhale [hello-rocm](https://github.com/datawhalechina/hello-rocm) 的 `01-deploy` 专区并适配本仓库目录。
 
 > 💡 **想学更多？** 完整的 ROCm 部署、微调与基础设施教程见：[hello-rocm](https://github.com/datawhalechina/hello-rocm) · [在线文档](https://datawhalechina.github.io/hello-rocm/)

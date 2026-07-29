@@ -153,6 +153,12 @@
 ### AMD GPU Section
 
 <p align="center">
+  <img src="./images/rocm_logo.png" height="56" alt="ROCm"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="./images/aup_logo.png" height="56" alt="AMD University Program"/>
+</p>
+
+<p align="center">
   <strong>🚀 AMD GPU Platform Supported Models</strong><br>
   <em>Each model provides complete ROCm environment setup and deployment tutorials (LM Studio / vLLM / Ollama / llama.cpp)</em><br>
   <em>Thanks to AMD University Program for supporting this project</em><br>
@@ -284,11 +290,16 @@
 ### Others
 
 - Special thanks to [@Sm1les](https://github.com/Sm1les) for their help and support for this project
-- Thanks to AMD University Program for supporting this project
 - Some lora code and explanations reference repository: https://github.com/zyds/transformers-code.git
 - If you have any ideas, you can contact DataWhale. We also welcome everyone to raise more issues
 - Special thanks to the following students who contributed to the tutorials!
 
+<p align="center">
+  <em>Thanks to AMD University Program for supporting this project</em><br>
+  <img src="./images/rocm_logo.png" height="48" alt="ROCm"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="./images/aup_logo.png" height="48" alt="AMD University Program"/>
+</p>
 
 <div align=center style="margin-top: 30px;">
   <a href="https://github.com/datawhalechina/self-llm/graphs/contributors">
