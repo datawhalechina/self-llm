@@ -24,8 +24,22 @@
 
 具体型号请以 [ROCm 官方支持列表](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html) 为准。
 
+## 实践算力支持（AMD 云平台）
+
+感谢 **AMD University Program（AMD 大学合作部）** 提供的云算力支持。无本地 AMD GPU 时，可优先使用以下免费 / 学习用云平台完成 ROCm 环境验证与本仓库模型部署实践：
+
+| 平台 | 定位 | 入口 |
+|---|---|---|
+| **AUP Learning Cloud（推荐）** | AMD 大学合作部学习云，GitHub 授权登录，适合正式训练与 Notebook 调试 | [tpe.aupcloud.io](https://tpe.aupcloud.io) |
+| **AMD Radeon Cloud（备用）** | AMD AI 开发者计划中文站云算力，适合快速启动现成 ROCm 模板做验证 | [AMD 开发者云](https://developer.amd.com.cn/login?source=91kadjjnI) |
+
+📖 **完整使用指南：** [AMD ROCm 云平台使用指南（AUP Learning Cloud 优先）](./models_amd/README_00_AMD_AUP免费云平台使用指南.md)
+
+> 额度、镜像、硬件与授权方式以各平台当前页面及管理员通知为准。建议先走 AUP Learning Cloud 完成主流程，再用 Radeon Cloud 做快速验证。
+
 ## 目录
 
+- [实践算力支持（AMD 云平台）](#实践算力支持amd-云平台)
 - [谷歌 Gemma4](#谷歌-gemma4)
 - [Qwen3.5](#qwen35)
 
