@@ -1,105 +1,126 @@
 # AMD GPU 平台支持模型列表
 
-> 本页面专门收录了在 AMD GPU 平台上经过测试和验证的大语言模型部署教程。我们为每个支持的模型提供了详细的 AMD 环境配置指南、部署步骤和优化建议。所有教程均在实际 AMD 硬件环境中验证通过，确保能够在 AMD 平台上顺利运行。
+> 本页面收录在 AMD GPU（ROCm）平台上验证的大语言模型部署教程。教程基于 Ubuntu 24.04 + ROCm 7 实践整理，覆盖环境准备、LM Studio、vLLM、Ollama、llama.cpp 等常见部署路径。所有内容参考 Datawhale [hello-rocm](https://github.com/datawhalechina/hello-rocm) 的 `01-deploy` 专区并适配本仓库目录。
+
+> 💡 **想学更多？** 完整的 ROCm 部署、微调与基础设施教程见：[hello-rocm](https://github.com/datawhalechina/hello-rocm) · [在线文档](https://datawhalechina.github.io/hello-rocm/)
 
 ## AMD 硬件环境支持
 
-目前教程主要支持以下 AMD 硬件平台：
-- **AMD Ryzen AI 300 系列**：AI Max+ 395、AI Max 370、AI Max 385
-- **AMD Radeon RX 系列**：RX 7900 XTX、RX 7900 XT、RX 6900 XT 等
-- **AMD Instinct 计算卡**：MI210、MI250、MI300 系列
+目前教程主要面向以下 AMD 硬件（需支持 ROCm）：
+
+- **AMD Ryzen AI MAX / AI 300 系列**：如 AI Max+ 395（gfx1151）等
+- **AMD Radeon RX 系列**：RX 7000 / 9000 系列等
+- **AMD Instinct 计算卡**：MI 系列等
+
+具体型号请以 [ROCm 官方支持列表](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html) 为准。
 
 ## 目录
 
-- [谷歌 Gemma3](#谷歌-gemma3)
-- [Qwen3](#qwen3)
+- [谷歌 Gemma4](#谷歌-gemma4)
+- [Qwen3.5](#qwen35)
 
 ## 已支持模型列表
 
-### 谷歌 Gemma3
+### 谷歌 Gemma4
 
-[Gemma3](https://huggingface.co/google/gemma-3-4b-it)
+[Gemma 4](https://huggingface.co/collections/google/gemma-4)（示例以 `gemma-4-E4B-it` 为主）
 
-- [x] [gemma3-4b-it AMD 环境准备](./models_amd/gemma3/1-gemma3-4b-it%20AMD环境准备.md) @陈榆
-- [x] [gemma3-4b-it AMD 模型服务部署](./models_amd/gemma3/2-gemma3-4b-it%20模型服务部署.md) @陈榆
+- [Ubuntu 24.04 + ROCm 7 环境准备](./models_amd/gemma4/1-env-prepare-ubuntu24-rocm7.md)
+- [Gemma 4 模型介绍](./models_amd/gemma4/2-gemma4_model.md)
+- [LM Studio 部署](./models_amd/gemma4/3-lm-studio-rocm7-deploy.md)
+- [vLLM 部署](./models_amd/gemma4/4-vllm-rocm7-deploy.md)
+- [Ollama 部署](./models_amd/gemma4/5-ollama-rocm7-deploy.md)
+- [llama.cpp 部署](./models_amd/gemma4/6-llamacpp-rocm7-deploy.md)
 
-### Qwen3
+### Qwen3.5
 
-[Qwen3](https://github.com/QwenLM/Qwen3)
+[Qwen3.5](https://github.com/QwenLM/Qwen3.5)
 
-- [x] [Qwen3-8B AMD部署调用](./models_amd/qwen3/1-Qwen3-8B-AMD部署调用.md) @陈榆
+- [Ubuntu 24.04 + ROCm 7 环境准备](./models_amd/qwen3.5/1-env-prepare-ubuntu24-rocm7.md)
+- [LM Studio 部署](./models_amd/qwen3.5/2-lm-studio-rocm7-deploy.md)
+- [vLLM 部署](./models_amd/qwen3.5/3-vllm-rocm7-deploy.md)
+- [Ollama 部署](./models_amd/qwen3.5/4-ollama-rocm7-deploy.md)
+- [llama.cpp 部署](./models_amd/qwen3.5/5-llamacpp-rocm7-deploy.md)
 
-## AMD 环境配置通用指南
+## AMD / ROCm 环境配置通用指南
 
 ### 1. 系统要求
 
 **操作系统：**
-- Windows 11 64-bit（推荐）
-- Linux Ubuntu 20.04+（部分支持）
+
+- Linux Ubuntu 24.04（推荐，教程主路径）
+- Windows 11（部分框架 / pip 路线可用，详见各篇环境准备）
 
 **硬件要求：**
-- AMD Ryzen AI 300 系列或更新处理器
-- 最低 16GB 内存，推荐 32GB+
+
+- 支持 ROCm 的 AMD GPU（建议显存 8GB+；更大模型请参考对应教程）
+- 最低 16GB 系统内存，推荐 32GB+
 - 存储：至少 50GB 可用空间
 
-### 2. 驱动安装
+### 2. 驱动与 ROCm
 
-**AMD Ryzen AI NPU 驱动：**
-- 下载并安装最新的 AMD Ryzen AI 软件包
-- 确保 NPU 驱动正确安装和识别
-
-**AMD GPU 驱动：**
-- 安装 AMD Software: Adrenalin Edition
-- 安装 ROCm 平台（Linux 环境）
+- 安装 / 升级至 **ROCm 7.x**（教程以 ROCm 7.13 / TheRock 体系为参考）
+- 使用 `rocminfo` / `rocm-smi` / `amd-smi` 验证 GPU 与驱动状态
+- 详细步骤见各模型目录下的「环境准备」文档
 
 ### 3. 软件环境
 
-**Python 环境：**
-```bash
-# 推荐使用 Python 3.9+
-conda create -n amd_llm python=3.9
-conda activate amd_llm
+**Python 环境（示例）：**
 
-# 更换 pypi 源加速安装
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```bash
+# 推荐 Python 3.10+（部分路线使用 3.13）
+uv python install 3.13
+uv venv --python 3.13
+source .venv/bin/activate
+
+# 或使用 conda / venv
+# conda create -n amd_llm python=3.13
+# conda activate amd_llm
 ```
 
-**核心依赖：**
-- torch (AMD ROCm 版本)
-- transformers
-- huggingface_hub
-- lemonade-server (Ryzen AI 平台专用)
+**常见推理栈：**
 
-## 性能优化建议
+- PyTorch（ROCm 版本）
+- vLLM（ROCm Docker / 源码）
+- Ollama / llama.cpp（ROCm 后端）
+- LM Studio（ROCm 版 llama.cpp 后端）
 
-### 1. 内存优化
-- 利用统一内存架构，合理分配系统内存和显存
-- 对于大模型，建议使用 32GB+ 内存配置
+## 推荐学习路径
 
-### 2. NPU 加速
-- 在支持的硬件上启用 NPU 推理加速
-- 使用 lemonade-server SDK 获得最佳性能
-
-### 3. 模型量化
-- 使用 INT4/INT8 量化减少内存占用
-- 在保证精度的前提下提升推理速度
+1. 完成对应模型的 **环境准备**
+2. 零基础可先走 **LM Studio** 或 **Ollama**
+3. 需要高吞吐服务再看 **vLLM**
+4. 需要命令行 / REST 精细控制再看 **llama.cpp**
+5. 进阶内容（微调、基础设施、更多模型）前往 [hello-rocm](https://github.com/datawhalechina/hello-rocm)
 
 ## 常见问题
 
-### Q: 如何检查我的 AMD 设备是否被正确识别？
-A: 可以使用以下命令检查硬件支持情况：
-```bash
-# 检查 NPU 设备
-python -c "import lemonade; print(lemonade.get_device_info())"
+### Q: 如何确认 AMD GPU 是否支持 ROCm？
 
-# 检查 GPU 设备（ROCm）
+A: 参考 [ROCm 官方支持列表](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html)，并在本机执行：
+
+```bash
+rocminfo
 rocm-smi
+# 或
+amd-smi
 ```
 
-### Q: 如何贡献新的 AMD 模型教程？
-A: 欢迎提交 PR 到本仓库，我们特别期待：
-- 更多 AMD GPU 型号的支持教程
-- Linux ROCm 环境的部署指南
-- 性能优化和基准测试结果
+### Q: 部署时遇到 HIP error 怎么办？
 
-> 💡 **提示：** 本教程系列正在持续更新中，如果您有特定 AMD 平台的模型部署需求或建议，欢迎通过 Issue 或 PR 与我们联系。
+A:
+
+1. 确认 ROCm 已正确安装
+2. 检查 `PATH` / `LD_LIBRARY_PATH` / `ROCM_PATH` 等环境变量
+3. 确认用户已加入 `render` / `video` 组后重新登录或重启
+
+### Q: 如何贡献新的 AMD 模型教程？
+
+A: 欢迎向本仓库提交 PR；更系统的 ROCm 教程也欢迎贡献到 [hello-rocm](https://github.com/datawhalechina/hello-rocm)。特别期待：
+
+- 更多 AMD GPU 型号的实测记录
+- 性能优化与基准测试结果
+- 新模型在 ROCm 上的部署路径
+
+> 💡 **提示：** AMD / ROCm 生态演进较快，若本仓库文档与最新实践不一致，请优先对照 [hello-rocm](https://github.com/datawhalechina/hello-rocm) 与 [ROCm 官方文档](https://rocm.docs.amd.com/)。
+

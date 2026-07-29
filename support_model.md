@@ -84,6 +84,7 @@
   - [x] [Qwen3.5-4B vLLM 部署调用](./models/Qwen3.5/01-Qwen3.5-4B-vLLM%20部署调用.md)
   - [x] [Qwen3.5-4B SGLang 部署调用](./models/Qwen3.5/02-Qwen3.5-4B-SGLang%20部署调用.md)
   - [x] [Qwen3.5-4B LoRA 及 SwanLab 可视化记录](./models/Qwen3.5/03-Qwen3.5-4B-LoRA及SwanLab可视化记录.md)
+  - [x] [AMD / ROCm 部署专区（Qwen3.5）](./support_model_amd.md#qwen35) · [vLLM on ROCm](./models_amd/qwen3.5/3-vllm-rocm7-deploy.md)
 
 ### Kimi-K2.5
 
@@ -113,8 +114,7 @@
 - [x] [gemma-2b-it langchain 接入 ](./models/Gemma/02-Gemma-2B-Instruct%20langchain%20接入.md) @陈榆
 - [x] [gemma-2b-it WebDemo 部署 ](./models/Gemma/03-Gemma-2B-Instruct%20WebDemo%20部署.md) @陈榆
 - [x] [gemma-2b-it Peft Lora 微调 ](./models/Gemma/04-Gemma-2B-Instruct%20Lora微调.md) @陈榆
-- [X] [gemma3-4b-it AMD 环境准备](./models/Gemma3/7-gemma3-4b-it%20AMD环境准备.md) @陈榆
-- [X] [gemma3-4b-it AMD 模型服务部署](./models/Gemma3/8-gemma3-4b-it%20模型服务部署.md) @陈榆
+- [X] [AMD / ROCm 部署专区（Gemma4）](./support_model_amd.md#谷歌-gemma4) · 详见 [models_amd/gemma4](./models_amd/gemma4/)（环境准备 / LM Studio / vLLM / Ollama / llama.cpp）
 
 ### MiniMax-M3
 
@@ -214,7 +214,7 @@
   - [x] [Qwen3-0.6B 的小模型有什么用](./models//Qwen3/08-Qwen3_0_6B的小模型有什么用.md) @不要葱姜蒜
   - [x] [Qwen3-1.7B 医学推理式对话微调 及 SwanLab 可视化记录](./models/Qwen3/09-Qwen3-1.7B-医学推理式对话微调%20及%20SwanLab%20可视化记录.md) @林泽毅
   - [x] [Qwen3-8B GRPO微调及通过swanlab可视化](./models/Qwen3/10-Qwen3-8B%20GRPO微调及通过swanlab可视化.md) @郭宣伯
-  - [X] [Qwen3-8B-AMD部署调用](./models/Qwen3/11-Qwen3-8B-AMD部署调用.md) @陈榆
+  - [X] [AMD / ROCm 部署专区（Qwen3.5）](./support_model_amd.md#qwen35) · 详见 [models_amd/qwen3.5](./models_amd/qwen3.5/)（环境准备 / LM Studio / vLLM / Ollama / llama.cpp）
 
 ### Kimi
 

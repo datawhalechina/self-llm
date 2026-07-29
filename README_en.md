@@ -154,22 +154,23 @@
 
 <p align="center">
   <strong>🚀 AMD GPU Platform Supported Models</strong><br>
-  <em>Each model provides complete AMD environment configuration and deployment tutorials</em><br>
+  <em>Each model provides complete ROCm environment setup and deployment tutorials (LM Studio / vLLM / Ollama / llama.cpp)</em><br>
   <em>Thanks to AMD University Program for supporting this project</em><br>
   📖 <strong><a href="./support_model_amd.md">View complete AMD platform model list and tutorials</a></strong><br>
+  📘 <strong>Further learning:</strong> <a href="https://github.com/datawhalechina/hello-rocm">hello-rocm</a> (Datawhale ROCm deploy / fine-tune / infra tutorials)
 </p>
 
 <table align="center">
   <tr>
     <td valign="top" width="50%">
-      • <a href="./support_model_amd.md#谷歌-gemma3">Google Gemma3</a><br>
-      • AMD Environment Preparation and Configuration<br>
-      • NPU Inference Acceleration Support
+      • <a href="./support_model_amd.md#谷歌-gemma4">Google Gemma4</a><br>
+      • ROCm 7 Environment Preparation<br>
+      • LM Studio / vLLM / Ollama / llama.cpp
     </td>
     <td valign="top" width="50%">
-      • <a href="./support_model_amd.md#qwen3">Qwen3</a><br>
-      • lemonade-server SDK Deployment<br>
-      • Ryzen AI 300 Series Optimization
+      • <a href="./support_model_amd.md#qwen35">Qwen3.5</a><br>
+      • ROCm 7 Environment Preparation<br>
+      • LM Studio / vLLM / Ollama / llama.cpp
     </td>
   </tr>
 </table>
