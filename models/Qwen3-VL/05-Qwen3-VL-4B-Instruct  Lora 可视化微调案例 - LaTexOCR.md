@@ -345,6 +345,19 @@ class Qwen3VLDataCollator:
         label_tensors = [
             torch.as_tensor(sample["labels"], dtype=torch.long) for sample in features
         ]
+        has_mm_token_type_ids = [
+            "mm_token_type_ids" in sample for sample in features
+        ]
+        if any(has_mm_token_type_ids) and not all(has_mm_token_type_ids):
+            raise ValueError("同一批次中的样本必须全部包含或全部不包含 mm_token_type_ids。")
+        mm_token_type_tensors = (
+            [
+                torch.as_tensor(sample["mm_token_type_ids"], dtype=torch.long)
+                for sample in features
+            ]
+            if all(has_mm_token_type_ids)
+            else None
+        )
 
         max_length = max(t.size(0) for t in input_id_tensors)
         pad_id = (
@@ -358,12 +371,21 @@ class Qwen3VLDataCollator:
         input_ids = torch.full((len(features), max_length), pad_id, dtype=torch.long)
         attention_mask = torch.zeros((len(features), max_length), dtype=torch.long)
         labels = torch.full((len(features), max_length), -100, dtype=torch.long)
+        mm_token_type_ids = (
+            torch.zeros((len(features), max_length), dtype=torch.long)
+            if mm_token_type_tensors is not None
+            else None
+        )
 
         for idx, (ids, attn, lbl) in enumerate(zip(input_id_tensors, attention_tensors, label_tensors)):
             length = ids.size(0)
+            if mm_token_type_tensors is not None and mm_token_type_tensors[idx].size(0) != length:
+                raise ValueError("mm_token_type_ids 与 input_ids 的长度必须一致。")
             input_ids[idx, :length] = ids
             attention_mask[idx, :length] = attn
             labels[idx, :length] = lbl
+            if mm_token_type_ids is not None:
+                mm_token_type_ids[idx, :length] = mm_token_type_tensors[idx]
 
         pixel_tensors = []
         for sample in features:
@@ -377,13 +399,16 @@ class Qwen3VLDataCollator:
             [torch.as_tensor(sample["image_grid_thw"], dtype=torch.long).view(-1) for sample in features], dim=0
         )
 
-        return {
+        batch = {
             "input_ids": input_ids,
             "attention_mask": attention_mask,
             "labels": labels,
             "pixel_values": pixel_values,
             "image_grid_thw": image_grid_thw,
         }
+        if mm_token_type_ids is not None:
+            batch["mm_token_type_ids"] = mm_token_type_ids
+        return batch
 
 
 PROMPT_TEXT = "Transcribe the LaTeX of this image."
@@ -423,6 +448,9 @@ def process_func(example, tokenizer, processor):
     instruction_pixel_values = inputs["pixel_values"]
 
     instruction_image_grid_thw = inputs["image_grid_thw"][0]
+    instruction_mm_token_type_ids = inputs.get("mm_token_type_ids")
+    if instruction_mm_token_type_ids is not None:
+        instruction_mm_token_type_ids = instruction_mm_token_type_ids[0]
 
     response = tokenizer(f"{output_content}", add_special_tokens=False)
     response_input_ids = response["input_ids"]
@@ -444,21 +472,31 @@ def process_func(example, tokenizer, processor):
 
     input_ids = instruction_input_ids + response_input_ids
     attention_mask = instruction_attention_mask + response_attention_mask
+    mm_token_type_ids = (
+        list(instruction_mm_token_type_ids) + [0] * len(response_input_ids)
+        if instruction_mm_token_type_ids is not None
+        else None
+    )
     labels = (
         [-100] * len(instruction_input_ids) + response_input_ids
     )
     if len(input_ids) > MAX_LENGTH:
         input_ids = input_ids[:MAX_LENGTH]
         attention_mask = attention_mask[:MAX_LENGTH]
+        if mm_token_type_ids is not None:
+            mm_token_type_ids = mm_token_type_ids[:MAX_LENGTH]
         labels = labels[:MAX_LENGTH]
 
-    return {
+    result = {
         "input_ids": input_ids,
         "attention_mask": attention_mask,
         "labels": labels,
         "pixel_values": instruction_pixel_values,
         "image_grid_thw": instruction_image_grid_thw,
     }
+    if mm_token_type_ids is not None:
+        result["mm_token_type_ids"] = mm_token_type_ids
+    return result
 
 
 def main():
