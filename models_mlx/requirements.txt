@@ -1,4 +1,4 @@
 mlx-lm==0.31.1
-transformers==4.57.5
+transformers>=5.0.0
 gradio==6.9.0
 socksio==1.0.0
