@@ -86,6 +86,7 @@
   <tr>
     <td valign="top" width="25%">
       • <a href="./support_model.md#minicpm5">MiniCPM5</a><br>
+      • <a href="./support_model.md#deepseek-v41-flash">DeepSeek-V4.1-Flash</a><br>
       • <a href="./support_model.md#qwen35">Qwen3.5</a><br>
       • <a href="./support_model.md#kimi-k25">Kimi-K2.5</a><br>
       • <a href="./support_model.md#step-35-flash">Step-3.5-Flash</a><br>
