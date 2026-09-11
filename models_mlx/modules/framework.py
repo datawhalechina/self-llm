@@ -44,8 +44,17 @@ class MLXBackend(BaseBackend):
         mx.eval()
 
     def generate(self, prompt, temperature=0.7, top_p=0.8, max_tokens=512):
+        import mlx.core as mx
+        import mlx_lm.generate as mlx_gen
         from mlx_lm import stream_generate
         from mlx_lm.sample_utils import make_sampler
+
+        # Gradio 会在不同的 worker 线程中分别执行「加载模型」和「生成」，
+        # 而 MLX 的 Stream 是线程局部的，mlx_lm 内部使用的全局
+        # generation_stream 在首次 import 的线程创建后无法跨线程使用，
+        # 否则会报 "There is no Stream(gpu, 0) in current thread"。
+        # 这里在每次生成（当前线程）时重建 stream 以规避该问题。
+        mlx_gen.generation_stream = mx.new_stream(mx.default_device())
 
         sampler = make_sampler(temp=temperature, top_p=top_p)
         response = ""
