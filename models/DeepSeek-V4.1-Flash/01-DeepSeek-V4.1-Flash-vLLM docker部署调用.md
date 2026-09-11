@@ -15,7 +15,7 @@
 
 本教程采用 **官方 vLLM Docker 镜像** 部署，无需在宿主机安装 Python/CUDA 等依赖，只需宿主机满足以下条件：
 
-- 一台带有 NVIDIA GPU 的 Linux 服务器（本教程测试机器 8 × 96GB）
+- 一台带有 NVIDIA GPU 的 Linux 服务器（本教程测试机器 8 × 96GB H20，CUDA 12.8）
 - 已安装 [Docker](https://docs.docker.com/engine/install/) 与 [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/)（使容器可调用 GPU）
 - 宿主机已配置好 NVIDIA 驱动（`nvidia-smi` 可正常显示）
 
@@ -68,7 +68,7 @@ print(f"模型下载完成，保存路径为：{model_dir}")
 
 ### 启动服务（Docker）
 
-以下为 8 卡 96GB 部署示例：
+以下为 8 卡 96GB 部署示例（测试环境 8 × 96GB H20，CUDA 12.8）：
 
 ```bash
 docker run --gpus all --ipc=host --name deepseek-v41-flash-vllm \
@@ -255,3 +255,25 @@ print(f"DeepSeek-V4.1-Flash 回复 4: {final_tool_response.choices[0].message.co
 ```
 
 在工具调用中，`DeepSeek-V4.1-Flash` 能够适时调用工具并最终返回准确的天气查询信息。
+
+## 实验验证
+
+本教程在 **8 张 NVIDIA H20（每卡 96GB），CUDA 12.8** 环境下完成了模型加载、普通对话、思考模式与工具调用的完整验证。服务启动时通过 `--tensor-parallel-size 8` 将模型切分到 8 张显卡上并行推理。
+
+启动前可在宿主机确认硬件与驱动信息：
+
+```bash
+nvidia-smi
+nvcc --version
+nvidia-smi topo -m
+```
+
+检查结果应满足：
+
+- 8 张 NVIDIA H20，每张约 96GB 显存；
+- `nvcc` 为 CUDA 12.8；
+- `nvidia-smi topo -m` 可正常显示 GPU 间互联拓扑。
+
+服务运行期间，可通过 `nvidia-smi` 查看各卡显存占用与 GPU 利用率，确认 8 张显卡均参与推理。
+
+> 提示：以上环境配置为参考值，具体显存占用与吞吐会随上下文长度、并发量及量化配置变化，可结合 `nvidia-smi` 与 `/metrics` 接口按实际机器调优。
