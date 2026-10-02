@@ -395,8 +395,8 @@
 
 [哔哩哔哩 Index-1.9B](https://github.com/bilibili/Index-1.9B)
   - [x] [Index-1.9B-Chat FastApi 部署调用](./models/bilibili_Index-1.9B/01-Index-1.9B-chat%20FastApi%20部署调用.md) @邓恺俊
-  - [x] [Index-1.9B-Chat langchain 接入](./models/bilibili_Index-1.9B/02-Index-1.9B-Chat%20接入%20LangChain.md) @张友东
-  - [x] [Index-1.9B-Chat WebDemo 部署](./models/bilibili_Index-1.9B/03-Index-1.9B-chat%20WebDemo部署.md) @程宏
+  - [x] [Index-1.9B-Chat langchain 接入](./models/bilibili_Index-1.9B/02-Index-1.9B-Chat%20LangChain%20接入.md) @张友东
+  - [x] [Index-1.9B-Chat WebDemo 部署](./models/bilibili_Index-1.9B/03-Index-1.9B-Chat%20WebDemo%20部署.md) @程宏
   - [x] [Index-1.9B-Chat Lora 微调](./models/bilibili_Index-1.9B/04-Index-1.9B-Chat%20Lora%20微调.md) @姜舒凡
 
 ### Qwen2
@@ -467,10 +467,10 @@
 ### TransNormerLLM
 
 [TransNormerLLM](https://github.com/OpenNLPLab/TransnormerLLM.git)
-  - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./models/TransNormer/01-TransNormer-7B%20FastApi%20部署调用.md) @王茂霖
-  - [X] [TransNormerLLM-7B-Chat langchain 接入](./models/TransNormer/02-TransNormer-7B%20接入langchain搭建知识库助手.md) @王茂霖
-  - [X] [TransNormerLLM-7B-Chat WebDemo 部署](./models/TransNormer/03-TransNormer-7B%20WebDemo.md) @王茂霖
-  - [x] [TransNormerLLM-7B-Chat Lora 微调](./models/TransNormer/04-TrasnNormer-7B%20Lora%20微调.md) @王茂霖
+  - [X] [TransNormerLLM-7B-Chat FastApi 部署调用](./models/TransNormerLLM/01-TransNormerLLM-7B%20FastApi%20部署调用.md) @王茂霖
+  - [X] [TransNormerLLM-7B-Chat langchain 接入](./models/TransNormerLLM/02-TransNormerLLM-7B%20接入langchain搭建知识库助手.md) @王茂霖
+  - [X] [TransNormerLLM-7B-Chat WebDemo 部署](./models/TransNormerLLM/03-TransNormerLLM-7B%20WebDemo.md) @王茂霖
+  - [x] [TransNormerLLM-7B-Chat Lora 微调](./models/TransNormerLLM/04-TrasnNormerLLM-7B%20Lora%20微调.md) @王茂霖
 
 ### BlueLM Vivo 蓝心大模型
 
@@ -497,7 +497,7 @@
   - [x] [DeepSeek-7B-chat Lora 微调](./models/DeepSeek/04-DeepSeek-7B-chat%20Lora%20微调.md) @不要葱姜蒜
   - [x] [DeepSeek-7B-chat 4bits量化 Qlora 微调](./models/DeepSeek/05-DeepSeek-7B-chat%204bits量化%20Qlora%20微调.md) @不要葱姜蒜
   - [x] [DeepSeek-MoE-16b-chat Transformers 部署调用](./models/DeepSeek/06-DeepSeek-MoE-16b-chat%20Transformer部署调用.md) @Kailigithub
-  - [x] [DeepSeek-MoE-16b-chat FastApi 部署调用](./models/DeepSeek/06-DeepSeek-MoE-16b-chat%20FastApi.md) @Kailigithub
+  - [x] [DeepSeek-MoE-16b-chat FastApi 部署调用](./models/DeepSeek/06-DeepSeek-MoE-16b-chat%20FastApi部署调用.md) @Kailigithub
   - [x] [DeepSeek-coder-6.7b finetune colab](./models/DeepSeek/07-deepseek_fine_tune.ipynb) @Swiftie
   - [x] [Deepseek-coder-6.7b webdemo colab](./models/DeepSeek/08-deepseek_web_demo.ipynb) @Swiftie
 
@@ -542,7 +542,7 @@
 ### Baichuan 百川智能
 
 [Baichuan 百川智能](https://www.baichuan-ai.com/home)
-  - [x] [Baichuan2-7B-chat FastApi 部署调用](./BaiChuan/01-Baichuan2-7B-chat%2BFastApi%2B%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md) @惠佳豪
+  - [x] [Baichuan2-7B-chat FastApi 部署调用](./models/BaiChuan/01-Baichuan2-7B-chat%2BFastApi%2B%E9%83%A8%E7%BD%B2%E8%B0%83%E7%94%A8.md) @惠佳豪
   - [x] [Baichuan2-7B-chat WebDemo](./models/BaiChuan/02-Baichuan-7B-chat%2BWebDemo.md) @惠佳豪
   - [x] [Baichuan2-7B-chat 接入 LangChain 框架](./models/BaiChuan/03-Baichuan2-7B-chat%E6%8E%A5%E5%85%A5LangChain%E6%A1%86%E6%9E%B6.md) @惠佳豪
   - [x] [Baichuan2-7B-chat Lora 微调](./models/BaiChuan/04-Baichuan2-7B-chat%2Blora%2B%E5%BE%AE%E8%B0%83.md) @惠佳豪
@@ -582,7 +582,7 @@
 
 - 模型下载
   - [x] [hugging face](./models/General-Setting/03-模型下载.md) @不要葱姜蒜
-  - [x] [hugging face](./General-Setting/03-模型下载.md) 镜像下载 @不要葱姜蒜
+  - [x] [hugging face](./models/General-Setting/03-模型下载.md) 镜像下载 @不要葱姜蒜
   - [x] [modelscope](./models/General-Setting/03-模型下载.md) @不要葱姜蒜
   - [x] [git-lfs](./models/General-Setting/03-模型下载.md) @不要葱姜蒜
   - [x] [Openxlab](./models/General-Setting/03-模型下载.md)
