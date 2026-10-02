@@ -2,7 +2,7 @@
 
 本节我们简要介绍如何基于 transformers、peft 等框架，对 TransNormerLLM-1B「备注：TransNormerLLM-358M/1B/7B的」 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-这个教程会在同目录下给大家提供一个 [nodebook](./TransNormerLLM-7B-Lora.ipynb) 文件，来让大家更好的学习。
+这个教程会在同目录下给大家提供一个 [nodebook](./04-TransNormerLLM-7B-chat-Lora.ipynb) 文件，来让大家更好的学习。
 
 ## 环境配置
 
