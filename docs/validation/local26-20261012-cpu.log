@@ -1,0 +1,16 @@
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting torchada
+  Downloading torchada-0.1.96-py3-none-any.whl (205 kB)
+Installing collected packages: torchada
+Successfully installed torchada-0.1.96
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+TORCHADA_VERSION=0.1.96
+test_arguments_cwd_and_exit_status (test_runner.RunnerTests) ... ok
+test_bootstrap_does_nothing_without_opt_in (test_runner.RunnerTests) ... ok
+test_failed_adapter_prevents_target_execution (test_runner.RunnerTests) ... ok
+test_module_and_child_process_inherit_bootstrap (test_runner.RunnerTests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.213s
+
+OK

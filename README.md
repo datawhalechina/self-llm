@@ -60,6 +60,10 @@
 
 ## 项目规划及进展
 
+### 摩尔线程 MUSA 环境
+
+使用 `registry.mthreads.com/mcctest/training-suite:v2.1.7` 的运行入口、Qwen 推理与 LoRA 示例见 [MUSA 适配说明](./docs/MUSA.md)。入口通过 `torchada` 和 `torch_musa` 兼容原教程的 PyTorch CUDA API；具体模型、量化库和推理引擎仍需分别验证。
+
 &emsp;&emsp; 本项目拟围绕开源 LLM 应用全流程组织，包括环境配置及使用、部署应用、微调等，每个部分覆盖主流及特点开源 LLM：
 
 ### Example 系列

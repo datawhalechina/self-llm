@@ -174,3 +174,7 @@ cython_debug/
 # model_mlx
 models_mlx/models
 .vscode
+
+# Local MUSA model weights and generated adapters
+/models_local/
+/output_musa/
