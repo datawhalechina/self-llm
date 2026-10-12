@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "compileall",
+      "-q",
+      "scripts/musa"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bash",
+      "-n",
+      "scripts/musa/container.sh",
+      "scripts/musa/install.sh"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]
