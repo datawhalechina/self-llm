@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/musa/tests",
+      "-v"
+    ],
+    "location": "macOS dongyang tmux",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_invalid_unleased_flag_is_rejected (test_container.ContainerLauncherTests) ... ok\ntest_lease_mode_keeps_serverlist_labels (test_container.ContainerLauncherTests) ... ok\ntest_lease_required_by_default (test_container.ContainerLauncherTests) ... ok\ntest_local_models_are_mounted_readonly (test_container.ContainerLauncherTests) ... ok\ntest_missing_model_directory_is_rejected (test_container.ContainerLauncherTests) ... ok\ntest_unleased_mode_is_explicit_and_has_no_serverlist_labels (test_container.ContainerLauncherTests) ... ok\ntest_arguments_cwd_and_exit_status (test_runner.RunnerTests) ... ok\ntest_bootstrap_does_nothing_without_opt_in (test_runner.RunnerTests) ... ok\ntest_build_subprocess_skips_hook_but_user_subprocess_keeps_it (test_runner.RunnerTests) ... ok\ntest_failed_adapter_prevents_target_execution (test_runner.RunnerTests) ... ok\ntest_module_and_child_process_inherit_bootstrap (test_runner.RunnerTests) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 2.618s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "compileall",
+      "-q",
+      "scripts/musa"
+    ],
+    "location": "macOS dongyang tmux",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--check"
+    ],
+    "location": "macOS dongyang tmux",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

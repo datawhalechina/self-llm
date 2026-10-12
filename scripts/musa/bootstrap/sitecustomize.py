@@ -20,6 +20,8 @@ if os.environ.get("SELF_LLM_MUSA") == "1":
             raise RuntimeError("MUSA GPU unavailable; check the driver and visible devices")
         if not torch.cuda.is_available():
             raise RuntimeError("torchada did not enable CUDA API compatibility")
+        from _musa_cpu_sampling import activate
+        activate(torch)
     except Exception as exc:
         # Python normally ignores sitecustomize failures and runs the target anyway.
         print(f"self-llm MUSA startup failed: {exc}", file=sys.stderr, flush=True)

@@ -134,6 +134,7 @@ bash scripts/musa/container.sh bash -lc '
 - 本机启动钩子与容器参数检查共 11 项测试通过；见 [测试日志](./validation/local26-20261012-tests.log)。
 - 两个真实模型的 adapter 已单独检查：Qwen3 保存 112 个张量，其中 56 个 LoRA B 张量非零；Qwen2 保存 96 个张量，其中 48 个 LoRA B 张量非零。所有张量均为有限值，配置与 tokenizer 文件可读，`ARTIFACT_CHECK_EXIT=0`。见 [adapter 检查日志](./validation/local26-20261012-artifact.log)。
 - [Review Notebook](./validation/LOCAL-26-review.ipynb) 汇集实际执行命令和日志；Notebook 读取已有结果，不重复执行 GPU 任务。
+- 通用启动层现为 CPU 索引采样保留 CPU Generator 和默认设备。实测发现 torchada 的 `get_default_device()` 返回 `musa:0`，而 `randperm` 的默认索引仍在 CPU；只改 Generator 类还不够。普通 Transformers `Trainer` 已直接完成 Qwen3-0.6B 的两步 BF16 LoRA，112 个 adapter 张量更新，loss 为 `6.338409185409546`。输入为人工 token 序列，结果只验证运行路径。见 [通用 Trainer 日志](./validation/local26-20261013-stock-trainer.log)。
 - 本次未运行多卡训练、量化或 vLLM/SGLang。
 
 本地启动器测试命令：

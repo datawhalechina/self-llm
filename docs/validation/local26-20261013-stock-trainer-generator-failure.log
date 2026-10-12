@@ -1,0 +1,70 @@
+GPU lease checks bypassed by explicit GPU_ALLOW_UNLEASED=1
+Image dependency conflicts already present before installation:
+ml-dtypes 0.6.0 has requirement numpy>=2.0.0, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement numpy==1.26.1, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement outlines_core==0.2.10, but you have outlines-core 0.1.26.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement xgrammar==0.1.21; platform_machine == "x86_64" or platform_machine == "aarch64" or platform_machine == "arm64", but you have xgrammar 0.1.27.
+vllm-musa 0.1.dev402+g3bad2b9.d20260902 has requirement pyarrow==20.0.0, but you have pyarrow 22.0.0.
+{"baseline_conflicts": 5}
+torch: 2.7.1.post1 torch_musa: 2.7.1.post1+b6d53a2
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting torchada
+  Downloading torchada-0.1.96-py3-none-any.whl (205 kB)
+Installing collected packages: torchada
+Successfully installed torchada-0.1.96
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2026-10-13 01:53:10 | _patch | 140100501541312 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-13 01:53:11 | warnings | 140100501541312 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-13 01:53:11 | warnings | 140100501541312 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+torchada: 0.1.96
+Removing incompatible optional torchao for unquantized PEFT LoRA
+Found existing installation: torchao 0.9.0
+Uninstalling torchao-0.9.0:
+  Successfully uninstalled torchao-0.9.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+{"baseline_conflicts": 5, "current_conflicts": 5, "new_conflicts": []}
+2026-10-13 01:53:18 | _patch | 140423605154240 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-13 01:53:18 | _patch | 140423605154240 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-13 01:53:19 | warnings | 140423605154240 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-13 01:53:19 | warnings | 140423605154240 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-13 01:53:21 | config | 140423605154240 | INFO : PyTorch version 2.7.1.post1 available.
+`torch_dtype` is deprecated! Use `dtype` instead!
+ORIGINAL_RANDOM_SAMPLER_RESULT=PASS
+{"default_generator_device": "cpu", "explicit_cpu_generator_device": "cpu", "default_device": "musa:0"}
+{"sampler": "RandomSampler", "status": "PASS", "indices": [4, 2, 3, 0, 6, 7, 1, 10, 11, 5, 9, 8]}
+{"sampler": "DistributedSampler", "status": "PASS", "indices": [6, 8, 1, 7, 0, 2, 10, 11, 4, 3, 5, 9]}
+  0%|          | 0/2 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/workspace/self-llm/scripts/musa/tests/stock_trainer_gpu.py", line 48, in <module>
+    result=trainer.train()
+  File "/usr/local/lib/python3.10/dist-packages/transformers/trainer.py", line 2325, in train
+    return inner_training_loop(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/trainer.py", line 2618, in _inner_training_loop
+    batch_samples, num_items_in_batch = self.get_batch_samples(epoch_iterator, num_batches, args.device)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/trainer.py", line 5654, in get_batch_samples
+    batch_samples.append(next(epoch_iterator))
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/data_loader.py", line 567, in __iter__
+    current_batch = next(dataloader_iter)
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 733, in __next__
+    data = self._next_data()
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 788, in _next_data
+    index = self._next_index()  # may raise StopIteration
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 723, in _next_index
+    return next(self._sampler_iter)  # may raise StopIteration
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/sampler.py", line 335, in __iter__
+    batch = [*itertools.islice(sampler_iter, self.batch_size)]
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/data_loader.py", line 102, in __iter__
+    yield from super().__iter__()
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/sampler.py", line 189, in __iter__
+    yield from torch.randperm(n, generator=generator).tolist()
+  File "/usr/local/lib/python3.10/dist-packages/torchada/_patch.py", line 1135, in wrapped_fn
+    return original_fn(*args, **kwargs)
+RuntimeError: Expected a 'cpu' device type for generator but found 'musa'
+STOCK_TRAINER_CHECK_EXIT=1

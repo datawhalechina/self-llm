@@ -43,6 +43,14 @@ GPU smoke 使用 `python scripts/musa/run.py scripts/musa/smoke.py`，分别测�
 
 这些脚本已检查并移除了凭据字段；模型路径、普通参数和结果目录仍按实际运行记录保留。未读取或上传认证文件。
 
+## 2026-10-13：普通 HF Trainer
+
+通用启动层为 CPU 索引采样保留 CPU Generator 和默认设备。torchada 的全局默认设备 getter 返回 MUSA，而默认 randperm 索引仍在 CPU；只改 Generator 类仍会失败。
+
+未改写的 Transformers Trainer 已在 sjq3 上完成 Qwen3-0.6B 两步 BF16 LoRA。设备为 `musa:0`，112 个 adapter 张量更新，loss 为 `6.338409185409546`，`STOCK_TRAINER_CHECK_EXIT=0`。输入为人工 token 序列，只验证运行路径。Notebook 保留了初次回归断言错误、生成器不匹配和最终通过三次日志。
+
+新的 11 项测试、Python 编译和 diff 检查在 macOS tmux 执行并通过。见 [普通 Trainer 日志](./local26-20261013-stock-trainer.log) 和 [静态记录](./local26-20261013-static.json)。
+
 ## 剩余风险
 
 镜像原有的 5 项依赖冲突仍需后续收敛；日志还出现 transformers 参数弃用、生成参数提示和 PEFT 缺少 config 的 warning。本次验证证明了当前镜像上的运行路径，但没有证明这些基线依赖在后续镜像升级后仍然兼容。
