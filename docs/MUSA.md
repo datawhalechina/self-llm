@@ -9,7 +9,8 @@
 | 文件 | 用途 |
 | --- | --- |
 | `scripts/musa/container.sh` | 使用指定镜像，在租到的卡上启动独立容器 |
-| `scripts/musa/install.sh` | 保留镜像的 PyTorch/MUSA 栈；缺少 torchada 时从包索引安装 |
+| `scripts/musa/install.sh` | 保留镜像的 PyTorch/MUSA 栈；缺少 torchada 时安装，并拒绝新增依赖冲突 |
+| `scripts/musa/check_dependencies.py` | 保存镜像原有依赖冲突，比较安装后的变化 |
 | `scripts/musa/run.py` | 在教程及其 Python 子进程启动前加载 torchada |
 | `scripts/musa/smoke.py` | 离线小 Qwen2：训练、生成、LoRA 训练和保存重载 |
 | `scripts/musa/qwen.py` | 本地 Qwen 模型的 Transformers 推理和 Trainer LoRA 示例 |
@@ -44,7 +45,9 @@ bash scripts/musa/container.sh bash -lc '
 
 容器使用 `mthreads` runtime，传入 `MTHREADS_VISIBLE_DEVICES` 做物理设备隔离，退出自动删除。容器内设备从 0 重新编号；单卡 smoke 默认使用 `cuda:0`，由 torchada 转到 `musa:0`。租约需要按 TTL 续期，任务结束后释放。
 
-`install.sh` 不升级 torch、torch_musa 或 transformers。只在 torchada 未安装时运行 `pip install --no-deps torchada`，然后检查导入和依赖一致性。GPU 不可用时不要运行 smoke；依赖核对可以用不暴露设备的 CPU 容器，但这种容器没有 runtime 注入的 MUSA 驱动库，不能用其导入结果判断 GPU 容器是否正常。
+`install.sh` 不升级 torch、torch_musa 或 transformers。先保存镜像的 `pip check` 清单，只在 torchada 未安装时运行 `pip install --no-deps torchada`，再检查导入并比较依赖清单；出现新增冲突或包元数据解析错误时退出。镜像原有冲突会报告出来，不自动改动相关包。
+
+GPU 不可用时不要运行 smoke；依赖核对可以用不暴露设备的 CPU 容器，但这种容器没有 runtime 注入的 MUSA 驱动库，不能用其导入结果判断 GPU 容器是否正常。
 
 ## 运行原教程
 
@@ -121,6 +124,7 @@ bash scripts/musa/container.sh bash -lc '
 - 本机启动器的 4 项测试通过：参数/目录/退出码保留、模块和子进程加载钩子、导入失败阻止执行、未启用时不加载框架。
 - sjq3 CPU 容器内同样 4 项启动器测试通过；这些测试使用假框架模块，只证明启动流程。
 - sjq3 CPU 容器的 Python 编译检查、Shell 语法检查通过，最终 `CPU_CHECK_EXIT=0`；原始日志见 [CPU 检查日志](./validation/local26-20261012-cpu.log)。
+- 目标镜像在安装前已有 5 项依赖冲突，涉及 ml-dtypes、vLLM 与 vllm-musa；torchada 安装后清单不变。依赖比较允许保留这 5 项冲突；临时加入缺失依赖或损坏的包元数据时均返回非零退出码。sjq3 CPU 容器的最终 `DEPENDENCY_GATE_EXIT=0`，见 [依赖比较验证日志](./validation/local26-20261012-dependency-gate.txt)。这不代表 vLLM 或这些包已经兼容。
 - GPU Worker 和 gpu-dashboard 快照均未匹配到 sjq3 的 hostname 或 GPU UUID。GPU Worker 对 `10.121.38.3` 的单卡定向申请返回 `insufficient free GPUs`，没有取得租约。
 - 尚未运行实际 MUSA smoke、BF16、真实模型推理、Trainer LoRA 或多卡训练，也未取得 torchada 在 GPU 容器中的导入结果。
 

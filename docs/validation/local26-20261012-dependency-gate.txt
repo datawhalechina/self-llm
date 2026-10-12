@@ -1,0 +1,30 @@
+Image dependency conflicts already present before installation:
+ml-dtypes 0.6.0 has requirement numpy>=2.0.0, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement numpy==1.26.1, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement outlines_core==0.2.10, but you have outlines-core 0.1.26.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement xgrammar==0.1.21; platform_machine == "x86_64" or platform_machine == "aarch64" or platform_machine == "arm64", but you have xgrammar 0.1.27.
+vllm-musa 0.1.dev402+g3bad2b9.d20260902 has requirement pyarrow==20.0.0, but you have pyarrow 22.0.0.
+{"baseline_conflicts": 5}
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting torchada
+  Downloading torchada-0.1.96-py3-none-any.whl (205 kB)
+Installing collected packages: torchada
+Successfully installed torchada-0.1.96
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+{"baseline_conflicts": 5, "current_conflicts": 5, "new_conflicts": []}
+REAL_IMAGE_GATE_EXIT=0
+{"baseline_conflicts": 5, "current_conflicts": 6, "new_conflicts": ["local26-conflict-fixture 1.0 requires local26-definitely-missing-package, which is not installed."]}
+NEW_CONFLICT_REJECTED=1
+Traceback (most recent call last):
+  File "/workspace/self-llm/scripts/musa/check_dependencies.py", line 52, in <module>
+    sys.exit(main())
+  File "/workspace/self-llm/scripts/musa/check_dependencies.py", line 34, in main
+    current = conflicts()
+  File "/workspace/self-llm/scripts/musa/check_dependencies.py", line 19, in conflicts
+    raise RuntimeError(f"pip check failed: {result.stderr or result.stdout}")
+RuntimeError: pip check failed: WARNING: Error parsing dependencies of local26-bad-metadata: Expected package name at the start of dependency specifier
+    ???
+    ^
+
+MALFORMED_METADATA_REJECTED=1
+DEPENDENCY_GATE_EXIT=0
