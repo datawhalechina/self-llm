@@ -1,0 +1,57 @@
+Image dependency conflicts already present before installation:
+ml-dtypes 0.6.0 has requirement numpy>=2.0.0, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement numpy==1.26.1, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement outlines_core==0.2.10, but you have outlines-core 0.1.26.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement xgrammar==0.1.21; platform_machine == "x86_64" or platform_machine == "aarch64" or platform_machine == "arm64", but you have xgrammar 0.1.27.
+vllm-musa 0.1.dev402+g3bad2b9.d20260902 has requirement pyarrow==20.0.0, but you have pyarrow 22.0.0.
+{"baseline_conflicts": 5}
+torch: 2.7.1.post1 torch_musa: 2.7.1.post1+b6d53a2
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting torchada
+  Downloading torchada-0.1.96-py3-none-any.whl (205 kB)
+Installing collected packages: torchada
+Successfully installed torchada-0.1.96
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2026-10-12 22:34:41 | _patch | 140139754435008 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:34:41 | warnings | 140139754435008 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:34:41 | warnings | 140139754435008 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+torchada: 0.1.96
+{"baseline_conflicts": 5, "current_conflicts": 5, "new_conflicts": []}
+2026-10-12 22:34:48 | _patch | 140325754032576 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:34:48 | _patch | 140325754032576 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:34:49 | warnings | 140325754032576 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:34:49 | warnings | 140325754032576 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+Traceback (most recent call last):
+  File "/workspace/self-llm/scripts/musa/smoke.py", line 249, in main
+    run(args, result)
+  File "/workspace/self-llm/scripts/musa/smoke.py", line 145, in run
+    lora_model = get_peft_model(
+  File "/usr/local/lib/python3.10/dist-packages/peft/mapping_func.py", line 122, in get_peft_model
+    return MODEL_TYPE_TO_PEFT_MODEL_MAPPING[peft_config.task_type](
+  File "/usr/local/lib/python3.10/dist-packages/peft/peft_model.py", line 2063, in __init__
+    super().__init__(model, peft_config, adapter_name, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/peft/peft_model.py", line 164, in __init__
+    self.base_model = cls(model, {adapter_name: peft_config}, adapter_name)
+  File "/usr/local/lib/python3.10/dist-packages/peft/tuners/tuners_utils.py", line 318, in __init__
+    self.inject_adapter(self.model, adapter_name, low_cpu_mem_usage=low_cpu_mem_usage, state_dict=state_dict)
+  File "/usr/local/lib/python3.10/dist-packages/peft/tuners/tuners_utils.py", line 917, in inject_adapter
+    self._create_and_replace(
+  File "/usr/local/lib/python3.10/dist-packages/peft/tuners/lora/model.py", line 281, in _create_and_replace
+    new_module = self._create_new_module(lora_config, adapter_name, target, device_map=device_map, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/peft/tuners/lora/model.py", line 430, in _create_new_module
+    new_module = dispatcher(target, adapter_name, config=lora_config, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/peft/tuners/lora/torchao.py", line 160, in dispatch_torchao
+    if not is_torchao_available():
+  File "/usr/local/lib/python3.10/dist-packages/peft/import_utils.py", line 147, in is_torchao_available
+    raise ImportError(
+ImportError: Found an incompatible version of torchao. Found version 0.9.0, but only versions above 0.16.0 are supported
+{"test": "torchada_musa_qwen2_peft_smoke", "status": "FAIL", "versions": {"python": "3.10.12", "torchada": "0.1.96", "torch_musa": "2.7.1.post1+b6d53a2", "torch": "2.7.1.post1", "transformers": "4.57.0", "peft": "0.20.0"}, "device": {"requested": "cuda:0", "name": "MTT S5000", "physical_type": "musa", "physical_index": 0}, "dtype": "float32", "base_loss": 4.834263801574707, "base_gradient_tensors": 27, "generated_token_ids": [121, 51, 25, 33, 43, 113, 15, 33, 114, 33, 114, 33], "error": {"type": "ImportError", "message": "Found an incompatible version of torchao. Found version 0.9.0, but only versions above 0.16.0 are supported"}}
+GPU_CHECK_EXIT=1

@@ -1,0 +1,3 @@
+{"adapter": "qwen3-lora", "status": "PASS", "saved_tensors": 112, "nonzero_lora_B_tensors": 56, "files": ["README.md", "adapter_config.json", "adapter_model.safetensors", "added_tokens.json", "chat_template.jinja", "merges.txt", "special_tokens_map.json", "tokenizer.json", "tokenizer_config.json", "vocab.json"]}
+{"adapter": "qwen2-lora", "status": "PASS", "saved_tensors": 96, "nonzero_lora_B_tensors": 48, "files": ["README.md", "adapter_config.json", "adapter_model.safetensors", "added_tokens.json", "chat_template.jinja", "merges.txt", "special_tokens_map.json", "tokenizer.json", "tokenizer_config.json", "vocab.json"]}
+ARTIFACT_CHECK_EXIT=0

@@ -1,0 +1,85 @@
+Image dependency conflicts already present before installation:
+ml-dtypes 0.6.0 has requirement numpy>=2.0.0, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement numpy==1.26.1, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement outlines_core==0.2.10, but you have outlines-core 0.1.26.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement xgrammar==0.1.21; platform_machine == "x86_64" or platform_machine == "aarch64" or platform_machine == "arm64", but you have xgrammar 0.1.27.
+vllm-musa 0.1.dev402+g3bad2b9.d20260902 has requirement pyarrow==20.0.0, but you have pyarrow 22.0.0.
+{"baseline_conflicts": 5}
+torch: 2.7.1.post1 torch_musa: 2.7.1.post1+b6d53a2
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting torchada
+  Downloading torchada-0.1.96-py3-none-any.whl (205 kB)
+Installing collected packages: torchada
+Successfully installed torchada-0.1.96
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2026-10-12 22:49:02 | _patch | 140441212424640 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:49:02 | warnings | 140441212424640 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:49:02 | warnings | 140441212424640 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+torchada: 0.1.96
+Removing incompatible optional torchao for unquantized PEFT LoRA
+Found existing installation: torchao 0.9.0
+Uninstalling torchao-0.9.0:
+  Successfully uninstalled torchao-0.9.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+{"baseline_conflicts": 5, "current_conflicts": 5, "new_conflicts": []}
+2026-10-12 22:49:10 | _patch | 139776306663872 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:49:10 | _patch | 139776306663872 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:49:10 | warnings | 139776306663872 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:49:10 | warnings | 139776306663872 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-12 22:49:13 | config | 139776306663872 | INFO : PyTorch version 2.7.1.post1 available.
+`torch_dtype` is deprecated! Use `dtype` instead!
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+你好！我是你的AI助手，我是一个基于大语言模型训练的助手，可以为你提供各种帮助，从学习、写作、解决问题到娱乐等
+{"action": "infer", "device": "musa:0", "status": "PASS"}
+2026-10-12 22:49:57 | _patch | 139901707071936 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:49:57 | _patch | 139901707071936 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:49:58 | warnings | 139901707071936 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:49:58 | warnings | 139901707071936 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-12 22:50:00 | config | 139901707071936 | INFO : PyTorch version 2.7.1.post1 available.
+`torch_dtype` is deprecated! Use `dtype` instead!
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [00:09<00:09,  9.76s/it]                                              50%|█████     | 1/2 [00:09<00:09,  9.76s/it]100%|██████████| 2/2 [00:09<00:00,  4.13s/it]                                             100%|██████████| 2/2 [00:09<00:00,  4.13s/it]                                             100%|██████████| 2/2 [00:09<00:00,  4.13s/it]100%|██████████| 2/2 [00:09<00:00,  4.98s/it]
+{'loss': 1.0926, 'grad_norm': 8.487940788269043, 'learning_rate': 0.0001, 'epoch': 0.5}
+{'loss': 4.4229, 'grad_norm': 11.85051155090332, 'learning_rate': 5e-05, 'epoch': 1.0}
+{'train_runtime': 9.9537, 'train_samples_per_second': 0.201, 'train_steps_per_second': 0.201, 'train_loss': 2.7577483654022217, 'epoch': 1.0}
+{"action": "lora", "status": "PASS", "device": "musa:0", "steps": 2, "loss": 2.7577483654022217, "adapter_directory": "/results/qwen3-lora"}
+2026-10-12 22:50:46 | _patch | 140455896207808 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:50:46 | _patch | 140455896207808 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:50:46 | warnings | 140455896207808 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:50:46 | warnings | 140455896207808 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-12 22:50:48 | config | 140455896207808 | INFO : PyTorch version 2.7.1.post1 available.
+`torch_dtype` is deprecated! Use `dtype` instead!
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+我是一个人工智能助手，可以回答问题、提供信息、进行聊天等。我可以帮助用户解决各种问题，提供有用的信息，以及与用户进行交流
+{"action": "infer", "device": "musa:0", "status": "PASS"}
+2026-10-12 22:51:33 | _patch | 139921162547648 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:51:33 | _patch | 139921162547648 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:51:34 | warnings | 139921162547648 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:51:34 | warnings | 139921162547648 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-12 22:51:36 | config | 139921162547648 | INFO : PyTorch version 2.7.1.post1 available.
+`torch_dtype` is deprecated! Use `dtype` instead!
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [00:09<00:09,  9.43s/it]                                              50%|█████     | 1/2 [00:09<00:09,  9.43s/it]100%|██████████| 2/2 [00:09<00:00,  3.96s/it]                                             100%|██████████| 2/2 [00:09<00:00,  3.96s/it]                                             100%|██████████| 2/2 [00:09<00:00,  3.96s/it]100%|██████████| 2/2 [00:09<00:00,  4.79s/it]
+{'loss': 0.7231, 'grad_norm': 8.327760696411133, 'learning_rate': 0.0001, 'epoch': 0.5}
+{'loss': 2.445, 'grad_norm': 8.73668384552002, 'learning_rate': 5e-05, 'epoch': 1.0}
+{'train_runtime': 9.5726, 'train_samples_per_second': 0.209, 'train_steps_per_second': 0.209, 'train_loss': 1.5840654969215393, 'epoch': 1.0}
+{"action": "lora", "status": "PASS", "device": "musa:0", "steps": 2, "loss": 1.5840654969215393, "adapter_directory": "/results/qwen2-lora"}
+MODEL_CHECK_EXIT=0

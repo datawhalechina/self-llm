@@ -8,14 +8,14 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| `scripts/musa/container.sh` | 使用指定镜像，在租到的卡上启动独立容器 |
+| `scripts/musa/container.sh` | 使用指定镜像和物理卡号启动独立容器 |
 | `scripts/musa/install.sh` | 保留镜像的 PyTorch/MUSA 栈；缺少 torchada 时安装，并拒绝新增依赖冲突 |
 | `scripts/musa/check_dependencies.py` | 保存镜像原有依赖冲突，比较安装后的变化 |
 | `scripts/musa/run.py` | 在教程及其 Python 子进程启动前加载 torchada |
 | `scripts/musa/smoke.py` | 离线小 Qwen2：训练、生成、LoRA 训练和保存重载 |
 | `scripts/musa/qwen.py` | 本地 Qwen 模型的 Transformers 推理和 Trainer LoRA 示例 |
 
-`run.py` 通过仅对本次进程生效的 `PYTHONPATH` 注入启动钩子。钩子先加载 torchada，再检查物理 MUSA 设备；导入失败或没有 MUSA 时直接退出。原教程及子进程的参数、工作目录和退出码保留。
+`run.py` 通过仅对本次进程生效的 `PYTHONPATH` 注入启动钩子。钩子先加载 torchada，再检查物理 MUSA 设备；导入失败或没有 MUSA 时直接退出。原教程及子进程的参数、工作目录和退出码保留。torchada 初始化时会临时关闭构建子进程的钩子，避免 Python 版 ninja 重复导入并卡在编译锁上；用户脚本启动前恢复钩子。
 
 torchada 默认可能保持 `torch.cuda.is_available()` 的原语义。启动钩子在导入前设置 `TORCHADA_FORCE_CUDA_AVAILABLE=1`，让原教程的 CUDA 可用性判断走 MUSA。转换后的张量实际设备类型是 `musa`，不能再用 `device.type == "cuda"` 判断是否在 GPU 上。
 
@@ -31,21 +31,22 @@ ssh mccxadmin@10.121.38.3
 tmux attach -t dongyang
 ```
 
-在 sjq3 的 tmux 窗口进入仓库目录后，先通过 GPU Worker 获取这台机器的 GPU 租约。以下变量必须来自实际申请结果，不能自行指定空闲卡代替租约：
+本任务按用户明确授权跳过 GPU Worker，通过 pc2 连接 sjq3，检查实际使用情况后选用空闲的物理 0 号卡。在 sjq3 的 tmux 窗口进入仓库目录后执行：
 
 ```bash
-export GPU_LEASE_ID='<有效租约 ID>'
-export GPU_INDICES='<租约返回的物理卡号，以逗号分隔>'
-export GPU_OWNER=dongyang
+export GPU_ALLOW_UNLEASED=1
+export GPU_INDICES=0
 bash scripts/musa/container.sh bash -lc '
   bash scripts/musa/install.sh &&
   python scripts/musa/run.py scripts/musa/smoke.py
 '
 ```
 
-容器使用 `mthreads` runtime，传入 `MTHREADS_VISIBLE_DEVICES` 做物理设备隔离，退出自动删除。容器内设备从 0 重新编号；单卡 smoke 默认使用 `cuda:0`，由 torchada 转到 `musa:0`。租约需要按 TTL 续期，任务结束后释放。
+容器使用 `mthreads` runtime，传入 `MTHREADS_VISIBLE_DEVICES` 做物理设备隔离，退出自动删除。容器内设备从 0 重新编号；单卡 smoke 默认使用 `cuda:0`，由 torchada 转到 `musa:0`。
 
-`install.sh` 不升级 torch、torch_musa 或 transformers。先保存镜像的 `pip check` 清单，只在 torchada 未安装时运行 `pip install --no-deps torchada`，再检查导入并比较依赖清单；出现新增冲突或包元数据解析错误时退出。镜像原有冲突会报告出来，不自动改动相关包。
+未设置 `GPU_ALLOW_UNLEASED=1` 时，启动器仍要求有效 `GPU_LEASE_ID`，并使用租约返回的 `GPU_INDICES`；租约模式须按 TTL 续期、结束后释放。直接使用模式不填写虚构的租约 ID，也不添加租约管理标签。
+
+`install.sh` 不升级 torch、torch_musa 或 transformers。先保存镜像的 `pip check` 清单，只在 torchada 未安装时运行 `pip install --no-deps torchada`，再检查导入并比较依赖清单；出现新增冲突或包元数据解析错误时退出。镜像原有冲突会报告出来。目标镜像的 PEFT 0.20.0 会拒绝 torchao 0.9.0，普通 LoRA 也会因此失败；安装脚本在隔离容器中移除这个不兼容的可选包，再核对依赖清单。本入口用于非量化 LoRA，不支持 torchao 量化模型。
 
 GPU 不可用时不要运行 smoke；依赖核对可以用不暴露设备的 CPU 容器，但这种容器没有 runtime 注入的 MUSA 驱动库，不能用其导入结果判断 GPU 容器是否正常。
 
@@ -80,13 +81,14 @@ assert torch.musa.is_available()
 
 ## 本地 Qwen 推理和 LoRA 示例
 
-`qwen.py` 使用已有本地权重，禁止自动下载；采用 eager attention，单卡运行。模型和数据放在仓库挂载目录下，命令在 sjq3 的 tmux 窗口执行：
+`qwen.py` 使用已有本地权重，禁止自动下载；采用 eager attention，单卡运行。`MUSA_MODELS_ROOT` 指定宿主机模型目录，容器内以只读方式挂载到 `/models`。命令在 sjq3 的 tmux 窗口执行：
 
 ```bash
+export MUSA_MODELS_ROOT=/data/models
 bash scripts/musa/container.sh bash -lc '
   bash scripts/musa/install.sh &&
   python scripts/musa/run.py scripts/musa/qwen.py infer \
-    --model-dir models_local/Qwen3-8B --prompt "请介绍一下你自己。"
+    --model-dir /models/Qwen3-0.6B --prompt "请介绍一下你自己。"
 '
 ```
 
@@ -96,19 +98,19 @@ LoRA 数据使用原教程的 `instruction`、`input`、`output` JSON 数组格�
 bash scripts/musa/container.sh bash -lc '
   bash scripts/musa/install.sh &&
   python scripts/musa/run.py scripts/musa/qwen.py lora \
-    --model-dir models_local/Qwen3-8B \
+    --model-dir /models/Qwen3-0.6B \
     --data-json data/huanhuan.json --output-dir output_musa/qwen3-lora \
     --max-steps 1 --max-length 256
 '
 ```
 
-该示例没有启用量化、自定义远程模型代码或 fused CUDA kernel。模型是否适用取决于镜像内 Transformers 的模型支持范围；真实 Qwen 权重的推理与训练目前待 sjq3 GPU 验证。
+该示例没有启用量化、自定义远程模型代码或 fused CUDA kernel。Qwen3-0.6B 和 Qwen2-0.5B-Instruct 的 BF16 推理及 Trainer LoRA 已在 sjq3 验证。Trainer 的随机采样器显式使用 CPU generator，保留随机打乱和种子；训练张量仍在 MUSA 上。其他模型取决于镜像内 Transformers 的支持范围。
 
 ## 兼容范围
 
 | 教程类型 | 处理方式 / 当前状态 |
 | --- | --- |
-| PyTorch CUDA API、纯 Transformers + PEFT | 已提供启动入口、离线 smoke 和本地 Qwen 示例；GPU 链路待验证 |
+| PyTorch CUDA API、纯 Transformers + PEFT | 单卡 float32/BF16 smoke、Qwen2/Qwen3 推理及 Trainer LoRA 已通过；其他教程逐项验证 |
 | bitsandbytes、4bit/QLoRA、GPTQ/AWQ | 依赖专门的 MUSA 量化实现，不能按 CUDA wheel 直接安装 |
 | FlashAttention、FLA、causal-conv1d、Triton 自定义算子 | 需要匹配的 MUSA 算子或 eager 回退；逐项验证 |
 | vLLM / SGLang | 必须使用匹配 MUSA 的引擎实现；普通 CUDA wheel 的教程不代表可用 |
@@ -121,12 +123,18 @@ bash scripts/musa/container.sh bash -lc '
 - sjq3 的目标镜像已存在，image ID：`sha256:67eafc3ad1ce409cb61996b9f86d7e8893c225d0e802abe8589ef4c945219b5c`。
 - 镜像包元数据：torch `2.7.1.post1`、torch_musa `2.7.1.post1`、transformers `4.57.0+musa.p34`、PEFT `0.20.0`、Accelerate `1.12.0`、datasets `3.0.0`。
 - 镜像未安装 torchada；不暴露 GPU 的临时容器已成功安装 torchada `0.1.96`，没有安装或升级其依赖。
-- 本机启动器的 4 项测试通过：参数/目录/退出码保留、模块和子进程加载钩子、导入失败阻止执行、未启用时不加载框架。
+- 本机启动器的 5 项测试通过：参数/目录/退出码保留、模块和子进程加载钩子、导入失败阻止执行、未启用时不加载框架、构建子进程不递归导入。
 - sjq3 CPU 容器内同样 4 项启动器测试通过；这些测试使用假框架模块，只证明启动流程。
 - sjq3 CPU 容器的 Python 编译检查、Shell 语法检查通过，最终 `CPU_CHECK_EXIT=0`；原始日志见 [CPU 检查日志](./validation/local26-20261012-cpu.log)。
 - 目标镜像在安装前已有 5 项依赖冲突，涉及 ml-dtypes、vLLM 与 vllm-musa；torchada 安装后清单不变。依赖比较允许保留这 5 项冲突；临时加入缺失依赖或损坏的包元数据时均返回非零退出码。sjq3 CPU 容器的最终 `DEPENDENCY_GATE_EXIT=0`，见 [依赖比较验证日志](./validation/local26-20261012-dependency-gate.txt)。这不代表 vLLM 或这些包已经兼容。
-- GPU Worker 和 gpu-dashboard 快照均未匹配到 sjq3 的 hostname 或 GPU UUID。GPU Worker 对 `10.121.38.3` 的单卡定向申请返回 `insufficient free GPUs`，没有取得租约。
-- 尚未运行实际 MUSA smoke、BF16、真实模型推理、Trainer LoRA 或多卡训练，也未取得 torchada 在 GPU 容器中的导入结果。
+- 用户明确授权不使用 GPU Worker，直接通过 pc2 连接 sjq3，使用物理 0 号 S5000，未创建或伪造租约。
+- GPU 容器中的 torchada / torch_musa 导入通过；float32 和 BF16 smoke 均 PASS，实际设备为 `musa:0`，训练、生成、LoRA 更新和 adapter 保存重载检查通过，`GPU_CHECK_EXIT=0`。原始日志见 [GPU smoke 日志](./validation/local26-20261012-gpu-smoke.log)。
+- Qwen3-0.6B 和 Qwen2-0.5B-Instruct 的 BF16 推理均 PASS，实际设备 `musa:0`；Trainer LoRA 各训练 2 步，训练 loss 分别为 `2.7577483654022217` 和 `1.5840654969215393`，`MODEL_CHECK_EXIT=0`。输入为 2 条人工编写的示例记录，用于检查训练链路，不用于评价模型效果。见 [真实模型日志](./validation/local26-20261012-model.log)。
+- 仓库 `container.sh` 的直接使用模式和只读本地模型挂载已在 sjq3 实测，Qwen3 推理 PASS，`LAUNCHER_CHECK_EXIT=0`。见 [容器入口日志](./validation/local26-20261012-launcher.log)。
+- 本机启动钩子与容器参数检查共 11 项测试通过；见 [测试日志](./validation/local26-20261012-tests.log)。
+- 两个真实模型的 adapter 已单独检查：Qwen3 保存 112 个张量，其中 56 个 LoRA B 张量非零；Qwen2 保存 96 个张量，其中 48 个 LoRA B 张量非零。所有张量均为有限值，配置与 tokenizer 文件可读，`ARTIFACT_CHECK_EXIT=0`。见 [adapter 检查日志](./validation/local26-20261012-artifact.log)。
+- [Review Notebook](./validation/LOCAL-26-review.ipynb) 汇集实际执行命令和日志；Notebook 读取已有结果，不重复执行 GPU 任务。
+- 本次未运行多卡训练、量化或 vLLM/SGLang。
 
 本地启动器测试命令：
 

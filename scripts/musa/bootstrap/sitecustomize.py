@@ -6,12 +6,18 @@ import sys
 if os.environ.get("SELF_LLM_MUSA") == "1":
     try:
         os.environ["TORCHADA_FORCE_CUDA_AVAILABLE"] = "1"
-        import torchada  # noqa: F401
-        import torch_musa  # noqa: F401
-        import torch
+        # torchada may compile extensions and launch Python-based build tools.
+        # Those tools must not import torchada again while its build lock is held.
+        os.environ["SELF_LLM_MUSA"] = "0"
+        try:
+            import torchada  # noqa: F401
+            import torch_musa  # noqa: F401
+            import torch
+        finally:
+            os.environ["SELF_LLM_MUSA"] = "1"
 
         if not torch.musa.is_available():
-            raise RuntimeError("MUSA GPU unavailable; check the driver and GPU lease")
+            raise RuntimeError("MUSA GPU unavailable; check the driver and visible devices")
         if not torch.cuda.is_available():
             raise RuntimeError("torchada did not enable CUDA API compatibility")
     except Exception as exc:

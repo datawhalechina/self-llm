@@ -1,0 +1,17 @@
+test_invalid_unleased_flag_is_rejected (test_container.ContainerLauncherTests) ... ok
+test_lease_mode_keeps_serverlist_labels (test_container.ContainerLauncherTests) ... ok
+test_lease_required_by_default (test_container.ContainerLauncherTests) ... ok
+test_local_models_are_mounted_readonly (test_container.ContainerLauncherTests) ... ok
+test_missing_model_directory_is_rejected (test_container.ContainerLauncherTests) ... ok
+test_unleased_mode_is_explicit_and_has_no_serverlist_labels (test_container.ContainerLauncherTests) ... ok
+test_arguments_cwd_and_exit_status (test_runner.RunnerTests) ... ok
+test_bootstrap_does_nothing_without_opt_in (test_runner.RunnerTests) ... ok
+test_build_subprocess_skips_hook_but_user_subprocess_keeps_it (test_runner.RunnerTests) ... ok
+test_failed_adapter_prevents_target_execution (test_runner.RunnerTests) ... ok
+test_module_and_child_process_inherit_bootstrap (test_runner.RunnerTests) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.795s
+
+OK
+TEST_CHECK_EXIT=0

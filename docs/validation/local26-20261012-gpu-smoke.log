@@ -1,0 +1,53 @@
+Image dependency conflicts already present before installation:
+ml-dtypes 0.6.0 has requirement numpy>=2.0.0, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement numpy==1.26.1, but you have numpy 1.26.4.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement outlines_core==0.2.10, but you have outlines-core 0.1.26.
+vllm 0.10.1.2.dev0+g1da94e673.d20260902.empty has requirement xgrammar==0.1.21; platform_machine == "x86_64" or platform_machine == "aarch64" or platform_machine == "arm64", but you have xgrammar 0.1.27.
+vllm-musa 0.1.dev402+g3bad2b9.d20260902 has requirement pyarrow==20.0.0, but you have pyarrow 22.0.0.
+{"baseline_conflicts": 5}
+torch: 2.7.1.post1 torch_musa: 2.7.1.post1+b6d53a2
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting torchada
+  Downloading torchada-0.1.96-py3-none-any.whl (205 kB)
+Installing collected packages: torchada
+Successfully installed torchada-0.1.96
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2026-10-12 22:38:50 | _patch | 140460064719296 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:38:51 | warnings | 140460064719296 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:38:51 | warnings | 140460064719296 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+torchada: 0.1.96
+Removing incompatible optional torchao for unquantized PEFT LoRA
+Found existing installation: torchao 0.9.0
+Uninstalling torchao-0.9.0:
+  Successfully uninstalled torchao-0.9.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+{"baseline_conflicts": 5, "current_conflicts": 5, "new_conflicts": []}
+2026-10-12 22:38:58 | _patch | 140295386354112 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:38:58 | _patch | 140295386354112 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:38:59 | warnings | 140295386354112 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:38:59 | warnings | 140295386354112 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-12 22:39:37 | warnings | 140295386354112 | WARNING : /usr/local/lib/python3.10/dist-packages/peft/utils/save_and_load.py:438: UserWarning: Could not find a config file in  - will assume that the vocabulary was not modified.
+  warnings.warn(
+
+{"test": "torchada_musa_qwen2_peft_smoke", "status": "PASS", "versions": {"python": "3.10.12", "torchada": "0.1.96", "torch_musa": "2.7.1.post1+b6d53a2", "torch": "2.7.1.post1", "transformers": "4.57.0", "peft": "0.20.0"}, "device": {"requested": "cuda:0", "name": "MTT S5000", "physical_type": "musa", "physical_index": 0}, "dtype": "float32", "base_loss": 4.834263324737549, "base_gradient_tensors": 27, "generated_token_ids": [121, 51, 25, 33, 43, 113, 15, 33, 114, 33, 114, 33], "lora_loss": 4.506847381591797, "lora_trainable_parameters": 1792, "adapter_directory": "temporary (removed after successful reload)", "checks": {"physical_musa": true, "cuda_tensor_api": true, "base_forward_backward_optimizer": true, "greedy_generation": true, "lora_training": true, "adapter_save_reload_weights_and_logits": true}}
+2026-10-12 22:39:43 | _patch | 140513514971584 | INFO : MUSA out_dtype backport armed for torch.mm, torch.bmm (probe deferred to the first out_dtype call)
+2026-10-12 22:39:43 | _patch | 140513514971584 | INFO : TORCHADA_FORCE_CUDA_AVAILABLE is set: torch.cuda.is_available() reports torch.musa.is_available()
+2026-10-12 22:39:44 | warnings | 140513514971584 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_DEEP_GEMM_BLOCK_M is deprecated, please use SGLANG_DEEP_GEMM_BLOCK_M
+  warnings.warn(
+
+2026-10-12 22:39:44 | warnings | 140513514971584 | WARNING : /home/sglang/python/sglang/srt/environ.py:401: UserWarning: Environment variable SGL_USE_DEEPGEMM_BMM is deprecated, please use SGLANG_USE_DEEPGEMM_BMM
+  warnings.warn(
+
+2026-10-12 22:40:22 | warnings | 140513514971584 | WARNING : /usr/local/lib/python3.10/dist-packages/peft/utils/save_and_load.py:438: UserWarning: Could not find a config file in  - will assume that the vocabulary was not modified.
+  warnings.warn(
+
+{"test": "torchada_musa_qwen2_peft_smoke", "status": "PASS", "versions": {"python": "3.10.12", "torchada": "0.1.96", "torch_musa": "2.7.1.post1+b6d53a2", "torch": "2.7.1.post1", "transformers": "4.57.0", "peft": "0.20.0"}, "device": {"requested": "cuda:0", "name": "MTT S5000", "physical_type": "musa", "physical_index": 0}, "dtype": "bf16", "base_loss": 4.834379196166992, "base_gradient_tensors": 27, "generated_token_ids": [121, 51, 25, 33, 43, 113, 15, 33, 114, 33, 114, 33], "lora_loss": 4.51035737991333, "lora_trainable_parameters": 1792, "adapter_directory": "temporary (removed after successful reload)", "checks": {"physical_musa": true, "cuda_tensor_api": true, "base_forward_backward_optimizer": true, "greedy_generation": true, "lora_training": true, "adapter_save_reload_weights_and_logits": true}}
+GPU_CHECK_EXIT=0

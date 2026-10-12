@@ -36,7 +36,7 @@ def main():
     )
 
     if not torch.musa.is_available() or not torch.cuda.is_available():
-        raise RuntimeError("Start with scripts/musa/run.py inside the leased MUSA container")
+        raise RuntimeError("Start with scripts/musa/run.py inside the MUSA-enabled container")
     dtype = torch.float32 if args.dtype == "float32" else torch.bfloat16
     tokenizer = AutoTokenizer.from_pretrained(str(args.model_dir), local_files_only=True)
     if tokenizer.pad_token_id is None:
@@ -96,7 +96,20 @@ def main():
         bf16=args.dtype == "bf16", fp16=False, gradient_checkpointing=True,
         report_to="none", dataloader_num_workers=0,
     )
-    trainer = Trainer(
+    class MusaTrainer(Trainer):
+        def _get_train_sampler(self, train_dataset=None):
+            # torch_musa's default Generator can be a MUSA generator, while
+            # RandomSampler produces CPU indices. Keep random, seeded sampling.
+            from torch.utils.data import RandomSampler
+
+            dataset = self.train_dataset if train_dataset is None else train_dataset
+            if dataset is None:
+                return None
+            generator = torch._C.Generator(device="cpu")
+            generator.manual_seed(self.args.data_seed if self.args.data_seed is not None else self.args.seed)
+            return RandomSampler(dataset, generator=generator)
+
+    trainer = MusaTrainer(
         model=model, args=training_args, train_dataset=examples,
         data_collator=DataCollatorForSeq2Seq(tokenizer, padding=True),
     )
