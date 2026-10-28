@@ -90,7 +90,7 @@ mypy-extensions==1.1.0
 narwhals==2.2.0
 nest-asyncio==1.6.0
 networkx==3.4.2
-nltk==3.10.3
+nltk==3.10.4
 numexpr==2.11.0
 numpy==1.26.4
 nvidia-cublas-cu12==12.8.4.1
