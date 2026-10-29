@@ -213,6 +213,29 @@
   </tr>
 </table>
 
+### 摩尔线程 MUSA 专区
+
+<p align="center">
+  <strong>🚀 摩尔线程 MUSA 平台已支持模型</strong><br>
+  <em>提供 MUSA 环境配置、模型推理与 LoRA 微调教程</em><br>
+  📖 <strong><a href="./support_model_musa.md">查看完整摩尔线程 MUSA 平台模型列表和教程</a></strong><br>
+</p>
+
+<table align="center">
+  <tr>
+    <td valign="top" width="50%">
+      • <a href="./support_model_musa.md#qwen3">Qwen3-4B</a><br>
+      • transformers 原生推理<br>
+      • 思考模式与流式输出
+    </td>
+    <td valign="top" width="50%">
+      • <a href="./support_model_musa.md#qwen35">Qwen3.5-4B</a><br>
+      • LoRA 微调<br>
+      • SwanLab 训练可视化
+    </td>
+  </tr>
+</table>
+
 ### 沐曦专区
 
 <p align="center">
