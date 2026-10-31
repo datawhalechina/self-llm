@@ -117,10 +117,12 @@ You are a helpful assistant<|eot_id|>'
 
 模型以半精度形式加载，如果你的显卡比较新的话，可以用`torch.bfolat`形式加载。对于自定义的模型一定要指定`trust_remote_code`参数为`True`。
 
+训练阶段不要设置`device_map="auto"`。这个参数会让加载流程提前分配设备，Trainer 初始化时再次调用 `.to()` 可能触发 `Cannot copy out of meta tensor`。训练阶段让 Trainer 负责设备放置，推理阶段仍可按显存情况使用`device_map="auto"`。
+
 ```python
 tokenizer = AutoTokenizer.from_pretrained('/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct', use_fast=False, trust_remote_code=True)
 
-model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct', device_map="auto",torch_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained('/root/autodl-tmp/LLM-Research/Meta-Llama-3-8B-Instruct', torch_dtype=torch.bfloat16)
 ```
 
 ## 定义 LoraConfig
