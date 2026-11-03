@@ -155,4 +155,4 @@ result = tokenizer.decode(outputs[0], skip_special_tokens=True)
 print(result)
 ```
 
-完整代码请看：[XVERSE-7B-Chat Lora 微调](./05-XVERSE-7B-Chat%20Lora%20微调.py)
+完整代码请看：[XVERSE-7B-Chat Lora 微调](./05-XVERSE-7B-Chat%20Lora%20微调.ipynb)

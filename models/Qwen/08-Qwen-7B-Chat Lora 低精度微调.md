@@ -4,7 +4,7 @@
 
 本节我们简要介绍如何基于 transformers、peft 等框架，对 Qwen-7B-Chat 模型进行 Lora 的低精度微调。包括8bit与4bit QLoRA
 
-本节所讲述的代码脚本在同级目录 [08-Qwen-7B-Chat Lora 低精度微调](./04-Qwen-7B-Chat%20Lora%20低精度微调.py) 下，运行该脚本来执行微调过程，但注意，需要修改脚本文件中的模型路径和数据集路径。
+本节所讲述的代码脚本在同级目录 [08-Qwen-7B-Chat Lora 低精度微调](./08-Qwen-7B-Chat%20Lora%20低精度微调.py) 下，运行该脚本来执行微调过程，但注意，需要修改脚本文件中的模型路径和数据集路径。
 
 这个教程会在同目录下给大家提供两个 [nodebook]，分别对应[8bit](./08-Qwen-7B-Chat%20Lora%20-8bit微调.ipynb) 与 [4bit](./08-Qwen-7B-Chat%20Lora%20-4bit微调.ipynb) 文件，来让大家更好的学习。
 

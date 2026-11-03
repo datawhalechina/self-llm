@@ -4,7 +4,7 @@
 
 本节我们简要介绍如何基于 transformers、peft 等框架，对 Atom-7B-Chat 模型进行 Lora 微调。Lora 是一种高效微调方法，深入了解其原理可参见博客：[知乎|深入浅出Lora](https://zhuanlan.zhihu.com/p/650197598)。
 
-本节所讲述的代码脚本在同级目录 [02-Atom-7B-Chat Lora](../Atom/02-Atom-7B-Chat%20Lora%20微调/train.py) 下，可以通过运行目录下 [train.sh](../Atom/02-Atom-7B-Chat%20Lora%20微调/train.sh) 脚本来执行微调过程，但注意，本文代码未使用分布式框架，微调 Atom-7B 模型至少需要 32G 及以上的显存。
+本节所讲述的代码脚本在同级目录 [02-Atom-7B-Chat Lora](../Atom/02-Atom-7B-Chat-Lora/train.py) 下，可以通过运行目录下 [train.sh](../Atom/02-Atom-7B-Chat-Lora/train.sh) 脚本来执行微调过程，但注意，本文代码未使用分布式框架，微调 Atom-7B 模型至少需要 32G 及以上的显存。
 
 ## 环境配置
 
