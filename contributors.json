@@ -35,10 +35,6 @@
         "info": "[郭志航](https://github.com/acwwt)（内容创作者）",
         "task_num": 11
     },
-    "陈榆": {
-        "info": "[陈榆](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）",
-        "task_num": 11
-    },
     "肖鸿儒": {
         "info": "[肖鸿儒](https://github.com/Hongru0306) （Datawhale成员-同济大学）",
         "task_num": 11
@@ -66,6 +62,10 @@
     "谢好冉": {
         "info": "[谢好冉](https://github.com/ilovexsir)（内容创作者-鲸英助教）",
         "task_num": 6
+    },
+    "陈榆": {
+        "info": "[陈榆](https://github.com/LucaChen)（内容创作者-谷歌开发者机器学习技术专家）",
+        "task_num": 5
     },
     "惠佳豪": {
         "info": "[惠佳豪](https://github.com/L4HeyXiao) （Datawhale-宣传大使）",

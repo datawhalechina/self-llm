@@ -1,3 +1,15 @@
+# /// script
+# requires-python = ">=3.9"
+# dependencies = ["requests"]
+# ///
+"""Repo maintenance utilities.
+
+Run with uv (environment is managed automatically via the inline
+script metadata above):
+
+    uv run utils.py
+"""
+
 import json
 import re
 import pprint
@@ -88,13 +100,24 @@ def update_contributors():
     return contributors
 
 
-def calculate_docker_hours():
+def calculate_docker_hours(username="Datawhale", sort_type="hot", page_size=100):
     """
-    Calculate and display Docker runtime hours from CodeWithGPU API.
-    Fetches data from Datawhale account, calculates total runtime hours,
-    and displays sorted information about each container.
+    Calculate and display image runtime hours from the AutoDL.Art API.
+
+    Fetches every published image of the given user — the same list shown at
+    https://www.autodl.art/u/<username>/image?sort_type=<sort_type> — by
+    paginating through all pages, then prints the total runtime hours and
+    a per-image ranking sorted by runtime.
+
+    Args:
+        username: AutoDL.Art account whose images to fetch (default: Datawhale)
+        sort_type: List ordering used by the website (default: hot)
+        page_size: Number of images requested per API page (default: 100)
+
+    Returns:
+        tuple: (docker_list, total_hours)
     """
-    url = "https://www.codewithgpu.com/api/v1/image/home/Datawhale?page_index=1&page_size=100&username=Datawhale"
+    url = f"https://www.autodl.art/api/v1/image/home/{username}"
 
     headers = {
         "accept": "application/json, text/plain, */*",
@@ -104,45 +127,67 @@ def calculate_docker_hours():
 
     total_hours = 0
     docker_list = []
+    seen_uuids = set()
+    page_index = 1
 
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
+    # Walk through every page so all images are collected, not just the first 100
+    while True:
+        params = {
+            "page_index": page_index,
+            "page_size": page_size,
+            "username": username,
+            "sort_type": sort_type,
+        }
+        response = requests.get(url, headers=headers, params=params, timeout=30)
+        if response.status_code != 200:
+            print(f"Error: HTTP {response.status_code} while fetching page {page_index}")
+            break
+
         data = response.json()
-        if data['code'] == "Success":
-            item_list = data['data']['list']
-            for item in item_list:
-                uuid = item['uuid']
-                runtime_hour = item['runtime_hour']
+        if data.get("code") != "Success":
+            print(f"Error: {data.get('msg') or data.get('message')}")
+            break
 
-                if runtime_hour is not None:
-                    total_hours += runtime_hour
-                    docker_list.append({
-                        "uuid": uuid.split("/")[-1],
-                        "runtime_hour": runtime_hour
-                    })
-        else:
-            print(f"Error: {data['message']}")
+        page_data = data["data"]
+        item_list = page_data.get("list") or []
+        for item in item_list:
+            uuid = item["uuid"]
+            runtime_hour = item.get("runtime_hour")
+            if uuid in seen_uuids or runtime_hour is None:
+                continue
+            seen_uuids.add(uuid)
+            total_hours += runtime_hour
+            docker_list.append({
+                "uuid": uuid.split("/")[-1],
+                "runtime_hour": runtime_hour
+            })
+
+        max_page = page_data.get("max_page") or 1
+        result_total = page_data.get("result_total") or 0
+        if not item_list or page_index >= max_page or len(seen_uuids) >= result_total:
+            break
+        page_index += 1
 
     print(f"\n{'='*60}")
-    print(f"{' DOCKER RUNTIME SUMMARY ':^60}")
+    print(f"{' AUTODL IMAGE RUNTIME SUMMARY ':^60}")
     print(f"{'='*60}")
-    print(f"{'Total Containers:':<20} {len(docker_list):>10}")
+    print(f"{'Total Images:':<20} {len(docker_list):>10}")
     print(f"{'Total Runtime:':<20} {total_hours:>10.1f} hours")
 
     if docker_list:
         print(f"{'='*60}")
-        print(f"{' DOCKER CONTAINERS (Sorted by Runtime) ':^60}")
+        print(f"{' IMAGES (Sorted by Runtime) ':^60}")
         print(f"{'='*60}")
-        print(f"{'Rank':<6} {'UUID':<35} {'Runtime (hours)':>15}")
+        print(f"{'Rank':<6} {'Image':<35} {'Runtime (hours)':>15}")
         print(f"{'-'*6}-{'-'*35}-{'-'*15}")
-        
+
         docker_list = sorted(docker_list, key=lambda x: x['runtime_hour'], reverse=True)
         for i, item in enumerate(docker_list, 1):
             print(f"{i:<6} {item['uuid']:<35} {item['runtime_hour']:>15.1f}")
         print(f"{'='*60}")
     else:
-        print("No Docker containers found.")
-    
+        print("No images found.")
+
     return docker_list, total_hours
 
 
