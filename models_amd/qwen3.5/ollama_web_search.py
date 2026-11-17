@@ -1,9 +1,9 @@
 import argparse
 import asyncio
 import json
-from datetime import timedelta
 
 import httpx
+from anyio import fail_after
 from mcp import ClientSession
 from mcp.client.streamable_http import streamable_http_client
 
@@ -57,19 +57,18 @@ async def search(arguments):
     ):
         raise ValueError("本地模型没有生成有效的搜索参数。")
 
-    async with httpx.AsyncClient(
-        headers={"User-Agent": "self-llm/ollama-web-search"},
-        trust_env=False,
-        timeout=20,
-    ) as client:
-        async with streamable_http_client(PARALLEL_MCP, http_client=client) as (read, write, _):
-            async with ClientSession(
-                read, write, read_timeout_seconds=timedelta(seconds=30)
-            ) as session:
-                await session.initialize()
-                result = await session.call_tool(
-                    "web_search", {"objective": objective, "search_queries": queries}
-                )
+    with fail_after(30):
+        async with httpx.AsyncClient(
+            headers={"User-Agent": "self-llm/ollama-web-search"},
+            trust_env=False,
+            timeout=20,
+        ) as client:
+            async with streamable_http_client(PARALLEL_MCP, http_client=client) as (read, write, _):
+                async with ClientSession(read, write) as session:
+                    await session.initialize()
+                    result = await session.call_tool(
+                        "web_search", {"objective": objective, "search_queries": queries}
+                    )
     if result.isError:
         raise ValueError("Parallel 搜索失败，请稍后重试。")
 
@@ -110,10 +109,17 @@ async def run(args):
             },
         )
         tool_message = await chat(client, args.model, messages, [SEARCH_TOOL])
-        calls = tool_message.get("tool_calls") or []
-        if len(calls) != 1 or calls[0]["function"]["name"] != "web_search":
+        calls = tool_message.get("tool_calls")
+        if not isinstance(calls, list) or len(calls) != 1 or not isinstance(calls[0], dict):
             raise ValueError("本地模型没有发起一次有效的网页搜索。")
-        sources = await search(calls[0]["function"]["arguments"])
+        function = calls[0].get("function")
+        if (
+            not isinstance(function, dict)
+            or function.get("name") != "web_search"
+            or not isinstance(function.get("arguments"), dict)
+        ):
+            raise ValueError("本地模型没有发起一次有效的网页搜索。")
+        sources = await search(function["arguments"])
         messages.extend(
             [
                 tool_message,
@@ -139,6 +145,8 @@ if __name__ == "__main__":
         asyncio.run(run(parser.parse_args()))
     except ValueError as error:
         parser.exit(1, f"{error}\n")
+    except TimeoutError:
+        parser.exit(1, "Parallel 搜索超时，请稍后重试。\n")
     except ExceptionGroup:
         parser.exit(1, "无法完成 Parallel 搜索。请检查网络连接后重试。\n")
     except httpx.HTTPError:
