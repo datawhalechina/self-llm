@@ -88,6 +88,24 @@ awk 'NR==1{count=$1} NR==2{duration=$1/1e9} END{printf "tokens/s: %.2f\n", count
 
 ---
 
+### 5. 可选：用公开网页来源回答问题
+
+本地模型自带的知识有时间限制。涉及公开资料时，可以让已部署的模型通过 Ollama 的工具调用发起一次网页搜索，再根据返回的摘要回答。示例会列出搜索结果的原始链接，方便核对。
+
+保持 Ollama 服务运行。在本教程目录下安装示例依赖（Python 3.10 或更高版本），然后输入第 3 节下载的本地模型名称：
+
+```bash
+python -m pip install 'mcp==1.30.0' 'httpx==0.28.1'
+ollama list
+read -r -p '本地模型名称：' MODEL
+python ollama_web_search.py --model "$MODEL" --web-search \
+  '请搜索 NASA 官网，找出欧罗巴快船（Europa Clipper）的发射日期，并注明来源。'
+```
+
+启用 `--web-search` 后，模型生成的搜索目标和关键词会发送到 [Parallel MCP](https://docs.parallel.ai/integrations/mcp/installation)，无需 API 密钥。请只输入可以公开搜索的问题。去掉这个参数，就只调用本机 Ollama 服务。
+
+可用 NASA 的[任务公告](https://www.nasa.gov/news-release/liftoff-nasas-europa-clipper-sails-toward-ocean-moon-of-jupiter)核对发射日期（2024 年 10 月 14 日）。脚本通过本地 `/api/chat` 接收工具调用，把摘要交回模型，并单独显示原始链接。
+
 ---
 
 ## 延伸学习
