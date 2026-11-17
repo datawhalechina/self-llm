@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import json
+from datetime import timedelta
 
 import httpx
 from mcp import ClientSession
@@ -62,7 +63,9 @@ async def search(arguments):
         timeout=20,
     ) as client:
         async with streamable_http_client(PARALLEL_MCP, http_client=client) as (read, write, _):
-            async with ClientSession(read, write) as session:
+            async with ClientSession(
+                read, write, read_timeout_seconds=timedelta(seconds=30)
+            ) as session:
                 await session.initialize()
                 result = await session.call_tool(
                     "web_search", {"objective": objective, "search_queries": queries}
