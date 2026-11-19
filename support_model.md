@@ -4,6 +4,7 @@
 
 ## 目录
 
+- [Ling-3.0-tiny](#ling-30-tiny)
 - [Hy3](#hy3)
 - [DeepSeek-V4-Flash](#deepseek-v4-flash)
 - [MiniCPM5](#minicpm5)
@@ -67,6 +68,12 @@
 
 
 ## 已支持模型列表
+
+### Ling-3.0-tiny
+
+[inclusionAI Ling-3.0-tiny（蚂蚁百灵）](https://www.modelscope.cn/models/inclusionAI/Ling-3.0-tiny)
+  - [x] [Ling-3.0-tiny MLX 量化与部署调用](./models/Ling-3.0-tiny/01-Ling-3.0-tiny%20MLX%20量化与部署调用.md) @lplalbert
+  - [x] [Ling-3.0-tiny MLX QLoRA 微调](./models/Ling-3.0-tiny/02-Ling-3.0-tiny%20MLX%20QLoRA%20微调.md) @lplalbert
 
 ### Hy3
 
