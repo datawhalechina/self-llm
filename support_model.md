@@ -5,6 +5,7 @@
 ## 目录
 
 - [Hy3](#hy3)
+- [DeepSeek-V4.1-Flash](#deepseek-v41-flash)
 - [DeepSeek-V4-Flash](#deepseek-v4-flash)
 - [MiniCPM5](#minicpm5)
 - [Qwen3.5](#qwen35)
@@ -73,6 +74,11 @@
 [Hy3](https://huggingface.co/tencent/Hy3)
   - [x] [Hy3 vLLM docker部署调用](./models/Hy3/01-Hy3-vLLM%20docker部署调用.md)
 
+
+### DeepSeek-V4.1-Flash
+
+[DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash)
+  - [x] [DeepSeek-V4.1-Flash vLLM docker部署调用](./models/DeepSeek-V4.1-Flash/01-DeepSeek-V4.1-Flash-vLLM%20docker部署调用.md) @muxiaoxiong
 
 ### DeepSeek-V4-Flash
 
