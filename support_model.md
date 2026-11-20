@@ -4,6 +4,7 @@
 
 ## 目录
 
+- [DeepSeek-V4-Flash-Vision](#deepseek-v4-flash-vision)
 - [Hy3](#hy3)
 - [DeepSeek-V4-Flash](#deepseek-v4-flash)
 - [MiniCPM5](#minicpm5)
@@ -78,6 +79,12 @@
 
 [DeepSeek-V4-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash)
   - [x] [DeepSeek-V4-Flash LoRA 及 SwanLab 可视化记录](./models/DeepSeek-V4-Flash/01-DeepSeek-V4-Flash-LoRA及SwanLab可视化记录.md)
+
+### DeepSeek-V4-Flash-Vision
+
+[DeepSeek-V4-Flash-Vision-Exp](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp)（多模态视觉模型）
+  - [x] [DeepSeek-V4-Flash-Vision-Exp vLLM 部署（多模态图像理解）](./models/DeepSeek-V4-Flash-Vision/01-DeepSeek-V4-Flash-Vision-Exp-vLLM部署.md)
+
 
 ### MiniCPM5
 
