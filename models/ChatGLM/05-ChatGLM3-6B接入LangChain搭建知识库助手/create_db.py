@@ -18,6 +18,10 @@ from langchain.vectorstores import Chroma
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from tqdm import tqdm
 import os
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+from encoding_utils import read_text_with_fallback
 
 # 获取文件路径函数
 def get_files(dir_path):
@@ -45,13 +49,29 @@ def get_text(dir_path):
     for one_file in tqdm(file_lst):
         file_type = one_file.split('.')[-1]
         if file_type == 'md':
-            loader = UnstructuredMarkdownLoader(one_file)
+            loader_cls = UnstructuredMarkdownLoader
         elif file_type == 'txt':
-            loader = UnstructuredFileLoader(one_file)
+            loader_cls = UnstructuredFileLoader
         else:
             # 如果是不符合条件的文件，直接跳过
             continue
-        docs.extend(loader.load())
+
+        _, encoding = read_text_with_fallback(one_file)
+        if encoding == "utf-8":
+            docs.extend(loader_cls(one_file).load())
+            continue
+
+        # unstructured's Markdown partitioner assumes UTF-8. Decode first and
+        # give it a temporary UTF-8 file so GBK/GB18030 documents follow the
+        # same parsing path without losing Markdown structure.
+        with TemporaryDirectory() as temp_dir:
+            temp_file = Path(temp_dir) / Path(one_file).name
+            text, _ = read_text_with_fallback(one_file)
+            temp_file.write_text(text, encoding="utf-8")
+            loaded_docs = loader_cls(str(temp_file)).load()
+            for doc in loaded_docs:
+                doc.metadata["source"] = one_file
+            docs.extend(loaded_docs)
     return docs
 
 # 目标文件夹
